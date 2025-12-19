@@ -1,0 +1,59 @@
+{
+    "piece": {
+        "Model": "",
+        "Squad": "",
+        "Power": 180
+    },
+    "presets": {
+        "King": false,
+        "Queen": false,
+        "Bishop": false,
+        "Knight": false,
+        "Rook": false,
+        "Pawn": false
+    },
+    "straight": {
+        "Active": true,
+        "All": true,
+        "Front": false,
+        "Back": false,
+        "Right": false,
+        "Left": false,
+        "Range": 8,
+        "Move": true,
+        "Capture": true,
+        "Jump": false
+    },
+    "diagonal": {
+        "Active": false,
+        "All": true,
+        "Front": false,
+        "Back": false,
+        "Right": false,
+        "Left": false,
+        "Range": 8,
+        "Move": true,
+        "Capture": false,
+        "Jump": false
+    },
+    "custom": {
+        "Active": false,
+        "Move": true,
+        "Capture": false,
+        "Jump": false,
+        "Moves": []
+    },
+    "special": {
+        "Active": false,
+        "Move": true,
+        "Capture": false,
+        "Jump": false,
+        "Castling": false,
+        "Moves": [],
+        "Pieces": []
+    },
+    "promotion": {
+        "Active": false,
+        "Pieces": []
+    }
+}

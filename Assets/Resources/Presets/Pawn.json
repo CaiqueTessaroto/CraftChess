@@ -1,0 +1,66 @@
+{
+    "piece": {
+        "Name": "",
+        "Art": "",
+        "FolderSprite": "",
+        "Squad": "",
+        "Power": 6
+    },
+    "presets": {
+        "King": false,
+        "Queen": false,
+        "Bishop": false,
+        "Knight": false,
+        "Rook": false,
+        "Pawn": false
+    },
+    "straight": {
+        "Active": true,
+        "All": false,
+        "Front": true,
+        "Back": false,
+        "Right": false,
+        "Left": false,
+        "Range": 1,
+        "Move": true,
+        "Capture": false,
+        "Jump": false
+    },
+    "diagonal": {
+        "Active": true,
+        "All": false,
+        "Front": true,
+        "Back": false,
+        "Right": false,
+        "Left": false,
+        "Range": 1,
+        "Move": false,
+        "Capture": true,
+        "Jump": false
+    },
+    "custom": {
+        "Active": false,
+        "Move": true,
+        "Capture": false,
+        "Jump": false,
+        "Moves": []
+    },
+    "special": {
+        "Active": true,
+        "Move": true,
+        "Capture": false,
+        "Jump": false,
+        "Castling": false,
+        "Moves": [
+            {
+                "x": 0,
+                "y": 2
+            }
+        ],
+        "Pieces": []
+    },
+    "promotion": {
+        "Active": false,
+        "Pieces": []
+    }
+}

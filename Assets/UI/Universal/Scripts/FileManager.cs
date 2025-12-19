@@ -1,0 +1,441 @@
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using System;
+
+
+
+
+public class FileManager : MonoBehaviour
+{
+    [Header("Directory Path:")]
+    public string basePath_Sprite = "Sprites";
+    public string basePath_PaintingData = "PaintingEditor";
+    public string basePath_UserData = "User";
+    public string basePath_PieceData = "Pieces";
+    public string basePath_SquadData = "Squads";
+
+    [Header("System:")]
+    public GameObject warningPrefab;
+    public GameObject advicePrefab;
+    public GameObject inputPrefab;
+    public Transform panel;
+
+    void Start()
+    {
+
+    }
+
+    public void CreateInput(string title, string placeholder, System.Action<string> onContinue, string defaultValue = null)
+    {
+        // Instancia o prefab como filho do panel
+        GameObject newInput = Instantiate(inputPrefab, panel);
+        newInput.transform.localScale = Vector3.one;
+
+        TMP_Text titleText = newInput.transform.Find("Title")?.GetComponent<TMP_Text>();
+        if (titleText != null)
+            titleText.text = title;
+
+        TMP_InputField inputField = newInput.GetComponentInChildren<TMP_InputField>();
+        if (inputField != null)
+        {
+            // Preenche com valor padrão se houver
+            if (!string.IsNullOrEmpty(defaultValue))
+                inputField.text = defaultValue;
+
+            if (inputField.placeholder != null)
+            {
+                TextMeshProUGUI placeholderText = inputField.placeholder.GetComponent<TextMeshProUGUI>();
+                if (placeholderText != null)
+                    placeholderText.text = placeholder;
+            }
+        }
+
+        Button[] buttons = newInput.GetComponentsInChildren<Button>();
+        Button buttonCancel = buttons.Length > 0 ? buttons[0] : null;
+        Button buttonContinue = buttons.Length > 1 ? buttons[1] : null;
+
+        if (buttonCancel != null)
+        {
+            buttonCancel.onClick.AddListener(() =>
+            {
+                Destroy(newInput);
+            });
+        }
+
+        if (buttonContinue != null)
+        {
+            buttonContinue.onClick.AddListener(() =>
+            {
+                onContinue?.Invoke(inputField.text); // retorna o texto digitado
+                Destroy(newInput);
+            });
+        }
+    }
+
+    public void CreateWarning(string title, string text, System.Action onContinue)
+    {
+        GameObject newWarning = Instantiate(warningPrefab, panel);
+
+        // Acessa o TextMeshPro do head
+        TMP_Text headText = newWarning.transform
+            .Find("Head/Text (TMP)")
+            .GetComponent<TMP_Text>();
+
+        Image imageIcon = newWarning.transform
+            .Find("Head/Image")
+            .GetComponent<Image>();
+
+        // Acessa o TextMeshPro do body
+        TMP_Text bodyText = newWarning.transform
+            .Find("Body/Text (TMP)")
+            .GetComponent<TMP_Text>();
+
+        Button buttonCancel = newWarning.transform
+            .Find("Body/ButtonCancel")
+            .GetComponent<Button>();
+
+        Button buttonContinue = newWarning.transform
+            .Find("Body/ButtonContinue")
+            .GetComponent<Button>();
+
+
+        buttonCancel.onClick.AddListener(() =>
+        {
+            Destroy(newWarning);
+        });
+
+        buttonContinue.onClick.AddListener(() =>
+        {
+            onContinue?.Invoke(); // chama a ação passada
+            Destroy(newWarning);
+        });
+
+        // Alterando os textos
+        headText.text = title;
+        bodyText.text = text;
+    }
+
+    public void CreateAdvice(string text)
+    {
+
+        GameObject newAdvice = Instantiate(advicePrefab, panel);
+
+        TMP_Text tmpText = newAdvice.transform.Find("Text (TMP)").GetComponent<TMP_Text>();
+
+        Button button = newAdvice.transform.Find("Button").GetComponent<Button>();
+
+        tmpText.text = text;
+
+        button.onClick.AddListener(() =>
+        {
+            Destroy(newAdvice);
+        });
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void HandleDeleteFile(string fileName, string path, GameObject buttonObj)
+    {
+        string title = "File will be deleted";
+        string text = "Do you really want to delete the file " + fileName + " ?";
+
+        if (buttonObj)
+        {
+            CreateWarning(title, text, () =>
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                    Destroy(buttonObj);
+                    Debug.Log("Arquivo excluído: " + path);
+                }
+                else
+                {
+                    Debug.LogWarning("Arquivo não encontrado: " + path);
+                }
+            });
+        }
+        else
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+                Debug.Log("Arquivo excluído: " + path);
+            }
+            else
+            {
+                Debug.LogWarning("Arquivo não encontrado: " + path);
+            }
+        }
+
+    }
+
+    public void HandleDeleteFolder(string pasta, string caminhoPasta, GameObject newButton)
+    {
+        if (!Directory.Exists(caminhoPasta))
+        {
+            Debug.LogWarning("A pasta não existe: " + caminhoPasta);
+            return;
+        }
+
+        if (Directory.GetFiles(caminhoPasta).Length > 0)
+        {
+            //CreateAdvice("The folder is not empty: " + pasta);
+            //return;
+        }
+
+        if (newButton)
+        {
+            string title = "Folder will be deleted";
+            string text = "Do you really want to delete the folder " + pasta + " ?";
+
+            CreateWarning(title, text, () =>
+            {
+                Directory.Delete(caminhoPasta, true);
+                Destroy(newButton);
+                Debug.Log("Pasta vazia excluída: " + caminhoPasta);
+            });
+        }
+        else
+        {
+            Directory.Delete(caminhoPasta, true);
+            Debug.Log("Pasta vazia excluída: " + caminhoPasta);
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void CleanUpEmptyFolder(string basePath, string folder)
+    {
+        string mainFolder = Path.Combine(Application.persistentDataPath, basePath, folder);
+
+        if (!Directory.Exists(mainFolder))
+            return;
+
+        try
+        {
+            // Pega todas as subpastas dentro do squad
+            string[] subfolders = Directory.GetDirectories(mainFolder);
+
+            foreach (string subfolder in subfolders)
+            {
+                bool subfolderIsEmpty = Directory.GetFiles(subfolder).Length == 0 &&
+                                        Directory.GetDirectories(subfolder).Length == 0;
+
+                if (subfolderIsEmpty)
+                {
+                    Directory.Delete(subfolder, true);
+                    Debug.Log($"Subpasta vazia removida: {subfolder}");
+                }
+            }
+
+            // Depois de limpar as subpastas, verifica se o squad ficou vazio
+            bool squadIsEmpty = Directory.GetFiles(mainFolder).Length == 0 &&
+                                Directory.GetDirectories(mainFolder).Length == 0;
+
+            if (squadIsEmpty)
+            {
+                Directory.Delete(mainFolder, true);
+                Debug.Log($"Squad '{folder}' removido (ficou vazio).");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Erro ao limpar squad '{folder}': {ex.Message}");
+        }
+    }
+
+
+
+
+
+
+
+
+
+    public void SaveJson(string folderName, string fileName, string json, string basePath)
+    {
+        // Caminho base -> persistentDataPath/Art
+        string artFolderPath = Path.Combine(Application.persistentDataPath, basePath);
+
+        // Garante que a pasta exista
+        if (!Directory.Exists(artFolderPath))
+            Directory.CreateDirectory(artFolderPath);
+
+        // Caminho da subpasta desejada
+        string targetFolderPath = Path.Combine(artFolderPath, folderName);
+
+        // Garante que a subpasta exista
+        if (!Directory.Exists(targetFolderPath))
+            Directory.CreateDirectory(targetFolderPath);
+
+        // Caminho completo do arquivo
+        string filePath = Path.Combine(targetFolderPath, fileName);
+
+        // Salva o JSON
+        File.WriteAllText(filePath, json);
+
+        Debug.Log($"Arquivo salvo em: {filePath}");
+    }
+
+    public void SavePng(string folderName, string fileName, Texture2D texture, string basePath)
+    {
+        string artFolderPath = Path.Combine(Application.persistentDataPath, basePath);
+
+        if (!Directory.Exists(artFolderPath))
+            Directory.CreateDirectory(artFolderPath);
+
+        string targetFolderPath = Path.Combine(artFolderPath, folderName);
+
+        if (!Directory.Exists(targetFolderPath))
+            Directory.CreateDirectory(targetFolderPath);
+
+        string filePath = Path.Combine(targetFolderPath, fileName);
+
+        byte[] pngBytes = texture.EncodeToPNG();
+        File.WriteAllBytes(filePath, pngBytes);
+
+        Debug.Log($"PNG salvo em: {filePath}");
+    }
+
+    public bool FileExists(string folderName, string fileName, string basePath)
+    {
+        string artFolderPath = Path.Combine(Application.persistentDataPath, basePath);
+        string targetFolderPath = Path.Combine(artFolderPath, folderName);
+        string filePath = Path.Combine(targetFolderPath, fileName);
+
+        return File.Exists(filePath);
+    }
+
+    public string LoadJson(string rootPath, string basePath, string folderName, string fileName)
+    {
+        string filePath = Path.Combine(rootPath, basePath, folderName, fileName);
+
+        if (File.Exists(filePath))
+        {
+            Debug.Log($"Arquivo carregado de: {filePath}");
+            return File.ReadAllText(filePath);
+        }
+        else
+        {
+            Debug.LogWarning($"Arquivo não encontrado: {filePath}");
+            return null;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    public Texture2D LoadTextureFromFile(string folderName, string fileName, string basePath, string rootPath)
+    {
+        string folderPath = Path.Combine(rootPath, basePath, folderName);
+        string fullPath = Path.Combine(folderPath, fileName.Trim() + ".png");
+
+        if (!File.Exists(fullPath))
+        {
+            Debug.LogWarning($"Arquivo não encontrado: {fullPath}");
+            return null;
+        }
+
+        byte[] fileData = File.ReadAllBytes(fullPath);
+        //Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+        Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, false, false);
+
+        tex.LoadImage(fileData, true);
+        return tex;
+    }
+
+    public Sprite ConvertTextureToSprite(Texture2D texture)
+    {
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
+                             new Vector2(0.5f, 0.5f), 100);
+    }
+
+
+
+
+
+
+
+
+
+
+
+    public List<string> GetSubfoldersIn(string basePath, string rootPath)
+    {
+        List<string> subfolders = new List<string>();
+
+        string fullPath = Path.Combine(rootPath, basePath);
+
+        string[] dirs = Directory.GetDirectories(fullPath);
+
+        foreach (string dir in dirs)
+        {
+            subfolders.Add(Path.GetFileName(dir));
+        }
+
+        return subfolders;
+    }
+
+
+    //string caminho = Path.Combine(Application.persistentDataPath, "Art", "MinhaSubpasta");
+    //List<string> arquivosJson = GetJsonFilesInFolder(caminho);
+    public List<string> GetJsonFilesInFolder(string folderPath)
+    {
+        List<string> jsonFiles = new List<string>();
+
+        // Se a pasta não existir, retorna vazio
+        if (!Directory.Exists(folderPath))
+            return jsonFiles;
+
+        // Busca todos os arquivos com extensão .json
+        string[] files = Directory.GetFiles(folderPath, "*.json");
+
+        foreach (string file in files)
+        {
+            // Adiciona apenas o nome do arquivo (sem caminho completo)
+            jsonFiles.Add(Path.GetFileName(file));
+        }
+
+        return jsonFiles;
+    }
+
+}

@@ -1,0 +1,32 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MatchData : MonoBehaviour
+{
+    public static MatchData Instance;
+
+    [Header("Lobby")]
+    public string userSquadName;
+    public string botSquadName;
+    public string mapName;
+    public StartOption whoStarts; // "User", "Bot" ou "Random"
+    public BotDifficulty botDifficulty;
+
+    [Header("Data")]
+    public List<MatchSquadData> Squads = new List<MatchSquadData>();
+    //public MatchSquadData Squad = new MatchSquadData();
+    //public MatchSquadData BotSquad = new MatchSquadData();
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // mantém entre as cenas
+        }
+        else
+        {
+            Destroy(gameObject); // impede duplicatas
+        }
+    }
+}
