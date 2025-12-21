@@ -72,19 +72,6 @@ public class SingleLobbyManager : MonoBehaviour
     {
         SingleMatchConfig currentMatch = MatchConfigManager.Load();
 
-        if (currentMatch == null)
-        {
-            // Se não existir, cria uma padrão
-            currentMatch = new SingleMatchConfig
-            {
-                UserSquadName = "White",
-                BotSquadName = "Black",
-                BotDifficulty = BotDifficulty.Easy,
-                MapName = "Default",
-                StartOption = StartOption.UserFirst
-            };
-        }
-
         return currentMatch;
     }
     public static SingleMatchConfig CreateMatch(string userSquad, string botSquad, BotDifficulty difficulty, string map, StartOption start)

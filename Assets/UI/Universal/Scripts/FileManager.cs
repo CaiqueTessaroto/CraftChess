@@ -405,6 +405,12 @@ public class FileManager : MonoBehaviour
 
         string fullPath = Path.Combine(rootPath, basePath);
 
+        if (!Directory.Exists(fullPath))
+        {
+            Directory.CreateDirectory(fullPath);
+            return subfolders;
+        }
+
         string[] dirs = Directory.GetDirectories(fullPath);
 
         foreach (string dir in dirs)

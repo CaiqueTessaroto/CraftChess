@@ -307,7 +307,7 @@ public class InteractiveLobby : MonoBehaviour
             }
 
             Sprite sprite = UIHelperUtils.GetSpriteFromPath(caminhoSprite);
-            
+
             if (elementCount <= 6)
             {
                 // Instancia o botão/imagem da peça no painel
@@ -384,6 +384,9 @@ public class InteractiveLobby : MonoBehaviour
     public void LoadMatchConfig()
     {
         SingleMatchConfig currentMatch = SingleLobbyManager.GetMatchConfig();
+
+        if (currentMatch == null)
+            return;
 
         string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
         string jsonFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");
