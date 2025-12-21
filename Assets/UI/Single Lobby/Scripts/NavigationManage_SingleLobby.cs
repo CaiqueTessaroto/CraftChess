@@ -71,7 +71,7 @@ public class NavigationManage_SingleLobby : MonoBehaviour
         // Carrega pastas do streamingAssetsPath se estiver no "onLibrary"
         if (uIHelperUtils.onLibrary)
         {
-            //    CreateFormationsButtons(Application.streamingAssetsPath, content);
+                CreateFormationsButtons(Application.streamingAssetsPath, content);
         }
 
         // Ajusta tamanho do ScrollView

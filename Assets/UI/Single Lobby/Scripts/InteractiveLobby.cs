@@ -89,6 +89,10 @@ public class InteractiveLobby : MonoBehaviour
 
         play.onClick.AddListener(() =>
         {
+
+            if (string.IsNullOrEmpty(currentMatch.BotSquadName) || string.IsNullOrEmpty(currentMatch.UserSquadName))
+                return;
+
             currentMatch.MapName = "Default";
 
             if (currentMatch.StartOption == StartOption.UserFirst)
@@ -391,13 +395,15 @@ public class InteractiveLobby : MonoBehaviour
         string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
         string jsonFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");
 
-        SelectSquad(currentMatch.UserSquadName, jsonFile);
+        if (File.Exists(jsonFile))
+            SelectSquad(currentMatch.UserSquadName, jsonFile);
 
         OnEnemy = true;
         squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BotSquadName);
         jsonFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".json");
 
-        SelectSquad(currentMatch.BotSquadName, jsonFile);
+        if (File.Exists(jsonFile))
+            SelectSquad(currentMatch.BotSquadName, jsonFile);
 
         foreach (Toggle toggle in difficulty_toggles)
         {
