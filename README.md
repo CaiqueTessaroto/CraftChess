@@ -39,20 +39,20 @@ games that offer replayability and competitive depth.
 
 ## Development Status
 
-• Core gameplay systems implemented
-• Customizing pieces in pixel-art, movements and squads
-• Test prototype available
-• Ongoing iteration and balancing
+- Core gameplay systems implemented
+- Customizing pieces in pixel-art, movements and squads
+- Test prototype available
+- Ongoing iteration and balancing
 
 ## Development Roadmap
 
-• Alpha: Completion of core game systems and rule functionalities
-• Alpha: Multiplayer implementation and initial stability testing
-• Beta: Polishing, UI/UX improvements, performance optimization, and extensive testing
-• Release (PC): PC (Steam) launch with post-launch support and updates
-• Release (Mobile): Mobile (Google Play Store) launch with post-launch support and updates
+- Alpha: Completion of core game systems and rule functionalities
+- Alpha: Multiplayer implementation and initial stability testing
+- Beta: Polishing, UI/UX improvements, performance optimization, and extensive testing
+- Release (PC): PC (Steam) launch with post-launch support and updates
+- Release (Mobile): Mobile (Google Play Store) launch with post-launch support and updates
 
 ## Monetization
 
-• PC title (one-time purchase)
-• Ads for Mobile
+- PC title (one-time purchase)
+- Ads for Mobile
