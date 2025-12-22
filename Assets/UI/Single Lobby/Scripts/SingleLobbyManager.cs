@@ -98,6 +98,11 @@ public class SingleLobbyManager : MonoBehaviour
         public static void Save(SingleMatchConfig config)
         {
             string json = JsonUtility.ToJson(config, true); // true = formatado
+
+            string path = Application.persistentDataPath + "/User";
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
             File.WriteAllText(filePath, json);
             //Debug.Log("Config salva em: " + filePath);
         }

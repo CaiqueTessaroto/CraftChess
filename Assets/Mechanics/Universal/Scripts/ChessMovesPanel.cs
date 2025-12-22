@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ChessMovesPanel : MonoBehaviour
 {
 
     public GameObject sidePanel;
+    public Button MenuBtn;
     public Button OpenBtn;
     public Button CloseBtn;
 
@@ -38,6 +40,11 @@ public class ChessMovesPanel : MonoBehaviour
         CloseBtn.onClick.AddListener(() =>
         {
             sidePanel.SetActive(false);
+        });
+
+        MenuBtn.onClick.AddListener(() =>
+        {
+             SceneManager.LoadScene("Menu");
         });
 
 
