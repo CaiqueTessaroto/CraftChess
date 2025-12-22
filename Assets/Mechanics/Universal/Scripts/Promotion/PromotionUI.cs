@@ -107,8 +107,8 @@ public class PromotionUI : MonoBehaviour
         currentPromotionCanvas = Instantiate(promotionCanvasPrefab);
 
         GameObject cell = boardManager.GetCellAtPosition(pos.x, pos.y);
-        
-        currentPromotionCanvas.transform.SetParent(cell.transform);
+
+        //currentPromotionCanvas.transform.SetParent(cell.transform);
 
         Button btn = currentPromotionCanvas.GetComponentInChildren<Button>();
         btn.onClick.AddListener(() =>
@@ -124,9 +124,19 @@ public class PromotionUI : MonoBehaviour
             piecetransform = cell.transform;
 
         float height = GetObjectHeight(piecetransform);
-        Vector3 heightOffset = new Vector3(0, -height, 0); // sobe de acordo com a altura
+        Vector3 heightOffset = new Vector3(0, -height, 0);
 
-        currentPromotionCanvas.transform.position = piecetransform.position + heightOffset + offset;
+        Vector3 desiredWorldPos = piecetransform.position + heightOffset + offset;
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(desiredWorldPos);
+
+        if (screenPos.y >= Screen.height * 0.8f)
+        {
+            currentPromotionCanvas.transform.position = piecetransform.position - heightOffset + offset;
+        }
+        else
+        {
+            currentPromotionCanvas.transform.position = desiredWorldPos;
+        }
 
         CreateSpriteButtons(squad);
     }

@@ -33,6 +33,9 @@ public class BoardChessManager : MonoBehaviour
     private GameObject currentOrigin;
     private GameObject currentTarget;
 
+    private Vector2Int originInt;
+    private Vector2Int targetInt;
+
     [Header("Data")]
     public List<MatchSquadData> Squads = new List<MatchSquadData>();
     public List<GameObject> AllPieces = new List<GameObject>();
@@ -119,7 +122,7 @@ public class BoardChessManager : MonoBehaviour
             }
         }
 
-        UpdateBoardControl();
+        HighlightLastMove(originInt,targetInt);
 
     }
 
@@ -326,6 +329,9 @@ public class BoardChessManager : MonoBehaviour
         DestroyIfExists(currentSelection);
         DestroyIfExists(currentOrigin);
         DestroyIfExists(currentTarget);
+
+        originInt = origin;
+        targetInt = target;
 
         GameObject originCell = GetCellAtPosition(origin.x, origin.y);
         GameObject targetCell = GetCellAtPosition(target.x, target.y);
