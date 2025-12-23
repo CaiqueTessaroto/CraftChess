@@ -33,16 +33,7 @@ public class NavigationManage_Create : MonoBehaviour
     public Button changeSquadBtw;
     public Button uploadArtBtw;
 
-    [Header("Add Pieces Swap and Promotion:")]
-    public Button swapBtw;
-    public Button promotionBtw;
-    public Transform swapColunContent;
-    public Transform promotionColunContent;
-    public GameObject viewPiecePrefab;
-
     [Header("Control Actions:")]
-    public bool onSwap = false;
-    public bool onPromotion = false;
     public bool OnSquad = false;
 
     // Start is called before the first frame update
@@ -109,52 +100,6 @@ public class NavigationManage_Create : MonoBehaviour
         });
 
 
-        swapBtw.onClick.AddListener(() =>
-        {
-            onSwap = true;
-            onPromotion = false;
-
-            if (squadPiece.text == "Squad") //|| !string.IsNullOrEmpty(nameText.text)
-            {
-                if (uIHelperUtils.change)
-                {
-                    folderNavigation.StartCreatingFolderButtons(fileManager.basePath_PieceData, panelFolder);
-                }
-                panelFolder.SetActive(true);
-            }
-            else
-            {
-                if (uIHelperUtils.change)
-                {
-                    fileNavigation.StartCreatingFileButtons(movementCreation.piece.Squad, folderNavigation.selectRootPath, fileManager.basePath_PieceData);
-                }
-                panelFile.SetActive(true);
-            }
-        });
-
-
-        promotionBtw.onClick.AddListener(() =>
-        {
-            onPromotion = true;
-            onSwap = false;
-
-            if (squadPiece.text == "Squad") //|| !string.IsNullOrEmpty(nameText.text)
-            {
-
-                folderNavigation.StartCreatingFolderButtons(fileManager.basePath_PieceData, panelFolder);
-
-                panelFolder.SetActive(true);
-            }
-            else
-            {
-                fileNavigation.StartCreatingFileButtons(movementCreation.piece.Squad, folderNavigation.selectRootPath, fileManager.basePath_PieceData);
-
-
-                panelFile.SetActive(true);
-            }
-        });
-
-
         changeSquadBtw.onClick.AddListener(() =>
         {
             ResetAllControlBooleans();
@@ -177,8 +122,6 @@ public class NavigationManage_Create : MonoBehaviour
 
     public void ResetAllControlBooleans()
     {
-        onSwap = false;
-        onPromotion = false;
         OnSquad = false;
     }
 
@@ -251,14 +194,8 @@ public class NavigationManage_Create : MonoBehaviour
             if (pasta != movementCreation.piece.Squad)
             {
 
-                if (movementCreation.piece.Squad != "")
-                    ClearSelectPieces();
-
                 movementCreation.piece.Squad = pasta;
                 squadPiece.text = movementCreation.piece.Squad;
-
-                movementCreation.special.Pieces.Clear();
-                movementCreation.promotion.Pieces.Clear();
 
             }
 
@@ -287,7 +224,7 @@ public class NavigationManage_Create : MonoBehaviour
         }
         else
         {
-            if (onSwap || onPromotion || OnSquad)
+            if (OnSquad)
             {
                 if (rootPath == Application.streamingAssetsPath)
                 {
@@ -300,14 +237,8 @@ public class NavigationManage_Create : MonoBehaviour
                 if (pasta != movementCreation.piece.Squad)
                 {
 
-                    if (movementCreation.piece.Squad != "")
-                        ClearSelectPieces();
-
                     movementCreation.piece.Squad = pasta;
                     squadPiece.text = movementCreation.piece.Squad;
-
-                    movementCreation.special.Pieces.Clear();
-                    movementCreation.promotion.Pieces.Clear();
 
                     movementCreation.CalcularPoderTotal();
 
@@ -315,10 +246,6 @@ public class NavigationManage_Create : MonoBehaviour
 
                 if (OnSquad)
                     OnSquad = false;
-                if (onPromotion)
-                    onPromotion = false;
-                if (onSwap)
-                    onSwap = false;
 
                 folderNavigation.selectRootPath = rootPath;
 
@@ -375,18 +302,6 @@ public class NavigationManage_Create : MonoBehaviour
             fileManager.HandleDeleteFile(fileName, jsonPath, buttonObj);
             uIHelperUtils.change = true;
             uIHelperUtils.delete = false;
-        }
-        else if (onSwap)
-        {
-            HandleSwapPiece(piece, fileName, sprite);
-            panelFile.SetActive(false);
-            onSwap = false;
-        }
-        else if (onPromotion)
-        {
-            HandlePromotionPiece(piece, fileName, sprite);
-            panelFile.SetActive(false);
-            onPromotion = false;
         }
         else
         {
@@ -451,73 +366,6 @@ public class NavigationManage_Create : MonoBehaviour
 
 
 
-    private void HandleSwapPiece(PieceInfo piece, string fileName, Sprite sprite)
-    {
-        if (fileName == movementCreation.piece.Name)
-        {
-            fileManager.CreateAdvice("Adding the same selected Piece is not allowed.");
-            return;
-        }
-
-        if (!movementCreation.AddPiece(fileName, movementCreation.special.Pieces))
-            return;
-
-        GameObject clone = Instantiate(viewPiecePrefab, swapColunContent);
-        clone.name = "Preview_" + piece.Art;
-
-        Image img = clone.GetComponentInChildren<Image>();
-        if (img != null) img.sprite = sprite;
-
-        Button btn = clone.GetComponentInChildren<Button>();
-        if (btn != null)
-        {
-            btn.onClick.RemoveAllListeners();
-            btn.onClick.AddListener(() =>
-            {
-                if (movementCreation.RemovePiece(fileName, movementCreation.special.Pieces))
-                {
-                    Destroy(clone);
-                    movementCreation.CalcularPoderTotal();
-                }
-            });
-        }
-
-        movementCreation.CalcularPoderTotal();
-    }
-
-    private void HandlePromotionPiece(PieceInfo piece, string fileName, Sprite sprite)
-    {
-        if (fileName == movementCreation.piece.Name)
-        {
-            fileManager.CreateAdvice("Adding the same selected Piece is not allowed.");
-            return;
-        }
-
-        if (!movementCreation.AddPiece(fileName, movementCreation.promotion.Pieces))
-            return;
-
-        GameObject clone = Instantiate(viewPiecePrefab, promotionColunContent);
-        clone.name = "Preview_" + piece.Art;
-
-        Image img = clone.GetComponentInChildren<Image>();
-        if (img != null) img.sprite = sprite;
-
-        Button btn = clone.GetComponentInChildren<Button>();
-        if (btn != null)
-        {
-            btn.onClick.RemoveAllListeners();
-            btn.onClick.AddListener(() =>
-            {
-                if (movementCreation.RemovePiece(fileName, movementCreation.promotion.Pieces))
-                {
-                    Destroy(clone);
-                    movementCreation.CalcularPoderTotal();
-                }
-            });
-        }
-
-        movementCreation.CalcularPoderTotal();
-    }
 
 
 
@@ -578,107 +426,6 @@ public class NavigationManage_Create : MonoBehaviour
         movementCreation.CalcularPoderTotal();
         // se quiser limpar a lista depois
         pendingRemoves.Clear();
-    }
-
-
-    public void ClearSelectPieces()
-    {
-        foreach (Transform child in promotionColunContent)
-        {
-            Destroy(child.gameObject);
-        }
-
-        foreach (Transform child in swapColunContent)
-        {
-            Destroy(child.gameObject);
-        }
-
-        //fileManager.CreateAdvice("Pieces from other squads in Promotion and Castling have been removed.");
-    }
-
-    public IEnumerator LoadPromotionsPiecesImage(string fileName, bool swap = false)
-    {
-        yield return null;
-
-        Transform content = promotionColunContent;
-
-        if (swap)
-            content = swapColunContent;
-
-        // Caminho do JSON específico
-        string jsonPath = Path.Combine(folderNavigation.selectRootPath, fileManager.basePath_PieceData, movementCreation.piece.Squad, fileName + ".json");
-
-        if (!File.Exists(jsonPath))
-        {
-            Debug.LogWarning("Arquivo JSON não encontrado: " + jsonPath);
-
-            if (swap)
-                pendingRemoves.Add(new PendingRemove(fileName, movementCreation.special.Pieces));
-            else
-                pendingRemoves.Add(new PendingRemove(fileName, movementCreation.promotion.Pieces));
-
-            yield break;
-        }
-
-        // Lê o JSON
-        string json = File.ReadAllText(jsonPath);
-        PieceWrapper wrapper = JsonUtility.FromJson<PieceWrapper>(json);
-
-        if (wrapper == null || wrapper.piece == null)
-        {
-            Debug.LogWarning("JSON inválido: " + jsonPath);
-            yield break;
-        }
-
-        PieceInfo piece = wrapper.piece;
-
-        // Instancia o prefab do painel
-        GameObject clone = Instantiate(viewPiecePrefab, content);
-
-        // Define o nome do objeto (opcional)
-        clone.name = "Preview_" + fileName;
-
-        // Acha a imagem dentro do painel
-        Image img = clone.GetComponentInChildren<Image>();
-
-        Texture2D tex = fileManager.LoadTextureFromFile(piece.FolderSprite, piece.Art, fileManager.basePath_Sprite, folderNavigation.selectRootPath);
-        Sprite sprite = fileManager.ConvertTextureToSprite(tex);
-
-        if (img != null)
-        {
-            img.sprite = sprite;
-        }
-
-        // Acha o botão dentro do painel
-        Button btn = clone.GetComponentInChildren<Button>();
-        if (btn != null)
-        {
-            btn.onClick.RemoveAllListeners(); // limpa listeners antigos, se houver
-            btn.onClick.AddListener(() =>
-            {
-                if (swap)
-                {
-                    if (movementCreation.RemovePiece(fileName, movementCreation.special.Pieces))
-                    {
-                        Destroy(clone);
-                        movementCreation.CalcularPoderTotal();
-                    }
-                }
-                else
-                {
-                    if (movementCreation.RemovePiece(fileName, movementCreation.promotion.Pieces))
-                    {
-                        Destroy(clone);
-                        movementCreation.CalcularPoderTotal();
-                    }
-                }
-
-
-            });
-        }
-
-        // Se quiser simular um carregamento assíncrono, pode colocar um yield
-        yield return null;
     }
 
 

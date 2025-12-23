@@ -1,10 +1,11 @@
 {
     "piece": {
         "Name": "King",
+        "Squad": "Black",
+        "Power": 80,
         "Art": "king",
         "FolderSprite": "Black",
-        "Squad": "Black",
-        "Power": 90
+        "NativeSprite": true
     },
     "straight": {
         "Active": true,
@@ -42,14 +43,6 @@
         "Move": true,
         "Capture": false,
         "Jump": false,
-        "Castling": true,
-        "Moves": [],
-        "Pieces": [
-            "Rook"
-        ]
-    },
-    "promotion": {
-        "Active": false,
-        "Pieces": []
+        "Moves": []
     }
 }

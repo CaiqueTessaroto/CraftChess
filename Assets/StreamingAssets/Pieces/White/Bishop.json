@@ -1,10 +1,11 @@
 {
     "piece": {
         "Name": "Bishop",
+        "Squad": "White",
+        "Power": 100,
         "Art": "bishop",
         "FolderSprite": "White",
-        "Squad": "White",
-        "Power": 100
+        "NativeSprite": true
     },
     "straight": {
         "Active": false,
@@ -42,12 +43,6 @@
         "Move": true,
         "Capture": false,
         "Jump": false,
-        "Castling": false,
-        "Moves": [],
-        "Pieces": []
-    },
-    "promotion": {
-        "Active": false,
-        "Pieces": []
+        "Moves": []
     }
 }

@@ -10,7 +10,6 @@ public class MovementConfigData
     public Movement diagonal;
     public PersonalizedMove custom;
     public Special special;
-    public Promotion promotion;
 }
 
 [System.Serializable]
@@ -73,20 +72,7 @@ public class Special
     public bool Move = true;
     public bool Capture = false;
     public bool Jump = false;
-    public bool Castling = false;
 
     [Header("Lista de Movimentos:")]
     public List<MoveData> Moves;
-
-    [Header("Configuração de Peças:")]
-    public List<string> Pieces = new List<string>();
-}
-
-[System.Serializable]
-public class Promotion
-{
-    public bool Active = false;
-
-    [Header("Configuração de Peças:")]
-    public List<string> Pieces = new List<string>();
 }

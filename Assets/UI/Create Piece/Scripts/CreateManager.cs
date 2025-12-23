@@ -16,7 +16,6 @@ public class CreateManager : MonoBehaviour
     public Button presetsButton;
     public Button movesButton;
     public Button specialButton;
-    public Button promotionButton;
 
     [Header("Options Panels:")]
     public GameObject presetsPanel;
@@ -40,7 +39,7 @@ public class CreateManager : MonoBehaviour
         presetsButton.onClick.AddListener(() => SelectOptionsPanels(presetsPanel));
         movesButton.onClick.AddListener(() => SelectOptionsPanels(movesPanel));
         specialButton.onClick.AddListener(() => SelectOptionsPanels(specialPanel));
-        promotionButton.onClick.AddListener(() => SelectOptionsPanels(promotionPanel));
+        //promotionButton.onClick.AddListener(() => SelectOptionsPanels(promotionPanel));
 
 
 

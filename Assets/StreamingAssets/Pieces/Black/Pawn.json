@@ -1,10 +1,11 @@
 {
     "piece": {
         "Name": "Pawn",
+        "Squad": "Black",
+        "Power": 6,
         "Art": "pawn",
         "FolderSprite": "Black",
-        "Squad": "Black",
-        "Power": 34
+        "NativeSprite": true
     },
     "straight": {
         "Active": true,
@@ -31,7 +32,7 @@
         "Jump": false
     },
     "custom": {
-        "Active": true,
+        "Active": false,
         "Move": true,
         "Capture": false,
         "Jump": false,
@@ -42,22 +43,11 @@
         "Move": true,
         "Capture": false,
         "Jump": false,
-        "Castling": false,
         "Moves": [
             {
                 "x": 0,
                 "y": 2
             }
-        ],
-        "Pieces": []
-    },
-    "promotion": {
-        "Active": true,
-        "Pieces": [
-            "Knight",
-            "Bishop",
-            "Queen",
-            "Rook"
         ]
     }
 }

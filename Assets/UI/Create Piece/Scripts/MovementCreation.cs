@@ -53,7 +53,6 @@ public class MovementCreation : MonoBehaviour
     public Movement diagonal;
     public PersonalizedMove custom;
     public Special special;
-    public Promotion promotion;
 
     [Header("Toggles:")]
     public GameObject presetsObject; // Objeto pai dos toggles (ex: PanelPresets)
@@ -89,8 +88,6 @@ public class MovementCreation : MonoBehaviour
         GetTogglesCustom(custom);
 
         GetTogglesSpecial(special);
-
-        GetTogglePromotion(promotion);
 
         GetPresetToggles(presets);
 
@@ -133,7 +130,7 @@ public class MovementCreation : MonoBehaviour
 
     public String CreateJson()
     {
-        bool isAnyActive = straight.Active || diagonal.Active || special.Active || promotion.Active || custom.Active;
+        bool isAnyActive = straight.Active || diagonal.Active || special.Active || custom.Active;
 
         if (isAnyActive)
         {
@@ -147,7 +144,6 @@ public class MovementCreation : MonoBehaviour
                     diagonal = this.diagonal,
                     custom = this.custom,
                     special = this.special,
-                    promotion = this.promotion
                 };
 
                 return JsonUtility.ToJson(config, true);
@@ -165,7 +161,7 @@ public class MovementCreation : MonoBehaviour
 
     public void SavePresetJson()
     {
-        bool isAnyActive = straight.Active || diagonal.Active || special.Active || promotion.Active || custom.Active;
+        bool isAnyActive = straight.Active || diagonal.Active || special.Active || custom.Active;
 
         if (isAnyActive)
         {
@@ -179,7 +175,6 @@ public class MovementCreation : MonoBehaviour
                     diagonal = this.diagonal,
                     custom = this.custom,
                     special = this.special,
-                    promotion = this.promotion
                 };
 
                 string json = JsonUtility.ToJson(config, true);
@@ -239,7 +234,6 @@ public class MovementCreation : MonoBehaviour
             this.straight = config.straight;
             this.diagonal = config.diagonal;
             this.special = config.special;
-            this.promotion = config.promotion;
             this.custom = config.custom;
 
             // Atualiza a UI com base nos dados carregados
@@ -270,24 +264,6 @@ public class MovementCreation : MonoBehaviour
 
             // Destaca células
             gridView.HighlightValidMoves();
-
-            navigationManage.ClearSelectPieces();
-
-            if (config.special?.Pieces != null)
-            {
-                foreach (string name in config.special.Pieces)
-                {
-                    yield return StartCoroutine(navigationManage.LoadPromotionsPiecesImage(name, true));
-                }
-            }
-
-            if (config.promotion?.Pieces != null)
-            {
-                foreach (string name in config.promotion.Pieces)
-                {
-                    yield return StartCoroutine(navigationManage.LoadPromotionsPiecesImage(name));
-                }
-            }
 
             navigationManage.ProcessPendingRemoves();
 
@@ -372,22 +348,6 @@ public class MovementCreation : MonoBehaviour
 
             //createSelectionManager.ClearSelectPieces();
 
-            if (config.special?.Pieces != null)
-            {
-                foreach (string name in config.special.Pieces)
-                {
-                    //        yield return StartCoroutine(createSelectionManager.LoadPromotionsPiecesImage(name, true));
-                }
-            }
-
-            if (config.promotion?.Pieces != null)
-            {
-                foreach (string name in config.promotion.Pieces)
-                {
-                    //        yield return StartCoroutine(createSelectionManager.LoadPromotionsPiecesImage(name));
-                }
-            }
-
             ApplyDataToUI();
 
             powerPreview.text = $"Power: {piece.Power}";
@@ -416,8 +376,6 @@ public class MovementCreation : MonoBehaviour
         GetTogglesCustom(custom);
 
         GetTogglesSpecial(special);
-
-        GetTogglePromotion(promotion);
 
         // Aqui você pode atualizar sliders, campos, toggles individuais, etc.
         // Exemplo:
@@ -801,38 +759,6 @@ public class MovementCreation : MonoBehaviour
         }
     }
 
-
-    void GetTogglePromotion(Promotion promotion)
-    {
-        Toggle[] toggles = promotionObject.GetComponentsInChildren<Toggle>(true); // Inclui objetos inativos
-
-        foreach (Toggle toggle in toggles)
-        {
-            //Debug.Log("Toggle encontrado: " + toggle.gameObject.name);
-
-            // Procura um campo na classe Movement com o mesmo nome do Toggle
-            FieldInfo field = typeof(Promotion).GetField(toggle.gameObject.name, BindingFlags.Public | BindingFlags.Instance);
-
-            if (field != null && field.FieldType == typeof(bool))
-            {
-                // Atualiza o Toggle com o valor atual da configuração
-                toggle.isOn = (bool)field.GetValue(promotion);
-
-                // Adiciona um listener para atualizar a classe Movement e chamar a atualização da UI
-                toggle.onValueChanged.AddListener((value) =>
-                {
-                    field.SetValue(promotion, value);
-                    //Debug.Log(toggle.gameObject.name + " atualizado para: " + value);
-                    CalcularPoderTotal();
-                });
-            }
-            else
-            {
-                Debug.LogWarning("Nenhum campo correspondente encontrado para: " + toggle.gameObject.name);
-            }
-        }
-    }
-
     void GetTogglesSpecial(Special movement)
     {
 
@@ -1085,15 +1011,6 @@ public class MovementCreation : MonoBehaviour
                 }
 
             }
-            if (special.Castling)
-            {
-                poderTotal = poderTotal + (special.Pieces.Count * 10);
-            }
-        }
-
-        if (promotion != null && promotion.Active)
-        {
-            poderTotal = poderTotal + (promotion.Pieces.Count * 10);
         }
 
         bool bloqueavel = Canbeblock();
