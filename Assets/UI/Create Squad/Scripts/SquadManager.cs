@@ -32,6 +32,7 @@ public class SquadManager : MonoBehaviour
     public string squadPiece;
     public int currentPiecepower;
     private Sprite spritePiece;
+    private SquadPieceData currentPieceData;
     private string currentjson;
     private string currentRootPath;
 
@@ -53,6 +54,7 @@ public class SquadManager : MonoBehaviour
     public Transform castelingContent;
     public GameObject viewPiecePrefab;
     public Button moreSpecialBtw;
+    public Button clearBtw;
     public GameObject infoGridPanel;
 
     [Header("Preview Squad:")]
@@ -108,8 +110,9 @@ public class SquadManager : MonoBehaviour
                 promotion.SetActive(false);
                 casteling.SetActive(false);
                 moreSpecialBtw.gameObject.SetActive(true);
+                clearBtw.gameObject.SetActive(false);
 
-                SelectPiece(currentPieceName, currentjson, spritePiece, currentRootPath);
+                SelectPiece(currentPieceName, currentPieceData, currentjson, spritePiece, currentRootPath);
             }
             else
                 DeselectPiece();
@@ -127,20 +130,39 @@ public class SquadManager : MonoBehaviour
             removePiece = !removePiece;
         });
 
+        clearBtw.onClick.AddListener(() =>
+        {
+
+            foreach (Transform child in promotionContent.transform)
+                Destroy(child.gameObject);
+
+            foreach (Transform child in castelingContent.transform)
+                Destroy(child.gameObject);
+
+            SquadPieceData pieceData = squadData.Pieces.Find(p => p.NameInSquad == currentPieceName);
+
+            pieceData.PromotionPieces.Clear();
+            pieceData.CastlingPieces.Clear();
+
+        });
 
         moreSpecialBtw.onClick.AddListener(() =>
         {
-            if (selectedPiece)
-            {
-                infoGridPanel.SetActive(false);
 
+            infoGridPanel.SetActive(false);
+
+            if (currentPiecepower <= 15)
                 promotion.SetActive(true);
+
+            if (currentPiecepower <= 80)
                 casteling.SetActive(true);
 
-                moreSpecialBtw.gameObject.SetActive(false);
+            moreSpecialBtw.gameObject.SetActive(false);
 
-                editMode = true;
-            }
+            clearBtw.gameObject.SetActive(true);
+
+            editMode = true;
+
 
         });
 
@@ -152,21 +174,23 @@ public class SquadManager : MonoBehaviour
         selectedPiece = false;
         currentPieceName = "";
         squadpanel.SetActive(true);
+        clearBtw.gameObject.SetActive(false);
 
-        currentjson = "";
+        currentPieceData = null;
         currentRootPath = "";
+        currentjson = "";
     }
 
     public void CheckStrategicModeRules()
     {
-        bool powerLimit = squadData.Power > 1600;
+        bool powerLimit = squadData.Power > 1200;
         bool hasKing = string.IsNullOrEmpty(squadData.King?.Name);
 
         bool uniqueKing = placedPieces.Count(p => p.Name == squadData.King.Name) > 1;
         bool sameArtPieces = squadData.Pieces.GroupBy(p => p.Sprite)
-                            .Any(g => g.Count() > 1 && g.Select(p => p.Name).Distinct().Count() > 1);
+                            .Any(g => g.Count() > 1);//&& g.Select(p => p.Name).Distinct().Count() > 1)
 
-        string powerLimitTxt = "Squad power must be less than 1600";
+        string powerLimitTxt = "Squad power must be less than 1200";
         string hasKingTxt = "There must be a King";
         string uniqueKingTxt = "The King's Piece must be unique";
         string sameArtPiecesTxt = "You cannot have different pieces with the same art.";
@@ -252,7 +276,10 @@ public class SquadManager : MonoBehaviour
 
             // seta variáveis globais (usadas no SetPieceToCell)
             currentPieceName = piece.Name;
-            currentPiecepower = piece.Power;
+
+            SquadPieceData pieceData = squadData.Pieces.Find(p => p.NameInSquad == currentPieceName);
+
+            currentPiecepower = pieceData.Power;
 
             // coloca a peça
             SetPieceToCellFromJson(cell, piece);
@@ -268,8 +295,9 @@ public class SquadManager : MonoBehaviour
             }
         }
 
-        int squadPower = CalculateTotalPower(placedPieces);
+        int squadPower = CalculateSquadPower(placedPieces, squadData.Pieces);
 
+        squadData.Power = squadPower;
         squadpowerTmp.text = $"Power: {squadPower}";
         squadgridpowerTmp.text = $"{squadPower}";
         squadData.Units = new List<UnitPieceData>(placedPieces);
@@ -298,13 +326,13 @@ public class SquadManager : MonoBehaviour
         {
             // atualiza os dados da peça existente
             existingPiece.Name = piece.Name;
-            existingPiece.Power = piece.Power;
+            //existingPiece.Power = piece.Power;
             existingPiece.Position = piece.Position;
         }
         else
         {
             // adiciona uma nova peça
-            placedPieces.Add(new UnitPieceData(piece.Name, piece.Power, piece.Position));
+            placedPieces.Add(new UnitPieceData(piece.Name, piece.Position));
         }
     }
 
@@ -469,16 +497,18 @@ public class SquadManager : MonoBehaviour
         {
             // atualiza os dados da peça existente
             existingPiece.Name = currentPieceName;
-            existingPiece.Power = currentPiecepower;
+            //existingPiece.Power = currentPiecepower;
             existingPiece.Position = pos;
         }
         else
         {
             // adiciona uma nova peça
-            placedPieces.Add(new UnitPieceData(currentPieceName, currentPiecepower, pos));
+            placedPieces.Add(new UnitPieceData(currentPieceName, pos));
         }
 
-        int squadPower = CalculateTotalPower(placedPieces);
+        int squadPower = CalculateSquadPower(placedPieces, squadData.Pieces);
+
+        squadData.Power = squadPower;
 
         squadpowerTmp.text = $"Power: {squadPower}";
         squadgridpowerTmp.text = $"{squadPower}";
@@ -491,18 +521,29 @@ public class SquadManager : MonoBehaviour
 
     }
 
-
-
-    public int CalculateTotalPower(List<UnitPieceData> pieces)
+    public int CalculateSquadPower(List<UnitPieceData> units, List<SquadPieceData> pieces)
     {
+        if (units == null || pieces == null)
+            return 0;
+
         int total = 0;
 
         foreach (var piece in pieces)
         {
-            total += piece.Power;
-        }
+            if (piece == null || string.IsNullOrEmpty(piece.NameInSquad))
+                continue;
 
-        squadData.Power = total;
+            foreach (var unit in units)
+            {
+                if (unit == null || string.IsNullOrEmpty(unit.Name))
+                    continue;
+
+                if (string.Equals(piece.NameInSquad, unit.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    total += piece.Power;
+                }
+            }
+        }
 
         return total;
     }
@@ -575,7 +616,9 @@ public class SquadManager : MonoBehaviour
             placedPieces.Remove(pieceToRemove);
         }
 
-        int squadPower = CalculateTotalPower(placedPieces);
+        int squadPower = CalculateSquadPower(placedPieces, squadData.Pieces);
+
+        squadData.Power = squadPower;
 
         squadpowerTmp.text = $"Power: {squadPower}";
         squadgridpowerTmp.text = $"{squadPower}";
@@ -687,7 +730,7 @@ public class SquadManager : MonoBehaviour
                 {
                     string fileJson = File.ReadAllText(fullPath);
 
-                    SelectPiece(unitPiece.Name, fileJson, pieceSprites[unitPiece.Name], rootPath, false);
+                    SelectPiece(unitPiece.Name, pieceData, fileJson, pieceSprites[unitPiece.Name], rootPath, false);
                 }
                 else
                 {
@@ -701,7 +744,7 @@ public class SquadManager : MonoBehaviour
 
 
 
-    public void SelectPiece(string namePieceSquad, string json, Sprite sprite, string rootPath, bool selected = true)
+    public void SelectPiece(string namePieceSquad, SquadPieceData pieceData, string json, Sprite sprite, string rootPath, bool selected = true)
     {
         MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
         //squadManager.spritePiece = sprite;
@@ -710,15 +753,15 @@ public class SquadManager : MonoBehaviour
         {
             currentjson = json;
             currentRootPath = rootPath;
+            currentPieceData = pieceData;
 
             SetInfoPiece(namePieceSquad, config, sprite, selected);
-            StartCoroutine(SetPromotionsAndCastelingPieces(config, rootPath));
+            StartCoroutine(SetPromotionsAndCastelingPieces(currentPieceData, json, rootPath));
 
             editMode = false;
         }
 
     }
-
 
 
 
@@ -750,13 +793,12 @@ public class SquadManager : MonoBehaviour
         if (selected)
             selectedPiece = true;
 
-
     }
 
-    public IEnumerator SetPromotionsAndCastelingPieces(MovementConfigData config, string selectRootPath)
+    public IEnumerator SetPromotionsAndCastelingPieces(SquadPieceData pieceData, string json, string selectRootPath)
     {
 
-        //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
+        MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
 
         casteling.SetActive(false);
         promotion.SetActive(false);
@@ -767,25 +809,25 @@ public class SquadManager : MonoBehaviour
         foreach (Transform child in castelingContent.transform)
             Destroy(child.gameObject);
 
-        if (config.special?.Pieces != null)
+        if (pieceData.CastlingPieces != null)
         {
-            if (config.special.Pieces.Count > 0)
+            if (pieceData.CastlingPieces.Count > 0)
                 casteling.SetActive(true);
 
-            foreach (string name in config.special.Pieces)
+            foreach (string name in pieceData.CastlingPieces)
             {
-                yield return StartCoroutine(LoadPiecesImage(name, config.piece.Squad, castelingContent, selectRootPath));
+                yield return StartCoroutine(LoadPiecesImage(name, pieceData.Squad, castelingContent, selectRootPath));
             }
         }
 
-        if (config.promotion?.Pieces != null)
+        if (pieceData.PromotionPieces != null)
         {
-            if (config.promotion.Pieces.Count > 0)
+            if (pieceData.PromotionPieces.Count > 0)
                 promotion.SetActive(true);
 
-            foreach (string name in config.promotion.Pieces)
+            foreach (string name in pieceData.PromotionPieces)
             {
-                yield return StartCoroutine(LoadPiecesImage(name, config.piece.Squad, promotionContent, selectRootPath));
+                yield return StartCoroutine(LoadPiecesImage(name, pieceData.Squad, promotionContent, selectRootPath));
             }
         }
 

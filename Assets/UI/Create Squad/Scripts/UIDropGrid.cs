@@ -26,7 +26,31 @@ public class UIDropGrid : MonoBehaviour, IDropHandler
         if (gridParent.childCount >= 4)
             return;
 
-        StartCoroutine(squadManager.LoadPiecesImage(uIDragItem.name, config.piece.Squad, gridParent, uIDragItem.RootPath));
+        if (uIDragItem.name == squadManager.currentPieceName)
+            return;
+
+        SquadPieceData pieceData = squadManager.squadData.Pieces.Find(p => p.NameInSquad == squadManager.currentPieceName);
+
+        if (gameObject.name == "Promotion")
+        {
+            //if (pieceData.PromotionPieces.Count < 4)
+            if (!pieceData.PromotionPieces.Contains(uIDragItem.name))
+            {
+                pieceData.PromotionPieces.Add(uIDragItem.name);
+                StartCoroutine(squadManager.LoadPiecesImage(uIDragItem.name, config.piece.Squad, gridParent, uIDragItem.RootPath));
+            }
+
+        }
+        else if (gameObject.name == "Casteling")
+        {
+            if (!pieceData.CastlingPieces.Contains(uIDragItem.name))
+            {
+                pieceData.CastlingPieces.Add(uIDragItem.name);
+                StartCoroutine(squadManager.LoadPiecesImage(uIDragItem.name, config.piece.Squad, gridParent, uIDragItem.RootPath));
+            }
+        }
+
+        //StartCoroutine(squadManager.LoadPiecesImage(uIDragItem.name, config.piece.Squad, gridParent, uIDragItem.RootPath));
 
         //dropped.GetComponent<CanvasGroup>().blocksRaycasts = true;
     }

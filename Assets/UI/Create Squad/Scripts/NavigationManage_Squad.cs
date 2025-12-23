@@ -699,6 +699,7 @@ public class NavigationManage_Squad : MonoBehaviour
                     NameInSquad = nameInSquad,
                     Name = piece.Name,
                     Squad = piece.Squad,
+                    Power = piece.Power,
                     Sprite = piece.Art,
                     NativePiece = nativePiece
                 });
@@ -717,6 +718,7 @@ public class NavigationManage_Squad : MonoBehaviour
                         NameInSquad = nameInSquad,
                         Name = piece.Name,
                         Squad = piece.Squad,
+                        Power = piece.Power,
                         Sprite = piece.Art,
                         NativePiece = nativePiece
                     });
@@ -772,12 +774,20 @@ public class NavigationManage_Squad : MonoBehaviour
 
         UIDragItem uIDragItem = newButton.AddComponent<UIDragItem>();
 
-        uIDragItem.GetPiece(nameInSquad,  File.ReadAllText(jsonPath),  sprite,  rootPath);
+        uIDragItem.GetPiece(nameInSquad, File.ReadAllText(jsonPath), sprite, rootPath);
 
+        SquadPieceData pieceData = squadManager.squadData.Pieces.Find(p => p.NameInSquad == nameInSquad);
         // Configura evento do botão
         newButton.GetComponent<Button>().onClick.AddListener(() =>
         {
-            squadManager.SelectPiece(nameInSquad, File.ReadAllText(jsonPath), sprite, rootPath);
+            if (pieceData.Power > 80)
+                squadManager.moreSpecialBtw.gameObject.SetActive(false);
+            else
+                squadManager.moreSpecialBtw.gameObject.SetActive(true);
+
+            squadManager.clearBtw.gameObject.SetActive(false);
+
+            squadManager.SelectPiece(nameInSquad, pieceData, File.ReadAllText(jsonPath), sprite, rootPath);
         });
 
 
