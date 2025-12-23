@@ -17,6 +17,8 @@ public class SquadManager : MonoBehaviour
     public InfoGridView infoGridView;
     public GridSquadManager gridSquadManager;
 
+    public GameObject dragPrefab;
+
     public string squad;
 
     [Header("JSON:")]
@@ -24,11 +26,15 @@ public class SquadManager : MonoBehaviour
     public List<UnitPieceData> placedPieces = new List<UnitPieceData>();
     public Dictionary<string, Sprite> pieceSprites = new Dictionary<string, Sprite>();
 
+    //public void SelectPiece(string namePieceSquad, string json, Sprite sprite, string rootPath, bool selected = true)
     [Header("Select Piece:")]
     public string currentPieceName;
     public string squadPiece;
     public int currentPiecepower;
-    public Sprite spritePiece;
+    private Sprite spritePiece;
+    private string currentjson;
+    private string currentRootPath;
+
 
     [Header("Select King:")]
     public GameObject kingCell;
@@ -41,11 +47,13 @@ public class SquadManager : MonoBehaviour
     public GameObject piecepanel;
     public Image previewImage;
     public Button deselectBtw;
-    public GameObject casteling;
     public GameObject promotion;
-    public Transform castelingContent;
+    public GameObject casteling;
     public Transform promotionContent;
+    public Transform castelingContent;
     public GameObject viewPiecePrefab;
+    public Button moreSpecialBtw;
+    public GameObject infoGridPanel;
 
     [Header("Preview Squad:")]
     public GameObject squadpanel;
@@ -64,6 +72,7 @@ public class SquadManager : MonoBehaviour
     public bool removePiece = false;
     public bool setKing = false;
     public bool enabledMode = false;
+    public bool editMode = false;
 
     [Header("Save:")]
     public RectTransform gridPanel;
@@ -92,7 +101,18 @@ public class SquadManager : MonoBehaviour
 
         deselectBtw.onClick.AddListener(() =>
         {
-            DeselectPiece();
+            if (editMode)
+            {
+                infoGridPanel.SetActive(true);
+
+                promotion.SetActive(false);
+                casteling.SetActive(false);
+                moreSpecialBtw.gameObject.SetActive(true);
+
+                SelectPiece(currentPieceName, currentjson, spritePiece, currentRootPath);
+            }
+            else
+                DeselectPiece();
         });
 
         crownBtw.onClick.AddListener(() =>
@@ -107,6 +127,23 @@ public class SquadManager : MonoBehaviour
             removePiece = !removePiece;
         });
 
+
+        moreSpecialBtw.onClick.AddListener(() =>
+        {
+            if (selectedPiece)
+            {
+                infoGridPanel.SetActive(false);
+
+                promotion.SetActive(true);
+                casteling.SetActive(true);
+
+                moreSpecialBtw.gameObject.SetActive(false);
+
+                editMode = true;
+            }
+
+        });
+
     }
 
     public void DeselectPiece()
@@ -115,6 +152,9 @@ public class SquadManager : MonoBehaviour
         selectedPiece = false;
         currentPieceName = "";
         squadpanel.SetActive(true);
+
+        currentjson = "";
+        currentRootPath = "";
     }
 
     public void CheckStrategicModeRules()
@@ -163,7 +203,7 @@ public class SquadManager : MonoBehaviour
         }
 
     }
-    
+
     public void LoadSquadData(string name, string rootPath)
     {
 
@@ -659,16 +699,24 @@ public class SquadManager : MonoBehaviour
 
     }
 
+
+
     public void SelectPiece(string namePieceSquad, string json, Sprite sprite, string rootPath, bool selected = true)
     {
         MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
         //squadManager.spritePiece = sprite;
 
-        if (config.piece.Name != currentPieceName || config.piece.Squad != squadPiece)
+        if (config.piece.Name != currentPieceName || config.piece.Squad != squadPiece || editMode)
         {
+            currentjson = json;
+            currentRootPath = rootPath;
+
             SetInfoPiece(namePieceSquad, config, sprite, selected);
             StartCoroutine(SetPromotionsAndCastelingPieces(config, rootPath));
+
+            editMode = false;
         }
+
     }
 
 
@@ -683,6 +731,9 @@ public class SquadManager : MonoBehaviour
 
         squadpanel.SetActive(false);
         piecepanel.SetActive(true);
+        infoGridPanel.SetActive(true);
+
+        moreSpecialBtw.gameObject.SetActive(true);
 
         currentPieceName = namePieceSquad;
         currentPiecepower = piece.Power;

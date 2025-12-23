@@ -770,6 +770,10 @@ public class NavigationManage_Squad : MonoBehaviour
             squadManager.pieceSprites[nameInSquad] = sprite;
         }
 
+        UIDragItem uIDragItem = newButton.AddComponent<UIDragItem>();
+
+        uIDragItem.GetPiece(nameInSquad,  File.ReadAllText(jsonPath),  sprite,  rootPath);
+
         // Configura evento do botão
         newButton.GetComponent<Button>().onClick.AddListener(() =>
         {
