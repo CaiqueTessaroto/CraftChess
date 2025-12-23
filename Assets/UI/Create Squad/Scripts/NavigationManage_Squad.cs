@@ -780,13 +780,6 @@ public class NavigationManage_Squad : MonoBehaviour
         // Configura evento do botão
         newButton.GetComponent<Button>().onClick.AddListener(() =>
         {
-            if (pieceData.Power > 80)
-                squadManager.moreSpecialBtw.gameObject.SetActive(false);
-            else
-                squadManager.moreSpecialBtw.gameObject.SetActive(true);
-
-            squadManager.clearBtw.gameObject.SetActive(false);
-
             squadManager.SelectPiece(nameInSquad, pieceData, File.ReadAllText(jsonPath), sprite, rootPath);
         });
 

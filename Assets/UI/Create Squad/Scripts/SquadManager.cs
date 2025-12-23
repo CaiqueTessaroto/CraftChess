@@ -141,8 +141,16 @@ public class SquadManager : MonoBehaviour
 
             SquadPieceData pieceData = squadData.Pieces.Find(p => p.NameInSquad == currentPieceName);
 
+            int power = pieceData.PromotionPieces.Count * 10;
+            power += pieceData.CastlingPieces.Count * 10;
+            pieceData.Power -= power;
+
             pieceData.PromotionPieces.Clear();
             pieceData.CastlingPieces.Clear();
+
+            currentPiecepower = pieceData.Power;
+
+            powerTmp.text = $"Power: {currentPiecepower}";
 
         });
 
@@ -183,14 +191,14 @@ public class SquadManager : MonoBehaviour
 
     public void CheckStrategicModeRules()
     {
-        bool powerLimit = squadData.Power > 1200;
+        bool powerLimit = squadData.Power > 1500;
         bool hasKing = string.IsNullOrEmpty(squadData.King?.Name);
 
         bool uniqueKing = placedPieces.Count(p => p.Name == squadData.King.Name) > 1;
         bool sameArtPieces = squadData.Pieces.GroupBy(p => p.Sprite)
                             .Any(g => g.Count() > 1);//&& g.Select(p => p.Name).Distinct().Count() > 1)
 
-        string powerLimitTxt = "Squad power must be less than 1200";
+        string powerLimitTxt = "Squad power must be less than 1500";
         string hasKingTxt = "There must be a King";
         string uniqueKingTxt = "The King's Piece must be unique";
         string sameArtPiecesTxt = "You cannot have different pieces with the same art.";
@@ -749,13 +757,20 @@ public class SquadManager : MonoBehaviour
         MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
         //squadManager.spritePiece = sprite;
 
+        if (config.piece.Power > 80)
+            moreSpecialBtw.gameObject.SetActive(false);
+        else
+            moreSpecialBtw.gameObject.SetActive(true);
+
+        clearBtw.gameObject.SetActive(false);
+
         if (config.piece.Name != currentPieceName || config.piece.Squad != squadPiece || editMode)
         {
             currentjson = json;
             currentRootPath = rootPath;
             currentPieceData = pieceData;
 
-            SetInfoPiece(namePieceSquad, config, sprite, selected);
+            SetInfoPiece(namePieceSquad,pieceData, config, sprite, selected);
             StartCoroutine(SetPromotionsAndCastelingPieces(currentPieceData, json, rootPath));
 
             editMode = false;
@@ -766,7 +781,7 @@ public class SquadManager : MonoBehaviour
 
 
 
-    public void SetInfoPiece(string namePieceSquad, MovementConfigData config, Sprite sprite, bool selected = true)
+    public void SetInfoPiece(string namePieceSquad,SquadPieceData pieceData, MovementConfigData config, Sprite sprite, bool selected = true)
     {
         //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
 
@@ -776,10 +791,8 @@ public class SquadManager : MonoBehaviour
         piecepanel.SetActive(true);
         infoGridPanel.SetActive(true);
 
-        moreSpecialBtw.gameObject.SetActive(true);
-
         currentPieceName = namePieceSquad;
-        currentPiecepower = piece.Power;
+        currentPiecepower = pieceData.Power;
         squadPiece = piece.Squad;
 
         nameTmp.text = currentPieceName;
@@ -816,7 +829,7 @@ public class SquadManager : MonoBehaviour
 
             foreach (string name in pieceData.CastlingPieces)
             {
-                yield return StartCoroutine(LoadPiecesImage(name, pieceData.Squad, castelingContent, selectRootPath));
+                yield return StartCoroutine(LoadPiecesImage(name, castelingContent));
             }
         }
 
@@ -827,7 +840,7 @@ public class SquadManager : MonoBehaviour
 
             foreach (string name in pieceData.PromotionPieces)
             {
-                yield return StartCoroutine(LoadPiecesImage(name, pieceData.Squad, promotionContent, selectRootPath));
+                yield return StartCoroutine(LoadPiecesImage(name, promotionContent));
             }
         }
 
@@ -840,28 +853,22 @@ public class SquadManager : MonoBehaviour
 
     }
 
-    public IEnumerator LoadPiecesImage(string fileName, string squadPiece, Transform content, string selectRootPath)
+    public IEnumerator LoadPiecesImage(string fileName, Transform content)
     {
         //Transform content = panel.transform;
 
-        string jsonPath = Path.Combine(selectRootPath, fileManager.basePath_PieceData, squadPiece, fileName + ".json");
-
-
-        string json = File.ReadAllText(jsonPath);
-        PieceWrapper wrapper = JsonUtility.FromJson<PieceWrapper>(json);
-        PieceInfo piece = wrapper.piece;
-
-        // Instancia o prefab do painel
         GameObject clone = Instantiate(viewPiecePrefab, content);
 
         // Define o nome do objeto (opcional)
-        clone.name = "Preview_" + piece.Name;
+        clone.name = "Preview_" + fileName;
 
         // Acha a imagem dentro do painel
         Image img = clone.GetComponentInChildren<Image>();
 
-        Texture2D tex = fileManager.LoadTextureFromFile(piece.FolderSprite, piece.Art, fileManager.basePath_Sprite, selectRootPath);
-        Sprite sprite = fileManager.ConvertTextureToSprite(tex);
+        Sprite sprite = null;
+
+        if (pieceSprites.ContainsKey(fileName))
+            sprite = pieceSprites[fileName];
 
         if (img != null)
         {

@@ -19,8 +19,6 @@ public class UIDropGrid : MonoBehaviour, IDropHandler
         GameObject dropped = eventData.pointerDrag;
         UIDragItem uIDragItem = dropped.GetComponent<UIDragItem>();
 
-        MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(uIDragItem.Json);
-
         if (dropped == null) return;
 
         if (gridParent.childCount >= 4)
@@ -37,7 +35,9 @@ public class UIDropGrid : MonoBehaviour, IDropHandler
             if (!pieceData.PromotionPieces.Contains(uIDragItem.name))
             {
                 pieceData.PromotionPieces.Add(uIDragItem.name);
-                StartCoroutine(squadManager.LoadPiecesImage(uIDragItem.name, config.piece.Squad, gridParent, uIDragItem.RootPath));
+                pieceData.Power += 10;
+                squadManager.currentPiecepower = pieceData.Power;
+                StartCoroutine(squadManager.LoadPiecesImage(uIDragItem.name, gridParent));
             }
 
         }
@@ -46,9 +46,13 @@ public class UIDropGrid : MonoBehaviour, IDropHandler
             if (!pieceData.CastlingPieces.Contains(uIDragItem.name))
             {
                 pieceData.CastlingPieces.Add(uIDragItem.name);
-                StartCoroutine(squadManager.LoadPiecesImage(uIDragItem.name, config.piece.Squad, gridParent, uIDragItem.RootPath));
+                pieceData.Power += 10;
+                squadManager.currentPiecepower = pieceData.Power;
+                StartCoroutine(squadManager.LoadPiecesImage(uIDragItem.name, gridParent));
             }
         }
+
+        squadManager.powerTmp.text = $"Power: {squadManager.currentPiecepower}";
 
         //StartCoroutine(squadManager.LoadPiecesImage(uIDragItem.name, config.piece.Squad, gridParent, uIDragItem.RootPath));
 
