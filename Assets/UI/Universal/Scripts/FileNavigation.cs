@@ -306,7 +306,7 @@ public class FileNavigation : MonoBehaviour
                     deleteObj.SetActive(false);
 
                     if (manageCreate)
-                        manageCreate.HandleSelectionArt(Path.GetFileNameWithoutExtension(fileCopy), nameFolder, sprite);
+                        manageCreate.HandleSelectionArt(Path.GetFileNameWithoutExtension(fileCopy), nameFolder, sprite,rootPath);
                     else if (managePainting)
                         managePainting.OnFileClick(newButton, fileName, nameFolder, rootPath);
                 });

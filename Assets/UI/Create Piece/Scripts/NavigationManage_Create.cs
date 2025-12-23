@@ -402,6 +402,12 @@ public class NavigationManage_Create : MonoBehaviour
         movementCreation.piece.FolderSprite = piece.FolderSprite;
         movementCreation.piece.Squad = folder;
 
+        if (rootPath == Application.streamingAssetsPath)
+            movementCreation.piece.NativeSprite = true;
+        else
+            movementCreation.piece.NativeSprite = false;
+
+
         namePiece.text = movementCreation.piece.Name;
         nameArt.text = movementCreation.piece.Art;
         squadPiece.text = movementCreation.piece.Squad;
@@ -417,12 +423,17 @@ public class NavigationManage_Create : MonoBehaviour
     }
 
 
-    public void HandleSelectionArt(string name, string folder, Sprite sprite)
+    public void HandleSelectionArt(string name, string folder, Sprite sprite, string rootPath)
     {
 
         movementCreation.piece.Art = name;
         nameArt.text = name;
         movementCreation.piece.FolderSprite = folder;
+
+        if (rootPath == Application.streamingAssetsPath)
+            movementCreation.piece.NativeSprite = true;
+        else
+            movementCreation.piece.NativeSprite = false;
 
         movementCreation.resultPreview.sprite = sprite;
 
