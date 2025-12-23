@@ -13,15 +13,18 @@ public class PieceComponent : MonoBehaviour
     public bool InitialMoved;
     public bool IsPromoted;
     public bool IsKing;
-
+    public List<string> PromotionPieces = new List<string>();
+    public List<string> CastlingPieces = new List<string>();
     public List<Vector2Int> PossibleMoves = new List<Vector2Int>();
 
-    public void Initialize(string squad, string name, int power, Player player, Vector2Int position, bool isKing)
+    public void Initialize(string squad, string name, int power, List<string> promotionPieces, List<string> castlingPieces, Player player, Vector2Int position, bool isKing)
     {
         this.Squad = squad;
         this.Name = name;
         this.Player = player;
         this.Power = power;
+        this.PromotionPieces = promotionPieces;
+        this.CastlingPieces = castlingPieces;
         this.Position = position;
         this.HasMoved = false;
         this.InitialMoved = false;

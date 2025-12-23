@@ -129,6 +129,9 @@ public class PieceController : MonoBehaviour
     {
         List<Vector2Int> validMoves = pieceMovement.GetValidMoves();
 
+        if (pieceComponent.CastlingPieces.Count > 0 && pieceComponent.CastlingPieces != null)
+            validMoves.AddRange(pieceMovement.GetCastlingMove(pieceComponent.CastlingPieces));
+
         bool captured = false;
 
         if (validMoves.Contains(clickedPosition))
@@ -275,9 +278,8 @@ public class PieceController : MonoBehaviour
     {
 
         PieceComponent component = selectedPiece.GetComponent<PieceComponent>();
-        PieceMovement movement = selectedPiece.GetComponent<PieceMovement>();
 
-        if (movement.configData.promotion.Active && movement.configData.promotion.Pieces != null)
+        if (component.PromotionPieces.Count > 0 && component.PromotionPieces != null)
             if (PromotePiece(component, targetPosition, targetPiece))
                 return;
 
@@ -305,7 +307,7 @@ public class PieceController : MonoBehaviour
         PieceComponent component = selectedPiece.GetComponent<PieceComponent>();
         PieceMovement movement = selectedPiece.GetComponent<PieceMovement>();
 
-        if (movement.configData.promotion.Active && movement.configData.promotion.Pieces != null)
+        if (component.PromotionPieces.Count > 0 && component.PromotionPieces != null)
             if (PromotePiece(component, targetPosition))
                 return;
 

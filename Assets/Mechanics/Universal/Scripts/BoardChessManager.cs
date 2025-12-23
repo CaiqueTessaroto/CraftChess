@@ -122,7 +122,7 @@ public class BoardChessManager : MonoBehaviour
             }
         }
 
-        HighlightLastMove(originInt,targetInt);
+        HighlightLastMove(originInt, targetInt);
 
     }
 
@@ -536,9 +536,9 @@ public class BoardChessManager : MonoBehaviour
         Player player = matchSquad.Player;
 
         if (pieceData.NameInSquad == squad.King.Name)
-            pieceComponent.Initialize(pieceData.Squad, name, movementScript.configData.piece.Power, player, pos, true);
+            pieceComponent.Initialize(pieceData.Squad, name, pieceData.Power, pieceData.PromotionPieces, pieceData.CastlingPieces, player, pos, true);
         else
-            pieceComponent.Initialize(pieceData.Squad, name, movementScript.configData.piece.Power, player, pos, false);
+            pieceComponent.Initialize(pieceData.Squad, name, pieceData.Power, pieceData.PromotionPieces, pieceData.CastlingPieces, player, pos, false);
     }
 
 

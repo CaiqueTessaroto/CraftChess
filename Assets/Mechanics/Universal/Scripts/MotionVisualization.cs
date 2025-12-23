@@ -106,9 +106,9 @@ public class MotionVisualization : MonoBehaviour
         
 
         if (!piece.HasMoved)
-            if (movement.configData.special.Castling && movement.configData.special.Pieces != null)
+            if (piece.CastlingPieces.Count > 0 && piece.CastlingPieces != null)
             {
-                List<Vector2Int> validMoves = movement.GetCastlingMove(movement.configData.special.Pieces);
+                List<Vector2Int> validMoves = movement.GetCastlingMove(piece.CastlingPieces);
                 ShowSpritesAtCastlingMoves(validMoves);
             }
 

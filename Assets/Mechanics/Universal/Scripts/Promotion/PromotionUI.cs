@@ -17,7 +17,6 @@ public class PromotionUI : MonoBehaviour
     [Header("References")]
     public PieceComponent currentPiece;
     public GameObject targetPiece;
-    private PieceMovement pieceMovement;
     public Vector2Int pos;
 
     [Header("Posição:")]
@@ -117,9 +116,6 @@ public class PromotionUI : MonoBehaviour
             Destroy(currentPiece.gameObject.GetComponent<PromotionUI>());
         });
 
-
-        pieceMovement = currentPiece.GetComponent<PieceMovement>();
-
         if (piecetransform == null)
             piecetransform = cell.transform;
 
@@ -149,7 +145,7 @@ public class PromotionUI : MonoBehaviour
         foreach (Transform child in contentParent)
             Destroy(child.gameObject);
 
-        foreach (var pieceName in pieceMovement.configData.promotion.Pieces)
+        foreach (var pieceName in currentPiece.PromotionPieces)
         {
             if (squad.Pieces.ContainsKey(pieceName))
             {

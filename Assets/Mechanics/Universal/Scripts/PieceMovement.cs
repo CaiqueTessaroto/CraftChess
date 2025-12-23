@@ -45,7 +45,7 @@ public class PieceMovement : MonoBehaviour
     public List<Vector2Int> GetValidMoves(bool control = false)
     {
         if (thisPiece == null) return null;
-        
+
         List<Vector2Int> validMoves = new List<Vector2Int>();
 
         if (configData.straight.Active)
@@ -95,11 +95,11 @@ public class PieceMovement : MonoBehaviour
         }
 
 
-        if (!thisPiece.HasMoved)
-            if (configData.special.Castling && configData.special.Pieces != null)
-            {
-                validMoves.AddRange(GetCastlingMove(configData.special.Pieces));
-            }
+        //if (!thisPiece.HasMoved)
+        //    if (configData.special.Castling && configData.special.Pieces != null)
+        //    {
+        //        validMoves.AddRange(GetCastlingMove(configData.special.Pieces));
+        //    }
 
 
 
@@ -109,7 +109,7 @@ public class PieceMovement : MonoBehaviour
     public List<Vector2Int> GetValidCaptureMoves(bool control = false)
     {
         if (thisPiece == null) return null;
-        
+
         List<Vector2Int> validMoves = new List<Vector2Int>();
 
         if (configData.straight.Active)
@@ -171,11 +171,11 @@ public class PieceMovement : MonoBehaviour
         }
 
 
-        if (!thisPiece.HasMoved)
-            if (configData.special.Castling && configData.special.Pieces != null)
-            {
-                validMoves.AddRange(GetCastlingMove(configData.special.Pieces));
-            }
+        //if (!thisPiece.HasMoved)
+        //    if (configData.special.Castling && configData.special.Pieces != null)
+        //    {
+        //        validMoves.AddRange(GetCastlingMove(configData.special.Pieces));
+        //    }
 
 
 
