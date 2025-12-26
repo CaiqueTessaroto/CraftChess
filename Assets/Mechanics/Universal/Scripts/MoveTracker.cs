@@ -44,6 +44,11 @@ public class MoveTracker : MonoBehaviour
         return new List<Move>(moveHistory);
     }
 
+    public int GetTurnPlayer()
+    {
+        return moveHistory.Count % 2;
+    }
+
     public void ClearHistory()
     {
         moveHistory.Clear();

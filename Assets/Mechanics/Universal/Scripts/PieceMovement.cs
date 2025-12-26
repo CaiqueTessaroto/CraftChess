@@ -94,6 +94,9 @@ public class PieceMovement : MonoBehaviour
             }
         }
 
+        validMoves = GetValidKingMoves(validMoves);
+
+        
 
         //if (!thisPiece.HasMoved)
         //    if (configData.special.Castling && configData.special.Pieces != null)
@@ -104,6 +107,34 @@ public class PieceMovement : MonoBehaviour
 
 
         return validMoves;
+    }
+
+    public List<Vector2Int> GetValidKingMoves(List<Vector2Int> validMoves)
+    {
+        if (!thisPiece.IsKing)
+            return validMoves;
+
+        List<Vector2Int> kingValidMoves = new List<Vector2Int>();
+
+        foreach (Vector2Int move in validMoves)
+        {
+            GameObject gameObject_Cell = gridManager.GetCellAtPosition(move.x, move.y);
+            Cell cell = gameObject_Cell.GetComponent<Cell>();
+
+            if (thisPiece.Player.id == 0)
+            {
+                if (!cell.house.isControlledByBlack)
+                    kingValidMoves.Add(move);
+            }
+            else
+            {
+                if (!cell.house.isControlledByWhite)
+                    kingValidMoves.Add(move);
+            }
+
+        }
+
+        return kingValidMoves;
     }
 
     public List<Vector2Int> GetValidCaptureMoves(bool control = false)

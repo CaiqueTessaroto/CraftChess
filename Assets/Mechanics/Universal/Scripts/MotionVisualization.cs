@@ -31,7 +31,7 @@ public class MotionVisualization : MonoBehaviour
 
         if (moveTracker == null)
             Debug.LogError("MoveTracker não encontrado na cena.");
-        
+
 
     }
 
@@ -53,6 +53,7 @@ public class MotionVisualization : MonoBehaviour
             List<Vector2Int> rawMoves = movement.GetDirectionalMoves(moveData);
             List<Vector2Int> validMoves = movement.GetValidDirectionalMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
             validMoves = movement.ControlOccupiedHouses(validMoves, moveData.Capture, false);
+            validMoves = movement.GetValidKingMoves(validMoves);
             //List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
             ShowSpritesAtMoves(validMoves, 1);
         }
@@ -64,6 +65,7 @@ public class MotionVisualization : MonoBehaviour
             List<Vector2Int> rawMoves = movement.GetDiagonalMoves(moveData);
             List<Vector2Int> validMoves = movement.GetValidDiagonalMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
             validMoves = movement.ControlOccupiedHouses(validMoves, moveData.Capture, false);
+            validMoves = movement.GetValidKingMoves(validMoves);
             //List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
             ShowSpritesAtMoves(validMoves, 1);
         }
@@ -75,6 +77,7 @@ public class MotionVisualization : MonoBehaviour
             List<Vector2Int> rawMoves = movement.GetCustomMovies();
             List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, personalizedMoveData.Jump, personalizedMoveData.Capture, personalizedMoveData.Move);
             validMoves = movement.ControlOccupiedHouses(validMoves, personalizedMoveData.Capture, false);
+            validMoves = movement.GetValidKingMoves(validMoves);
             ShowSpritesAtMoves(validMoves, 2);
         }
 
@@ -86,10 +89,11 @@ public class MotionVisualization : MonoBehaviour
                 List<Vector2Int> rawMoves = movement.GetSpecialMovies();
                 List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, specialMoveData.Jump, specialMoveData.Capture, specialMoveData.Move);
                 validMoves = movement.ControlOccupiedHouses(validMoves, specialMoveData.Capture, false);
+                validMoves = movement.GetValidKingMoves(validMoves);
                 ShowSpritesAtMoves(validMoves, 3);
             }
 
-        
+
         if (moveTracker.GetLastMoved() != null)
         {
             Move lastMoved = moveTracker.GetLastMoved();
@@ -99,16 +103,18 @@ public class MotionVisualization : MonoBehaviour
                 if (lastPieceMoved.InitialMoved && piece.Player.id != lastPieceMoved.Player.id)
                 {
                     List<Vector2Int> validMoves = movement.GetHouseBehindInitialMove(lastPieceMoved, lastMoved.TargetPosition);
+                    validMoves = movement.GetValidKingMoves(validMoves);
                     ShowSpritesAtPassantMoves(validMoves);
                 }
             }
         }
-        
+
 
         if (!piece.HasMoved)
             if (piece.CastlingPieces.Count > 0 && piece.CastlingPieces != null)
             {
                 List<Vector2Int> validMoves = movement.GetCastlingMove(piece.CastlingPieces);
+                validMoves = movement.GetValidKingMoves(validMoves);
                 ShowSpritesAtCastlingMoves(validMoves);
             }
 
