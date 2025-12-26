@@ -27,6 +27,9 @@ public class UIDropGrid : MonoBehaviour, IDropHandler
         if (uIDragItem.name == squadManager.currentPieceName)
             return;
 
+        if (uIDragItem.name == squadManager.squadData.King.Name)
+            return;
+
         SquadPieceData pieceData = squadManager.squadData.Pieces.Find(p => p.NameInSquad == squadManager.currentPieceName);
 
         if (gameObject.name == "Promotion")
@@ -38,6 +41,8 @@ public class UIDropGrid : MonoBehaviour, IDropHandler
                 pieceData.Power += 10;
                 squadManager.currentPiecepower = pieceData.Power;
                 StartCoroutine(squadManager.LoadPiecesImage(uIDragItem.name, gridParent));
+                squadManager.UpdateSquadPower();
+
             }
 
         }
@@ -49,6 +54,7 @@ public class UIDropGrid : MonoBehaviour, IDropHandler
                 pieceData.Power += 10;
                 squadManager.currentPiecepower = pieceData.Power;
                 StartCoroutine(squadManager.LoadPiecesImage(uIDragItem.name, gridParent));
+                squadManager.UpdateSquadPower();
             }
         }
 

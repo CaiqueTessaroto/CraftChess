@@ -152,6 +152,8 @@ public class SquadManager : MonoBehaviour
 
             powerTmp.text = $"Power: {currentPiecepower}";
 
+            UpdateSquadPower();
+
         });
 
         moreSpecialBtw.onClick.AddListener(() =>
@@ -430,6 +432,18 @@ public class SquadManager : MonoBehaviour
 
         squadData.King.Name = piece.Name;
         squadData.King.Position = cellPos;
+
+
+        foreach (SquadPieceData piecedata in squadData.Pieces)
+        {
+            if (piecedata.PromotionPieces.Remove(piece.Name))
+                piecedata.Power -= 10;
+
+            if (piecedata.CastlingPieces.Remove(piece.Name))
+                piecedata.Power -= 10;
+        }
+
+        UpdateSquadPower();
         /*
         Transform pieceTransform = cell.transform.Find("Crown");
         Image image;
@@ -527,6 +541,16 @@ public class SquadManager : MonoBehaviour
             if (kingCell == cell)
                 SetKing(cell, pos);
 
+    }
+
+    public void UpdateSquadPower()
+    {
+        int squadPower = CalculateSquadPower(placedPieces, squadData.Pieces);
+
+        squadData.Power = squadPower;
+
+        squadpowerTmp.text = $"Power: {squadPower}";
+        squadgridpowerTmp.text = $"{squadPower}";
     }
 
     public int CalculateSquadPower(List<UnitPieceData> units, List<SquadPieceData> pieces)
@@ -770,7 +794,7 @@ public class SquadManager : MonoBehaviour
             currentRootPath = rootPath;
             currentPieceData = pieceData;
 
-            SetInfoPiece(namePieceSquad,pieceData, config, sprite, selected);
+            SetInfoPiece(namePieceSquad, pieceData, config, sprite, selected);
             StartCoroutine(SetPromotionsAndCastelingPieces(currentPieceData, json, rootPath));
 
             editMode = false;
@@ -781,7 +805,7 @@ public class SquadManager : MonoBehaviour
 
 
 
-    public void SetInfoPiece(string namePieceSquad,SquadPieceData pieceData, MovementConfigData config, Sprite sprite, bool selected = true)
+    public void SetInfoPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite, bool selected = true)
     {
         //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
 
