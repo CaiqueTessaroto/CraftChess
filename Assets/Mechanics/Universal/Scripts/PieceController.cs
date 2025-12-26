@@ -19,6 +19,9 @@ public class PieceController : MonoBehaviour
     private PieceComponent pieceComponent;
     private PieceMovement pieceMovement;
 
+    public PieceComponent KingWhite;
+    public PieceComponent KingBlack;
+
 
     public bool freeMode = true;
     public bool localGame = true;

@@ -382,7 +382,11 @@ public class BoardChessManager : MonoBehaviour
     {
         if (IsWithinBounds(x, y))
         {
-            if (GetPieceAtPosition(x, y) == null)
+            //if (GetPieceAtPosition(x, y) == null)
+            //    return false;
+            GameObject GameObject_Cell = GetCellAtPosition(x, y);
+            Cell cell = GameObject_Cell.GetComponent<Cell>();
+            if (!cell.house.isOccupied)
                 return false;
 
             return true;
@@ -509,6 +513,7 @@ public class BoardChessManager : MonoBehaviour
 
         Cell cellComp = cell.GetComponent<Cell>();
         cellComp.house.Piece = name;
+        cellComp.house.isOccupied = true;
 
         AllPieces.Add(pieceObj);
 
@@ -536,7 +541,17 @@ public class BoardChessManager : MonoBehaviour
         Player player = matchSquad.Player;
 
         if (pieceData.NameInSquad == squad.King.Name)
+        {
             pieceComponent.Initialize(pieceData.Squad, name, pieceData.Power, pieceData.PromotionPieces, pieceData.CastlingPieces, player, pos, true);
+
+            PieceController pieceController = FindObjectOfType<PieceController>();
+
+            if (player.id == 0)
+                pieceController.KingWhite = pieceComponent;
+            else
+                pieceController.KingBlack = pieceComponent;
+
+        }
         else
             pieceComponent.Initialize(pieceData.Squad, name, pieceData.Power, pieceData.PromotionPieces, pieceData.CastlingPieces, player, pos, false);
     }
@@ -547,10 +562,12 @@ public class BoardChessManager : MonoBehaviour
     {
         GameObject cell = GetCellAtPosition(origin.x, origin.y);
         Cell cellComp = cell.GetComponent<Cell>();
+        cellComp.house.isOccupied = false;
         cellComp.house.Piece = null;
 
         cell = GetCellAtPosition(targetPosition.x, targetPosition.y);
         cellComp = cell.GetComponent<Cell>();
+        cellComp.house.isOccupied = true;
         cellComp.house.Piece = name;
 
     }
@@ -563,6 +580,57 @@ public class BoardChessManager : MonoBehaviour
 
     public void UpdateBoardControl()
     {
+        Debug.Log("UpdateBoardControl");
+        // 1️⃣ Limpa todos os controles antigos
+        foreach (var house in BoardHouses)
+        {
+            house.isControlledByWhite = false;
+            house.isControlledByBlack = false;
+            house.WhitePiecesControl.Clear();
+            house.BlackPiecesControl.Clear();
+        //    house.isOccupied = false;
+        }
+
+        // 2️⃣ Atualiza o controle com base nas peças
+        foreach (GameObject piece in AllPieces)
+        {
+            if (piece == null) continue;
+
+            PieceComponent component = piece.GetComponent<PieceComponent>();
+            PieceMovement movement = piece.GetComponent<PieceMovement>();
+            if (component == null || movement == null) continue;
+
+            List<Vector2Int> controlledMoves = movement.GetValidCaptureMoves(true);
+
+            if (controlledMoves == null) continue;
+
+            foreach (Vector2Int move in controlledMoves)
+            {
+                if (!IsWithinBounds(move.x, move.y)) continue;
+
+                Cell cellComp = gridCells[move.x, move.y].GetComponent<Cell>();
+
+                //if (GetPieceAtPosition(move.x, move.y))
+                //    cellComp.house.isOccupied = true;
+
+                if (component.Player.id == 0)
+                {
+                    cellComp.house.isControlledByWhite = true;
+                    cellComp.house.WhitePiecesControl.Add(component);
+                }
+                else
+                {
+                    cellComp.house.isControlledByBlack = true;
+                    cellComp.house.BlackPiecesControl.Add(component);
+                }
+            }
+        }
+    }
+
+
+    public void UpdateBoardControlSimulated()
+    {
+        Debug.Log("UpdateBoardControl");
         // 1️⃣ Limpa todos os controles antigos
         foreach (var house in BoardHouses)
         {
@@ -590,6 +658,7 @@ public class BoardChessManager : MonoBehaviour
                 if (!IsWithinBounds(move.x, move.y)) continue;
 
                 Cell cellComp = gridCells[move.x, move.y].GetComponent<Cell>();
+
                 if (component.Player.id == 0)
                 {
                     cellComp.house.isControlledByWhite = true;
@@ -605,4 +674,16 @@ public class BoardChessManager : MonoBehaviour
     }
 
 
+
+
+
+
 }
+
+
+
+
+
+
+
+

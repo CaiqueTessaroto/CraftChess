@@ -16,6 +16,8 @@ public class PieceMovement : MonoBehaviour
     private PieceComponent thisPiece;
     private BoardChessManager gridManager;
     private MoveTracker moveTracker;
+
+    private PieceController pieceController;
     //private MoveTracker moveTracker;
 
     void Start()
@@ -26,10 +28,10 @@ public class PieceMovement : MonoBehaviour
 
         moveTracker = FindObjectOfType<MoveTracker>();
 
+        pieceController = FindObjectOfType<PieceController>();
+
         if (gridManager == null)
-        {
             Debug.LogError("GridManager não encontrado.");
-        }
 
         if (moveTracker == null)
             Debug.LogError("MoveTracker não encontrado na cena.");
@@ -94,9 +96,16 @@ public class PieceMovement : MonoBehaviour
             }
         }
 
-        validMoves = GetValidKingMoves(validMoves);
 
-        
+        List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
+        rawForMovesInCheck.AddRange(validMoves);
+
+        validMoves = GetValidKingMoves(validMoves);
+        validMoves = GetValidMovesInCheck(validMoves);
+        validMoves.AddRange(GetValidCaptureMovesInCheck(rawForMovesInCheck));
+
+
+        //pegar todos os movimentos de todas as peças se estiver zerado e o rei sobre ataque é checkmate se o rei não estiver sobre ataque é afogamento 
 
         //if (!thisPiece.HasMoved)
         //    if (configData.special.Castling && configData.special.Pieces != null)
@@ -107,6 +116,162 @@ public class PieceMovement : MonoBehaviour
 
 
         return validMoves;
+    }
+
+    public List<Vector2Int> GetValidMovesInCheck(List<Vector2Int> validMoves)
+    {
+        if (thisPiece.IsKing)
+            return validMoves;
+
+        if (thisPiece.Player.id == 0)
+        {
+            Vector2Int pos = pieceController.KingWhite.Position;
+            GameObject gameObjectKing = gridManager.GetCellAtPosition(pos.x, pos.y);
+            Cell cellKing = gameObjectKing.GetComponent<Cell>();
+
+            if (cellKing.house.BlackPiecesControl.Count == 0)
+            {
+
+                Vector2Int Position = thisPiece.Position;
+                GameObject gameObjectPiece = gridManager.GetCellAtPosition(Position.x, Position.y);
+                Cell cellPiece = gameObjectPiece.GetComponent<Cell>();
+
+                if (cellPiece.house.BlackPiecesControl.Count == 0)
+                    return validMoves;
+
+            }
+        }
+        else
+        {
+            Vector2Int pos = pieceController.KingBlack.Position;
+            GameObject gameObjectKing = gridManager.GetCellAtPosition(pos.x, pos.y);
+            Cell cellKing = gameObjectKing.GetComponent<Cell>();
+
+            if (cellKing.house.WhitePiecesControl.Count == 0)
+            {
+                Vector2Int Position = thisPiece.Position;
+                GameObject gameObjectPiece = gridManager.GetCellAtPosition(Position.x, Position.y);
+                Cell cellPiece = gameObjectPiece.GetComponent<Cell>();
+
+                if (cellPiece.house.WhitePiecesControl.Count == 0)
+                    return validMoves;
+            }
+        }
+
+
+        List<Vector2Int> validMovesInCheck = new List<Vector2Int>();
+
+        foreach (Vector2Int move in validMoves)
+        {
+
+            if (!gridManager.GetPieceAtPosition(move.x, move.y))
+            {
+                GameObject gameObject_Cell = gridManager.GetCellAtPosition(move.x, move.y);
+                Cell cell = gameObject_Cell.GetComponent<Cell>();
+
+                GameObject gameObject_PlayerCell = gridManager.GetCellAtPosition(thisPiece.Position.x, thisPiece.Position.y);
+                Cell playerCell = gameObject_PlayerCell.GetComponent<Cell>();
+
+                playerCell.house.isOccupied = false;
+                cell.house.isOccupied = true;
+
+                gridManager.UpdateBoardControlSimulated();
+
+                if (thisPiece.Player.id == 0)
+                {
+                    Vector2Int pos = pieceController.KingWhite.Position;
+                    GameObject gameObjectKing = gridManager.GetCellAtPosition(pos.x, pos.y);
+                    Cell cellKing = gameObjectKing.GetComponent<Cell>();
+
+                    Debug.Log(cellKing.house.BlackPiecesControl.Count);
+
+                    if (cellKing.house.BlackPiecesControl.Count == 0)
+                    {
+                        validMovesInCheck.Add(move);
+                    }
+                }
+                else
+                {
+                    Vector2Int pos = pieceController.KingBlack.Position;
+                    GameObject gameObjectKing = gridManager.GetCellAtPosition(pos.x, pos.y);
+                    Cell cellKing = gameObjectKing.GetComponent<Cell>();
+
+                    if (cellKing.house.WhitePiecesControl.Count == 0)
+                        validMovesInCheck.Add(move);
+                }
+
+                playerCell.house.isOccupied = true;
+                cell.house.isOccupied = false;
+            }
+
+        }
+
+        return validMovesInCheck;
+    }
+
+    public List<Vector2Int> GetValidCaptureMovesInCheck(List<Vector2Int> validMoves)
+    {
+        if (thisPiece.IsKing)
+            return validMoves;
+
+        List<Vector2Int> validCaptureMovesInCheck = new List<Vector2Int>();
+
+        if (thisPiece.Player.id == 0)
+        {
+            Vector2Int pos = pieceController.KingWhite.Position;
+            GameObject gameObject_Cell = gridManager.GetCellAtPosition(pos.x, pos.y);
+            Cell cell = gameObject_Cell.GetComponent<Cell>();
+
+            if (cell.house.isControlledByBlack)
+            {
+                if (cell.house.BlackPiecesControl.Count > 1)
+                    return validCaptureMovesInCheck;
+
+                foreach (PieceComponent enemyPiece in cell.house.BlackPiecesControl)
+                {
+                    foreach (Vector2Int move in validMoves)
+                    {
+                        if (move == enemyPiece.Position)
+                        {
+                            validCaptureMovesInCheck.Add(move);
+
+                        }
+
+                    }
+                }
+            }
+            else
+                return validMoves;
+        }
+        else
+        {
+            Vector2Int pos = pieceController.KingBlack.Position;
+            GameObject gameObject_Cell = gridManager.GetCellAtPosition(pos.x, pos.y);
+            Cell cell = gameObject_Cell.GetComponent<Cell>();
+
+            if (cell.house.isControlledByWhite)
+            {
+                if (cell.house.WhitePiecesControl.Count > 1)
+                    return validCaptureMovesInCheck;
+
+                foreach (PieceComponent enemyPiece in cell.house.WhitePiecesControl)
+                {
+                    foreach (Vector2Int move in validMoves)
+                    {
+                        if (move == enemyPiece.Position)
+                        {
+                            validCaptureMovesInCheck.Add(move);
+
+                        }
+                    }
+                }
+            }
+            else
+                return validMoves;
+        }
+
+        return validCaptureMovesInCheck;
+
     }
 
     public List<Vector2Int> GetValidKingMoves(List<Vector2Int> validMoves)
@@ -207,7 +372,6 @@ public class PieceMovement : MonoBehaviour
         //    {
         //        validMoves.AddRange(GetCastlingMove(configData.special.Pieces));
         //    }
-
 
 
         return validMoves;
@@ -673,7 +837,7 @@ public class PieceMovement : MonoBehaviour
                 {
                     validMoves.Add(move);
 
-                    blocked = !canJumpOverPieces;
+                    blocked = true; //!canJumpOverPieces
                 }
                 else if (captureMovement && control)
                 {

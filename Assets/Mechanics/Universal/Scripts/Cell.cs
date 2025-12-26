@@ -11,7 +11,7 @@ public class House
     public Vector2Int Position;
     public string Piece;
     //public string Type;          // "Pawn", "Rook", "Knight", "Bishop", "Queen", "King"
-    public bool isOccupied => Piece != null;
+    public bool isOccupied = false;// => Piece != null;
 
 
     public bool isControlledByWhite;
