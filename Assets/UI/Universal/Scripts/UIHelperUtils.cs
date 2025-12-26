@@ -136,7 +136,7 @@ public class UIHelperUtils : MonoBehaviour
         int lineCount = Mathf.CeilToInt((float)elementCount / grid.constraintCount);
 
         // Altura total = linhas * cell size + (linhas - 1) * spacing + margem extra
-        float totalHeight = (lineCount * grid.cellSize.y) + (lineCount * grid.spacing.y) + grid.spacing.y;
+        float totalHeight = (lineCount * grid.cellSize.y) + (lineCount * grid.spacing.y) + grid.spacing.y + 25;
         //float totalHeight = lineCount * grid.cellSize.y + Mathf.Max(0, lineCount - 1) * grid.spacing.y;
 
         // Ajusta o Content

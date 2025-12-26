@@ -350,15 +350,6 @@ public class InteractiveLobby : MonoBehaviour
                     Squad.Pieces[piece.NameInSquad] = wrapper;
             }
 
-            // --- 🔹 Define imagem do rei no painel ---
-            if (data.King.Name == piece.NameInSquad)
-            {
-                if (OnEnemy)
-                    enemyImage.sprite = sprite;
-                else
-                    userImage.sprite = sprite;
-            }
-
             elementCount += 1;
         }
 
