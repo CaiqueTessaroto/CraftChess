@@ -45,6 +45,9 @@ public class BoardChessManager : MonoBehaviour
     // Armazena as células do grid
     public GameObject[,] gridCells;
 
+    [Header("Control")]
+    public bool noRules = false;
+
     void Start()
     {
 

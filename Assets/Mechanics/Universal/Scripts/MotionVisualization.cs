@@ -54,13 +54,16 @@ public class MotionVisualization : MonoBehaviour
             List<Vector2Int> validMoves = movement.GetValidDirectionalMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
             validMoves = movement.ControlOccupiedHouses(validMoves, moveData.Capture, false);
 
-            List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
-            rawForMovesInCheck.AddRange(validMoves);
+            if (!gridManager.noRules)
+            {
+                List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
+                rawForMovesInCheck.AddRange(validMoves);
 
-            validMoves = movement.GetValidKingMoves(validMoves);
-            validMoves = movement.GetValidMovesInCheck(validMoves);
-            if (!piece.IsKing)
-                validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+                validMoves = movement.GetValidKingMoves(validMoves);
+                validMoves = movement.GetValidMovesInCheck(validMoves);
+                if (!piece.IsKing)
+                    validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+            }
 
             //List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
             ShowSpritesAtMoves(validMoves, 1);
@@ -74,13 +77,16 @@ public class MotionVisualization : MonoBehaviour
             List<Vector2Int> validMoves = movement.GetValidDiagonalMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
             validMoves = movement.ControlOccupiedHouses(validMoves, moveData.Capture, false);
 
-            List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
-            rawForMovesInCheck.AddRange(validMoves);
+            if (!gridManager.noRules)
+            {
+                List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
+                rawForMovesInCheck.AddRange(validMoves);
 
-            validMoves = movement.GetValidKingMoves(validMoves);
-            validMoves = movement.GetValidMovesInCheck(validMoves);
-            if (!piece.IsKing)
-                validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+                validMoves = movement.GetValidKingMoves(validMoves);
+                validMoves = movement.GetValidMovesInCheck(validMoves);
+                if (!piece.IsKing)
+                    validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+            }
 
             //List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
             ShowSpritesAtMoves(validMoves, 1);
@@ -94,13 +100,16 @@ public class MotionVisualization : MonoBehaviour
             List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, personalizedMoveData.Jump, personalizedMoveData.Capture, personalizedMoveData.Move);
             validMoves = movement.ControlOccupiedHouses(validMoves, personalizedMoveData.Capture, false);
 
-            List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
-            rawForMovesInCheck.AddRange(validMoves);
+            if (!gridManager.noRules)
+            {
+                List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
+                rawForMovesInCheck.AddRange(validMoves);
 
-            validMoves = movement.GetValidKingMoves(validMoves);
-            validMoves = movement.GetValidMovesInCheck(validMoves);
-            if (!piece.IsKing)
-                validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+                validMoves = movement.GetValidKingMoves(validMoves);
+                validMoves = movement.GetValidMovesInCheck(validMoves);
+                if (!piece.IsKing)
+                    validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+            }
 
             ShowSpritesAtMoves(validMoves, 2);
         }
@@ -114,13 +123,16 @@ public class MotionVisualization : MonoBehaviour
                 List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, specialMoveData.Jump, specialMoveData.Capture, specialMoveData.Move);
                 validMoves = movement.ControlOccupiedHouses(validMoves, specialMoveData.Capture, false);
 
-                List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
-                rawForMovesInCheck.AddRange(validMoves);
+                if (!gridManager.noRules)
+                {
+                    List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
+                    rawForMovesInCheck.AddRange(validMoves);
 
-                validMoves = movement.GetValidKingMoves(validMoves);
-                validMoves = movement.GetValidMovesInCheck(validMoves);
-                if (!piece.IsKing)
-                    validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+                    validMoves = movement.GetValidKingMoves(validMoves);
+                    validMoves = movement.GetValidMovesInCheck(validMoves);
+                    if (!piece.IsKing)
+                        validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+                }
 
                 ShowSpritesAtMoves(validMoves, 3);
             }
@@ -136,15 +148,18 @@ public class MotionVisualization : MonoBehaviour
                 {
                     List<Vector2Int> validMoves = movement.GetHouseBehindInitialMove(lastPieceMoved, lastMoved.TargetPosition);
 
-                    List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
-                    rawForMovesInCheck.AddRange(validMoves);
+                    if (!gridManager.noRules)
+                    {
+                        List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
+                        rawForMovesInCheck.AddRange(validMoves);
 
-                    validMoves = movement.GetValidKingMoves(validMoves);
-                    validMoves = movement.GetValidMovesInCheck(validMoves);
-                    if (!piece.IsKing)
-                        validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+                        validMoves = movement.GetValidKingMoves(validMoves);
+                        validMoves = movement.GetValidMovesInCheck(validMoves);
+                        if (!piece.IsKing)
+                            validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
 
-                    ShowSpritesAtPassantMoves(validMoves);
+                        ShowSpritesAtPassantMoves(validMoves);
+                    }
                 }
             }
         }

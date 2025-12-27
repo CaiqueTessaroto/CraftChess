@@ -97,13 +97,16 @@ public class PieceMovement : MonoBehaviour
         }
 
 
-        List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
-        rawForMovesInCheck.AddRange(validMoves);
+        if (!gridManager.noRules)
+        {
+            List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
+            rawForMovesInCheck.AddRange(validMoves);
 
-        validMoves = GetValidKingMoves(validMoves);
-        validMoves = GetValidMovesInCheck(validMoves);
-        if (!thisPiece.IsKing)
-            validMoves.AddRange(GetValidCaptureMovesInCheck(rawForMovesInCheck));
+            validMoves = GetValidKingMoves(validMoves);
+            validMoves = GetValidMovesInCheck(validMoves);
+            if (!thisPiece.IsKing)
+                validMoves.AddRange(GetValidCaptureMovesInCheck(rawForMovesInCheck));
+        }
 
 
         //pegar todos os movimentos de todas as peças se estiver zerado e o rei sobre ataque é checkmate se o rei não estiver sobre ataque é afogamento 

@@ -23,7 +23,6 @@ public class PieceController : MonoBehaviour
     public PieceComponent KingBlack;
 
 
-    //public bool noRules = false;
     public bool freeMode = true;
     public bool localGame = true;
 
