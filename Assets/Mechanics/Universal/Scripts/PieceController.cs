@@ -23,10 +23,6 @@ public class PieceController : MonoBehaviour
     public PieceComponent KingBlack;
 
 
-    public bool freeMode = true;
-    public bool localGame = true;
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -76,8 +72,8 @@ public class PieceController : MonoBehaviour
                     return;
             }
 
-            if (localGame || comp.Player.name != "Bot")
-                if (freeMode || comp.Player.id == moveTracker.GetTurnPlayer())
+            if (boardManager.localGame || comp.Player.name != "Bot")
+                if (boardManager.freeMode || comp.Player.id == moveTracker.GetTurnPlayer())
                     SelectPiece(piece);
             //Debug.Log($"Selecionou peça {piece.name} em {clickedPos}");
 

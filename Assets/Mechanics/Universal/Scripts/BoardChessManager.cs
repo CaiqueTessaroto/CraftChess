@@ -28,6 +28,9 @@ public class BoardChessManager : MonoBehaviour
 
     [Header("Control")]
     public bool inBlackView = false;
+    public bool noRules = false;
+    public bool freeMode = true;
+    public bool localGame = true;
     private GameObject currentSelection;
 
     private GameObject currentOrigin;
@@ -45,8 +48,6 @@ public class BoardChessManager : MonoBehaviour
     // Armazena as células do grid
     public GameObject[,] gridCells;
 
-    [Header("Control")]
-    public bool noRules = false;
 
     void Start()
     {
@@ -591,7 +592,7 @@ public class BoardChessManager : MonoBehaviour
             house.isControlledByBlack = false;
             house.WhitePiecesControl.Clear();
             house.BlackPiecesControl.Clear();
-        //    house.isOccupied = false;
+            //    house.isOccupied = false;
         }
 
         // 2️⃣ Atualiza o controle com base nas peças
