@@ -157,9 +157,10 @@ public class MotionVisualization : MonoBehaviour
                         validMoves = movement.GetValidMovesInCheck(validMoves);
                         if (!piece.IsKing)
                             validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
-
-                        ShowSpritesAtPassantMoves(validMoves);
                     }
+
+                    ShowSpritesAtPassantMoves(validMoves);
+
                 }
             }
         }
