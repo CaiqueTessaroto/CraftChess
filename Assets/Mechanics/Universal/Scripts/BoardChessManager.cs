@@ -580,7 +580,7 @@ public class BoardChessManager : MonoBehaviour
 
     public void UpdateBoardControl()
     {
-        Debug.Log("UpdateBoardControl");
+        //Debug.Log("UpdateBoardControl");
         // 1️⃣ Limpa todos os controles antigos
         foreach (var house in BoardHouses)
         {
@@ -630,7 +630,7 @@ public class BoardChessManager : MonoBehaviour
 
     public void UpdateBoardControlSimulated()
     {
-        Debug.Log("UpdateBoardControl");
+        //Debug.Log("UpdateBoardControlSimulated");
         // 1️⃣ Limpa todos os controles antigos
         foreach (var house in BoardHouses)
         {

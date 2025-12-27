@@ -102,7 +102,8 @@ public class PieceMovement : MonoBehaviour
 
         validMoves = GetValidKingMoves(validMoves);
         validMoves = GetValidMovesInCheck(validMoves);
-        validMoves.AddRange(GetValidCaptureMovesInCheck(rawForMovesInCheck));
+        if (!thisPiece.IsKing)
+            validMoves.AddRange(GetValidCaptureMovesInCheck(rawForMovesInCheck));
 
 
         //pegar todos os movimentos de todas as peças se estiver zerado e o rei sobre ataque é checkmate se o rei não estiver sobre ataque é afogamento 
@@ -183,8 +184,6 @@ public class PieceMovement : MonoBehaviour
                     GameObject gameObjectKing = gridManager.GetCellAtPosition(pos.x, pos.y);
                     Cell cellKing = gameObjectKing.GetComponent<Cell>();
 
-                    Debug.Log(cellKing.house.BlackPiecesControl.Count);
-
                     if (cellKing.house.BlackPiecesControl.Count == 0)
                     {
                         validMovesInCheck.Add(move);
@@ -206,13 +205,15 @@ public class PieceMovement : MonoBehaviour
 
         }
 
+        gridManager.UpdateBoardControl();
+
         return validMovesInCheck;
     }
 
     public List<Vector2Int> GetValidCaptureMovesInCheck(List<Vector2Int> validMoves)
     {
-        if (thisPiece.IsKing)
-            return validMoves;
+        //if (thisPiece.IsKing)
+        //    return validMoves;
 
         List<Vector2Int> validCaptureMovesInCheck = new List<Vector2Int>();
 
@@ -426,6 +427,20 @@ public class PieceMovement : MonoBehaviour
             if (gridManager.IsHouseOccupied(current.x, current.y))
             {
                 return false;
+            }
+
+            GameObject gameObjectPiece = gridManager.GetCellAtPosition(current.x, current.y);
+            Cell cell = gameObjectPiece.GetComponent<Cell>();
+
+            if (thisPiece.Player.id == 0)
+            {
+                if (cell.house.isControlledByBlack)
+                    return false;
+            }
+            else
+            {
+                if (cell.house.isControlledByWhite)
+                    return false;
             }
 
             current += direction;
