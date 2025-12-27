@@ -44,7 +44,7 @@ public class PieceMovement : MonoBehaviour
     }
 
 
-    public List<Vector2Int> GetValidMoves(bool control = false)
+    public List<Vector2Int> GetValidMoves(bool control = false, bool updateBoardControl = true)
     {
         if (thisPiece == null) return null;
 
@@ -53,33 +53,32 @@ public class PieceMovement : MonoBehaviour
         if (configData.straight.Active)
         {
             List<Vector2Int> rawMoves = GetDirectionalMoves(configData.straight);
-            rawMoves = GetValidDirectionalMoves(rawMoves, configData.straight.Jump, configData.straight.Capture, configData.straight.Move);
-            rawMoves = ControlOccupiedHouses(rawMoves, configData.straight.Capture, control);
-            validMoves.AddRange(rawMoves);
+            List<Vector2Int> moves = GetValidDirectionalMoves(rawMoves, configData.straight.Jump, configData.straight.Capture, configData.straight.Move);
+            validMoves.AddRange(ControlOccupiedHouses(moves, configData.straight.Capture, false));
+
             //validMoves.AddRange(FilterValidMoves(rawMoves, configData.straight.Jump, configData.straight.Capture, configData.straight.Move));
         }
         if (configData.diagonal.Active)
         {
             List<Vector2Int> rawMoves = GetDiagonalMoves(configData.diagonal);
-            rawMoves = GetValidDiagonalMoves(rawMoves, configData.diagonal.Jump, configData.diagonal.Capture, configData.diagonal.Move);
-            rawMoves = ControlOccupiedHouses(rawMoves, configData.diagonal.Capture, control);
-            validMoves.AddRange(rawMoves);
+            List<Vector2Int> moves = GetValidDiagonalMoves(rawMoves, configData.diagonal.Jump, configData.diagonal.Capture, configData.diagonal.Move);
+            validMoves.AddRange(ControlOccupiedHouses(moves, configData.diagonal.Capture, control));
+
             //validMoves.AddRange(FilterValidMoves(rawMoves, configData.diagonal.Jump, configData.diagonal.Capture, configData.diagonal.Move));
         }
         if (configData.custom.Active)
         {
             List<Vector2Int> rawMoves = GetCustomMovies();
-            rawMoves = FilterValidMoves(rawMoves, configData.custom.Jump, configData.custom.Capture, configData.custom.Move);
-            rawMoves = ControlOccupiedHouses(rawMoves, configData.custom.Capture, control);
-            validMoves.AddRange(rawMoves);
+            List<Vector2Int> moves = FilterValidMoves(rawMoves, configData.custom.Jump, configData.custom.Capture, configData.custom.Move);
+            validMoves.AddRange(ControlOccupiedHouses(moves, configData.custom.Capture, control));
+
         }
         if (!thisPiece.HasMoved)
             if (configData.special.Active)
             {
                 List<Vector2Int> rawMoves = GetSpecialMovies();
-                rawMoves = FilterValidMoves(rawMoves, configData.special.Jump, configData.special.Capture, configData.special.Move);
-                rawMoves = ControlOccupiedHouses(rawMoves, configData.special.Capture, control);
-                validMoves.AddRange(rawMoves);
+                List<Vector2Int> moves = FilterValidMoves(rawMoves, configData.special.Jump, configData.special.Capture, configData.special.Move);
+                validMoves.AddRange(ControlOccupiedHouses(moves, configData.special.Capture, control));
             }
 
 
@@ -102,210 +101,172 @@ public class PieceMovement : MonoBehaviour
             List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
             rawForMovesInCheck.AddRange(validMoves);
 
-            validMoves = GetValidKingMoves(validMoves);
-            validMoves = GetValidMovesInCheck(validMoves);
-            if (!thisPiece.IsKing)
-                validMoves.AddRange(GetValidCaptureMovesInCheck(rawForMovesInCheck));
+            validMoves= GetLegalMovesWhileInCheck(thisPiece,validMoves);
         }
 
-
-        //pegar todos os movimentos de todas as peças se estiver zerado e o rei sobre ataque é checkmate se o rei não estiver sobre ataque é afogamento 
-
-        //if (!thisPiece.HasMoved)
-        //    if (configData.special.Castling && configData.special.Pieces != null)
-        //    {
-        //        validMoves.AddRange(GetCastlingMove(configData.special.Pieces));
-        //    }
+        if (!thisPiece.HasMoved)
+            if (thisPiece.CastlingPieces.Count > 0 && thisPiece.CastlingPieces != null)
+                validMoves.AddRange(GetCastlingMove(thisPiece.CastlingPieces));
 
 
 
         return validMoves;
     }
 
-    public List<Vector2Int> GetValidMovesInCheck(List<Vector2Int> validMoves)
+    //pegar todos os movimentos de todas as peças se estiver zerado e o rei sobre ataque é checkmate se o rei não estiver sobre ataque é afogamento 
+
+    //verificar as peças que atacam o rei e as peças que atacam a peça que se move
+
+    bool IsSlidingPiece(PieceMovement pieceMove)
     {
-        if (thisPiece.IsKing)
+        //return piece.Type == PieceType.Rook ||
+        //       piece.Type == PieceType.Bishop ||
+        //       piece.Type == PieceType.Queen;
+
+        if (pieceMove.configData.straight.Active && pieceMove.configData.straight.Range > 1)
+            return true;
+        else if (pieceMove.configData.diagonal.Active && pieceMove.configData.diagonal.Range > 1)
+            return true;
+        else
+            return false;
+    }
+
+    public List<Vector2Int> GetLegalMovesWhileInCheck(PieceComponent piece,List<Vector2Int> validMoves)
+    {
+        List<Vector2Int> legalMoves = new List<Vector2Int>();
+
+        // Rei
+        Vector2Int kingPos = piece.Player.id == 0
+            ? pieceController.KingWhite.Position
+            : pieceController.KingBlack.Position;
+
+        Cell kingCell = gridManager
+            .GetCellAtPosition(kingPos.x, kingPos.y)
+            .GetComponent<Cell>();
+
+        // Atacantes
+        List<PieceComponent> attackers =
+            piece.Player.id == 0
+                ? kingCell.house.BlackPiecesControl
+                : kingCell.house.WhitePiecesControl;
+
+        // Não está em xeque
+        if (attackers.Count == 0)
             return validMoves;
 
-        if (thisPiece.Player.id == 0)
+        // Xeque duplo → só o rei pode jogar
+        if (attackers.Count >= 2 && !piece.IsKing)
+            return legalMoves;
+
+        // Movimento do rei
+        if (piece.IsKing)
         {
-            Vector2Int pos = pieceController.KingWhite.Position;
-            GameObject gameObjectKing = gridManager.GetCellAtPosition(pos.x, pos.y);
-            Cell cellKing = gameObjectKing.GetComponent<Cell>();
-
-            if (cellKing.house.BlackPiecesControl.Count == 0)
+            foreach (Vector2Int move in validMoves)
             {
+                Cell targetCell = gridManager
+                    .GetCellAtPosition(move.x, move.y)
+                    .GetComponent<Cell>();
 
-                Vector2Int Position = thisPiece.Position;
-                GameObject gameObjectPiece = gridManager.GetCellAtPosition(Position.x, Position.y);
-                Cell cellPiece = gameObjectPiece.GetComponent<Cell>();
+                bool underAttack =
+                    piece.Player.id == 0
+                        ? targetCell.house.isControlledByBlack
+                        : targetCell.house.isControlledByWhite;
 
-                if (cellPiece.house.BlackPiecesControl.Count == 0)
-                    return validMoves;
-
+                if (!underAttack)
+                    legalMoves.Add(move);
             }
-        }
-        else
-        {
-            Vector2Int pos = pieceController.KingBlack.Position;
-            GameObject gameObjectKing = gridManager.GetCellAtPosition(pos.x, pos.y);
-            Cell cellKing = gameObjectKing.GetComponent<Cell>();
 
-            if (cellKing.house.WhitePiecesControl.Count == 0)
-            {
-                Vector2Int Position = thisPiece.Position;
-                GameObject gameObjectPiece = gridManager.GetCellAtPosition(Position.x, Position.y);
-                Cell cellPiece = gameObjectPiece.GetComponent<Cell>();
-
-                if (cellPiece.house.WhitePiecesControl.Count == 0)
-                    return validMoves;
-            }
+            return legalMoves;
         }
 
+        // Xeque simples
+        PieceComponent attacker = attackers[0];
+        PieceMovement attackerMove = attacker.gameObject.GetComponent<PieceMovement>();
 
-        List<Vector2Int> validMovesInCheck = new List<Vector2Int>();
-
+        // Captura do atacante
         foreach (Vector2Int move in validMoves)
         {
-
-            if (!gridManager.GetPieceAtPosition(move.x, move.y))
-            {
-                GameObject gameObject_Cell = gridManager.GetCellAtPosition(move.x, move.y);
-                Cell cell = gameObject_Cell.GetComponent<Cell>();
-
-                GameObject gameObject_PlayerCell = gridManager.GetCellAtPosition(thisPiece.Position.x, thisPiece.Position.y);
-                Cell playerCell = gameObject_PlayerCell.GetComponent<Cell>();
-
-                playerCell.house.isOccupied = false;
-                cell.house.isOccupied = true;
-
-                gridManager.UpdateBoardControlSimulated();
-
-                if (thisPiece.Player.id == 0)
-                {
-                    Vector2Int pos = pieceController.KingWhite.Position;
-                    GameObject gameObjectKing = gridManager.GetCellAtPosition(pos.x, pos.y);
-                    Cell cellKing = gameObjectKing.GetComponent<Cell>();
-
-                    if (cellKing.house.BlackPiecesControl.Count == 0)
-                    {
-                        validMovesInCheck.Add(move);
-                    }
-                }
-                else
-                {
-                    Vector2Int pos = pieceController.KingBlack.Position;
-                    GameObject gameObjectKing = gridManager.GetCellAtPosition(pos.x, pos.y);
-                    Cell cellKing = gameObjectKing.GetComponent<Cell>();
-
-                    if (cellKing.house.WhitePiecesControl.Count == 0)
-                        validMovesInCheck.Add(move);
-                }
-
-                playerCell.house.isOccupied = true;
-                cell.house.isOccupied = false;
-            }
-
+            if (move == attacker.Position)
+                legalMoves.Add(move);
         }
 
-        gridManager.UpdateBoardControl();
+        // Bloqueio do ataque (se for peça de raio)
+        if (IsSlidingPiece(attackerMove))
+        {
+            List<Vector2Int> blockRay =
+                GetRayBetween(attacker.Position, kingPos);
 
-        return validMovesInCheck;
+            foreach (Vector2Int move in validMoves)
+            {
+                if (blockRay.Contains(move))
+                    legalMoves.Add(move);
+            }
+        }
+
+        // Cravada
+        bool isPinned = IsPiecePinned(
+            piece.Position,
+            kingPos,
+            attackers
+        );
+
+        if (isPinned)
+        {
+            List<Vector2Int> filtered = new List<Vector2Int>();
+
+            foreach (Vector2Int move in legalMoves)
+            {
+                List<Vector2Int> pinRay =
+                    GetRayBetween(attacker.Position, kingPos);
+
+                if (move == attacker.Position || pinRay.Contains(move))
+                    filtered.Add(move);
+            }
+
+            return filtered;
+        }
+
+        return legalMoves;
     }
-
-    public List<Vector2Int> GetValidCaptureMovesInCheck(List<Vector2Int> validMoves)
+    bool IsPiecePinned(
+        Vector2Int piecePos,
+        Vector2Int kingPos,
+        List<PieceComponent> attackers)
     {
-        //if (thisPiece.IsKing)
-        //    return validMoves;
-
-        List<Vector2Int> validCaptureMovesInCheck = new List<Vector2Int>();
-
-        if (thisPiece.Player.id == 0)
+        foreach (var attacker in attackers)
         {
-            Vector2Int pos = pieceController.KingWhite.Position;
-            GameObject gameObject_Cell = gridManager.GetCellAtPosition(pos.x, pos.y);
-            Cell cell = gameObject_Cell.GetComponent<Cell>();
+            PieceMovement attackerMove = attacker.gameObject.GetComponent<PieceMovement>();
+            if (!IsSlidingPiece(attackerMove))
+                continue;
 
-            if (cell.house.isControlledByBlack)
-            {
-                if (cell.house.BlackPiecesControl.Count > 1)
-                    return validCaptureMovesInCheck;
+            List<Vector2Int> ray = GetRayBetween(attacker.Position, kingPos);
 
-                foreach (PieceComponent enemyPiece in cell.house.BlackPiecesControl)
-                {
-                    foreach (Vector2Int move in validMoves)
-                    {
-                        if (move == enemyPiece.Position)
-                        {
-                            validCaptureMovesInCheck.Add(move);
-
-                        }
-
-                    }
-                }
-            }
-            else
-                return validMoves;
-        }
-        else
-        {
-            Vector2Int pos = pieceController.KingBlack.Position;
-            GameObject gameObject_Cell = gridManager.GetCellAtPosition(pos.x, pos.y);
-            Cell cell = gameObject_Cell.GetComponent<Cell>();
-
-            if (cell.house.isControlledByWhite)
-            {
-                if (cell.house.WhitePiecesControl.Count > 1)
-                    return validCaptureMovesInCheck;
-
-                foreach (PieceComponent enemyPiece in cell.house.WhitePiecesControl)
-                {
-                    foreach (Vector2Int move in validMoves)
-                    {
-                        if (move == enemyPiece.Position)
-                        {
-                            validCaptureMovesInCheck.Add(move);
-
-                        }
-                    }
-                }
-            }
-            else
-                return validMoves;
+            if (ray.Contains(piecePos))
+                return true;
         }
 
-        return validCaptureMovesInCheck;
-
+        return false;
     }
 
-    public List<Vector2Int> GetValidKingMoves(List<Vector2Int> validMoves)
+    List<Vector2Int> GetRayBetween(Vector2Int from, Vector2Int to)
     {
-        if (!thisPiece.IsKing)
-            return validMoves;
+        List<Vector2Int> ray = new List<Vector2Int>();
 
-        List<Vector2Int> kingValidMoves = new List<Vector2Int>();
+        int dx = Mathf.Clamp(to.x - from.x, -1, 1);
+        int dy = Mathf.Clamp(to.y - from.y, -1, 1);
 
-        foreach (Vector2Int move in validMoves)
+        Vector2Int current = from + new Vector2Int(dx, dy);
+
+        while (current != to)
         {
-            GameObject gameObject_Cell = gridManager.GetCellAtPosition(move.x, move.y);
-            Cell cell = gameObject_Cell.GetComponent<Cell>();
-
-            if (thisPiece.Player.id == 0)
-            {
-                if (!cell.house.isControlledByBlack)
-                    kingValidMoves.Add(move);
-            }
-            else
-            {
-                if (!cell.house.isControlledByWhite)
-                    kingValidMoves.Add(move);
-            }
-
+            ray.Add(current);
+            current += new Vector2Int(dx, dy);
         }
 
-        return kingValidMoves;
+        return ray;
     }
 
+   
     public List<Vector2Int> GetValidCaptureMoves(bool control = false)
     {
         if (thisPiece == null) return null;
@@ -369,13 +330,6 @@ public class PieceMovement : MonoBehaviour
                 }
             }
         }
-
-
-        //if (!thisPiece.HasMoved)
-        //    if (configData.special.Castling && configData.special.Pieces != null)
-        //    {
-        //        validMoves.AddRange(GetCastlingMove(configData.special.Pieces));
-        //    }
 
 
         return validMoves;

@@ -17,7 +17,7 @@ public class GameInterfaceManager : MonoBehaviour
         switchSide.onClick.AddListener(() =>
         {
             boardChessManager.SwitchSide();
-
+            boardChessManager.UpdateBoardControl();
         });
 
     }

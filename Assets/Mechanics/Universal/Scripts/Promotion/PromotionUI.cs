@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 
 public class PromotionUI : MonoBehaviour
@@ -9,6 +10,7 @@ public class PromotionUI : MonoBehaviour
 
     public ChessMovesPanel chessMovesPanel;
     public BoardChessManager boardManager;
+    public PieceController pieceController;
 
     [Header("Prefabs")]
     public GameObject promotionCanvasPrefab;
@@ -44,6 +46,8 @@ public class PromotionUI : MonoBehaviour
         if (boardManager == null)
             boardManager = FindObjectOfType<BoardChessManager>();
 
+        if (pieceController == null)
+            pieceController = FindObjectOfType<PieceController>();
 
         CreateCanvas(currentPiece);
 
@@ -169,10 +173,24 @@ public class PromotionUI : MonoBehaviour
                     btn.onClick.AddListener(() =>
                     {
                         GameObject newPiece = boardManager.PlacePiece(pieceName, sprite, pos, squad);
+
+                        if (newPiece == null)
+                        {
+                            Debug.LogError("Erro ao criar peça promovida");
+                            return;
+                        }
+
+
                         PieceComponent component = newPiece.GetComponent<PieceComponent>();
+                        PieceMovement newMovement = newPiece.GetComponent<PieceMovement>();
+
                         component.IsPromoted = true;
 
-                        Destroy(currentPromotionCanvas);
+                        // 5️⃣ Garante inicialização de movimentos
+                        if (newMovement != null)
+                        {
+                            component.PossibleMoves = new List<Vector2Int>();
+                        }
 
                         string letter = $"{(char)('a' + pos.x)}";
                         string number = $"{pos.y + 1}";
@@ -188,23 +206,89 @@ public class PromotionUI : MonoBehaviour
                         else
                             house = $"{letter}{number}=";
 
+                        boardManager.UpdatePiecePosition(currentPiece.Position, pos, component.Name);
+
+                        pieceController.DeselectPiece();
 
                         boardManager.AllPieces.Remove(currentPiece.gameObject);
                         Destroy(currentPiece.gameObject);
-
 
                         SpriteRenderer sr = currentPiece.GetComponent<SpriteRenderer>();
 
                         chessMovesPanel.AddMove(house, sr.sprite, sprite);
 
-                        boardManager.UpdateBoardControl();
+                        //boardManager.UpdateBoardControl();
+                        //Debug.Log("UpdateBoardControl");
+
+                        pieceController.Updateforce(newPiece);
+
+                        //StartCoroutine(pieceController.DelayedBoardUpdate(newPiece));
+                        //Debug.Log("DelayedBoardUpdate2");
+                        Destroy(currentPromotionCanvas);
                     });
                 }
 
-                // (Opcional) — renomeia o botão na hierarquia
                 newButton.name = $"Btn_{spriteName}";
             }
         }
+    }
+
+
+    public void FinalizePromotion(
+        PieceComponent pawn,
+        string newPieceName,
+        Sprite newSprite,
+        Vector2Int pos,
+        MatchSquadData squadData,
+        GameObject targetPiece = null
+    )
+    {
+        // 1️⃣ Segurança total: limpa qualquer seleção
+        pieceController.DeselectPiece();
+
+        // 2️⃣ Se houve captura na promoção
+        if (targetPiece != null)
+        {
+            boardManager.AddCapturedPiece(targetPiece, pawn.Player.id);
+            boardManager.AllPieces.Remove(targetPiece.gameObject);
+            Destroy(targetPiece.gameObject);
+        }
+
+        // 3️⃣ Cria a nova peça promovida
+        GameObject newPieceObj = boardManager.PlacePiece(
+            newPieceName,
+            newSprite,
+            pos,
+            squadData
+        );
+
+        if (newPieceObj == null)
+        {
+            Debug.LogError("Erro ao criar peça promovida");
+            return;
+        }
+
+        PieceComponent newPiece = newPieceObj.GetComponent<PieceComponent>();
+        PieceMovement newMovement = newPieceObj.GetComponent<PieceMovement>();
+
+        // 4️⃣ Marca como promovida
+        newPiece.IsPromoted = true;
+
+        // 5️⃣ Garante inicialização de movimentos
+        if (newMovement != null)
+        {
+            newPiece.PossibleMoves = newMovement.GetValidMoves();
+        }
+
+        // 6️⃣ Remove o peão antigo
+        boardManager.AllPieces.Remove(pawn.gameObject);
+        Destroy(pawn.gameObject);
+
+        // 7️⃣ Atualiza o tabuleiro (controle, ataques, ocupação)
+        boardManager.UpdateBoardControl();
+
+        // 8️⃣ Estado limpo e pronto para próximo clique
+        pieceController.selectedPiece = null;
     }
 
 

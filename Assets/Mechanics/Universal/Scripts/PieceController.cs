@@ -15,7 +15,7 @@ public class PieceController : MonoBehaviour
     public CreatePromotionUI createPromotionUI;
     public SoundManager soundManager;
 
-    private GameObject selectedPiece;
+    public GameObject selectedPiece;
     private PieceComponent pieceComponent;
     private PieceMovement pieceMovement;
 
@@ -110,7 +110,7 @@ public class PieceController : MonoBehaviour
         motionVisualization.ClearMoveOverlays();
     }
 
-    private bool SelectPiece(GameObject piece)
+    public bool SelectPiece(GameObject piece)
     {
         PieceComponent component = piece.GetComponent<PieceComponent>();
 
@@ -127,18 +127,43 @@ public class PieceController : MonoBehaviour
         return false;
     }
 
+    public void Updateforce(GameObject newPiece)
+    {
+        StartCoroutine(DelayedBoardUpdate(newPiece));
+    }
 
+    public IEnumerator DelayedBoardUpdate(GameObject newPiece)
+    {
+
+        yield return new WaitForEndOfFrame();
+        //yield return new WaitForSecondsRealtime(1f);
+        Debug.Log("DelayedBoardUpdate");
+
+        if (boardManager != null)
+        {
+            boardManager.UpdateBoardControl();
+            //DeselectPiece();
+            //SelectPiece(newPiece);
+            //pieceController.DeselectPiece();
+        }
+    }
 
     private bool AttemptMoveOrCapture(Vector2Int clickedPosition)
     {
-        List<Vector2Int> validMoves = pieceMovement.GetValidMoves();
+        //List<Vector2Int> validMoves = pieceMovement.GetValidMoves();
+        List<Vector2Int> validMoves = pieceComponent.PossibleMoves;
 
-        if (pieceComponent.CastlingPieces.Count > 0 && pieceComponent.CastlingPieces != null)
-            validMoves.AddRange(pieceMovement.GetCastlingMove(pieceComponent.CastlingPieces));
+        //if (pieceComponent.CastlingPieces.Count > 0 && pieceComponent.CastlingPieces != null)
+        //    validMoves.AddRange(pieceMovement.GetCastlingMove(pieceComponent.CastlingPieces));
+
+        if (validMoves == null)
+        {
+            boardManager.UpdateBoardControl();
+        }
 
         bool captured = false;
 
-        if (validMoves.Contains(clickedPosition))
+        if (validMoves.Contains(clickedPosition) && validMoves != null)
         {
 
             GameObject targetPiece = boardManager.GetPieceAtPosition(clickedPosition.x, clickedPosition.y);

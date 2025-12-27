@@ -558,6 +558,7 @@ public class BoardChessManager : MonoBehaviour
         }
         else
             pieceComponent.Initialize(pieceData.Squad, name, pieceData.Power, pieceData.PromotionPieces, pieceData.CastlingPieces, player, pos, false);
+
     }
 
 
@@ -584,7 +585,6 @@ public class BoardChessManager : MonoBehaviour
 
     public void UpdateBoardControl()
     {
-        //Debug.Log("UpdateBoardControl");
         // 1️⃣ Limpa todos os controles antigos
         foreach (var house in BoardHouses)
         {
@@ -592,25 +592,39 @@ public class BoardChessManager : MonoBehaviour
             house.isControlledByBlack = false;
             house.WhitePiecesControl.Clear();
             house.BlackPiecesControl.Clear();
-            //    house.isOccupied = false;
+            house.isOccupied = false;
+        }
+
+        foreach (var house in BoardHouses)
+        {
+            Cell cellComp = gridCells[house.Position.x, house.Position.y].GetComponent<Cell>();
+            if (GetPieceAtPosition(house.Position.x, house.Position.y))
+                cellComp.house.isOccupied = true;
         }
 
         // 2️⃣ Atualiza o controle com base nas peças
         foreach (GameObject piece in AllPieces)
         {
-            if (piece == null) continue;
+            if (piece == null)
+                continue;
 
             PieceComponent component = piece.GetComponent<PieceComponent>();
             PieceMovement movement = piece.GetComponent<PieceMovement>();
-            if (component == null || movement == null) continue;
+
+            if (component == null || movement == null)
+                continue;
 
             List<Vector2Int> controlledMoves = movement.GetValidCaptureMoves(true);
+            //List<Vector2Int> controlledMoves = movement.GetValidMoves();
+            //component.PossibleMoves = movement.GetValidMoves(false, false);
 
-            if (controlledMoves == null) continue;
+            if (controlledMoves == null)
+                continue;
 
             foreach (Vector2Int move in controlledMoves)
             {
-                if (!IsWithinBounds(move.x, move.y)) continue;
+                if (!IsWithinBounds(move.x, move.y))
+                    continue;
 
                 Cell cellComp = gridCells[move.x, move.y].GetComponent<Cell>();
 
@@ -628,54 +642,26 @@ public class BoardChessManager : MonoBehaviour
                     cellComp.house.BlackPiecesControl.Add(component);
                 }
             }
-        }
-    }
 
-
-    public void UpdateBoardControlSimulated()
-    {
-        //Debug.Log("UpdateBoardControlSimulated");
-        // 1️⃣ Limpa todos os controles antigos
-        foreach (var house in BoardHouses)
-        {
-            house.isControlledByWhite = false;
-            house.isControlledByBlack = false;
-            house.WhitePiecesControl.Clear();
-            house.BlackPiecesControl.Clear();
         }
 
-        // 2️⃣ Atualiza o controle com base nas peças
         foreach (GameObject piece in AllPieces)
         {
-            if (piece == null) continue;
+            if (piece == null)
+                continue;
 
             PieceComponent component = piece.GetComponent<PieceComponent>();
             PieceMovement movement = piece.GetComponent<PieceMovement>();
-            if (component == null || movement == null) continue;
 
-            List<Vector2Int> controlledMoves = movement.GetValidCaptureMoves(true);
+            if (component == null || movement == null)
+                continue;
 
-            if (controlledMoves == null) continue;
+            component.PossibleMoves = movement.GetValidMoves(false, false);
 
-            foreach (Vector2Int move in controlledMoves)
-            {
-                if (!IsWithinBounds(move.x, move.y)) continue;
-
-                Cell cellComp = gridCells[move.x, move.y].GetComponent<Cell>();
-
-                if (component.Player.id == 0)
-                {
-                    cellComp.house.isControlledByWhite = true;
-                    cellComp.house.WhitePiecesControl.Add(component);
-                }
-                else
-                {
-                    cellComp.house.isControlledByBlack = true;
-                    cellComp.house.BlackPiecesControl.Add(component);
-                }
-            }
         }
+
     }
+
 
 
 

@@ -7,6 +7,7 @@ public class MotionVisualization : MonoBehaviour
     [Header("Scripts")]
     public BoardChessManager gridManager;
     private MoveTracker moveTracker;
+    private PieceController pieceController;
 
     [Header("Color")]
     public Color moveColor = Color.green;
@@ -29,6 +30,9 @@ public class MotionVisualization : MonoBehaviour
 
         moveTracker = FindObjectOfType<MoveTracker>();
 
+        pieceController = FindObjectOfType<PieceController>();
+
+
         if (moveTracker == null)
             Debug.LogError("MoveTracker não encontrado na cena.");
 
@@ -43,110 +47,19 @@ public class MotionVisualization : MonoBehaviour
 
         if (movement == null || movement.configData == null) return;
 
+        ShowSpritesAtMoves(piece);
+
         //Vector2Int origin = new Vector2Int((int)piece.gridPosition.x, (int)piece.gridPosition.y);
 
 
-        // Direcional
-        if (movement.configData.straight.Active)
-        {
-            moveData = movement.configData.straight;
-            List<Vector2Int> rawMoves = movement.GetDirectionalMoves(moveData);
-            List<Vector2Int> validMoves = movement.GetValidDirectionalMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
-            validMoves = movement.ControlOccupiedHouses(validMoves, moveData.Capture, false);
-
-            if (!gridManager.noRules)
-            {
-                List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
-                rawForMovesInCheck.AddRange(validMoves);
-
-                validMoves = movement.GetValidKingMoves(validMoves);
-                validMoves = movement.GetValidMovesInCheck(validMoves);
-                if (!piece.IsKing)
-                    validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
-            }
-
-            //List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
-            ShowSpritesAtMoves(validMoves, 1);
-        }
-
-        // Diagonal
-        if (movement.configData.diagonal.Active)
-        {
-            moveData = movement.configData.diagonal;
-            List<Vector2Int> rawMoves = movement.GetDiagonalMoves(moveData);
-            List<Vector2Int> validMoves = movement.GetValidDiagonalMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
-            validMoves = movement.ControlOccupiedHouses(validMoves, moveData.Capture, false);
-
-            if (!gridManager.noRules)
-            {
-                List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
-                rawForMovesInCheck.AddRange(validMoves);
-
-                validMoves = movement.GetValidKingMoves(validMoves);
-                validMoves = movement.GetValidMovesInCheck(validMoves);
-                if (!piece.IsKing)
-                    validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
-            }
-
-            //List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
-            ShowSpritesAtMoves(validMoves, 1);
-        }
-
-        // Custom
-        if (movement.configData.custom.Active)
-        {
-            personalizedMoveData = movement.configData.custom;
-            List<Vector2Int> rawMoves = movement.GetCustomMovies();
-            List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, personalizedMoveData.Jump, personalizedMoveData.Capture, personalizedMoveData.Move);
-            validMoves = movement.ControlOccupiedHouses(validMoves, personalizedMoveData.Capture, false);
-
-            if (!gridManager.noRules)
-            {
-                List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
-                rawForMovesInCheck.AddRange(validMoves);
-
-                validMoves = movement.GetValidKingMoves(validMoves);
-                validMoves = movement.GetValidMovesInCheck(validMoves);
-                if (!piece.IsKing)
-                    validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
-            }
-
-            ShowSpritesAtMoves(validMoves, 2);
-        }
-
-        // Especial
-        if (!piece.HasMoved)
-            if (movement.configData.special.Active)
-            {
-                specialMoveData = movement.configData.special;
-                List<Vector2Int> rawMoves = movement.GetSpecialMovies();
-                List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, specialMoveData.Jump, specialMoveData.Capture, specialMoveData.Move);
-                validMoves = movement.ControlOccupiedHouses(validMoves, specialMoveData.Capture, false);
-
-                if (!gridManager.noRules)
+        /*
+                // Direcional
+                if (movement.configData.straight.Active)
                 {
-                    List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
-                    rawForMovesInCheck.AddRange(validMoves);
-
-                    validMoves = movement.GetValidKingMoves(validMoves);
-                    validMoves = movement.GetValidMovesInCheck(validMoves);
-                    if (!piece.IsKing)
-                        validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
-                }
-
-                ShowSpritesAtMoves(validMoves, 3);
-            }
-
-
-        if (moveTracker.GetLastMoved() != null)
-        {
-            Move lastMoved = moveTracker.GetLastMoved();
-            if (lastMoved != null && lastMoved.PieceObject != null)
-            {
-                PieceComponent lastPieceMoved = lastMoved.PieceObject.GetComponent<PieceComponent>();
-                if (lastPieceMoved.InitialMoved && piece.Player.id != lastPieceMoved.Player.id)
-                {
-                    List<Vector2Int> validMoves = movement.GetHouseBehindInitialMove(lastPieceMoved, lastMoved.TargetPosition);
+                    moveData = movement.configData.straight;
+                    List<Vector2Int> rawMoves = movement.GetDirectionalMoves(moveData);
+                    List<Vector2Int> validMoves = movement.GetValidDirectionalMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
+                    validMoves = movement.ControlOccupiedHouses(validMoves, moveData.Capture, false);
 
                     if (!gridManager.noRules)
                     {
@@ -159,31 +72,187 @@ public class MotionVisualization : MonoBehaviour
                             validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
                     }
 
-                    ShowSpritesAtPassantMoves(validMoves);
-
+                    //List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
+                    ShowSpritesAtMoves(validMoves, 1);
                 }
-            }
-        }
+
+                // Diagonal
+                if (movement.configData.diagonal.Active)
+                {
+                    moveData = movement.configData.diagonal;
+                    List<Vector2Int> rawMoves = movement.GetDiagonalMoves(moveData);
+                    List<Vector2Int> validMoves = movement.GetValidDiagonalMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
+                    validMoves = movement.ControlOccupiedHouses(validMoves, moveData.Capture, false);
+
+                    if (!gridManager.noRules)
+                    {
+                        List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
+                        rawForMovesInCheck.AddRange(validMoves);
+
+                        validMoves = movement.GetValidKingMoves(validMoves);
+                        validMoves = movement.GetValidMovesInCheck(validMoves);
+                        if (!piece.IsKing)
+                            validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+                    }
+
+                    //List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, moveData.Jump, moveData.Capture, moveData.Move);
+                    ShowSpritesAtMoves(validMoves, 1);
+                }
+
+                // Custom
+                if (movement.configData.custom.Active)
+                {
+                    personalizedMoveData = movement.configData.custom;
+                    List<Vector2Int> rawMoves = movement.GetCustomMovies();
+                    List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, personalizedMoveData.Jump, personalizedMoveData.Capture, personalizedMoveData.Move);
+                    validMoves = movement.ControlOccupiedHouses(validMoves, personalizedMoveData.Capture, false);
+
+                    if (!gridManager.noRules)
+                    {
+                        List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
+                        rawForMovesInCheck.AddRange(validMoves);
+
+                        validMoves = movement.GetValidKingMoves(validMoves);
+                        validMoves = movement.GetValidMovesInCheck(validMoves);
+                        if (!piece.IsKing)
+                            validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+                    }
+
+                    ShowSpritesAtMoves(validMoves, 2);
+                }
+
+                // Especial
+                if (!piece.HasMoved)
+                    if (movement.configData.special.Active)
+                    {
+                        specialMoveData = movement.configData.special;
+                        List<Vector2Int> rawMoves = movement.GetSpecialMovies();
+                        List<Vector2Int> validMoves = movement.FilterValidMoves(rawMoves, specialMoveData.Jump, specialMoveData.Capture, specialMoveData.Move);
+                        validMoves = movement.ControlOccupiedHouses(validMoves, specialMoveData.Capture, false);
+
+                        if (!gridManager.noRules)
+                        {
+                            List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
+                            rawForMovesInCheck.AddRange(validMoves);
+
+                            validMoves = movement.GetValidKingMoves(validMoves);
+                            validMoves = movement.GetValidMovesInCheck(validMoves);
+                            if (!piece.IsKing)
+                                validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+                        }
+
+                        ShowSpritesAtMoves(validMoves, 3);
+                    }
 
 
-        if (!piece.HasMoved)
-            if (piece.CastlingPieces.Count > 0 && piece.CastlingPieces != null)
-            {
-                List<Vector2Int> validMoves = movement.GetCastlingMove(piece.CastlingPieces);
+                if (moveTracker.GetLastMoved() != null)
+                {
+                    Move lastMoved = moveTracker.GetLastMoved();
+                    if (lastMoved != null && lastMoved.PieceObject != null)
+                    {
+                        PieceComponent lastPieceMoved = lastMoved.PieceObject.GetComponent<PieceComponent>();
+                        if (lastPieceMoved.InitialMoved && piece.Player.id != lastPieceMoved.Player.id)
+                        {
+                            List<Vector2Int> validMoves = movement.GetHouseBehindInitialMove(lastPieceMoved, lastMoved.TargetPosition);
 
-                //List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
-                //rawForMovesInCheck.AddRange(validMoves);
+                            if (!gridManager.noRules)
+                            {
+                                List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
+                                rawForMovesInCheck.AddRange(validMoves);
 
-                //validMoves = movement.GetValidKingMoves(validMoves);
-                //validMoves = movement.GetValidMovesInCheck(validMoves);
-                //if (!piece.IsKing)
-                //    validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+                                validMoves = movement.GetValidKingMoves(validMoves);
+                                validMoves = movement.GetValidMovesInCheck(validMoves);
+                                if (!piece.IsKing)
+                                    validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+                            }
 
-                ShowSpritesAtCastlingMoves(validMoves);
-            }
+                            ShowSpritesAtPassantMoves(validMoves);
+
+                        }
+                    }
+                }
+
+
+                if (!piece.HasMoved)
+                    if (piece.CastlingPieces.Count > 0 && piece.CastlingPieces != null)
+                    {
+                        List<Vector2Int> validMoves = movement.GetCastlingMove(piece.CastlingPieces);
+
+                        //List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
+                        //rawForMovesInCheck.AddRange(validMoves);
+
+                        //validMoves = movement.GetValidKingMoves(validMoves);
+                        //validMoves = movement.GetValidMovesInCheck(validMoves);
+                        //if (!piece.IsKing)
+                        //    validMoves.AddRange(movement.GetValidCaptureMovesInCheck(rawForMovesInCheck));
+
+                        ShowSpritesAtCastlingMoves(validMoves);
+                    }
+                    */
+
+
 
     }
 
+    private void ShowSpritesAtMoves(PieceComponent thisPiece)
+    {
+
+        if (thisPiece == null)
+        {
+            Debug.LogError("PieceComponent is null in ShowSpritesAtMoves");
+            return;
+        }
+
+        if (thisPiece.PossibleMoves == null)
+        {
+            //pieceController.DeselectPiece();
+            //gridManager.UpdateBoardControl();
+            //pieceController.SelectPiece(thisPiece.gameObject);
+            Debug.LogWarning("PossibleMoves is null for piece: " + thisPiece.name);
+            return;
+        }
+
+        List<Vector2Int> moves = thisPiece.PossibleMoves;
+
+        foreach (var move in moves)
+        {
+            if (!gridManager.IsWithinBounds(move.x, move.y))
+                continue;
+
+            bool occupied = gridManager.IsHouseOccupied(move.x, move.y);
+
+            if (occupied)
+            {
+                GameObject piece = gridManager.GetPieceAtPosition(move.x, move.y);
+                PieceComponent pieceComponent = piece.GetComponent<PieceComponent>();
+                if (pieceComponent.Player.id == thisPiece.Player.id)
+                    occupied = false;
+
+
+
+            }
+
+            GameObject cell = gridManager.GetCellAtPosition(move.x, move.y);
+            if (cell != null && moveOverlayPrefab != null)
+            {
+                var highlight = Instantiate(moveOverlayPrefab, cell.transform);
+                highlight.transform.localPosition = Vector3.zero;
+                highlight.transform.localScale = Vector3.one;
+                //highlight.name = occupied ? "Overlay" : "Overlay";
+                highlight.name = "Overlay";
+
+                SpriteRenderer sr = highlight.GetComponent<SpriteRenderer>();
+                if (sr != null)
+                {
+                    sr.sortingOrder = 4;
+                    sr.color = occupied ? captureColor : moveColor;
+                }
+
+                activeOverlays.Add(highlight);
+
+            }
+        }
+    }
 
     private void ShowSpritesAtMoves(List<Vector2Int> moves, byte TypeMove)
     {
