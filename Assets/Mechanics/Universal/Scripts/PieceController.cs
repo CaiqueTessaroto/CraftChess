@@ -127,7 +127,7 @@ public class PieceController : MonoBehaviour
         return false;
     }
 
-    public void Updateforce(GameObject newPiece)
+    public void BoardUpdateForce(GameObject newPiece)
     {
         StartCoroutine(DelayedBoardUpdate(newPiece));
     }
@@ -137,14 +137,10 @@ public class PieceController : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
         //yield return new WaitForSecondsRealtime(1f);
-        Debug.Log("DelayedBoardUpdate");
 
         if (boardManager != null)
         {
             boardManager.UpdateBoardControl();
-            //DeselectPiece();
-            //SelectPiece(newPiece);
-            //pieceController.DeselectPiece();
         }
     }
 
@@ -241,7 +237,8 @@ public class PieceController : MonoBehaviour
                     soundManager.PlayCapture();
                     DeselectPiece();
 
-                    boardManager.UpdateBoardControl();
+                    //boardManager.UpdateBoardControl();
+                    StartCoroutine(DelayedBoardUpdate(selectedPiece));
 
                     return true;
                 }
