@@ -23,6 +23,7 @@ public class FileManager : MonoBehaviour
     public GameObject advicePrefab;
     public GameObject inputPrefab;
     public Transform panel;
+    private bool delete = false;
 
     void Start()
     {
@@ -106,12 +107,14 @@ public class FileManager : MonoBehaviour
         buttonCancel.onClick.AddListener(() =>
         {
             Destroy(newWarning);
+            delete = false;
         });
 
         buttonContinue.onClick.AddListener(() =>
         {
             onContinue?.Invoke(); // chama a ação passada
             Destroy(newWarning);
+            delete = false;
         });
 
         // Alterando os textos
@@ -193,6 +196,9 @@ public class FileManager : MonoBehaviour
 
     public void HandleDeleteFolder(string pasta, string caminhoPasta, GameObject newButton)
     {
+
+        delete = true;
+
         if (!Directory.Exists(caminhoPasta))
         {
             Debug.LogWarning("A pasta não existe: " + caminhoPasta);
@@ -221,6 +227,7 @@ public class FileManager : MonoBehaviour
         {
             Directory.Delete(caminhoPasta, true);
             Debug.Log("Pasta vazia excluída: " + caminhoPasta);
+            delete = false;
         }
 
 

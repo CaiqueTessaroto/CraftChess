@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-using System;
-
 
 
 public class InfoGridView : MonoBehaviour
@@ -476,6 +474,9 @@ public class InfoGridView : MonoBehaviour
 
     public void HighlightGrid(Movement movement, List<Vector2Int> validMoves, string sourceType)
     {
+
+        movement.Jump = false;
+
         foreach (Vector2Int move in validMoves)
         {
             if (!movementStates.ContainsKey(move))
