@@ -1,13 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.IO;
 
 using System.Linq;
-using System.Windows.Forms;
-
-//using Newtonsoft.Json;
-
-//using Newtonsoft.Json;
 
 public class PieceMovement : MonoBehaviour
 {
