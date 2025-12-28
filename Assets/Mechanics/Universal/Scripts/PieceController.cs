@@ -19,6 +19,9 @@ public class PieceController : MonoBehaviour
     private PieceComponent pieceComponent;
     private PieceMovement pieceMovement;
 
+    public bool KingWhiteIsInCheck;
+    public bool KingBlackIsInCheck;
+
     public PieceComponent KingWhite;
     public PieceComponent KingBlack;
 
@@ -127,7 +130,7 @@ public class PieceController : MonoBehaviour
         return false;
     }
 
-    public void BoardUpdateForce(GameObject newPiece)
+    public void BoardUpdate(GameObject newPiece)
     {
         StartCoroutine(DelayedBoardUpdate(newPiece));
     }
@@ -141,7 +144,28 @@ public class PieceController : MonoBehaviour
         if (boardManager != null)
         {
             boardManager.UpdateBoardControl();
+            GetCheck();
+            boardManager.UpdateMoves();
         }
+    }
+
+    public void GetCheck()
+    {
+        // Verificar se o rei branco está em xeque
+        Vector2Int kingWhitePos = KingWhite.Position;
+        Cell cellWhite = boardManager
+            .GetCellAtPosition(kingWhitePos.x, kingWhitePos.y)
+            .GetComponent<Cell>();
+
+        KingWhiteIsInCheck = cellWhite.house.isControlledByBlack;
+
+        // Verificar se o rei preto está em xeque
+        Vector2Int kingBlackPos = KingBlack.Position;
+        Cell cellBlack = boardManager
+            .GetCellAtPosition(kingBlackPos.x, kingBlackPos.y)
+            .GetComponent<Cell>();
+
+        KingBlackIsInCheck = cellBlack.house.isControlledByWhite;
     }
 
     private bool AttemptMoveOrCapture(Vector2Int clickedPosition)
@@ -154,7 +178,8 @@ public class PieceController : MonoBehaviour
 
         if (validMoves == null)
         {
-            boardManager.UpdateBoardControl();
+            //boardManager.UpdateBoardControl();
+            BoardUpdate(selectedPiece);
         }
 
         bool captured = false;
@@ -200,7 +225,8 @@ public class PieceController : MonoBehaviour
                     soundManager.PlayMove();
                     DeselectPiece();
 
-                    boardManager.UpdateBoardControl();
+                    //boardManager.UpdateBoardControl();
+                    BoardUpdate(selectedPiece);
 
                     return true;
                 }
@@ -238,7 +264,8 @@ public class PieceController : MonoBehaviour
                     DeselectPiece();
 
                     //boardManager.UpdateBoardControl();
-                    StartCoroutine(DelayedBoardUpdate(selectedPiece));
+                    BoardUpdate(selectedPiece);
+                    //StartCoroutine(DelayedBoardUpdate(selectedPiece));
 
                     return true;
                 }
@@ -255,7 +282,8 @@ public class PieceController : MonoBehaviour
                 soundManager.PlayMove();
                 DeselectPiece();
 
-                boardManager.UpdateBoardControl();
+                //boardManager.UpdateBoardControl();
+                BoardUpdate(selectedPiece);
 
                 return true;
             }

@@ -44,7 +44,7 @@ public class PieceMovement : MonoBehaviour
     }
 
 
-    public List<Vector2Int> GetValidMoves(bool control = false, bool updateBoardControl = true)
+    public List<Vector2Int> GetValidMoves(bool control = false)
     {
         if (thisPiece == null) return null;
 
@@ -111,7 +111,19 @@ public class PieceMovement : MonoBehaviour
 
         if (!thisPiece.HasMoved)
             if (thisPiece.CastlingPieces.Count > 0 && thisPiece.CastlingPieces != null)
-                validMoves.AddRange(GetCastlingMove(thisPiece.CastlingPieces));
+            {
+                if (thisPiece.IsKing)
+                {
+                    if (thisPiece.Player.id == 0 && !pieceController.KingWhiteIsInCheck)
+                        validMoves.AddRange(GetCastlingMove(thisPiece.CastlingPieces));
+                    else if (thisPiece.Player.id == 1 && !pieceController.KingBlackIsInCheck)
+                        validMoves.AddRange(GetCastlingMove(thisPiece.CastlingPieces));
+                }
+                else
+                {
+                    validMoves.AddRange(GetCastlingMove(thisPiece.CastlingPieces));
+                }
+            }
 
 
 
@@ -179,7 +191,7 @@ public class PieceMovement : MonoBehaviour
             if (!IsSlidingPiece(attackerMove))
                 continue;
 
-            List<Vector2Int> pinRay = GetRayBetween(attacker.Position, kingPos);
+            List<Vector2Int> pinRay = GetRayBetween(attacker.Position, kingPos, attackerMove);
 
             // Verifica se há exatamente duas peças no raio
             int pieceCountInRay = 0;
@@ -224,7 +236,7 @@ public class PieceMovement : MonoBehaviour
         return validMoves;
     }
 
-    List<Vector2Int> GetRayBetween(Vector2Int from, Vector2Int to)
+    List<Vector2Int> GetRayBetween(Vector2Int from, Vector2Int to, PieceMovement pieceMove)
     {
         List<Vector2Int> ray = new List<Vector2Int>();
 
@@ -232,21 +244,54 @@ public class PieceMovement : MonoBehaviour
         int dx = to.x - from.x;
         int dy = to.y - from.y;
 
+        // Se for o mesmo quadrado
         if (dx == 0 && dy == 0) return ray;
-        if (dx != 0 && dy != 0 && Mathf.Abs(dx) != Mathf.Abs(dy)) return ray;
 
-        int stepX = Mathf.Clamp(dx, -1, 1);
-        int stepY = Mathf.Clamp(dy, -1, 1);
+        // Verifica o tipo de movimento com base na direção
+        bool isStraight = (dx == 0 || dy == 0);
+        bool isDiagonal = (Mathf.Abs(dx) == Mathf.Abs(dy));
 
-        Vector2Int current = from + new Vector2Int(stepX, stepY);
+        // Se não for movimento válido
+        if (!isStraight && !isDiagonal) return ray;
 
-        while (current != to)
+        // Verifica se a peça pode fazer este tipo de movimento
+        if (isStraight && (!pieceMove.configData.straight.Active || pieceMove.configData.straight.Range <= 0))
+            return ray;
+
+        if (isDiagonal && (!pieceMove.configData.diagonal.Active || pieceMove.configData.diagonal.Range <= 0))
+            return ray;
+
+        // Determina a direção do passo
+        int stepX = (dx != 0) ? (dx > 0 ? 1 : -1) : 0;
+        int stepY = (dy != 0) ? (dy > 0 ? 1 : -1) : 0;
+
+        // Calcula a distância total
+        int distance = isStraight ? Mathf.Max(Mathf.Abs(dx), Mathf.Abs(dy)) : Mathf.Abs(dx);
+
+        // Verifica se está dentro do alcance da peça
+        if (isStraight && distance > pieceMove.configData.straight.Range)
+            return ray;
+
+        if (isDiagonal && distance > pieceMove.configData.diagonal.Range)
+            return ray;
+
+        // Gera os quadrados intermediários
+        Vector2Int current = from;
+        int stepsTaken = 0;
+
+        while (stepsTaken < distance)
         {
-            ray.Add(current);
             current += new Vector2Int(stepX, stepY);
 
+            // Para antes de chegar no quadrado de destino
+            if (current == to)
+                break;
+
+            ray.Add(current);
+            stepsTaken++;
+
             // Previne loop infinito
-            if (ray.Count > 16) return new List<Vector2Int>();
+            if (stepsTaken > 16) return new List<Vector2Int>();
         }
 
         return ray;
@@ -312,7 +357,7 @@ public class PieceMovement : MonoBehaviour
         if (IsSlidingPiece(attackerMove))
         {
             List<Vector2Int> blockRay =
-                GetRayBetween(attacker.Position, kingPos);
+                GetRayBetween(attacker.Position, kingPos, attackerMove);
 
             foreach (Vector2Int move in validMoves)
             {

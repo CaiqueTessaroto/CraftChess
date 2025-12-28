@@ -97,6 +97,7 @@ public class BoardChessManager : MonoBehaviour
     {
         yield return null; // espera 1 frame
         UpdateBoardControl();
+        UpdateMoves();
     }
 
     public void SwitchSide()
@@ -645,6 +646,10 @@ public class BoardChessManager : MonoBehaviour
 
         }
 
+    }
+
+    public void UpdateMoves()
+    {
         foreach (GameObject piece in AllPieces)
         {
             if (piece == null)
@@ -656,10 +661,9 @@ public class BoardChessManager : MonoBehaviour
             if (component == null || movement == null)
                 continue;
 
-            component.PossibleMoves = movement.GetValidMoves(false, false);
+            component.PossibleMoves = movement.GetValidMoves();
 
         }
-
     }
 
 
