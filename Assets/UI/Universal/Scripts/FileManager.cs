@@ -23,7 +23,7 @@ public class FileManager : MonoBehaviour
     public GameObject advicePrefab;
     public GameObject inputPrefab;
     public Transform panel;
-    private bool delete = false;
+    private bool warning = false;
 
     void Start()
     {
@@ -79,6 +79,8 @@ public class FileManager : MonoBehaviour
 
     public void CreateWarning(string title, string text, System.Action onContinue)
     {
+        warning = true;
+
         GameObject newWarning = Instantiate(warningPrefab, panel);
 
         // Acessa o TextMeshPro do head
@@ -107,14 +109,14 @@ public class FileManager : MonoBehaviour
         buttonCancel.onClick.AddListener(() =>
         {
             Destroy(newWarning);
-            delete = false;
+            warning = false;
         });
 
         buttonContinue.onClick.AddListener(() =>
         {
             onContinue?.Invoke(); // chama a ação passada
             Destroy(newWarning);
-            delete = false;
+            warning = false;
         });
 
         // Alterando os textos
@@ -160,6 +162,8 @@ public class FileManager : MonoBehaviour
 
     public void HandleDeleteFile(string fileName, string path, GameObject buttonObj)
     {
+        if (warning) return;
+
         string title = "File will be deleted";
         string text = "Do you really want to delete the file " + fileName + " ?";
 
@@ -197,7 +201,7 @@ public class FileManager : MonoBehaviour
     public void HandleDeleteFolder(string pasta, string caminhoPasta, GameObject newButton)
     {
 
-        delete = true;
+        if (warning) return;
 
         if (!Directory.Exists(caminhoPasta))
         {
@@ -227,7 +231,7 @@ public class FileManager : MonoBehaviour
         {
             Directory.Delete(caminhoPasta, true);
             Debug.Log("Pasta vazia excluída: " + caminhoPasta);
-            delete = false;
+            warning = false;
         }
 
 
