@@ -73,18 +73,21 @@ public class FolderNavigation : MonoBehaviour
 
         allBtw.onClick.AddListener(() =>
         {
+            if (initiate) return;
             if (uIHelperUtils.setAll())
                 StartCoroutine(UpdateFolderButtons());
 
         });
         myBtw.onClick.AddListener(() =>
         {
+            if (initiate) return;
             if (uIHelperUtils.setMy())
                 StartCoroutine(UpdateFolderButtons());
 
         });
         libraryBtw.onClick.AddListener(() =>
         {
+            if (initiate) return;
             if (uIHelperUtils.setLibrary())
                 StartCoroutine(UpdateFolderButtons());
 
@@ -110,6 +113,8 @@ public class FolderNavigation : MonoBehaviour
 
         piecesBtw.onClick.AddListener(() =>
         {
+            if (initiate) return;
+            
             uIHelperUtils.OnFolder = false;
             uIHelperUtils.OnFiles = true;
 
@@ -195,7 +200,6 @@ public class FolderNavigation : MonoBehaviour
 
     public void StartCreatingFolderButtons(string basePath, GameObject panel)
     {
-        initiate = true;
         uIHelperUtils.setAll();
 
         panelFolders = panel;
@@ -212,37 +216,47 @@ public class FolderNavigation : MonoBehaviour
 
     public IEnumerator UpdateFolderButtons()
     {
-        Transform content = panelFolders.transform.Find("Scroll View/Viewport/Content");
+        initiate = true;
 
-        // Remove todos os filhos, exceto o Head
-        foreach (Transform child in content)
+        try
         {
-            if (child.name != "Head")
+            Transform content = panelFolders.transform.Find("Scroll View/Viewport/Content");
+
+            // Remove todos os filhos, exceto o Head
+            foreach (Transform child in content)
             {
-                Destroy(child.gameObject);
+                if (child.name != "Head")
+                {
+                    Destroy(child.gameObject);
+                }
             }
+
+            List<string> pastas = new List<string>();
+
+            // Carrega pastas do persistentDataPath se estiver no "onMy"
+            if (uIHelperUtils.onMy)
+            {
+                pastas = fileManager.GetSubfoldersIn(selectBasePath, Application.persistentDataPath);
+                // Espera terminar a criação antes de continuar
+                yield return StartCoroutine(CreateFolderButtons(pastas, Application.persistentDataPath));
+            }
+
+            // Carrega pastas do streamingAssetsPath se estiver no "onLibrary"
+            if (uIHelperUtils.onLibrary)
+            {
+                pastas = fileManager.GetSubfoldersIn(selectBasePath, Application.streamingAssetsPath);
+                yield return StartCoroutine(CreateFolderButtons(pastas, Application.streamingAssetsPath));
+            }
+
+            // Ajusta tamanho do ScrollView
+
+            UIHelperUtils.SetSizeScrollView(panelFolders);
         }
-
-        List<string> pastas = new List<string>();
-
-        // Carrega pastas do persistentDataPath se estiver no "onMy"
-        if (uIHelperUtils.onMy)
+        finally
         {
-            pastas = fileManager.GetSubfoldersIn(selectBasePath, Application.persistentDataPath);
-            // Espera terminar a criação antes de continuar
-            yield return StartCoroutine(CreateFolderButtons(pastas, Application.persistentDataPath));
+            initiate = false;
         }
 
-        // Carrega pastas do streamingAssetsPath se estiver no "onLibrary"
-        if (uIHelperUtils.onLibrary)
-        {
-            pastas = fileManager.GetSubfoldersIn(selectBasePath, Application.streamingAssetsPath);
-            yield return StartCoroutine(CreateFolderButtons(pastas, Application.streamingAssetsPath));
-        }
-
-        // Ajusta tamanho do ScrollView
-
-        UIHelperUtils.SetSizeScrollView(panelFolders);
     }
 
 

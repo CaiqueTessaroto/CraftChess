@@ -47,7 +47,7 @@ public class PieceMovement : MonoBehaviour
         if (configData.straight.Active)
         {
             List<Vector2Int> rawMoves = GetDirectionalMoves(configData.straight);
-            List<Vector2Int> moves = GetValidDirectionalMoves(rawMoves, configData.straight.Jump, configData.straight.Capture, configData.straight.Move);
+            List<Vector2Int> moves = GetValidDirectionalMoves(rawMoves, false, configData.straight.Capture, configData.straight.Move);
             validMoves.AddRange(ControlOccupiedHouses(moves, configData.straight.Capture, false));
 
             //validMoves.AddRange(FilterValidMoves(rawMoves, configData.straight.Jump, configData.straight.Capture, configData.straight.Move));
@@ -55,7 +55,7 @@ public class PieceMovement : MonoBehaviour
         if (configData.diagonal.Active)
         {
             List<Vector2Int> rawMoves = GetDiagonalMoves(configData.diagonal);
-            List<Vector2Int> moves = GetValidDiagonalMoves(rawMoves, configData.diagonal.Jump, configData.diagonal.Capture, configData.diagonal.Move);
+            List<Vector2Int> moves = GetValidDiagonalMoves(rawMoves, false, configData.diagonal.Capture, configData.diagonal.Move);
             validMoves.AddRange(ControlOccupiedHouses(moves, configData.diagonal.Capture, control));
 
             //validMoves.AddRange(FilterValidMoves(rawMoves, configData.diagonal.Jump, configData.diagonal.Capture, configData.diagonal.Move));

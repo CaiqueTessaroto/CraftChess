@@ -5,6 +5,7 @@ using System.IO;
 using TMPro;
 using System;
 using System.Collections;
+using System.Linq;
 
 public class FileNavigation : MonoBehaviour
 {
@@ -60,18 +61,21 @@ public class FileNavigation : MonoBehaviour
 
         allBtw.onClick.AddListener(() =>
         {
+            if (initiate) return;
             if (uIHelperUtils.setAll())
                 StartCoroutine(UpdateFilesButtons());
 
         });
         myBtw.onClick.AddListener(() =>
         {
+            if (initiate) return;
             if (uIHelperUtils.setMy())
                 StartCoroutine(UpdateFilesButtons());
 
         });
         libraryBtw.onClick.AddListener(() =>
         {
+            if (initiate) return;
             if (uIHelperUtils.setLibrary())
                 StartCoroutine(UpdateFilesButtons());
 
@@ -115,6 +119,8 @@ public class FileNavigation : MonoBehaviour
 
         squadsBtw.onClick.AddListener(() =>
         {
+            if (initiate) return;
+            
             uIHelperUtils.OnFolder = true;
             uIHelperUtils.OnFiles = false;
 
@@ -140,7 +146,6 @@ public class FileNavigation : MonoBehaviour
 
     public void StartCreatingFileButtons(string folder, string rootPath, string basePath)
     {
-        initiate = true;
         selectBasePath = basePath;
 
         if (rootPath == Application.streamingAssetsPath)
@@ -159,29 +164,39 @@ public class FileNavigation : MonoBehaviour
 
     public IEnumerator UpdateFilesButtons()
     {
-        Transform content = panelFile.transform.Find("Scroll View/Viewport/Content");
+        initiate = true;
 
-        // Remove botões antigos
-        foreach (Transform child in content)
-            Destroy(child.gameObject);
-
-        string rootPath;
-
-        if (uIHelperUtils.onMy)
+        try
         {
-            rootPath = Application.persistentDataPath;
+            Transform content = panelFile.transform.Find("Scroll View/Viewport/Content");
 
-            yield return StartCoroutine(CreatePathFileButtons(content, rootPath));
+            // Remove botões antigos
+            foreach (Transform child in content)
+                Destroy(child.gameObject);
+
+            string rootPath;
+
+            if (uIHelperUtils.onMy)
+            {
+                rootPath = Application.persistentDataPath;
+
+                yield return StartCoroutine(CreatePathFileButtons(content, rootPath));
+            }
+
+            if (uIHelperUtils.onLibrary)
+            {
+                rootPath = Application.streamingAssetsPath;
+
+                yield return StartCoroutine(CreatePathFileButtons(content, rootPath));
+            }
+
+            UIHelperUtils.SetSizeScrollView(panelFile);
+        }
+        finally
+        {
+            initiate = false;
         }
 
-        if (uIHelperUtils.onLibrary)
-        {
-            rootPath = Application.streamingAssetsPath;
-
-            yield return StartCoroutine(CreatePathFileButtons(content, rootPath));
-        }
-
-        UIHelperUtils.SetSizeScrollView(panelFile);
     }
 
     public IEnumerator CreatePathFileButtons(Transform content, string rootPath)
@@ -200,7 +215,13 @@ public class FileNavigation : MonoBehaviour
 
             string[] arquivos = Directory.GetFiles(caminhoBase, "*.json", SearchOption.AllDirectories);
 
-            foreach (string arquivo in arquivos)
+            var arquivosOrdenados = arquivos
+                    .Select(f => new FileInfo(f))
+                    .OrderByDescending(f => f.LastWriteTime)
+                    .Select(f => f.FullName)
+                    .ToArray();
+
+            foreach (string arquivo in arquivosOrdenados)
             {
                 string pasta = Path.GetFileName(Path.GetDirectoryName(arquivo));
                 string json = File.ReadAllText(arquivo); // ainda síncrono
@@ -283,7 +304,13 @@ public class FileNavigation : MonoBehaviour
 
             string[] files = Directory.GetFiles(pathBase, "*.png", SearchOption.AllDirectories);
 
-            foreach (string file in files)
+            var orderedfiles = files
+                    .Select(f => new FileInfo(f))
+                    .OrderByDescending(f => f.LastWriteTime)
+                    .Select(f => f.FullName)
+                    .ToArray();
+
+            foreach (string file in orderedfiles)
             {
                 GameObject newButton = Instantiate(fileButtonPrefab, content);
                 //Transform newButton = painelNewButton.transform.GetChild(0);
@@ -306,7 +333,7 @@ public class FileNavigation : MonoBehaviour
                     deleteObj.SetActive(false);
 
                     if (manageCreate)
-                        manageCreate.HandleSelectionArt(Path.GetFileNameWithoutExtension(fileCopy), nameFolder, sprite,rootPath);
+                        manageCreate.HandleSelectionArt(Path.GetFileNameWithoutExtension(fileCopy), nameFolder, sprite, rootPath);
                     else if (managePainting)
                         managePainting.OnFileClick(newButton, fileName, nameFolder, rootPath);
                 });
@@ -315,6 +342,9 @@ public class FileNavigation : MonoBehaviour
             }
         }
 
+        yield return new WaitForEndOfFrame();
+
+        //initiate = false;
     }
 
     private IEnumerator CreateFileButtons(string folder, string rootPath)

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Linq;
 
 
 
@@ -399,7 +400,8 @@ public class FileManager : MonoBehaviour
 
 
 
-    public List<string> GetSubfoldersIn(string basePath, string rootPath)
+
+    public List<string> GetSubfoldersIn(string basePath, string rootPath, bool orderByModificationDate = true, bool descending = true)
     {
         List<string> subfolders = new List<string>();
 
@@ -411,11 +413,27 @@ public class FileManager : MonoBehaviour
             return subfolders;
         }
 
-        string[] dirs = Directory.GetDirectories(fullPath);
+        // Obter informações das pastas
+        var dirInfo = new DirectoryInfo(fullPath);
+        var directories = dirInfo.GetDirectories();
 
-        foreach (string dir in dirs)
+        // Ordenar por data de modificação se solicitado
+        if (orderByModificationDate)
         {
-            subfolders.Add(Path.GetFileName(dir));
+            if (descending)
+                directories = directories.OrderByDescending(d => d.LastWriteTime).ToArray();
+            else
+                directories = directories.OrderBy(d => d.LastWriteTime).ToArray();
+        }
+        // Caso contrário, ordenar por nome (opcional)
+        else
+        {
+            directories = directories.OrderBy(d => d.Name).ToArray();
+        }
+
+        foreach (var dir in directories)
+        {
+            subfolders.Add(dir.Name);
         }
 
         return subfolders;
