@@ -80,8 +80,6 @@ public class MotionVisualization : MonoBehaviour
                 if (pieceComponent.Player.id == thisPiece.Player.id)
                     occupied = false;
 
-
-
             }
 
             GameObject cell = gridManager.GetCellAtPosition(move.x, move.y);

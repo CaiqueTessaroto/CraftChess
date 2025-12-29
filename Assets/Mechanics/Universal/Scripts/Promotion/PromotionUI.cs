@@ -9,6 +9,7 @@ public class PromotionUI : MonoBehaviour
     public ChessMovesPanel chessMovesPanel;
     public BoardChessManager boardManager;
     public PieceController pieceController;
+        public MoveTracker moveTracker;
 
     [Header("Prefabs")]
     public GameObject promotionCanvasPrefab;
@@ -37,6 +38,8 @@ public class PromotionUI : MonoBehaviour
         this.pos = pos;
         this.squad = squadData;
 
+        if (moveTracker == null)
+            moveTracker = FindObjectOfType<MoveTracker>();
 
         if (chessMovesPanel == null)
             chessMovesPanel = FindObjectOfType<ChessMovesPanel>();
@@ -47,7 +50,32 @@ public class PromotionUI : MonoBehaviour
         if (pieceController == null)
             pieceController = FindObjectOfType<PieceController>();
 
-        CreateCanvas(currentPiece);
+        if (piecePromotion.Player.id != boardManager.botPlayerId) // || boardManager.localGame
+            CreateCanvas(currentPiece);
+        else
+        {
+            SquadPieceData strongestPiece = null;
+            float maxPower = 0;
+
+            foreach (var pieceName in currentPiece.PromotionPieces)
+            {
+                if (squad.Pieces.ContainsKey(pieceName))
+                {
+                    SquadPieceData pieceData = squad.Data.Pieces.Find(p => p.Name == pieceName);
+
+                    if (pieceData != null && pieceData.Power > maxPower)
+                    {
+                        maxPower = pieceData.Power;
+                        strongestPiece = pieceData;
+                    }
+                }
+            }
+
+            string spriteName = strongestPiece.NameInSquad;
+            Sprite sprite = squad.Sprites[spriteName];
+
+            Promotion(strongestPiece.Name, sprite);
+        }
 
         //StartCoroutine(DestroyObject());
     }
@@ -170,59 +198,7 @@ public class PromotionUI : MonoBehaviour
                 {
                     btn.onClick.AddListener(() =>
                     {
-                        GameObject newPiece = boardManager.PlacePiece(pieceName, sprite, pos, squad);
-
-                        if (newPiece == null)
-                        {
-                            Debug.LogError("Erro ao criar peça promovida");
-                            return;
-                        }
-
-
-                        PieceComponent component = newPiece.GetComponent<PieceComponent>();
-                        PieceMovement newMovement = newPiece.GetComponent<PieceMovement>();
-
-                        component.IsPromoted = true;
-
-                        // 5️⃣ Garante inicialização de movimentos
-                        if (newMovement != null)
-                        {
-                            component.PossibleMoves = new List<Vector2Int>();
-                        }
-
-                        string letter = $"{(char)('a' + pos.x)}";
-                        string number = $"{pos.y + 1}";
-                        string house;
-
-                        if (targetPiece)
-                        {
-                            house = $"x{letter}{number}=";
-                            boardManager.AddCapturedPiece(targetPiece, currentPiece.Player.id);
-                            boardManager.AllPieces.Remove(targetPiece);
-                            Destroy(targetPiece);
-                        }
-                        else
-                            house = $"{letter}{number}=";
-
-                        boardManager.UpdatePiecePosition(currentPiece.Position, pos, component.Name);
-
-                        pieceController.DeselectPiece();
-
-                        boardManager.AllPieces.Remove(currentPiece.gameObject);
-                        Destroy(currentPiece.gameObject);
-
-                        SpriteRenderer sr = currentPiece.GetComponent<SpriteRenderer>();
-
-                        chessMovesPanel.AddMove(house, sr.sprite, sprite);
-
-                        //boardManager.UpdateBoardControl();
-                        //Debug.Log("UpdateBoardControl");
-
-                        pieceController.BoardUpdate(newPiece);
-
-                        //StartCoroutine(pieceController.DelayedBoardUpdate(newPiece));
-                        //Debug.Log("DelayedBoardUpdate2");
-                        Destroy(currentPromotionCanvas);
+                        Promotion(pieceName, sprite);
                     });
                 }
 
@@ -232,61 +208,63 @@ public class PromotionUI : MonoBehaviour
     }
 
 
-    public void FinalizePromotion(
-        PieceComponent pawn,
-        string newPieceName,
-        Sprite newSprite,
-        Vector2Int pos,
-        MatchSquadData squadData,
-        GameObject targetPiece = null
-    )
+    public void Promotion(string pieceName, Sprite sprite)
     {
-        // 1️⃣ Segurança total: limpa qualquer seleção
-        pieceController.DeselectPiece();
+        GameObject newPiece = boardManager.PlacePiece(pieceName, sprite, pos, squad);
 
-        // 2️⃣ Se houve captura na promoção
-        if (targetPiece != null)
-        {
-            boardManager.AddCapturedPiece(targetPiece, pawn.Player.id);
-            boardManager.AllPieces.Remove(targetPiece.gameObject);
-            Destroy(targetPiece.gameObject);
-        }
-
-        // 3️⃣ Cria a nova peça promovida
-        GameObject newPieceObj = boardManager.PlacePiece(
-            newPieceName,
-            newSprite,
-            pos,
-            squadData
-        );
-
-        if (newPieceObj == null)
+        if (newPiece == null)
         {
             Debug.LogError("Erro ao criar peça promovida");
             return;
         }
 
-        PieceComponent newPiece = newPieceObj.GetComponent<PieceComponent>();
-        PieceMovement newMovement = newPieceObj.GetComponent<PieceMovement>();
 
-        // 4️⃣ Marca como promovida
-        newPiece.IsPromoted = true;
+        PieceComponent component = newPiece.GetComponent<PieceComponent>();
+        PieceMovement newMovement = newPiece.GetComponent<PieceMovement>();
+
+        component.IsPromoted = true;
 
         // 5️⃣ Garante inicialização de movimentos
         if (newMovement != null)
         {
-            newPiece.PossibleMoves = newMovement.GetValidMoves();
+            component.PossibleMoves = new List<Vector2Int>();
         }
 
-        // 6️⃣ Remove o peão antigo
-        boardManager.AllPieces.Remove(pawn.gameObject);
-        Destroy(pawn.gameObject);
+        string letter = $"{(char)('a' + pos.x)}";
+        string number = $"{pos.y + 1}";
+        string house;
 
-        // 7️⃣ Atualiza o tabuleiro (controle, ataques, ocupação)
-        boardManager.UpdateBoardControl();
+        if (targetPiece)
+        {
+            house = $"x{letter}{number}=";
+            boardManager.AddCapturedPiece(targetPiece, currentPiece.Player.id);
+            boardManager.AllPieces.Remove(targetPiece);
+            Destroy(targetPiece);
+        }
+        else
+            house = $"{letter}{number}=";
 
-        // 8️⃣ Estado limpo e pronto para próximo clique
-        pieceController.selectedPiece = null;
+        boardManager.UpdatePiecePosition(currentPiece.Position, pos, component.Name);
+
+        pieceController.DeselectPiece();
+
+        boardManager.AllPieces.Remove(currentPiece.gameObject);
+        Destroy(currentPiece.gameObject);
+
+        SpriteRenderer sr = currentPiece.GetComponent<SpriteRenderer>();
+
+        moveTracker.AddMove(currentPiece.gameObject, currentPiece, currentPiece.Position, pos);
+        chessMovesPanel.AddMove(house, sr.sprite, sprite);
+
+        //boardManager.UpdateBoardControl();
+        //Debug.Log("UpdateBoardControl");
+
+        pieceController.BoardUpdate(newPiece);
+
+        //StartCoroutine(pieceController.DelayedBoardUpdate(newPiece));
+        //Debug.Log("DelayedBoardUpdate2");
+        if (currentPromotionCanvas)
+            Destroy(currentPromotionCanvas);
     }
 
 

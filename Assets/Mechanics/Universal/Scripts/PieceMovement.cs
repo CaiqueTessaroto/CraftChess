@@ -153,9 +153,97 @@ public class PieceMovement : MonoBehaviour
 
         }
 
+        Cell cellcomp = gridManager
+            .GetCellAtPosition(thisPiece.Position.x, thisPiece.Position.y)
+            .GetComponent<Cell>();
+
+        List<PieceComponent> attackers =
+            thisPiece.Player.id == 0
+                ? cellcomp.house.BlackPiecesControl
+                : cellcomp.house.WhitePiecesControl;
+
+        foreach (var attacker in attackers)
+        {
+            PieceMovement attackerMove = attacker.GetComponent<PieceMovement>();
+            if (!IsSlidingPiece(attackerMove))
+                continue;
+
+            List<Vector2Int> pinRay = GetRayBetweenWithRange(attacker.Position, thisPiece.Position, attackerMove);
+
+            kingValidMoves = kingValidMoves.Where(move => !pinRay.Contains(move)).ToList();
+        }
+
         return kingValidMoves;
     }
 
+    List<Vector2Int> GetRayBetweenWithRange(Vector2Int from, Vector2Int to, PieceMovement pieceMove)
+    {
+        List<Vector2Int> ray = new List<Vector2Int>();
+
+        // Verifica se estão na mesma linha, coluna ou diagonal
+        int dx = to.x - from.x;
+        int dy = to.y - from.y;
+
+        // Se for o mesmo quadrado
+        if (dx == 0 && dy == 0) return ray;
+
+        // Verifica o tipo de movimento com base na direção
+        bool isStraight = (dx == 0 || dy == 0);
+        bool isDiagonal = (Mathf.Abs(dx) == Mathf.Abs(dy));
+
+        // Se não for movimento válido
+        if (!isStraight && !isDiagonal) return ray;
+
+        // Verifica se a peça pode fazer este tipo de movimento
+        if (isStraight && (!pieceMove.configData.straight.Active || pieceMove.configData.straight.Range <= 0))
+            return ray;
+
+        if (isDiagonal && (!pieceMove.configData.diagonal.Active || pieceMove.configData.diagonal.Range <= 0))
+            return ray;
+
+        // Determina a direção do passo
+        int stepX = (dx != 0) ? (dx > 0 ? 1 : -1) : 0;
+        int stepY = (dy != 0) ? (dy > 0 ? 1 : -1) : 0;
+
+        // Calcula a distância até o destino
+        int distanceToTarget = isStraight ? Mathf.Max(Mathf.Abs(dx), Mathf.Abs(dy)) : Mathf.Abs(dx);
+
+        // Obtém o alcance máximo da peça
+        int maxRange;
+        if (isStraight)
+        {
+            maxRange = pieceMove.configData.straight.Range;
+        }
+        else // diagonal
+        {
+            maxRange = pieceMove.configData.diagonal.Range;
+        }
+
+        // Verifica se o destino está dentro do alcance
+        if (distanceToTarget > maxRange)
+            return ray;
+
+        // Calcula quantos passos podemos dar (até o alcance máximo)
+        int maxSteps = maxRange;
+        int stepsTaken = 0;
+
+        // Começa a partir da posição atual
+        Vector2Int current = from;
+
+        while (stepsTaken < maxSteps)
+        {
+            current += new Vector2Int(stepX, stepY);
+
+            // Adiciona todas as posições incluindo o destino e além
+            ray.Add(current);
+            stepsTaken++;
+
+            // Previne loop infinito
+            if (stepsTaken > 16) break;
+        }
+
+        return ray;
+    }
 
     public List<Vector2Int> GetPiecePinnedMoves(List<Vector2Int> validMoves)
     {
@@ -163,9 +251,6 @@ public class PieceMovement : MonoBehaviour
             return validMoves;
 
         Vector2Int piecePos = thisPiece.Position;
-        Vector2Int kingPos = thisPiece.Player.id == 0
-            ? pieceController.KingWhite.Position
-            : pieceController.KingBlack.Position;
 
         Cell cell = gridManager
             .GetCellAtPosition(piecePos.x, piecePos.y)
@@ -178,6 +263,10 @@ public class PieceMovement : MonoBehaviour
 
         if (attackers.Count == 0)
             return validMoves;
+
+        Vector2Int kingPos = thisPiece.Player.id == 0
+            ? pieceController.KingWhite.Position
+            : pieceController.KingBlack.Position;
 
         foreach (var attacker in attackers)
         {
@@ -312,6 +401,14 @@ public class PieceMovement : MonoBehaviour
         if (thisPiece.IsKing)
             return validMoves;
 
+        bool check =
+            piece.Player.id == 0
+                ? pieceController.KingWhiteIsInCheck
+                : pieceController.KingBlackIsInCheck;
+
+        if (!check)
+            return validMoves;
+
         // Rei
         Vector2Int kingPos = piece.Player.id == 0
             ? pieceController.KingWhite.Position
@@ -327,13 +424,8 @@ public class PieceMovement : MonoBehaviour
                 ? kingCell.house.BlackPiecesControl
                 : kingCell.house.WhitePiecesControl;
 
-
-        // Não está em xeque
-        if (attackers.Count == 0)
-            return validMoves;
-
         // Xeque duplo → só o rei pode jogar
-        if (attackers.Count >= 2 && !piece.IsKing)
+        if (attackers.Count >= 2 && !thisPiece.IsKing)
             return legalMoves;
 
         // Xeque simples

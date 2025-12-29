@@ -29,6 +29,7 @@ public class BoardChessManager : MonoBehaviour
     public bool noRules = false;
     public bool freeMode = true;
     public bool localGame = true;
+    public int botPlayerId;
     private GameObject currentSelection;
 
     private GameObject currentOrigin;
@@ -75,6 +76,7 @@ public class BoardChessManager : MonoBehaviour
         //Squad = MatchData.Instance.Squad;
         //BotSquad = MatchData.Instance.BotSquad;
 
+
         Squads = MatchData.Instance.Squads;
 
         if (Squads[0].Player.name == "Bot")
@@ -89,6 +91,28 @@ public class BoardChessManager : MonoBehaviour
 
 
         StartCoroutine(AfterStart());
+    }
+
+    public int GetBotId()
+    {
+        int id;
+
+
+        Squads = MatchData.Instance.Squads;
+
+        if (Squads[0].Player.name == "Bot")
+        {
+            id = 0;
+        }
+        else
+        {
+            id = 1;
+        }
+
+        botPlayerId = id;
+
+        return id;
+
     }
 
     IEnumerator AfterStart()

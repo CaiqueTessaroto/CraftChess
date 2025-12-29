@@ -144,6 +144,7 @@ public class PieceController : MonoBehaviour
             GetCheck();
             boardManager.UpdateMoves();
         }
+
     }
 
     public void GetCheck()
@@ -252,12 +253,13 @@ public class PieceController : MonoBehaviour
 
                 if (targetComponent != null && targetComponent.Player.id != pieceComponent.Player.id)
                 {
-
+                    //moveTracker.AddMove(selectedPiece, pieceComponent, pieceComponent.Position, clickedPosition);
                     // Captura normal
-                    moveTracker.AddMove(selectedPiece, pieceComponent, pieceComponent.Position, clickedPosition);
                     boardManager.HighlightLastMove(pieceComponent.Position, clickedPosition);
                     CaptureEnemyPiece(selectedPiece, targetPiece, clickedPosition);
+
                     soundManager.PlayCapture();
+
                     DeselectPiece();
 
                     //boardManager.UpdateBoardControl();
@@ -270,13 +272,13 @@ public class PieceController : MonoBehaviour
             else
             {
                 // Movimento normal
-                moveTracker.AddMove(selectedPiece, pieceComponent, pieceComponent.Position, clickedPosition);
 
-
+                //moveTracker.AddMove(selectedPiece, pieceComponent, pieceComponent.Position, clickedPosition);
 
                 boardManager.HighlightLastMove(pieceComponent.Position, clickedPosition);
                 MovePiece(selectedPiece, clickedPosition, captured);
                 soundManager.PlayMove();
+
                 DeselectPiece();
 
                 //boardManager.UpdateBoardControl();
@@ -298,7 +300,6 @@ public class PieceController : MonoBehaviour
     {
 
         Move move = moveTracker.GetLastMoved();
-
 
         string letter = $"{(char)('a' + move.TargetPosition.x)}";
         string number = $"{move.TargetPosition.y + 1}";
@@ -361,6 +362,8 @@ public class PieceController : MonoBehaviour
         if (component.PromotionPieces.Count > 0 && component.PromotionPieces != null)
             if (PromotePiece(component, targetPosition))
                 return;
+
+        moveTracker.AddMove(selectedPiece, pieceComponent, pieceComponent.Position, targetPosition);
 
         if (component.InitialMoved)
             component.InitialMoved = false;
@@ -478,12 +481,13 @@ public class PieceController : MonoBehaviour
         {
             Move(selectedPiece, middlePosition);
 
+            Move(castlePiece, oneBackFromMiddle);
+
             moveTracker.AddMove(selectedPiece, pieceComponent, origin, middlePosition);
             boardManager.HighlightLastMove(origin, middlePosition);
 
             // Limpa as partículas e desseleciona a peça
             DeselectPiece();
-            Move(castlePiece, oneBackFromMiddle);
         }
         else
         {
