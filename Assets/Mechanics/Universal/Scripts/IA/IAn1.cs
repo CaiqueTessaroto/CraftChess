@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IA : MonoBehaviour
+public class IAn1 : MonoBehaviour
 {
     public BoardChessManager boardManager;
     public PieceController pieceController;
@@ -66,7 +66,7 @@ public class IA : MonoBehaviour
             chosenMove = possibleMoves[Random.Range(0, possibleMoves.Count)];
 
         // Simula clique na peça
-        pieceController.OnCellClicked(chosenMove.from);
+        pieceController.OnCellClicked(chosenMove.from, true);
 
         yield return new WaitForSecondsRealtime(0.1f);
 

@@ -29,7 +29,6 @@ public class BoardChessManager : MonoBehaviour
     public bool noRules = false;
     public bool freeMode = true;
     public bool localGame = true;
-    public int botPlayerId;
     private GameObject currentSelection;
 
     private GameObject currentOrigin;
@@ -108,8 +107,6 @@ public class BoardChessManager : MonoBehaviour
         {
             id = 1;
         }
-
-        botPlayerId = id;
 
         return id;
 

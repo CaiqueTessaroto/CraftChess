@@ -18,6 +18,8 @@ public class PieceController : MonoBehaviour
 
     public bool KingWhiteIsInCheck;
     public bool KingBlackIsInCheck;
+    public int botPlayerId;
+    public bool IA = false;
 
     public PieceComponent KingWhite;
     public PieceComponent KingBlack;
@@ -45,6 +47,8 @@ public class PieceController : MonoBehaviour
         if (soundManager == null)
             soundManager = FindObjectOfType<SoundManager>();
 
+
+        botPlayerId = boardManager.GetBotId();
     }
 
     // Update is called once per frame
@@ -54,8 +58,9 @@ public class PieceController : MonoBehaviour
     }
 
 
-    public void OnCellClicked(Vector2Int clickedPos)
+    public void OnCellClicked(Vector2Int clickedPos, bool IA = false)
     {
+        this.IA = IA;
 
         GameObject cell = boardManager.gridCells[clickedPos.x, clickedPos.y];
         boardManager.HighlightSelect(cell); // muda a cor da célula selecionada
@@ -119,7 +124,9 @@ public class PieceController : MonoBehaviour
             selectedPiece = piece;
             pieceComponent = piece.GetComponent<PieceComponent>();
             pieceMovement = piece.GetComponent<PieceMovement>();
-            motionVisualization.VisualizeMoves(pieceComponent, pieceMovement);
+
+            if (!IA) // pieceComponent.Player.id != botPlayerId
+                motionVisualization.VisualizeMoves(pieceComponent, pieceMovement);
 
             return true;
         }
@@ -444,7 +451,7 @@ public class PieceController : MonoBehaviour
             else
                 squadData = boardManager.Squads[1];
 
-            newpromotionUI.Initialize(piece, createPromotionUI.promotionCanvasPrefab, createPromotionUI.promotionButtonPrefab, squadData, targetPosition, targetPiece);
+            newpromotionUI.Initialize(piece, createPromotionUI.promotionCanvasPrefab, createPromotionUI.promotionButtonPrefab, squadData, targetPosition, IA, targetPiece);
         }
         else
             return false;

@@ -9,7 +9,7 @@ public class PromotionUI : MonoBehaviour
     public ChessMovesPanel chessMovesPanel;
     public BoardChessManager boardManager;
     public PieceController pieceController;
-        public MoveTracker moveTracker;
+    public MoveTracker moveTracker;
 
     [Header("Prefabs")]
     public GameObject promotionCanvasPrefab;
@@ -29,7 +29,7 @@ public class PromotionUI : MonoBehaviour
     public MatchSquadData squad = new MatchSquadData();
 
 
-    public void Initialize(PieceComponent piecePromotion, GameObject promotionCanvasPrefab, GameObject promotionButtonPrefab, MatchSquadData squadData, Vector2Int pos, GameObject targetPiece = null)
+    public void Initialize(PieceComponent piecePromotion, GameObject promotionCanvasPrefab, GameObject promotionButtonPrefab, MatchSquadData squadData, Vector2Int pos,bool IA = false, GameObject targetPiece = null)
     {
         this.promotionCanvasPrefab = promotionCanvasPrefab;
         this.promotionButtonPrefab = promotionButtonPrefab;
@@ -50,7 +50,7 @@ public class PromotionUI : MonoBehaviour
         if (pieceController == null)
             pieceController = FindObjectOfType<PieceController>();
 
-        if (piecePromotion.Player.id != boardManager.botPlayerId) // || boardManager.localGame
+        if (!IA) // piecePromotion.Player.id != pieceController.botPlayerId || boardManager.localGame
             CreateCanvas(currentPiece);
         else
         {
@@ -227,8 +227,8 @@ public class PromotionUI : MonoBehaviour
         // 5️⃣ Garante inicialização de movimentos
         //if (newMovement != null)
         //{
-            //component.PossibleMoves = new List<Vector2Int>();
-            //component.PossibleMoves = new List<Move>();
+        //component.PossibleMoves = new List<Vector2Int>();
+        //component.PossibleMoves = new List<Move>();
         //}
 
         string letter = $"{(char)('a' + pos.x)}";
