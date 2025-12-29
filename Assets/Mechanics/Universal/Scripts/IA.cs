@@ -30,8 +30,8 @@ public class IA : MonoBehaviour
 
     void Update()
     {
-        if (boardManager.localGame)
-            return;
+        //if (boardManager.localGame)
+        //    return;
 
         if (isThinking)
             return;

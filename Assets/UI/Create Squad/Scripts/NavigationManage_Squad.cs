@@ -383,8 +383,7 @@ public class NavigationManage_Squad : MonoBehaviour
             squadManager.placedPieces.Clear();
             squadManager.pieceSprites.Clear();
             squadManager.squadData.Pieces.Clear();
-
-            //squadManager.squadData.Units.Clear();
+            squadManager.squadData.Units.Clear();
 
             if (squadManager.squad != pasta)
             {
