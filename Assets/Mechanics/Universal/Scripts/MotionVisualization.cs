@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MotionVisualization : MonoBehaviour
@@ -65,6 +66,7 @@ public class MotionVisualization : MonoBehaviour
         }
 
         List<Vector2Int> moves = thisPiece.PossibleMoves;
+        moves = moves.Where(move => !thisPiece.CaptureMoves.Contains(move)).ToList();
 
         foreach (var move in moves)
         {
@@ -96,6 +98,30 @@ public class MotionVisualization : MonoBehaviour
                 {
                     sr.sortingOrder = 4;
                     sr.color = occupied ? captureColor : moveColor;
+                }
+
+                activeOverlays.Add(highlight);
+
+            }
+        }
+
+        moves = thisPiece.CaptureMoves;
+        foreach (var move in moves)
+        {
+            GameObject cell = gridManager.GetCellAtPosition(move.x, move.y);
+            if (cell != null && moveOverlayPrefab != null)
+            {
+                var highlight = Instantiate(moveOverlayPrefab, cell.transform);
+                highlight.transform.localPosition = Vector3.zero;
+                highlight.transform.localScale = Vector3.one;
+                //highlight.name = occupied ? "Overlay" : "Overlay";
+                highlight.name = "Overlay";
+
+                SpriteRenderer sr = highlight.GetComponent<SpriteRenderer>();
+                if (sr != null)
+                {
+                    sr.sortingOrder = 4;
+                    sr.color = captureColor;
                 }
 
                 activeOverlays.Add(highlight);

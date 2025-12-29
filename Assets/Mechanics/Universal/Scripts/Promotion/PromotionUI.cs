@@ -225,10 +225,11 @@ public class PromotionUI : MonoBehaviour
         component.IsPromoted = true;
 
         // 5️⃣ Garante inicialização de movimentos
-        if (newMovement != null)
-        {
-            component.PossibleMoves = new List<Vector2Int>();
-        }
+        //if (newMovement != null)
+        //{
+            //component.PossibleMoves = new List<Vector2Int>();
+            //component.PossibleMoves = new List<Move>();
+        //}
 
         string letter = $"{(char)('a' + pos.x)}";
         string number = $"{pos.y + 1}";

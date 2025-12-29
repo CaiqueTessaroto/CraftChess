@@ -191,7 +191,7 @@ public class PieceController : MonoBehaviour
             PieceComponent enemyBehind = null;
 
             // Verifica se é captura en passant
-            if (pieceComponent.Power <= 40 && targetPiece == null && moveTracker.GetLastMoved() != null)
+            if (pieceComponent.Power <= 50 && targetPiece == null && moveTracker.GetLastMoved() != null)
             {
                 Move lastMoved = moveTracker.GetLastMoved();
                 if (lastMoved != null && lastMoved.PieceObject != null)

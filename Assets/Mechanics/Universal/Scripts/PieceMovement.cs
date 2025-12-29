@@ -85,6 +85,7 @@ public class PieceMovement : MonoBehaviour
                 if (lastPieceMoved.InitialMoved && thisPiece.Player.id != lastPieceMoved.Player.id)
                 {
                     validMoves.AddRange(GetHouseBehindInitialMove(lastPieceMoved, lastMoved.TargetPosition));
+                    thisPiece.CaptureMoves = GetHouseBehindInitialMove(lastPieceMoved, lastMoved.TargetPosition);
                 }
             }
         }

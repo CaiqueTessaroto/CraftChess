@@ -15,6 +15,7 @@ public class PieceComponent : MonoBehaviour
     public List<string> PromotionPieces = new List<string>();
     public List<string> CastlingPieces = new List<string>();
     public List<Vector2Int> PossibleMoves = new List<Vector2Int>();
+    public List<Vector2Int> CaptureMoves = new List<Vector2Int>();
 
     public void Initialize(string squad, string name, int power, List<string> promotionPieces, List<string> castlingPieces, Player player, Vector2Int position, bool isKing)
     {
@@ -29,7 +30,6 @@ public class PieceComponent : MonoBehaviour
         this.InitialMoved = false;
         this.IsPromoted = false;
         this.IsKing = isKing;
-        this.PossibleMoves = new List<Vector2Int>();
     }
 
     public void SetGridPosition(int x, int y)

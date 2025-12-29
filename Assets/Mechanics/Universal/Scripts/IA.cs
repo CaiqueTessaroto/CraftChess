@@ -106,6 +106,14 @@ public class IA : MonoBehaviour
 
                 moves.Add(new BotMove(from, target, isCapture));
             }
+
+            foreach (Vector2Int target in comp.CaptureMoves)
+            {
+                moves.Add(new BotMove(from, target, true));
+            }
+
+
+
         }
 
         return moves;
