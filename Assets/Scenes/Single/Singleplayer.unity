@@ -6161,7 +6161,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062591124}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef63f7a3decb3014993a4130370b53c6, type: 3}
   m_Name: 
@@ -7260,6 +7260,8 @@ MonoBehaviour:
   noRules: 0
   freeMode: 1
   localGame: 1
+  WhiteHasMoves: 1
+  BlackHasMoves: 1
   Squads: []
   AllPieces: []
   BoardHouses: []

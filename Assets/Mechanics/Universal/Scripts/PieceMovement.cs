@@ -125,10 +125,6 @@ public class PieceMovement : MonoBehaviour
         return validMoves;
     }
 
-    //pegar todos os movimentos de todas as peças se estiver zerado e o rei sobre ataque é checkmate se o rei não estiver sobre ataque é afogamento 
-
-    //verificar as peças que atacam o rei e as peças que atacam a peça que se move
-
     public List<Vector2Int> GetValidKingMoves(List<Vector2Int> validMoves)
     {
         if (!thisPiece.IsKing)

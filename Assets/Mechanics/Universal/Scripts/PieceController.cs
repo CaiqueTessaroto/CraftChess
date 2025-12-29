@@ -152,6 +152,30 @@ public class PieceController : MonoBehaviour
             boardManager.UpdateMoves();
         }
 
+
+        if (!boardManager.WhiteHasMoves)
+        {
+            if (KingWhiteIsInCheck)
+            {
+                Debug.Log("Black Wins");
+            }
+            else
+            {
+                Debug.Log("Empate");
+            }
+        }
+        else if (!boardManager.BlackHasMoves)
+        {
+            if (KingBlackIsInCheck)
+            {
+                Debug.Log("White Wins");
+            }
+            else
+            {
+                Debug.Log("Empate");
+            }
+        }
+
     }
 
     public void GetCheck()

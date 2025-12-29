@@ -24,11 +24,15 @@ public class BoardChessManager : MonoBehaviour
     public Color colorB = Color.gray;
     public Color selectedColor = Color.blue;
 
-    [Header("Control")]
+    [Header("Options")]
     public bool inBlackView = false;
     public bool noRules = false;
     public bool freeMode = true;
     public bool localGame = true;
+
+    [Header("Control")]
+    public bool WhiteHasMoves = true;
+    public bool BlackHasMoves = true;
     private GameObject currentSelection;
 
     private GameObject currentOrigin;
@@ -669,6 +673,9 @@ public class BoardChessManager : MonoBehaviour
 
     public void UpdateMoves()
     {
+        WhiteHasMoves = false;
+        BlackHasMoves = false;
+
         foreach (GameObject piece in AllPieces)
         {
             if (piece == null)
@@ -681,6 +688,18 @@ public class BoardChessManager : MonoBehaviour
                 continue;
 
             component.PossibleMoves = movement.GetValidMoves();
+
+            if (!WhiteHasMoves || !BlackHasMoves)
+                if (component.Player.id == 0)
+                {
+                    if (component.PossibleMoves.Count != 0)
+                        WhiteHasMoves = true;
+                }
+                else
+                {
+                    if (component.PossibleMoves.Count != 0)
+                        BlackHasMoves = true;
+                }
 
         }
     }
