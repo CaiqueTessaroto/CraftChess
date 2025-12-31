@@ -9,7 +9,8 @@ public class IAn1 : MonoBehaviour
     public MoveTracker moveTracker;
 
     public float thinkDelay = 0.6f;
-    private int botPlayerId;
+    public int botPlayerId = 0;
+    public bool selectId = false;
 
     private bool isThinking = false;
 
@@ -24,7 +25,8 @@ public class IAn1 : MonoBehaviour
         if (!moveTracker)
             moveTracker = FindObjectOfType<MoveTracker>();
 
-        botPlayerId = boardManager.GetBotId();
+        if (!selectId)
+            botPlayerId = boardManager.GetBotId();
 
     }
 
@@ -71,7 +73,7 @@ public class IAn1 : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.1f);
 
         // Simula clique na casa de destino
-        pieceController.OnCellClicked(chosenMove.to);
+        pieceController.OnCellClicked(chosenMove.to, true);
 
         isThinking = false;
     }

@@ -9,6 +9,7 @@ public class IAn2 : MonoBehaviour
     public MoveTracker moveTracker;
 
     public int botPlayerId = 0;
+    public bool selectId = true;
     public float thinkDelay = 0.6f;
 
     private bool isThinking;
@@ -19,7 +20,8 @@ public class IAn2 : MonoBehaviour
         pieceController = FindObjectOfType<PieceController>();
         moveTracker = FindObjectOfType<MoveTracker>();
 
-        //botPlayerId = boardManager.GetBotId();
+        if (!selectId)
+            botPlayerId = boardManager.GetBotId();
     }
 
     void Update()
@@ -44,7 +46,7 @@ public class IAn2 : MonoBehaviour
         {
             pieceController.OnCellClicked(bestMove.from, true);
             yield return new WaitForSecondsRealtime(0.1f);
-            pieceController.OnCellClicked(bestMove.to);
+            pieceController.OnCellClicked(bestMove.to, true);
         }
 
         isThinking = false;

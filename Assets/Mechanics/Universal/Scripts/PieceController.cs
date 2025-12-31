@@ -159,7 +159,7 @@ public class PieceController : MonoBehaviour
             {
                 Debug.Log("Black Wins");
             }
-            else
+            else if (moveTracker.GetTurnPlayer() == 0)
             {
                 Debug.Log("Empate");
             }
@@ -170,10 +170,14 @@ public class PieceController : MonoBehaviour
             {
                 Debug.Log("White Wins");
             }
-            else
+            else if (moveTracker.GetTurnPlayer() == 1)
             {
                 Debug.Log("Empate");
             }
+        }
+        else if (boardManager.AllPieces.Count == 2)
+        {
+            Debug.Log("Empate");
         }
 
     }

@@ -173,7 +173,7 @@ public class PieceMovement : MonoBehaviour
         return kingValidMoves;
     }
 
-    List<Vector2Int> GetRayBetweenWithRange(Vector2Int from, Vector2Int to, PieceMovement pieceMove)
+    public List<Vector2Int> GetRayBetweenWithRange(Vector2Int from, Vector2Int to, PieceMovement pieceMove)
     {
         List<Vector2Int> ray = new List<Vector2Int>();
 
@@ -316,7 +316,7 @@ public class PieceMovement : MonoBehaviour
         return validMoves;
     }
 
-    List<Vector2Int> GetRayBetween(Vector2Int from, Vector2Int to, PieceMovement pieceMove)
+    public List<Vector2Int> GetRayBetween(Vector2Int from, Vector2Int to, PieceMovement pieceMove)
     {
         List<Vector2Int> ray = new List<Vector2Int>();
 

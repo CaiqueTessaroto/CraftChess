@@ -44,6 +44,8 @@ public class BoardChessManager : MonoBehaviour
     [Header("Data")]
     public List<MatchSquadData> Squads = new List<MatchSquadData>();
     public List<GameObject> AllPieces = new List<GameObject>();
+    public List<GameObject> WhitePieces = new List<GameObject>();
+    public List<GameObject> BlackPieces = new List<GameObject>();
 
     public List<House> BoardHouses = new List<House>();
     //public House[,] BoardHouses = new House[8, 8];
@@ -676,6 +678,9 @@ public class BoardChessManager : MonoBehaviour
         WhiteHasMoves = false;
         BlackHasMoves = false;
 
+        WhitePieces.Clear();
+        BlackPieces.Clear();
+
         foreach (GameObject piece in AllPieces)
         {
             if (piece == null)
@@ -700,6 +705,11 @@ public class BoardChessManager : MonoBehaviour
                     if (component.PossibleMoves.Count != 0)
                         BlackHasMoves = true;
                 }
+
+            if (component.Player.id == 0)
+                WhitePieces.Add(piece);
+            else
+                BlackPieces.Add(piece);
 
         }
     }
