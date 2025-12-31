@@ -96,6 +96,24 @@ public class BoardChessManager : MonoBehaviour
 
 
         StartCoroutine(AfterStart());
+
+
+        if(MatchData.Instance.botDifficulty == BotDifficulty.Easy)
+        {
+            IAn1 iA = FindObjectOfType<IAn1>();
+            iA.enabled = true;
+        }
+        else if(MatchData.Instance.botDifficulty == BotDifficulty.Medium)
+        {
+            IAn2 iA = FindObjectOfType<IAn2>();
+            iA.enabled = true;
+        }
+        else
+        {
+            IAn3 iA = FindObjectOfType<IAn3>();
+            iA.enabled = true;
+        }
+
     }
 
     public int GetBotId()

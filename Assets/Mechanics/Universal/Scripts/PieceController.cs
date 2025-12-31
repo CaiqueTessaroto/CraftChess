@@ -11,6 +11,7 @@ public class PieceController : MonoBehaviour
     public ChessMovesPanel chessMovesPanel;
     public CreatePromotionUI createPromotionUI;
     public SoundManager soundManager;
+    public GameInterfaceManager gameInterfaceManager;
 
     public GameObject selectedPiece;
     private PieceComponent pieceComponent;
@@ -46,6 +47,9 @@ public class PieceController : MonoBehaviour
 
         if (soundManager == null)
             soundManager = FindObjectOfType<SoundManager>();
+
+        if (gameInterfaceManager == null)
+            gameInterfaceManager = FindObjectOfType<GameInterfaceManager>();
 
 
         botPlayerId = boardManager.GetBotId();
@@ -142,6 +146,10 @@ public class PieceController : MonoBehaviour
     public IEnumerator DelayedBoardUpdate(GameObject newPiece)
     {
 
+        bool black = false;
+        bool white = false;
+        bool draw = false;
+
         yield return new WaitForEndOfFrame();
         //yield return new WaitForSecondsRealtime(1f);
 
@@ -157,28 +165,37 @@ public class PieceController : MonoBehaviour
         {
             if (KingWhiteIsInCheck)
             {
-                Debug.Log("Black Wins");
+                black = true;
             }
             else if (moveTracker.GetTurnPlayer() == 0)
             {
-                Debug.Log("Empate");
+                draw = true;
             }
         }
         else if (!boardManager.BlackHasMoves)
         {
             if (KingBlackIsInCheck)
             {
-                Debug.Log("White Wins");
+                white = true;
             }
             else if (moveTracker.GetTurnPlayer() == 1)
             {
-                Debug.Log("Empate");
+                draw = true;
             }
         }
         else if (boardManager.AllPieces.Count == 2)
         {
-            Debug.Log("Empate");
+            draw = true;
         }
+
+        if (draw)
+            gameInterfaceManager.EndGame("Draw");
+        if (black && botPlayerId == 0)
+            gameInterfaceManager.EndGame("Victory");
+        else if (white && botPlayerId == 1)
+            gameInterfaceManager.EndGame("Victory");
+        else if(black || white)
+            gameInterfaceManager.EndGame("Defeat");
 
     }
 
