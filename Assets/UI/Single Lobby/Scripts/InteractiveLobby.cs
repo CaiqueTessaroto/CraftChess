@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -45,23 +46,45 @@ public class InteractiveLobby : MonoBehaviour
     private Toggle[] difficulty_toggles;
     private Toggle[] startOption_toggles;
 
+    [Header("Select Piece:")]
+    public InfoGridView infoGridView;
+    public string currentPieceName;
+    public string squadPiece;
+    public TMP_Text nameTmp;
+    public TMP_Text powerTmp;
+    public GameObject piecepanel;
+    public Image previewImage;
+    public GameObject promotion;
+    public GameObject casteling;
+    public Transform promotionContent;
+    public Transform castelingContent;
+    public GameObject viewPiecePrefab;
+    public Button closePiecebtn;
+    private Dictionary<string, Sprite> pieceSprites = new Dictionary<string, Sprite>();
+
     [Header("YourSquad")]
+    public GameObject userSelect;
+    public GameObject userView;
+    public Button userSquadView;
     public Image userImage;
     public TMP_Text userSquadTMP;
     public TMP_Text userTMP;
     public GameObject userSelectTMP;
     public GameObject userBtn_Squad;
     private Button userBtn;
-    private Transform userPiecesGrid;
+    public Transform userPiecesGrid;
 
     [Header("EnemySquad")]
+    public GameObject enemySelect;
+    public GameObject enemyView;
+    public Button enemySquadView;
     public Image enemyImage;
     public TMP_Text enemySquadTMP;
     public TMP_Text enemyTMP;
     public GameObject enemySelectTMP;
     public GameObject enemyBtn_Squad;
     private Button enemyBtn;
-    private Transform enemyPiecesGrid;
+    public Transform enemyPiecesGrid;
 
     [Header("Prefabs")]
     public GameObject piece_ImgPrefab;
@@ -140,10 +163,10 @@ public class InteractiveLobby : MonoBehaviour
 
 
         userBtn = userBtn_Squad.GetComponent<Button>();
-        userPiecesGrid = userBtn_Squad.transform;
+        //userPiecesGrid = userBtn_Squad.transform;
 
         enemyBtn = enemyBtn_Squad.GetComponent<Button>();
-        enemyPiecesGrid = enemyBtn_Squad.transform;
+        //enemyPiecesGrid = enemyBtn_Squad.transform;
 
         userBtn.onClick.AddListener(() =>
         {
@@ -153,7 +176,23 @@ public class InteractiveLobby : MonoBehaviour
 
         });
 
+        userSquadView.onClick.AddListener(() =>
+        {
+            OnEnemy = false;
+
+            navigationManage.StartFormationsButtons();
+
+        });
+
         enemyBtn.onClick.AddListener(() =>
+        {
+            OnEnemy = true;
+
+            navigationManage.StartFormationsButtons();
+        });
+
+
+        enemySquadView.onClick.AddListener(() =>
         {
             OnEnemy = true;
 
@@ -213,13 +252,21 @@ public class InteractiveLobby : MonoBehaviour
         }
 
 
+        closePiecebtn.onClick.AddListener(() =>
+        {
+            piecepanel.SetActive(false);
+        });
+
+
         LoadMatchConfig();
 
     }
 
 
-    public void SelectSquad(string folderName, string jsonFile)
+    public void SelectSquad(string folderName, string jsonFile, Sprite sprite)
     {
+
+        pieceSprites.Clear();
 
         if (OnEnemy)
         {
@@ -230,11 +277,23 @@ public class InteractiveLobby : MonoBehaviour
 
             if (enemySelectTMP.activeSelf)
             {
-                enemySelectTMP.SetActive(false);
-                enemyBtn_Squad.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.5f);
+                //enemySelectTMP.SetActive(false);
+                enemySelect.SetActive(false);
+                enemyView.SetActive(true);
+
+                enemySquadView.GetComponent<Image>().sprite = sprite;
+                //enemyBtn_Squad.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.5f);
             }
 
             CreatePiecesVisualization(jsonFile, enemyPiecesGrid);
+
+            string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
+            string jsonFileUser = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");
+
+            OnEnemy = false;
+            if (File.Exists(jsonFileUser))
+                CreatePiecesVisualization(jsonFileUser, userPiecesGrid);
+
         }
         else
         {
@@ -246,12 +305,22 @@ public class InteractiveLobby : MonoBehaviour
 
             if (userSelectTMP.activeSelf)
             {
-                userSelectTMP.SetActive(false);
-                userBtn_Squad.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.5f);
+                //userSelectTMP.SetActive(false);
+                userSelect.SetActive(false);
+                userView.SetActive(true);
+
+                userSquadView.GetComponent<Image>().sprite = sprite;
+                //userBtn_Squad.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.5f);
             }
 
-
             CreatePiecesVisualization(jsonFile, userPiecesGrid);
+
+            string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
+            string jsonFileEnemy = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");
+
+            OnEnemy = true;
+            if (File.Exists(jsonFileEnemy))
+                CreatePiecesVisualization(jsonFileEnemy, enemyPiecesGrid);
         }
 
         navigationManage.panelSquad.SetActive(false);
@@ -310,7 +379,7 @@ public class InteractiveLobby : MonoBehaviour
 
             Sprite sprite = UIHelperUtils.GetSpriteFromPath(caminhoSprite);
 
-            if (elementCount <= 6)
+            if (elementCount <= 16)
             {
                 // Instancia o botão/imagem da peça no painel
                 GameObject newImage = Instantiate(piece_ImgPrefab, content);
@@ -325,6 +394,12 @@ public class InteractiveLobby : MonoBehaviour
                 TextMeshProUGUI textComp = newImage.GetComponentInChildren<TextMeshProUGUI>();
                 if (textComp != null)
                     textComp.text = string.IsNullOrEmpty(piece.NameInSquad) ? wrapper.piece.Art : piece.NameInSquad;
+
+                newImage.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    SelectPiece(piece.NameInSquad, piece, json, sprite);
+                    //    squadManager.SelectPiece(nameInSquad, pieceData, File.ReadAllText(jsonPath), sprite, rootPath);
+                });
 
             }
 
@@ -349,6 +424,13 @@ public class InteractiveLobby : MonoBehaviour
             }
 
             elementCount += 1;
+
+
+            if (!pieceSprites.ContainsKey(piece.NameInSquad))
+            {
+                pieceSprites[piece.NameInSquad] = sprite;
+            }
+
         }
 
         // --- 🔹 Ao final, guarda o Squad completo ---
@@ -360,7 +442,110 @@ public class InteractiveLobby : MonoBehaviour
 
 
 
+    public void SelectPiece(string namePieceSquad, SquadPieceData pieceData, string json, Sprite sprite)
+    {
+        MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
 
+        if (config.piece.Name != currentPieceName || config.piece.Squad != squadPiece)
+        {
+            SetInfoPiece(namePieceSquad, pieceData, config, sprite);
+            StartCoroutine(SetPromotionsAndCastelingPieces(pieceData, json, sprite));
+        }
+
+    }
+
+
+
+
+    public void SetInfoPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite)
+    {
+        //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
+
+        PieceInfo piece = config.piece;
+
+        piecepanel.SetActive(true);
+
+        currentPieceName = namePieceSquad;
+        squadPiece = piece.Squad;
+
+        //spritePiece = sprite;
+        previewImage.sprite = sprite;
+
+        nameTmp.text = namePieceSquad;
+        powerTmp.text = $"Power: {pieceData.Power}";
+
+    }
+
+    public IEnumerator SetPromotionsAndCastelingPieces(SquadPieceData pieceData, string json, Sprite sprite)
+    {
+
+        MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
+
+        casteling.SetActive(false);
+        promotion.SetActive(false);
+
+        foreach (Transform child in promotionContent.transform)
+            Destroy(child.gameObject);
+
+        foreach (Transform child in castelingContent.transform)
+            Destroy(child.gameObject);
+
+        if (pieceData.CastlingPieces != null)
+        {
+            if (pieceData.CastlingPieces.Count > 0)
+                casteling.SetActive(true);
+
+            foreach (string name in pieceData.CastlingPieces)
+            {
+                yield return StartCoroutine(LoadPiecesImage(name, castelingContent));
+            }
+        }
+
+        if (pieceData.PromotionPieces != null)
+        {
+            if (pieceData.PromotionPieces.Count > 0)
+                promotion.SetActive(true);
+
+            foreach (string name in pieceData.PromotionPieces)
+            {
+                yield return StartCoroutine(LoadPiecesImage(name, promotionContent));
+            }
+        }
+
+        yield return null;
+
+
+        infoGridView.GenerateGridPiece(config, sprite);
+
+        yield return null;
+
+    }
+
+    public IEnumerator LoadPiecesImage(string fileName, Transform content)
+    {
+        //Transform content = panel.transform;
+
+        GameObject clone = Instantiate(viewPiecePrefab, content);
+
+        // Define o nome do objeto (opcional)
+        clone.name = "Preview_" + fileName;
+
+        // Acha a imagem dentro do painel
+        Image img = clone.GetComponentInChildren<Image>();
+
+        Sprite sprite = null;
+
+        if (pieceSprites.ContainsKey(fileName))
+            sprite = pieceSprites[fileName];
+
+        if (img != null)
+        {
+            img.sprite = sprite;
+        }
+
+        // Se quiser simular um carregamento assíncrono, pode colocar um yield
+        yield return null;
+    }
 
 
 
@@ -383,16 +568,22 @@ public class InteractiveLobby : MonoBehaviour
 
         string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
         string jsonFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");
+        string pngFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".png");
+
+        Sprite sprite = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
 
         if (File.Exists(jsonFile))
-            SelectSquad(currentMatch.UserSquadName, jsonFile);
+            SelectSquad(currentMatch.UserSquadName, jsonFile, sprite);
 
         OnEnemy = true;
         squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BotSquadName);
         jsonFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".json");
+        pngFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".png");
+
+        sprite = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
 
         if (File.Exists(jsonFile))
-            SelectSquad(currentMatch.BotSquadName, jsonFile);
+            SelectSquad(currentMatch.BotSquadName, jsonFile, sprite);
 
         foreach (Toggle toggle in difficulty_toggles)
         {

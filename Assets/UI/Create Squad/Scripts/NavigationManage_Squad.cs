@@ -763,8 +763,6 @@ public class NavigationManage_Squad : MonoBehaviour
         if (textComp != null)
             textComp.text = string.IsNullOrEmpty(nameInSquad) ? piece.Art : nameInSquad;
 
-        string fileName = Path.GetFileNameWithoutExtension(jsonPath);
-
         // Guarda sprite em cache
         if (!squadManager.pieceSprites.ContainsKey(nameInSquad))
         {

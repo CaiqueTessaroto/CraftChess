@@ -17,6 +17,7 @@ public class InfoGridView : MonoBehaviour
     public Movement diagonal;
     public PersonalizedMove custom;
     public Special special;
+    private Sprite currentSprite;
 
     private Dictionary<Vector2, GameObject> gridCells = new Dictionary<Vector2, GameObject>();
 
@@ -148,7 +149,10 @@ public class InfoGridView : MonoBehaviour
                 if (x == selectedPosition.x && y == selectedPosition.y)
                 {
                     //if (squadManager.selectedPiece)
-                    squadManager.SetSprite(newCell);
+                    if (squadManager != null)
+                        squadManager.SetSprite(newCell);
+                    else if (currentSprite != null)
+                        SetSprite(newCell);
                 }
 
                 //Button button = newCell.GetComponent<Button>();
@@ -156,6 +160,45 @@ public class InfoGridView : MonoBehaviour
 
             }
         }
+    }
+
+    public void SetSprite(GameObject cell)
+    {
+        // procura se já existe um filho chamado "Piece"
+        Transform pieceTransform = cell.transform.Find("Piece");
+        Image pieceImage;
+
+        if (pieceTransform == null)
+        {
+            // cria um novo GameObject dentro da célula
+            GameObject pieceGO = new GameObject("Piece", typeof(RectTransform), typeof(Image));
+
+            // define como filho da célula
+            pieceGO.transform.SetParent(cell.transform, false);
+
+            float margin = 5f; // margem em pixels
+
+            // ajusta o RectTransform para ocupar toda a célula
+            RectTransform rt = pieceGO.GetComponent<RectTransform>();
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.offsetMin = new Vector2(margin, margin);       // distância da borda inferior/esquerda
+            rt.offsetMax = new Vector2(-margin, -margin);     // distância da borda superior/direita
+
+            // pega o componente Image recém-criado
+            pieceImage = pieceGO.GetComponent<Image>();
+        }
+        else
+        {
+            // se já existe, só pega o Image
+            pieceImage = pieceTransform.GetComponent<Image>();
+        }
+
+        // aplica o sprite da peça
+        pieceImage.sprite = currentSprite;
+        pieceImage.preserveAspect = true;
+
+
     }
 
     public void RegenerateGrid()
@@ -176,8 +219,13 @@ public class InfoGridView : MonoBehaviour
         GenerateGrid();
     }
 
-    public void GenerateGridPiece(MovementConfigData config)
+    public void GenerateGridPiece(MovementConfigData config, Sprite sprite = null)
     {
+        if (sprite != null)
+        {
+            currentSprite = sprite;
+
+        }
         RegenerateGrid();
         HighlightValidMoves(config);
     }

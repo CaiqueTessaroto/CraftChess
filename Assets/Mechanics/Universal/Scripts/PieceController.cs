@@ -81,9 +81,11 @@ public class PieceController : MonoBehaviour
                     return;
             }
 
-            if (boardManager.localGame || comp.Player.name != "Bot")
-                if (boardManager.freeMode || comp.Player.id == moveTracker.GetTurnPlayer())
-                    SelectPiece(piece);
+            if (!boardManager.localGame && comp.Player.id == botPlayerId && IA == false)
+                return;
+
+            if (boardManager.freeMode || comp.Player.id == moveTracker.GetTurnPlayer())
+                SelectPiece(piece);
             //Debug.Log($"Selecionou peça {piece.name} em {clickedPos}");
 
         }
@@ -194,7 +196,7 @@ public class PieceController : MonoBehaviour
             gameInterfaceManager.EndGame("Victory");
         else if (white && botPlayerId == 1)
             gameInterfaceManager.EndGame("Victory");
-        else if(black || white)
+        else if (black || white)
             gameInterfaceManager.EndGame("Defeat");
 
     }

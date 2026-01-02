@@ -71,7 +71,7 @@ public class NavigationManage_SingleLobby : MonoBehaviour
         // Carrega pastas do streamingAssetsPath se estiver no "onLibrary"
         if (uIHelperUtils.onLibrary)
         {
-                CreateFormationsButtons(Application.streamingAssetsPath, content);
+            CreateFormationsButtons(Application.streamingAssetsPath, content);
         }
 
         // Ajusta tamanho do ScrollView
@@ -137,6 +137,8 @@ public class NavigationManage_SingleLobby : MonoBehaviour
                 imageComponent.sprite = sprite;
             }
 
+            Sprite spriteSquad = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
+
             // Clique do botão
             Button buttonComponent = newButton.GetComponent<Button>();
             if (buttonComponent != null)
@@ -144,7 +146,7 @@ public class NavigationManage_SingleLobby : MonoBehaviour
                 buttonComponent.onClick.AddListener(() =>
                 {
                     //OnButtonClicked(folderName, newButton, piecesPanel, squadName, rootPath, jsonFile);
-                    interactiveLobby.SelectSquad(folderName, jsonFile);
+                    interactiveLobby.SelectSquad(folderName, jsonFile, spriteSquad);
                 });
             }
         }

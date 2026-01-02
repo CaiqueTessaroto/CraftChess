@@ -186,7 +186,43 @@ public class UIHelperUtils : MonoBehaviour
         return sprite;
     }
 
+    public static Sprite GetSpriteFromPathForLobby(string pathSprite)
+    {
+        Sprite sprite = null;
 
+        if (File.Exists(pathSprite))
+        {
+            byte[] bytes = File.ReadAllBytes(pathSprite);
+            Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+            tex.LoadImage(bytes);
+
+            Rect bottomHalf = new Rect(
+                0,
+                0,
+                tex.width,
+                tex.height / 2
+            );
+
+            sprite = Sprite.Create(
+                tex,
+                bottomHalf,
+                new Vector2(0.5f, 0.5f),
+                100f // pixelsPerUnit (opcional, mas recomendado)
+            );
+        }
+        else
+        {
+            sprite = Resources.Load<Sprite>("Sprites/Default/Piece_Default");
+
+            if (sprite == null)
+            {
+                Debug.LogError("Sprite padrão não encontrado em Resources/Sprites/Piece_Default");
+                return null;
+            }
+        }
+
+        return sprite;
+    }
 
 
 
