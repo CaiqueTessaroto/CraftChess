@@ -32,6 +32,7 @@ public class InteractiveLobby : MonoBehaviour
     //public MatchConfig currentMatch;
 
     [Header("Scripts")]
+        public ManagerPieceInfo managerPieceInfo;
     public NavigationManage_SingleLobby navigationManage;
 
     [Header("Buttons")]
@@ -45,22 +46,6 @@ public class InteractiveLobby : MonoBehaviour
     public ToggleGroup startOption;
     private Toggle[] difficulty_toggles;
     private Toggle[] startOption_toggles;
-
-    [Header("Select Piece:")]
-    public InfoGridView infoGridView;
-    public string currentPieceName;
-    public string squadPiece;
-    public TMP_Text nameTmp;
-    public TMP_Text powerTmp;
-    public GameObject piecepanel;
-    public Image previewImage;
-    public GameObject promotion;
-    public GameObject casteling;
-    public Transform promotionContent;
-    public Transform castelingContent;
-    public GameObject viewPiecePrefab;
-    public Button closePiecebtn;
-    private Dictionary<string, Sprite> pieceSprites = new Dictionary<string, Sprite>();
 
     [Header("YourSquad")]
     public GameObject userSelect;
@@ -105,6 +90,9 @@ public class InteractiveLobby : MonoBehaviour
     //PieceWrapper
     void Start()
     {
+
+        if (managerPieceInfo == null)
+            managerPieceInfo = FindObjectOfType<ManagerPieceInfo>();
 
         userTMP.text = "Player20";
 
@@ -252,12 +240,6 @@ public class InteractiveLobby : MonoBehaviour
         }
 
 
-        closePiecebtn.onClick.AddListener(() =>
-        {
-            piecepanel.SetActive(false);
-        });
-
-
         LoadMatchConfig();
 
     }
@@ -266,7 +248,7 @@ public class InteractiveLobby : MonoBehaviour
     public void SelectSquad(string folderName, string jsonFile, Sprite sprite)
     {
 
-        pieceSprites.Clear();
+        managerPieceInfo.pieceSprites.Clear();
 
         if (OnEnemy)
         {
@@ -397,7 +379,7 @@ public class InteractiveLobby : MonoBehaviour
 
                 newImage.GetComponent<Button>().onClick.AddListener(() =>
                 {
-                    SelectPiece(piece.NameInSquad, piece, json, sprite);
+                    managerPieceInfo.SelectPiece(piece.NameInSquad, piece, json, sprite);
                     //    squadManager.SelectPiece(nameInSquad, pieceData, File.ReadAllText(jsonPath), sprite, rootPath);
                 });
 
@@ -426,9 +408,9 @@ public class InteractiveLobby : MonoBehaviour
             elementCount += 1;
 
 
-            if (!pieceSprites.ContainsKey(piece.NameInSquad))
+            if (!managerPieceInfo.pieceSprites.ContainsKey(piece.NameInSquad))
             {
-                pieceSprites[piece.NameInSquad] = sprite;
+                managerPieceInfo.pieceSprites[piece.NameInSquad] = sprite;
             }
 
         }
@@ -442,110 +424,8 @@ public class InteractiveLobby : MonoBehaviour
 
 
 
-    public void SelectPiece(string namePieceSquad, SquadPieceData pieceData, string json, Sprite sprite)
-    {
-        MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
-
-        if (config.piece.Name != currentPieceName || config.piece.Squad != squadPiece)
-        {
-            SetInfoPiece(namePieceSquad, pieceData, config, sprite);
-            StartCoroutine(SetPromotionsAndCastelingPieces(pieceData, json, sprite));
-        }
-
-    }
 
 
-
-
-    public void SetInfoPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite)
-    {
-        //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
-
-        PieceInfo piece = config.piece;
-
-        piecepanel.SetActive(true);
-
-        currentPieceName = namePieceSquad;
-        squadPiece = piece.Squad;
-
-        //spritePiece = sprite;
-        previewImage.sprite = sprite;
-
-        nameTmp.text = namePieceSquad;
-        powerTmp.text = $"Power: {pieceData.Power}";
-
-    }
-
-    public IEnumerator SetPromotionsAndCastelingPieces(SquadPieceData pieceData, string json, Sprite sprite)
-    {
-
-        MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
-
-        casteling.SetActive(false);
-        promotion.SetActive(false);
-
-        foreach (Transform child in promotionContent.transform)
-            Destroy(child.gameObject);
-
-        foreach (Transform child in castelingContent.transform)
-            Destroy(child.gameObject);
-
-        if (pieceData.CastlingPieces != null)
-        {
-            if (pieceData.CastlingPieces.Count > 0)
-                casteling.SetActive(true);
-
-            foreach (string name in pieceData.CastlingPieces)
-            {
-                yield return StartCoroutine(LoadPiecesImage(name, castelingContent));
-            }
-        }
-
-        if (pieceData.PromotionPieces != null)
-        {
-            if (pieceData.PromotionPieces.Count > 0)
-                promotion.SetActive(true);
-
-            foreach (string name in pieceData.PromotionPieces)
-            {
-                yield return StartCoroutine(LoadPiecesImage(name, promotionContent));
-            }
-        }
-
-        yield return null;
-
-
-        infoGridView.GenerateGridPiece(config, sprite);
-
-        yield return null;
-
-    }
-
-    public IEnumerator LoadPiecesImage(string fileName, Transform content)
-    {
-        //Transform content = panel.transform;
-
-        GameObject clone = Instantiate(viewPiecePrefab, content);
-
-        // Define o nome do objeto (opcional)
-        clone.name = "Preview_" + fileName;
-
-        // Acha a imagem dentro do painel
-        Image img = clone.GetComponentInChildren<Image>();
-
-        Sprite sprite = null;
-
-        if (pieceSprites.ContainsKey(fileName))
-            sprite = pieceSprites[fileName];
-
-        if (img != null)
-        {
-            img.sprite = sprite;
-        }
-
-        // Se quiser simular um carregamento assíncrono, pode colocar um yield
-        yield return null;
-    }
 
 
 
