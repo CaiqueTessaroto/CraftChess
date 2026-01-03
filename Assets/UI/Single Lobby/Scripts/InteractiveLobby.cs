@@ -32,7 +32,7 @@ public class InteractiveLobby : MonoBehaviour
     //public MatchConfig currentMatch;
 
     [Header("Scripts")]
-        public ManagerPieceInfo managerPieceInfo;
+    public ManagerPieceInfo managerPieceInfo;
     public NavigationManage_SingleLobby navigationManage;
 
     [Header("Buttons")]
@@ -275,7 +275,6 @@ public class InteractiveLobby : MonoBehaviour
             OnEnemy = false;
             if (File.Exists(jsonFileUser))
                 CreatePiecesVisualization(jsonFileUser, userPiecesGrid);
-
         }
         else
         {
@@ -297,8 +296,8 @@ public class InteractiveLobby : MonoBehaviour
 
             CreatePiecesVisualization(jsonFile, userPiecesGrid);
 
-            string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
-            string jsonFileEnemy = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");
+            string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BotSquadName);
+            string jsonFileEnemy = Path.Combine(squadFolder, currentMatch.BotSquadName + ".json");
 
             OnEnemy = true;
             if (File.Exists(jsonFileEnemy))
