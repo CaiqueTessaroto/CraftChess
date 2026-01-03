@@ -94,7 +94,7 @@ public class ManagerPieceInfo : MonoBehaviour
 
             foreach (string name in pieceData.CastlingPieces)
             {
-                yield return StartCoroutine(LoadPiecesImage(name, castelingContent));
+                yield return StartCoroutine(LoadPiecesImage(name, pieceData.Squad, castelingContent));
             }
         }
 
@@ -105,7 +105,7 @@ public class ManagerPieceInfo : MonoBehaviour
 
             foreach (string name in pieceData.PromotionPieces)
             {
-                yield return StartCoroutine(LoadPiecesImage(name, promotionContent));
+                yield return StartCoroutine(LoadPiecesImage(name, pieceData.Squad, promotionContent));
             }
         }
 
@@ -118,7 +118,7 @@ public class ManagerPieceInfo : MonoBehaviour
 
     }
 
-    public IEnumerator LoadPiecesImage(string fileName, Transform content)
+    public IEnumerator LoadPiecesImage(string fileName, string squad, Transform content)
     {
         //Transform content = panel.transform;
 
@@ -132,8 +132,8 @@ public class ManagerPieceInfo : MonoBehaviour
 
         Sprite sprite = null;
 
-        if (pieceSprites.ContainsKey(fileName))
-            sprite = pieceSprites[fileName];
+        if (pieceSprites.ContainsKey(fileName + squad))
+            sprite = pieceSprites[fileName + squad];
 
         if (img != null)
         {

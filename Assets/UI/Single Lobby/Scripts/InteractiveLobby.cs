@@ -407,9 +407,9 @@ public class InteractiveLobby : MonoBehaviour
             elementCount += 1;
 
 
-            if (!managerPieceInfo.pieceSprites.ContainsKey(piece.NameInSquad))
+            if (!managerPieceInfo.pieceSprites.ContainsKey(piece.NameInSquad + piece.Squad))
             {
-                managerPieceInfo.pieceSprites[piece.NameInSquad] = sprite;
+                managerPieceInfo.pieceSprites[piece.NameInSquad + piece.Squad] = sprite;
             }
 
         }

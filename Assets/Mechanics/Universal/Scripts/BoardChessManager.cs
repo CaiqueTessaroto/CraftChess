@@ -61,7 +61,7 @@ public class BoardChessManager : MonoBehaviour
     {
 
         infoPiece = false;
-        
+
         if (managerPieceInfo == null)
             managerPieceInfo = FindObjectOfType<ManagerPieceInfo>();
 
@@ -103,7 +103,6 @@ public class BoardChessManager : MonoBehaviour
 
         foreach (var squad in Squads)
         {
-            managerPieceInfo.pieceSprites.AddRange(squad.Sprites);
 
             LoadSquadPieces(squad);
         }
@@ -537,7 +536,7 @@ public class BoardChessManager : MonoBehaviour
         //pieceObj.transform.localRotation = Quaternion.identity;
         pieceObj.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);//-90f
 
-        LoadPieceData(name, pieceObj, pos, matchSquad);
+        LoadPieceData(name, pieceObj, pos, matchSquad, sprite);
 
         // Opcional: garante escala 1
         pieceObj.transform.localScale = Vector3.one;
@@ -582,8 +581,9 @@ public class BoardChessManager : MonoBehaviour
         return pieceObj;
     }
 
-    private void LoadPieceData(string name, GameObject pieceObj, Vector2Int pos, MatchSquadData matchSquad)
+    private void LoadPieceData(string name, GameObject pieceObj, Vector2Int pos, MatchSquadData matchSquad, Sprite sprite = null)
     {
+
 
         Dictionary<string, MovementConfigData> yourPieces = matchSquad.Pieces;
         //Dictionary<string, MovementConfigData> enemyPieces = MatchData.Instance.enemyPieces;
@@ -616,6 +616,12 @@ public class BoardChessManager : MonoBehaviour
         }
         else
             pieceComponent.Initialize(pieceData.Squad, name, pieceData.Power, pieceData.PromotionPieces, pieceData.CastlingPieces, player, pos, false);
+
+
+        if (!managerPieceInfo.pieceSprites.ContainsKey(pieceData.Name + pieceData.Squad))
+        {
+            managerPieceInfo.pieceSprites[pieceData.NameInSquad + pieceData.Squad] = sprite;
+        }
 
     }
 
