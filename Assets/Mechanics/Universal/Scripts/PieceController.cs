@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,9 @@ public class PieceController : MonoBehaviour
     private PieceComponent pieceComponent;
     private PieceMovement pieceMovement;
 
+
+    public ManagerPieceInfo managerPieceInfo;
+
     public bool KingWhiteIsInCheck;
     public bool KingBlackIsInCheck;
     public int botPlayerId;
@@ -29,6 +33,8 @@ public class PieceController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (managerPieceInfo == null)
+            managerPieceInfo = FindObjectOfType<ManagerPieceInfo>();
 
         if (chessMovesPanel == null)
             chessMovesPanel = FindObjectOfType<ChessMovesPanel>();
@@ -81,6 +87,11 @@ public class PieceController : MonoBehaviour
                     return;
             }
 
+            if (boardManager.infoPiece && !IA){
+                GetPieceInfo(piece);
+                return;
+            }
+
             if (!boardManager.localGame && comp.Player.id == botPlayerId && IA == false)
                 return;
 
@@ -123,13 +134,17 @@ public class PieceController : MonoBehaviour
 
     public bool SelectPiece(GameObject piece)
     {
+
+
         PieceComponent component = piece.GetComponent<PieceComponent>();
+
 
         if (component != null) //component != null && component.player.id == GameManager.Instance.currentPlayerId
         {
             selectedPiece = piece;
             pieceComponent = piece.GetComponent<PieceComponent>();
             pieceMovement = piece.GetComponent<PieceMovement>();
+
 
             if (!IA) // pieceComponent.Player.id != botPlayerId
                 motionVisualization.VisualizeMoves(pieceComponent, pieceMovement);
@@ -138,6 +153,29 @@ public class PieceController : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void GetPieceInfo(GameObject piece)
+    {
+
+        PieceComponent component = piece.GetComponent<PieceComponent>();
+        PieceMovement movement = piece.GetComponent<PieceMovement>();
+
+        MatchSquadData matchSquad;
+
+        if (component.Player.id == 0)
+            matchSquad = boardManager.Squads[0];
+        else
+            matchSquad = boardManager.Squads[1];
+
+        string spriteName = component.name;
+        Sprite sprite = matchSquad.Sprites[spriteName];
+
+        Squad squad = matchSquad.Data;
+        SquadPieceData pieceData = squad.Pieces.Find(p => p.NameInSquad == component.name);
+
+        managerPieceInfo.SelectPiece(component.name, pieceData, movement.configData, sprite);
+
     }
 
     public void BoardUpdate(GameObject newPiece)

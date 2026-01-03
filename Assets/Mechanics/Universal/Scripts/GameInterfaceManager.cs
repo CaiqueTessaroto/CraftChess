@@ -8,6 +8,7 @@ public class GameInterfaceManager : MonoBehaviour
     public BoardChessManager boardChessManager;
     public Button MenuBtn;
     public Button switchSide;
+    public Button ViewInfoBtn;
 
     [Header("Panel")]
     public GameObject panel;
@@ -35,6 +36,11 @@ public class GameInterfaceManager : MonoBehaviour
         ContinueBtn.onClick.AddListener(() =>
         {
             SceneManager.LoadScene("Single Lobby");
+        });
+
+        ViewInfoBtn.onClick.AddListener(() =>
+        {
+            boardChessManager.infoPiece = !boardChessManager.infoPiece;
         });
 
     }

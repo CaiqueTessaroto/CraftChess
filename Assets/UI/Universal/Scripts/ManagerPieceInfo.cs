@@ -40,14 +40,15 @@ public class ManagerPieceInfo : MonoBehaviour
 
     }
 
-    public void SelectPiece(string namePieceSquad, SquadPieceData pieceData, string json, Sprite sprite)
+    public void SelectPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite)
     {
-        MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
 
-        if (config.piece.Name != currentPieceName || config.piece.Squad != squadPiece)
+        //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
+
+        if (config.piece.Name != currentPieceName || config.piece.Squad != squadPiece || Panel.activeSelf == false)
         {
             SetInfoPiece(namePieceSquad, pieceData, config, sprite);
-            StartCoroutine(SetPromotionsAndCastelingPieces(pieceData, json, sprite));
+            StartCoroutine(SetPromotionsAndCastelingPieces(pieceData, config, sprite));
         }
 
     }
@@ -72,10 +73,10 @@ public class ManagerPieceInfo : MonoBehaviour
 
     }
 
-    public IEnumerator SetPromotionsAndCastelingPieces(SquadPieceData pieceData, string json, Sprite sprite)
+    public IEnumerator SetPromotionsAndCastelingPieces(SquadPieceData pieceData, MovementConfigData config, Sprite sprite)
     {
 
-        MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
+        //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
 
         casteling.SetActive(false);
         promotion.SetActive(false);

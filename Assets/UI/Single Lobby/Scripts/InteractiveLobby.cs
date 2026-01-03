@@ -378,7 +378,7 @@ public class InteractiveLobby : MonoBehaviour
 
                 newImage.GetComponent<Button>().onClick.AddListener(() =>
                 {
-                    managerPieceInfo.SelectPiece(piece.NameInSquad, piece, json, sprite);
+                    managerPieceInfo.SelectPiece(piece.NameInSquad, piece, wrapper, sprite);
                     //    squadManager.SelectPiece(nameInSquad, pieceData, File.ReadAllText(jsonPath), sprite, rootPath);
                 });
 

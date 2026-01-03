@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -31,6 +32,7 @@ public class BoardChessManager : MonoBehaviour
     public bool localGame = true;
 
     [Header("Control")]
+    public bool infoPiece = false;
     public bool WhiteHasMoves = true;
     public bool BlackHasMoves = true;
     private GameObject currentSelection;
@@ -52,9 +54,16 @@ public class BoardChessManager : MonoBehaviour
     // Armazena as células do grid
     public GameObject[,] gridCells;
 
+    public ManagerPieceInfo managerPieceInfo;
+
 
     void Start()
     {
+
+        infoPiece = false;
+        
+        if (managerPieceInfo == null)
+            managerPieceInfo = FindObjectOfType<ManagerPieceInfo>();
 
         if (capturedManager == null)
             capturedManager = FindObjectOfType<CapturedPiecesManager>();
@@ -69,6 +78,9 @@ public class BoardChessManager : MonoBehaviour
         //var sprite = MatchData.Instance.yourPieceSprites["Rei"];
         //var pieceData = MatchData.Instance.yourPieces["Rei"];
         //var enemyData = MatchData.Instance.enemySquad;
+
+        //managerPieceInfo.pieceSprites.AddRange(MatchData.Instance.Squads[0].Sprites);
+        //managerPieceInfo.pieceSprites.AddRange(MatchData.Instance.Squads[1].Sprites);
 
         //Debug.Log(pieceData);
 
@@ -91,6 +103,8 @@ public class BoardChessManager : MonoBehaviour
 
         foreach (var squad in Squads)
         {
+            managerPieceInfo.pieceSprites.AddRange(squad.Sprites);
+
             LoadSquadPieces(squad);
         }
 
@@ -98,12 +112,12 @@ public class BoardChessManager : MonoBehaviour
         StartCoroutine(AfterStart());
 
 
-        if(MatchData.Instance.botDifficulty == BotDifficulty.Easy)
+        if (MatchData.Instance.botDifficulty == BotDifficulty.Easy)
         {
             IAn1 iA = FindObjectOfType<IAn1>();
             iA.enabled = true;
         }
-        else if(MatchData.Instance.botDifficulty == BotDifficulty.Medium)
+        else if (MatchData.Instance.botDifficulty == BotDifficulty.Medium)
         {
             IAn2 iA = FindObjectOfType<IAn2>();
             iA.enabled = true;
