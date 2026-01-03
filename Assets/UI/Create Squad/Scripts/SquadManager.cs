@@ -596,7 +596,7 @@ public class SquadManager : MonoBehaviour
             // define como filho da célula
             pieceGO.transform.SetParent(cell.transform, false);
 
-            float margin = 5f; // margem em pixels
+            float margin = 0f; // margem em pixels
 
             // ajusta o RectTransform para ocupar toda a célula
             RectTransform rt = pieceGO.GetComponent<RectTransform>();

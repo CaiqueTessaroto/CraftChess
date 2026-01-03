@@ -28,8 +28,8 @@ public class BoardChessManager : MonoBehaviour
     [Header("Options")]
     public bool inBlackView = false;
     public bool noRules = false;
-    public bool freeMode = true;
-    public bool localGame = true;
+    public bool freeMode = false;
+    public bool localGame = false;
 
     [Header("Control")]
     public bool infoPiece = false;
@@ -60,7 +60,7 @@ public class BoardChessManager : MonoBehaviour
     void Start()
     {
 
-        infoPiece = false;
+        //infoPiece = false;
 
         if (managerPieceInfo == null)
             managerPieceInfo = FindObjectOfType<ManagerPieceInfo>();

@@ -9,7 +9,9 @@ public class MenuButtonsManager : MonoBehaviour
     public Button playBtn;
     public Button createBtn;
     public Button inventoryBtn;
+    public Button settingsBtn;
     public Button exitBtn;
+    public GameObject settingsPanel;
 
     [Header("Play:")]
     public Button singleBtn;
@@ -48,6 +50,14 @@ public class MenuButtonsManager : MonoBehaviour
                 SwitchPainelTo(CreationPanel);
         });
 
+        settingsBtn.onClick.AddListener(() =>
+        {
+            if (settingsPanel.activeSelf)
+                settingsPanel.SetActive(false);
+            else
+                SwitchPainelTo(settingsPanel);
+        });
+
         paintingEditorBtn.onClick.AddListener(() => gameManager.ChangeScene("Painting Editor"));
 
         createPieceBtn.onClick.AddListener(() => gameManager.ChangeScene("Create Piece"));
@@ -64,6 +74,7 @@ public class MenuButtonsManager : MonoBehaviour
     {
         CreationPanel.SetActive(false);
         playPanel.SetActive(false);
+        settingsPanel.SetActive(false);
 
 
         painel.SetActive(true);

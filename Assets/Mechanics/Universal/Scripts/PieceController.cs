@@ -6,30 +6,30 @@ using UnityEngine;
 public class PieceController : MonoBehaviour
 {
 
+    [Header("Scripts:")]
     public BoardChessManager boardManager;
     public MotionVisualization motionVisualization;
     public MoveTracker moveTracker;
     public ChessMovesPanel chessMovesPanel;
     public CreatePromotionUI createPromotionUI;
-    public SoundManager soundManager;
     public GameInterfaceManager gameInterfaceManager;
-
     public GameObject selectedPiece;
-    private PieceComponent pieceComponent;
-    private PieceMovement pieceMovement;
-
-
     public ManagerPieceInfo managerPieceInfo;
 
+    [Header("AudioClip:")]
+    public AudioClip moveSound;
+    public AudioClip captureSound;
+
+    [Header("Control:")]
     public bool KingWhiteIsInCheck;
     public bool KingBlackIsInCheck;
     public int botPlayerId;
     public bool IA = false;
-
     public PieceComponent KingWhite;
     public PieceComponent KingBlack;
 
-
+    private PieceComponent pieceComponent;
+    private PieceMovement pieceMovement;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,9 +50,6 @@ public class PieceController : MonoBehaviour
 
         if (createPromotionUI == null)
             createPromotionUI = FindObjectOfType<CreatePromotionUI>();
-
-        if (soundManager == null)
-            soundManager = FindObjectOfType<SoundManager>();
 
         if (gameInterfaceManager == null)
             gameInterfaceManager = FindObjectOfType<GameInterfaceManager>();
@@ -87,7 +84,8 @@ public class PieceController : MonoBehaviour
                     return;
             }
 
-            if (boardManager.infoPiece && !IA){
+            if (boardManager.infoPiece && !IA)
+            {
                 GetPieceInfo(piece);
                 return;
             }
@@ -312,7 +310,9 @@ public class PieceController : MonoBehaviour
                 if (targetComponent != null && targetComponent.Player.id == pieceComponent.Player.id)
                 {
                     PerformCastle(targetPiece, clickedPosition);
-                    soundManager.PlayMove();
+
+                    AudioManager.Instance.PlaySFX(moveSound);
+
                     DeselectPiece();
 
                     //boardManager.UpdateBoardControl();
@@ -350,7 +350,7 @@ public class PieceController : MonoBehaviour
                     boardManager.HighlightLastMove(pieceComponent.Position, clickedPosition);
                     CaptureEnemyPiece(selectedPiece, targetPiece, clickedPosition);
 
-                    soundManager.PlayCapture();
+                    AudioManager.Instance.PlaySFX(captureSound);
 
                     DeselectPiece();
 
@@ -369,7 +369,8 @@ public class PieceController : MonoBehaviour
 
                 boardManager.HighlightLastMove(pieceComponent.Position, clickedPosition);
                 MovePiece(selectedPiece, clickedPosition, captured);
-                soundManager.PlayMove();
+
+                AudioManager.Instance.PlaySFX(moveSound);
 
                 DeselectPiece();
 
