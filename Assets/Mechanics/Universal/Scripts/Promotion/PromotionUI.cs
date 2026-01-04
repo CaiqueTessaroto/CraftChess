@@ -260,7 +260,7 @@ public class PromotionUI : MonoBehaviour
         //boardManager.UpdateBoardControl();
         //Debug.Log("UpdateBoardControl");
 
-        pieceController.BoardUpdate(newPiece);
+        pieceController.BoardUpdate();
 
         //StartCoroutine(pieceController.DelayedBoardUpdate(newPiece));
         //Debug.Log("DelayedBoardUpdate2");

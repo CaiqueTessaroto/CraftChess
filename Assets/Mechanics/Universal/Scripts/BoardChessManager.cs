@@ -28,7 +28,7 @@ public class BoardChessManager : MonoBehaviour
     [Header("Options")]
     public bool inBlackView = false;
     public bool noRules = false;
-    public bool freeMode = false;
+    public bool noTurns = false;
     public bool localGame = false;
 
     [Header("Control")]
@@ -84,6 +84,10 @@ public class BoardChessManager : MonoBehaviour
 
         //Debug.Log(pieceData);
 
+        noRules = MatchData.Instance.noRules;
+        noTurns = MatchData.Instance.noTurns;
+        localGame = MatchData.Instance.localGame;
+
         if (cellPrefab == null)
         {
             Debug.LogError("Cell prefab não atribuído no GridManager!");
@@ -113,16 +117,25 @@ public class BoardChessManager : MonoBehaviour
 
         if (MatchData.Instance.botDifficulty == BotDifficulty.Easy)
         {
+            if (localGame)
+                return;
+
             IAn1 iA = FindObjectOfType<IAn1>();
             iA.enabled = true;
         }
         else if (MatchData.Instance.botDifficulty == BotDifficulty.Medium)
         {
+            if (localGame)
+                return;
+
             IAn2 iA = FindObjectOfType<IAn2>();
             iA.enabled = true;
         }
         else
         {
+            if (localGame)
+                return;
+
             IAn3 iA = FindObjectOfType<IAn3>();
             iA.enabled = true;
         }

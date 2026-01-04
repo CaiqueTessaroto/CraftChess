@@ -426,6 +426,9 @@ public class PieceMovement : MonoBehaviour
             return legalMoves;
 
         // Xeque simples
+        if (attackers.Count == 0)
+            return legalMoves;
+            
         PieceComponent attacker = attackers[0];
         PieceMovement attackerMove = attacker.gameObject.GetComponent<PieceMovement>();
 

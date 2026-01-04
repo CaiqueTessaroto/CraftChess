@@ -6677,6 +6677,7 @@ GameObject:
   - component: {fileID: 1062591125}
   - component: {fileID: 1062591127}
   - component: {fileID: 1062591128}
+  - component: {fileID: 1062591129}
   m_Layer: 0
   m_Name: IA
   m_TagString: Untagged
@@ -6753,6 +6754,35 @@ MonoBehaviour:
   botPlayerId: 1
   selectId: 0
   thinkDelay: 0.6
+--- !u!114 &1062591129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062591124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4fe4cf7ce7bddd4488a7fd7c9f7f6f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boardManager: {fileID: 0}
+  motionVisualization: {fileID: 0}
+  moveTracker: {fileID: 0}
+  chessMovesPanel: {fileID: 0}
+  createPromotionUI: {fileID: 0}
+  gameInterfaceManager: {fileID: 0}
+  selectedPiece: {fileID: 0}
+  managerPieceInfo: {fileID: 0}
+  pieceController: {fileID: 0}
+  moveSound: {fileID: 8300000, guid: 9f5f1a057b0dcf743a4feb12e3e89347, type: 3}
+  captureSound: {fileID: 8300000, guid: 9f5f1a057b0dcf743a4feb12e3e89347, type: 3}
+  KingWhiteIsInCheck: 0
+  KingBlackIsInCheck: 0
+  botPlayerId: 0
+  IA: 0
+  KingWhite: {fileID: 0}
+  KingBlack: {fileID: 0}
 --- !u!1 &1071800082
 GameObject:
   m_ObjectHideFlags: 0
@@ -7840,7 +7870,7 @@ MonoBehaviour:
   selectedColor: {r: 0, g: 0, b: 1, a: 0.23529412}
   inBlackView: 0
   noRules: 0
-  freeMode: 0
+  noTurns: 0
   localGame: 0
   infoPiece: 0
   WhiteHasMoves: 1

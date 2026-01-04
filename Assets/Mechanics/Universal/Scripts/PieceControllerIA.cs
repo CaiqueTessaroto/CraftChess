@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PieceController : MonoBehaviour
+public class PieceControllerIA : MonoBehaviour
 {
 
     [Header("Scripts:")]
@@ -15,10 +15,7 @@ public class PieceController : MonoBehaviour
     public GameInterfaceManager gameInterfaceManager;
     public GameObject selectedPiece;
     public ManagerPieceInfo managerPieceInfo;
-
-    [Header("AudioClip:")]
-    public AudioClip moveSound;
-    public AudioClip captureSound;
+    public PieceController pieceController;
 
     [Header("Control:")]
     public bool KingWhiteIsInCheck;
@@ -33,6 +30,9 @@ public class PieceController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (pieceController == null)
+            pieceController = FindObjectOfType<PieceController>();
+
         if (managerPieceInfo == null)
             managerPieceInfo = FindObjectOfType<ManagerPieceInfo>();
 
@@ -84,12 +84,6 @@ public class PieceController : MonoBehaviour
                     return;
             }
 
-            if (boardManager.infoPiece && !IA)
-            {
-                GetPieceInfo(piece);
-                return;
-            }
-
             if (!boardManager.localGame && comp.Player.id == botPlayerId && IA == false)
                 return;
 
@@ -127,9 +121,6 @@ public class PieceController : MonoBehaviour
         selectedPiece = null;
         pieceComponent = null;
         pieceMovement = null;
-
-        if (!IA)
-            motionVisualization.ClearMoveOverlays();
     }
 
     public bool SelectPiece(GameObject piece)
@@ -145,128 +136,10 @@ public class PieceController : MonoBehaviour
             pieceComponent = piece.GetComponent<PieceComponent>();
             pieceMovement = piece.GetComponent<PieceMovement>();
 
-
-            if (!IA) // pieceComponent.Player.id != botPlayerId
-                motionVisualization.VisualizeMoves(pieceComponent, pieceMovement);
-
             return true;
         }
 
         return false;
-    }
-
-    public void GetPieceInfo(GameObject piece)
-    {
-
-        PieceComponent component = piece.GetComponent<PieceComponent>();
-        PieceMovement movement = piece.GetComponent<PieceMovement>();
-
-        MatchSquadData matchSquad;
-
-        if (component.Player.id == 0)
-            matchSquad = boardManager.Squads[0];
-        else
-            matchSquad = boardManager.Squads[1];
-
-        string spriteName = component.name;
-        Sprite sprite = matchSquad.Sprites[spriteName];
-
-        Squad squad = matchSquad.Data;
-        SquadPieceData pieceData = squad.Pieces.Find(p => p.NameInSquad == component.name);
-
-        managerPieceInfo.SelectPiece(component.name, pieceData, movement.configData, sprite);
-
-    }
-
-    public void BoardUpdate()
-    {
-        StartCoroutine(DelayedBoardUpdate());
-    }
-
-    public IEnumerator DelayedBoardUpdate()
-    {
-
-        bool black = false;
-        bool white = false;
-        bool draw = false;
-
-        yield return new WaitForEndOfFrame();
-        //yield return new WaitForSecondsRealtime(1f);
-
-        if (boardManager != null)
-        {
-            boardManager.UpdateBoardControl();
-            GetCheck();
-            boardManager.UpdateMoves();
-        }
-
-        if (selectedPiece)
-            SelectPiece(selectedPiece.gameObject);
-        else
-            DeselectPiece();
-
-
-        if (!boardManager.WhiteHasMoves)
-        {
-            if (KingWhiteIsInCheck)
-            {
-                black = true;
-            }
-            else if (moveTracker.GetTurnPlayer() == 0)
-            {
-                draw = true;
-            }
-        }
-        else if (!boardManager.BlackHasMoves)
-        {
-            if (KingBlackIsInCheck)
-            {
-                white = true;
-            }
-            else if (moveTracker.GetTurnPlayer() == 1)
-            {
-                draw = true;
-            }
-        }
-        else if (boardManager.AllPieces.Count == 2)
-        {
-            draw = true;
-        }
-
-        if (KingWhite == null)
-            black = true;
-
-        if (KingBlack == null)
-            white = true;
-
-        if (draw)
-            gameInterfaceManager.EndGame("Draw");
-        if (black && botPlayerId == 0)
-            gameInterfaceManager.EndGame("Victory");
-        else if (white && botPlayerId == 1)
-            gameInterfaceManager.EndGame("Victory");
-        else if (black || white)
-            gameInterfaceManager.EndGame("Defeat");
-
-    }
-
-    public void GetCheck()
-    {
-        // Verificar se o rei branco está em xeque
-        Vector2Int kingWhitePos = KingWhite.Position;
-        Cell cellWhite = boardManager
-            .GetCellAtPosition(kingWhitePos.x, kingWhitePos.y)
-            .GetComponent<Cell>();
-
-        KingWhiteIsInCheck = cellWhite.house.isControlledByBlack;
-
-        // Verificar se o rei preto está em xeque
-        Vector2Int kingBlackPos = KingBlack.Position;
-        Cell cellBlack = boardManager
-            .GetCellAtPosition(kingBlackPos.x, kingBlackPos.y)
-            .GetComponent<Cell>();
-
-        KingBlackIsInCheck = cellBlack.house.isControlledByWhite;
     }
 
     private bool AttemptMoveOrCapture(Vector2Int clickedPosition)
@@ -280,7 +153,7 @@ public class PieceController : MonoBehaviour
         if (validMoves == null)
         {
             //boardManager.UpdateBoardControl();
-            BoardUpdate();
+            pieceController.BoardUpdate();
         }
 
         bool captured = false;
@@ -324,12 +197,12 @@ public class PieceController : MonoBehaviour
                 {
                     PerformCastle(targetPiece, clickedPosition);
 
-                    AudioManager.Instance?.PlaySFX(moveSound);
+                    AudioManager.Instance?.PlaySFX(pieceController.moveSound);
 
                     DeselectPiece();
 
                     //boardManager.UpdateBoardControl();
-                    BoardUpdate();
+                    pieceController.BoardUpdate();
 
                     return true;
                 }
@@ -363,12 +236,12 @@ public class PieceController : MonoBehaviour
                     boardManager.HighlightLastMove(pieceComponent.Position, clickedPosition);
                     CaptureEnemyPiece(selectedPiece, targetPiece, clickedPosition);
 
-                    AudioManager.Instance?.PlaySFX(captureSound);
+                    AudioManager.Instance?.PlaySFX(pieceController.captureSound);
 
                     DeselectPiece();
 
                     //boardManager.UpdateBoardControl();
-                    BoardUpdate();
+                    pieceController.BoardUpdate();
                     //StartCoroutine(DelayedBoardUpdate(selectedPiece));
 
                     return true;
@@ -383,12 +256,12 @@ public class PieceController : MonoBehaviour
                 boardManager.HighlightLastMove(pieceComponent.Position, clickedPosition);
                 MovePiece(selectedPiece, clickedPosition, captured);
 
-                AudioManager.Instance?.PlaySFX(moveSound);
+                AudioManager.Instance?.PlaySFX(pieceController.moveSound);
 
                 DeselectPiece();
 
                 //boardManager.UpdateBoardControl();
-                BoardUpdate();
+                pieceController.BoardUpdate();
 
                 return true;
             }

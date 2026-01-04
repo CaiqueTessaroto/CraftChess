@@ -12,6 +12,11 @@ public class MatchData : MonoBehaviour
     public StartOption whoStarts; // "User", "Bot" ou "Random"
     public BotDifficulty botDifficulty;
 
+    [Header("Options")]
+    public bool noRules = false;
+    public bool noTurns = false;
+    public bool localGame = false;
+
     [Header("Data")]
     public List<MatchSquadData> Squads = new List<MatchSquadData>();
     //public MatchSquadData Squad = new MatchSquadData();

@@ -35,6 +35,14 @@ public class InteractiveLobby : MonoBehaviour
     public ManagerPieceInfo managerPieceInfo;
     public NavigationManage_SingleLobby navigationManage;
 
+    [Header("Options")]
+    public GameObject optionsPanel;
+    public Button OpenOpt;
+    public Button CloseOpt;
+    public Toggle noRulesToggle;
+    public Toggle noTurnsToggle;
+    public Toggle localGameToggle;
+
     [Header("Buttons")]
     public Button play;
 
@@ -95,6 +103,22 @@ public class InteractiveLobby : MonoBehaviour
             managerPieceInfo = FindObjectOfType<ManagerPieceInfo>();
 
         userTMP.text = "Player20";
+
+        OpenOpt.onClick.AddListener(() =>
+        {
+            optionsPanel.SetActive(true);
+            OpenOpt.gameObject.SetActive(false);
+        });
+
+        CloseOpt.onClick.AddListener(() =>
+        {
+            optionsPanel.SetActive(false);
+            OpenOpt.gameObject.SetActive(true);
+        });
+
+        noRulesToggle.onValueChanged.AddListener(OnNoRulesChanged);
+        noTurnsToggle.onValueChanged.AddListener(OnNoTurnsChanged);
+        localGameToggle.onValueChanged.AddListener(OnLocalGameChanged);
 
         play.onClick.AddListener(() =>
         {
@@ -244,6 +268,20 @@ public class InteractiveLobby : MonoBehaviour
 
     }
 
+    void OnNoRulesChanged(bool value)
+    {
+        currentMatch.noRules = value;
+    }
+
+    void OnNoTurnsChanged(bool value)
+    {
+        currentMatch.noTurns = value;
+    }
+
+    void OnLocalGameChanged(bool value)
+    {
+        currentMatch.localGame = value;
+    }
 
     public void SelectSquad(string folderName, string jsonFile, Sprite sprite)
     {
@@ -444,6 +482,12 @@ public class InteractiveLobby : MonoBehaviour
 
         if (currentMatch == null)
             return;
+
+        noRulesToggle.isOn = currentMatch.noRules;
+
+        localGameToggle.isOn = currentMatch.localGame;
+
+        noTurnsToggle.isOn = currentMatch.noTurns;
 
         string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
         string jsonFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");

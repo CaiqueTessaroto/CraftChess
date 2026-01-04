@@ -5,7 +5,7 @@ using UnityEngine;
 public class IAn2 : MonoBehaviour
 {
     public BoardChessManager boardManager;
-    public PieceController pieceController;
+    public PieceControllerIA pieceController;
     public MoveTracker moveTracker;
 
     public int botPlayerId = 0;
@@ -17,7 +17,7 @@ public class IAn2 : MonoBehaviour
     void Start()
     {
         boardManager = FindObjectOfType<BoardChessManager>();
-        pieceController = FindObjectOfType<PieceController>();
+        pieceController = FindObjectOfType<PieceControllerIA>();
         moveTracker = FindObjectOfType<MoveTracker>();
 
         if (!selectId)
@@ -29,10 +29,14 @@ public class IAn2 : MonoBehaviour
         if (isThinking)
             return;
 
-        if (moveTracker.GetTurnPlayer() == botPlayerId)
+        if (boardManager.noTurns)
+            thinkDelay = Random.Range(1f, 2.5f);
+
+        if (moveTracker.GetTurnPlayer() == botPlayerId || boardManager.noTurns)
         {
             StartCoroutine(ThinkAndPlay());
         }
+        
     }
 
     IEnumerator ThinkAndPlay()

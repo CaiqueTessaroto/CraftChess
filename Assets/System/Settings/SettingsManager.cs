@@ -6,9 +6,9 @@ using UnityEngine;
 public class GameSettings
 {
     // 🎵 Áudio
-    public float masterVolume = 1f;
-    public float musicVolume = 0.8f;
-    public float sfxVolume = 0.8f;
+    public float masterVolume = 0.5f;
+    public float musicVolume = 0.5f;
+    public float sfxVolume = 0.5f;
 
     // 🖥️ Gráficos
     public int resolutionIndex = 0;

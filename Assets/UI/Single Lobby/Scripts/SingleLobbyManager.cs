@@ -13,6 +13,9 @@ public class SingleMatchConfig
     public BotDifficulty BotDifficulty;
     public string MapName;
     public StartOption StartOption;
+    public bool noRules = false;
+    public bool noTurns = false;
+    public bool localGame = false;
 }
 
 public enum BotDifficulty
@@ -53,10 +56,14 @@ public class SingleLobbyManager : MonoBehaviour
         MatchData.Instance.whoStarts = currentMatch.StartOption;
         MatchData.Instance.botDifficulty = currentMatch.BotDifficulty;
 
+        MatchData.Instance.noRules = currentMatch.noRules;
+        MatchData.Instance.localGame = currentMatch.localGame;
+        MatchData.Instance.noTurns = currentMatch.noTurns;
+
         MatchData.Instance.Squads = Squads;
 
         //MatchData.Instance.Squad = Squad;
-       // MatchData.Instance.BotSquad = BotSquad;
+        // MatchData.Instance.BotSquad = BotSquad;
 
         // carrega a próxima cena
         gameManager.ChangeScene("Singleplayer");
