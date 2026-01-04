@@ -5,7 +5,8 @@ using UnityEngine;
 public class IAn3 : MonoBehaviour
 {
     public BoardChessManager boardManager;
-    public PieceControllerIA pieceController;
+    public PieceControllerIA pieceControllerIA;
+    public PieceController pieceController;
     public MoveTracker moveTracker;
 
     public int botPlayerId = 1;
@@ -17,7 +18,8 @@ public class IAn3 : MonoBehaviour
     void Start()
     {
         boardManager = FindObjectOfType<BoardChessManager>();
-        pieceController = FindObjectOfType<PieceControllerIA>();
+        pieceControllerIA = FindObjectOfType<PieceControllerIA>();
+        pieceController = FindObjectOfType<PieceController>();
         moveTracker = FindObjectOfType<MoveTracker>();
 
         if (!selectId)
@@ -47,9 +49,9 @@ public class IAn3 : MonoBehaviour
 
         if (bestMove.isValid)
         {
-            pieceController.OnCellClicked(bestMove.from, true);
+            pieceControllerIA.OnCellClicked(bestMove.from, true);
             yield return new WaitForSecondsRealtime(0.1f);
-            pieceController.OnCellClicked(bestMove.to, true);
+            pieceControllerIA.OnCellClicked(bestMove.to, true);
         }
 
         isThinking = false;

@@ -55,6 +55,9 @@ public class PieceControllerIA : MonoBehaviour
             gameInterfaceManager = FindObjectOfType<GameInterfaceManager>();
 
 
+        //KingWhite = pieceController.KingWhite;
+        //KingBlack = pieceController.KingBlack;
+
         botPlayerId = boardManager.GetBotId();
     }
 
