@@ -33,13 +33,15 @@ public class MenuButtonsManager : MonoBehaviour
             gameManager = FindObjectOfType<GameManager>();
         }
 
-        playBtn.onClick.AddListener(() =>
-        {
-            if (playPanel.activeSelf)
-                playPanel.SetActive(false);
-            else
-                SwitchPainelTo(playPanel);
-        });
+        playBtn.onClick.AddListener(() => gameManager.ChangeScene("Single Lobby"));
+
+        //playBtn.onClick.AddListener(() =>
+        //{
+        //    if (playPanel.activeSelf)
+        //        playPanel.SetActive(false);
+        //    else
+        //        SwitchPainelTo(playPanel);
+        //});
 
 
         createBtn.onClick.AddListener(() =>
