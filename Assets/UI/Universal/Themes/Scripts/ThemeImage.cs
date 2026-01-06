@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class ThemeImage : MonoBehaviour
 {
-    public enum ImageType { Background, Panel, Button }
+    public enum ImageType { Button, Background, Panel, Background_Icon }
     public ImageType type;
 
     Image img;
@@ -27,17 +27,23 @@ public class ThemeImage : MonoBehaviour
         switch (type)
         {
             case ImageType.Background:
-                //img.color = theme.backgroundColor;
+                if (!theme.backgroundSprite)
+                    img.color = theme.backgroundColor;
+                img.sprite = theme.backgroundSprite;
                 break;
 
             case ImageType.Panel:
-                //img.color = theme.panelColor;
-                img.sprite = theme.panelSprite;
+                img.color = theme.panelColor;
+                //img.sprite = theme.panelSprite;
                 break;
 
             case ImageType.Button:
                 //img.color = theme.buttonColor;
                 img.sprite = theme.buttonSprite;
+                break;
+            case ImageType.Background_Icon:
+                img.color = theme.buttonColor;
+                //img.sprite = theme.buttonSprite;
                 break;
         }
     }

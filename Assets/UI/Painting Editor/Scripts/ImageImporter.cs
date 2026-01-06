@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.IO;
-using System.Collections.Generic;
 using UnityEngine.UI;
 
 #if UNITY_STANDALONE || UNITY_EDITOR
@@ -8,7 +7,6 @@ using SFB; // StandaloneFileBrowser
 #endif
 
 #if UNITY_ANDROID || UNITY_IOS
-using NativeFilePickerNamespace; // NativeFilePicker
 #endif
 public class ImageImporter : MonoBehaviour
 {
@@ -99,6 +97,9 @@ public class ImageImporter : MonoBehaviour
             }
         }
         resized.Apply();
+
+        //if (!gridManager.isUpscaled)
+        //    gridManager.UpdateScale();
 
         gridManager.UpscaleGrid();
         gridManager.ClearGrid();

@@ -14,7 +14,8 @@ public class ThemeData : ScriptableObject
     public Color buttonColor;
 
     [Header("Sprites")]
-    public Sprite panelSprite;
+    //public Sprite panelSprite;
+    public Sprite backgroundSprite;
     public Sprite buttonSprite;
 
     [Header("Audio")]

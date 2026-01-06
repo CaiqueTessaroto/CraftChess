@@ -15,10 +15,15 @@ public class NavigationManage_Painting : MonoBehaviour
     public PaintingGridManager gridManager;
     private GameObject panelFolder;
     private GameObject panelFile;
+    private string fileName = "";
+    private string folderName = "";
+    private string selectRootPath = "";
+
 
     [Header("TMP_Text")]
     public TMP_Text folderText;
-    public TMP_Text namePiece;
+    //public TMP_Text namePiece;
+    public TMP_InputField namePiece;
 
     [Header("Buttons:")]
     public Button saveBtn;
@@ -49,6 +54,14 @@ public class NavigationManage_Painting : MonoBehaviour
 
         saveBtn.onClick.AddListener(() =>
         {
+            if (string.IsNullOrEmpty(namePiece.text))
+            {
+                fileManager.CreateAdvice("Precisa ter um nome para salvar.");
+                return;
+            }
+
+            Debug.Log(namePiece.text);
+
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             uIHelperUtils.save = true;
             folderNavigation.panelFolders.SetActive(true);
@@ -68,6 +81,17 @@ public class NavigationManage_Painting : MonoBehaviour
 
         QuickSave.onClick.AddListener(() =>
         {
+            if (string.IsNullOrEmpty(folderName) && string.IsNullOrEmpty(fileName))
+            {
+                fileManager.CreateAdvice("Nenhuma arte selecionada.");
+                return;
+            }
+            else if (string.IsNullOrEmpty(namePiece.text))
+            {
+                fileManager.CreateAdvice("Precisa ter um nome para salvar.");
+                return;
+            }
+
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             QuickSaveArt();
         });
@@ -113,16 +137,18 @@ public class NavigationManage_Painting : MonoBehaviour
             }
 
 
-            string name = null;
-            if (!string.IsNullOrEmpty(namePiece.text) && namePiece.text != "Name")
-            {
-                name = namePiece.text;
-            }
+            //string name = null;
+            //if (!string.IsNullOrEmpty(namePiece.text) && namePiece.text != "Name")
+            //{
+            //    name = namePiece.text;
+            //}
 
-            fileManager.CreateInput("Salvar Arquivo", "Digite o nome...", (text) =>
-            {
-                SaveArt(text, pasta);
-            }, name);
+            //fileManager.CreateInput("Salvar Arquivo", "Digite o nome...", (text) =>
+            //{
+            //    SaveArt(text, pasta);
+            //}, name);
+
+            SaveArt(namePiece.text, pasta);
         }
         else
         {
@@ -141,15 +167,15 @@ public class NavigationManage_Painting : MonoBehaviour
     {
         Debug.Log($"Arquivo clicado: {fileName}");
 
-        string caminhoPng = Path.Combine(rootPath, fileManager.basePath_Sprite, folder, Path.ChangeExtension(fileName, ".png"));
-        string caminhoJson = Path.Combine(rootPath, fileManager.basePath_PaintingData, folder, Path.ChangeExtension(fileName, ".json"));
+        string caminhoPng = Path.Combine(rootPath, fileManager.basePath_Sprite, folder, fileName.Trim() + ".png");
+        string caminhoJson = Path.Combine(rootPath, fileManager.basePath_PaintingData, folder, fileName.Trim() + ".json");
 
         if (uIHelperUtils.delete)
         {
             uIHelperUtils.change = true;
 
-            fileManager.HandleDeleteFile(fileName, caminhoPng, buttonObj);
             fileManager.HandleDeleteFile(fileName, caminhoJson, null);
+            fileManager.HandleDeleteFile(fileName, caminhoPng, buttonObj);
 
             string pasta = Path.GetDirectoryName(caminhoJson);
             if (Directory.Exists(pasta) && Directory.GetFiles(pasta).Length == 0 && Directory.GetDirectories(pasta).Length == 0)
@@ -169,8 +195,12 @@ public class NavigationManage_Painting : MonoBehaviour
         else
         {
             //Carrega informações da peça
-            folderText.text = folder;
+            //folderText.text = folder;
             namePiece.text = fileName;
+
+            this.fileName = fileName;
+            this.folderName = folder;
+            selectRootPath = rootPath;
 
             gridManager.LoadPaintedCells(Path.GetFileName(caminhoJson), rootPath, folder);
             panelFile.SetActive(false);
@@ -207,9 +237,11 @@ public class NavigationManage_Painting : MonoBehaviour
                 uIHelperUtils.change = true;
                 panelFolder.SetActive(false);
 
+                //folderText.text = subfolderName;
+                //namePiece.text = fileName;
 
-                folderText.text = subfolderName;
-                namePiece.text = fileName;
+                this.fileName = fileName;
+                this.folderName = subfolderName;
             });
 
             return; // sai daqui e espera o clique do usuário
@@ -220,23 +252,63 @@ public class NavigationManage_Painting : MonoBehaviour
         uIHelperUtils.change = true;
         panelFolder.SetActive(false);
 
-        folderText.text = subfolderName;
-        namePiece.text = fileName;
+        //folderText.text = subfolderName;
+        //namePiece.text = fileName;
+
+        this.fileName = fileName;
+        this.folderName = subfolderName;
     }
 
     private void QuickSaveArt()
     {
-        if (string.IsNullOrEmpty(namePiece.text) || namePiece.text == "Name")
+        if (string.IsNullOrEmpty(this.fileName)) // || namePiece.text == "Name"
             return;
 
-        if (string.IsNullOrEmpty(folderText.text) || folderText.text == "Squad")
+        if (string.IsNullOrEmpty(this.folderName)) // || folderText.text == "Squad"
             return;
 
-        string fileName = namePiece.text;
-        string subfolderName = folderText.text;
+
+        string fileName = namePiece.text; //namePiece.text;
+        string subfolderName = this.folderName;
 
         string fileJson = fileName.Trim() + ".json";
         string filePng = fileName.Trim() + ".png";
+
+        if (this.fileName != namePiece.text)
+        {
+            if (selectRootPath == Application.streamingAssetsPath)
+                return;
+
+            string fileJson_ = this.fileName.Trim() + ".json";
+            string filePng_ = this.fileName.Trim() + ".png";
+
+            string caminhoPasta = Path.Combine(selectRootPath, fileManager.basePath_Sprite, this.folderName, filePng_);
+            string caminhoPastaJson = Path.Combine(selectRootPath, fileManager.basePath_PaintingData, this.folderName, fileJson_);
+
+            fileManager.HandleDeleteFile(fileName, caminhoPastaJson, null);
+            fileManager.HandleDeleteFile(fileName, caminhoPasta, null);
+
+            if (fileManager.FileExists(subfolderName, filePng, fileManager.basePath_Sprite) ||
+                fileManager.FileExists(subfolderName, fileJson, fileManager.basePath_PaintingData))
+            {
+                string title = "Do you want to Save the file?";
+                string text = "Já existe um artquivo chamado: " + fileName;
+
+                fileManager.CreateWarning(title, text, () =>
+                {
+                    gridManager.Save(fileJson, filePng, subfolderName);
+                    uIHelperUtils.change = true;
+                    panelFolder.SetActive(false);
+
+                    this.fileName = fileName;
+                    this.folderName = subfolderName;
+                });
+
+                return; // sai daqui e espera o clique do usuário
+            }
+
+        }
+
 
         if (fileManager.FileExists(subfolderName, filePng, fileManager.basePath_Sprite) ||
             fileManager.FileExists(subfolderName, fileJson, fileManager.basePath_PaintingData))
@@ -249,6 +321,9 @@ public class NavigationManage_Painting : MonoBehaviour
                 gridManager.Save(fileJson, filePng, subfolderName);
                 uIHelperUtils.change = true;
                 panelFolder.SetActive(false);
+
+                this.fileName = fileName;
+                this.folderName = subfolderName;
             });
 
             return; // sai daqui e espera o clique do usuário
@@ -258,6 +333,9 @@ public class NavigationManage_Painting : MonoBehaviour
         gridManager.Save(fileJson, filePng, subfolderName);
         uIHelperUtils.change = true;
         panelFolder.SetActive(false);
+
+        this.fileName = fileName;
+        this.folderName = subfolderName;
     }
 
 

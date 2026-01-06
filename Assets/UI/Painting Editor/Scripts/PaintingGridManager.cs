@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 
 public class PaintingGridManager : MonoBehaviour
@@ -13,7 +14,7 @@ public class PaintingGridManager : MonoBehaviour
     private bool gridGenerated = false;
     public int currentScale = 1;
     public TextMeshProUGUI scaleText;
-    private bool isUpscaled = false;
+    public bool isUpscaled = false;
 
     [Header("Scripts:")]
     public GridStateManager gridStateManager;
@@ -63,6 +64,8 @@ public class PaintingGridManager : MonoBehaviour
 
     private Vector2 originalCellSize;
     private Vector2 originalSpacing;
+
+    private bool isScalingLocked = false;
     void Start()
     {
 
@@ -673,14 +676,25 @@ public class PaintingGridManager : MonoBehaviour
     }
     public void UpdateScale()
     {
+        if (isScalingLocked)
+            return;
+
+        StartCoroutine(UpdateScaleDelayed(0.3f));
+    }
+
+    private IEnumerator UpdateScaleDelayed(float delay)
+    {
+        isScalingLocked = true;
+
         if (isUpscaled)
             DownscaleGrid();
         else
             UpscaleGrid();
 
+        yield return new WaitForSeconds(delay);
+
+        isScalingLocked = false;
     }
-
-
 
 
     public void UpscaleGrid()
@@ -721,6 +735,8 @@ public class PaintingGridManager : MonoBehaviour
         layout.cellSize /= 2f;
         layout.spacing *= 0.45f;
         layout.constraintCount *= 2;
+        layout.padding.left = 4;
+        layout.padding.top = 1;
 
         // Gera o novo grid
         GenerateGrid();
@@ -796,6 +812,8 @@ public class PaintingGridManager : MonoBehaviour
         layout.cellSize = originalCellSize;
         layout.spacing = originalSpacing;
         layout.constraintCount /= 2;
+        layout.padding.left = 1;
+        layout.padding.top = 0;
 
         GenerateGrid();
 

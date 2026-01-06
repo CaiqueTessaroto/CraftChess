@@ -342,7 +342,6 @@ public class FolderNavigation : MonoBehaviour
             }
             else if (selectBasePath == fileManager.basePath_Sprite)
             {
-                Debug.Log("fileManager.basePath_Sprite");
                 Transform panelImagens = newButton.transform.Find("Panel");
                 if (panelImagens != null)
                 {

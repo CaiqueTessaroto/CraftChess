@@ -5,7 +5,7 @@ public class ThemeText : MonoBehaviour
 {
     TMP_Text text;
 
-    void Awake()
+    void Start()
     {
         text = GetComponent<TMP_Text>();
         ApplyTheme(ThemeManager.Instance.currentTheme);

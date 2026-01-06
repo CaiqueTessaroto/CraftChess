@@ -151,6 +151,10 @@ public class PaitingToolsManager : MonoBehaviour
         {
             upscaleButton.onClick.AddListener(() =>
             {
+                manager.DisableTools();
+
+                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+
                 manager.SaveStateForUndo();
                 manager.UpdateScale();
             });

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8319b494323001c41b7f9cf8f4f2ba22, type: 3}
-  m_Name: NewTheme
+  m_Name: LabTheme
   m_EditorClassIdentifier: 
-  backgroundColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
-  panelColor: {r: 0, g: 0, b: 0, a: 0}
-  textColor: {r: 0, g: 0, b: 0, a: 0}
-  buttonColor: {r: 0, g: 0, b: 0, a: 0}
-  panelSprite: {fileID: 0}
+  backgroundColor: {r: 0.6784314, g: 0.909804, b: 0.9803922, a: 1}
+  panelColor: {r: 0.8726415, g: 0.98333025, b: 1, a: 1}
+  textColor: {r: 0, g: 0, b: 0, a: 1}
+  buttonColor: {r: 1, g: 1, b: 1, a: 1}
+  backgroundSprite: {fileID: 21300000, guid: 3cffd333b4941cc42abf0d3abf61460c, type: 3}
   buttonSprite: {fileID: 21300000, guid: cabfd1ea20895094aa1ece9bef16b3ff, type: 3}
   clickSound: {fileID: 0}
