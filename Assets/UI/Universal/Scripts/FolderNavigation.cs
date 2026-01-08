@@ -304,6 +304,7 @@ public class FolderNavigation : MonoBehaviour
 
                         if (wrapper?.piece == null)
                         {
+                            fileManager.HandleDeleteFile(jsonPath, jsonPath, null);
                             Debug.LogWarning("JSON inválido em: " + jsonPath);
                             continue;
                         }

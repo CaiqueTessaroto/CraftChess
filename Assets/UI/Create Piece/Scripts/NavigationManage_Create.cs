@@ -21,7 +21,8 @@ public class NavigationManage_Create : MonoBehaviour
     private GameObject panelFile;
 
     [Header("TMP_Text")]
-    public TMP_Text namePiece;
+    public TMP_InputField namePiece;
+    //public TMP_Text namePiece;
     public TMP_Text nameArt;
     public TMP_Text squadPiece;
 
@@ -74,11 +75,22 @@ public class NavigationManage_Create : MonoBehaviour
 
         saveBtn.onClick.AddListener(() =>
         {
+            if (string.IsNullOrEmpty(namePiece.text))
+            {
+                fileManager.CreateAdvice("Precisa ter um nome para salvar.");
+                return;
+            }
+
             if (!string.IsNullOrEmpty(movementCreation.piece.Art))
             {
                 uIHelperUtils.save = true;
                 StartFolderNavigation();
             }
+            else
+            {
+                fileManager.CreateAdvice("Precisa ter uma arte para salvar.");
+            }
+            
         });
 
         loadBtn.onClick.AddListener(() =>
@@ -201,21 +213,23 @@ public class NavigationManage_Create : MonoBehaviour
 
             //string texto = nameInput.text;
             //SavePiece(texto, pasta);
+            /*
+                        string name = null;
+                        if (!string.IsNullOrEmpty(namePiece.text) && namePiece.text != "Name")
+                        {
+                            name = namePiece.text;
+                        }
+                        else if (!string.IsNullOrEmpty(nameArt.text) && nameArt.text != "Name")
+                        {
+                            name = nameArt.text;
+                        }
 
-            string name = null;
-            if (!string.IsNullOrEmpty(namePiece.text) && namePiece.text != "Name")
-            {
-                name = namePiece.text;
-            }
-            else if (!string.IsNullOrEmpty(nameArt.text) && nameArt.text != "Name")
-            {
-                name = nameArt.text;
-            }
-
-            fileManager.CreateInput("Salvar Arquivo", "Digite o nome...", (text) =>
-            {
-                SavePiece(text, pasta, rootPath);
-            }, name);
+                        fileManager.CreateInput("Salvar Arquivo", "Digite o nome...", (text) =>
+                        {
+                            SavePiece(text, pasta, rootPath);
+                        }, name);
+            */
+            SavePiece(namePiece.text, pasta, rootPath);
 
 
 
@@ -327,10 +341,14 @@ public class NavigationManage_Create : MonoBehaviour
         nameArt.text = movementCreation.piece.Art;
         squadPiece.text = movementCreation.piece.Squad;
 
+
         string resourcePath = Path.Combine(rootPath, fileManager.basePath_PieceData, folder, fileName + ".json");
         StartCoroutine(movementCreation.LoadJson(resourcePath));
 
         movementCreation.resultPreview.sprite = sprite;
+
+        if (!movementCreation.resultPreview.gameObject.activeSelf)
+            movementCreation.resultPreview.gameObject.SetActive(true);
 
         gridViewManager.UpdateArtToGrid(sprite);
 
@@ -345,12 +363,20 @@ public class NavigationManage_Create : MonoBehaviour
         nameArt.text = name;
         movementCreation.piece.FolderSprite = folder;
 
+        if (string.IsNullOrEmpty(namePiece.text))
+        {
+            namePiece.text = nameArt.text;
+        }
+
         if (rootPath == Application.streamingAssetsPath)
             movementCreation.piece.NativeSprite = true;
         else
             movementCreation.piece.NativeSprite = false;
 
         movementCreation.resultPreview.sprite = sprite;
+
+        if (!movementCreation.resultPreview.gameObject.activeSelf)
+            movementCreation.resultPreview.gameObject.SetActive(true);
 
         gridViewManager.UpdateArtToGrid(sprite);
 

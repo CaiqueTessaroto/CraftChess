@@ -1,11 +1,16 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GridViewManager : MonoBehaviour
 {
-    public GameObject gridCellWhite; // Prefab da célula branca
-    public GameObject gridCellBlack; // Prefab da célula preta
+    public GameObject gridCellWhitePrefab; // Prefab base
+    public GameObject gridCellBlackPrefab; // Prefab base
+
+    public Color colorCellWhite = new Color32(255, 255, 255, 255);
+    public Color colorCellBlack = new Color32(0, 0, 0, 255);
+
     public Sprite spritePiece;
     public Movement movementConfig; // Configuração de movimento
     public int rows = 7; // Número de linhas
@@ -141,6 +146,13 @@ public class GridViewManager : MonoBehaviour
         GenerateGrid();
     }
 
+
+    IEnumerator GenerateGridDelayed()
+    {
+        yield return new WaitForEndOfFrame();
+        GenerateGrid();
+    }
+
     void GenerateGrid()
     {
 
@@ -153,17 +165,22 @@ public class GridViewManager : MonoBehaviour
                 if (gridbool == false)
                 {
                     //newCell = (x == selectedPosition.x && y == selectedPosition.y) ? Instantiate(gridCellPiece, gridTransform) : Instantiate(gridCellWhite, gridTransform);
-                    newCell = Instantiate(gridCellWhite, gridTransform);
+                    newCell = Instantiate(gridCellWhitePrefab, gridTransform);
+
+                    //Image cellImage = newCell.GetComponent<Image>();
+                    //cellImage.color = colorCellWhite;
+
                     gridbool = true;
                 }
                 else
                 {
                     //newCell = (x == selectedPosition.x && y == selectedPosition.y) ? Instantiate(gridCellPiece, gridTransform) : Instantiate(gridCellBlack, gridTransform);
 
-                    newCell = Instantiate(gridCellBlack, gridTransform);
-                    Image cellImage = newCell.GetComponent<Image>();
+                    newCell = Instantiate(gridCellBlackPrefab, gridTransform); //gridCellBlack
+                    //Image cellImage = newCell.GetComponent<Image>();
                     //Color newBlack = new Color32(50, 50, 50, 255);
-                    cellImage.color = Color.black;
+                    //cellImage.color = Color.black;
+                    //cellImage.color = colorCellBlack;
 
                     gridbool = false;
                 }

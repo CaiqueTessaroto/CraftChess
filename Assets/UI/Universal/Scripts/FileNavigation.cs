@@ -230,6 +230,7 @@ public class FileNavigation : MonoBehaviour
                 if (wrapper == null || wrapper.piece == null)
                 {
                     Debug.LogWarning("JSON inválido: " + arquivo);
+                    fileManager.HandleDeleteFile(pasta, arquivo, null);
                     continue;
                 }
 
@@ -376,6 +377,7 @@ public class FileNavigation : MonoBehaviour
 
                     if (wrapper == null || wrapper.piece == null)
                     {
+                        fileManager.HandleDeleteFile(jsonPath, jsonPath, null);
                         Debug.LogWarning("JSON inválido: " + jsonPath);
                         continue;
                     }

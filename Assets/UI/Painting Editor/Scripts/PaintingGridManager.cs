@@ -72,7 +72,12 @@ public class PaintingGridManager : MonoBehaviour
         //float targetAlpha = 60f / 255f;
         //baseGridColor = new Color(1, 1, 1, targetAlpha);
 
-        UndoButton.onClick.AddListener(() => gridStateManager.Undo());
+        UndoButton.onClick.AddListener(() => {
+            
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            gridStateManager.Undo();
+
+        });
 
         if (fileManager == null)
         {

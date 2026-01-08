@@ -20,6 +20,7 @@ public class SquadManager : MonoBehaviour
     public GameObject dragPrefab;
 
     public string squad;
+    public TMP_Text rulesTmp;
 
     [Header("JSON:")]
     public Squad squadData;
@@ -65,7 +66,6 @@ public class SquadManager : MonoBehaviour
     public TMP_Text squadnameTmp;
     public TMP_Text squadpowerTmp;
     public TMP_Text squadgridpowerTmp;
-    public TMP_Text rulesTmp;
     public GameObject piecesCountPanel;
     public GameObject prefabCounter;
 
@@ -213,7 +213,7 @@ public class SquadManager : MonoBehaviour
 
         if (!enabledMode)
         {
-            rulesTmp.color = Color.black;
+            rulesTmp.color = Color.white;
 
             if (powerLimit)
                 sb.AppendLine(powerLimitTxt);
