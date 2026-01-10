@@ -27,8 +27,8 @@ public enum BotDifficulty
 
 public enum StartOption
 {
-    UserFirst,
-    BotFirst,
+    Black,
+    White,
     Random
 }
 

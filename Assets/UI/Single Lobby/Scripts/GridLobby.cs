@@ -1,17 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class GridSquadManager : MonoBehaviour
+public class GridLobby : MonoBehaviour
 {
-    public SquadManager squadManager;
     public GameObject gridCell;
     public Color whiteHouse = Color.white;
     public Color blackHouse = Color.black;
     public int rows = 8; // Número de linhas
     public int cols = 8; // Número de colunas
 
-    public Dictionary<Vector2Int, GameObject> gridCells = new Dictionary<Vector2Int, GameObject>();
+    public Dictionary<Vector2, GameObject> gridCells = new Dictionary<Vector2, GameObject>();
 
 
     private GameObject newCell; // <- Adicionamos a declaração aqui
@@ -19,25 +17,13 @@ public class GridSquadManager : MonoBehaviour
     private Transform gridTransform;
 
 
-
-
-
     void Start()
     {
-
-        if (squadManager == null)
-        {
-            squadManager = FindObjectOfType<SquadManager>();
-        }
 
         gridTransform = transform;
         thisObject = gameObject;
         Image imagem = thisObject.GetComponent<Image>();
         imagem.enabled = false; // Desativando o componente Image
-
-        //var centerX = 4;
-        //var centerY = 4;
-        //selectedPosition = new Vector2Int(centerX, centerY);
 
         GenerateGrid();
     }
@@ -62,11 +48,9 @@ public class GridSquadManager : MonoBehaviour
                 newCell.name = $"Cell ({x},{y})";
                 gridCells[cellPos] = newCell;
 
-                if (y <= 3)
-                {
-                    Button button = newCell.GetComponent<Button>();
-                    button.onClick.AddListener(() => ToggleCellSelection(cellPos));
-                }
+                Button button = newCell.GetComponent<Button>();
+                button.onClick.AddListener(() => ToggleCellSelection(cellPos));
+
             }
         }
     }
@@ -74,32 +58,9 @@ public class GridSquadManager : MonoBehaviour
     void ToggleCellSelection(Vector2Int cellPos)
     {
 
-        //Debug.Log("cellPos: " + cellPos);
-
-        GameObject cell = gridCells[cellPos];
-
-        if (squadManager.removePiece)
-        {
-            squadManager.RemovePieceFromCell(cell, cellPos);
-            squadManager.CheckStrategicModeRules();
-        }
-        else if (squadManager.selectedPiece)
-        {
-            squadManager.SetPieceToCell(cell, cellPos);
-            squadManager.CheckStrategicModeRules();
-        }
-        else if (squadManager.setKing)
-        {
-            squadManager.SetKing(cell, cellPos);
-            squadManager.CheckStrategicModeRules();
-        }
-        else
-        {
-            squadManager.GetPieceOnCell(cellPos);
-        }
+        Debug.Log("cellPos: " + cellPos);
 
     }
-
 
 
     public GameObject GetCellAtPosition(Vector2Int pos)
@@ -115,7 +76,26 @@ public class GridSquadManager : MonoBehaviour
         return null;
     }
 
+    public void ClearGrid(List<Vector2Int> pos)
+    {
+        foreach (var kvp in gridCells)
+        {
+            Vector2 cellPos = kvp.Key;
 
+            // ignora células que estão na lista
+            if (pos != null && pos.Contains(Vector2Int.RoundToInt(cellPos)))
+                continue;
+
+            GameObject cell = kvp.Value;
+            if (cell == null) continue;
+
+            Transform piece = cell.transform.Find("Piece");
+            if (piece != null)
+            {
+                Destroy(piece.gameObject);
+            }
+        }
+    }
 
     public void RegenerateGrid()
     {
@@ -131,7 +111,6 @@ public class GridSquadManager : MonoBehaviour
         // Chama a geração novamente
         GenerateGrid();
     }
-
 
 
 

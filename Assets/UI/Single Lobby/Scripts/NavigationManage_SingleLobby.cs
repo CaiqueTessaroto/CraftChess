@@ -137,7 +137,7 @@ public class NavigationManage_SingleLobby : MonoBehaviour
                 imageComponent.sprite = sprite;
             }
 
-            Sprite spriteSquad = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
+            //Sprite spriteSquad = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
 
             // Clique do botão
             Button buttonComponent = newButton.GetComponent<Button>();
@@ -146,7 +146,7 @@ public class NavigationManage_SingleLobby : MonoBehaviour
                 buttonComponent.onClick.AddListener(() =>
                 {
                     //OnButtonClicked(folderName, newButton, piecesPanel, squadName, rootPath, jsonFile);
-                    interactiveLobby.SelectSquad(folderName, jsonFile, spriteSquad);
+                    interactiveLobby.SelectSquad(folderName, jsonFile);
                 });
             }
         }

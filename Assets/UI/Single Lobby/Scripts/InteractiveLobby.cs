@@ -29,6 +29,7 @@ public class InteractiveLobby : MonoBehaviour
     //SingleLobbyManager
     public FileManager fileManager;
     public SingleLobbyManager managerLobby;
+    public GridLobby gridLobby;
     //public MatchConfig currentMatch;
 
     [Header("Scripts")]
@@ -49,32 +50,40 @@ public class InteractiveLobby : MonoBehaviour
     [Header("Map")]
     public Image map;
 
+    [Header("BotView")]
+    public Image ImageBot;
+    public Sprite Human;
+    public Sprite Robot;
+
+    [Header("Crows")]
+    public Image crowPlayer1;
+    public Image crowPlayer2;
+
+    [Header("Sprite Crows")]
+    public Sprite crowWhite;
+    public Sprite crowRandon;
+    public Sprite crowBlack;
+
     [Header("ToggleGroup:")]
     public ToggleGroup difficultyOption;
     public ToggleGroup startOption;
     private Toggle[] difficulty_toggles;
     private Toggle[] startOption_toggles;
 
-    [Header("YourSquad")]
-    public GameObject userSelect;
-    public GameObject userView;
+    [Header("BlackSquad")]
+    //public GameObject userSelect;
     public Button userSquadView;
-    public Image userImage;
-    public TMP_Text userSquadTMP;
-    public TMP_Text userTMP;
-    public GameObject userSelectTMP;
+    public TMP_Text blackSquadTMP;
+    public TMP_Text blackSquadTMP2;
     public GameObject userBtn_Squad;
     private Button userBtn;
     public Transform userPiecesGrid;
 
-    [Header("EnemySquad")]
-    public GameObject enemySelect;
-    public GameObject enemyView;
+    [Header("WhiteSquad")]
+    //public GameObject enemySelect;
     public Button enemySquadView;
-    public Image enemyImage;
-    public TMP_Text enemySquadTMP;
-    public TMP_Text enemyTMP;
-    public GameObject enemySelectTMP;
+    public TMP_Text whiteSquadTMP;
+    public TMP_Text whiteSquadTMP2;
     public GameObject enemyBtn_Squad;
     private Button enemyBtn;
     public Transform enemyPiecesGrid;
@@ -90,8 +99,8 @@ public class InteractiveLobby : MonoBehaviour
 
     public List<MatchSquadData> Squads = new List<MatchSquadData>();
 
-    private MatchSquadData Squad = new MatchSquadData();
-    private MatchSquadData BotSquad = new MatchSquadData();
+    private MatchSquadData BlackSquad = new MatchSquadData();
+    private MatchSquadData WhiteSquad = new MatchSquadData();
 
 
     //SquadDataWrapper
@@ -102,7 +111,10 @@ public class InteractiveLobby : MonoBehaviour
         if (managerPieceInfo == null)
             managerPieceInfo = FindObjectOfType<ManagerPieceInfo>();
 
-        userTMP.text = "Player20";
+        if (gridLobby == null)
+            gridLobby = FindObjectOfType<GridLobby>();
+
+        //userTMP.text = "Player20";
 
         OpenOpt.onClick.AddListener(() =>
         {
@@ -128,21 +140,22 @@ public class InteractiveLobby : MonoBehaviour
 
             currentMatch.MapName = "Default";
 
-            if (currentMatch.StartOption == StartOption.UserFirst)
+            if (currentMatch.StartOption == StartOption.Black)
             {
-                Squad.Player = new Player("Jogador", 0, Color.white);
-                BotSquad.Player = new Player("Bot", 1, Color.black);
+                BlackSquad.Player = new Player("Jogador", 1, Color.black);
+                WhiteSquad.Player = new Player("Bot", 0, Color.white);
 
-                Squads.Add(Squad);
-                Squads.Add(BotSquad);
+                Squads.Add(WhiteSquad);
+                Squads.Add(BlackSquad);
+
             }
-            else if (currentMatch.StartOption == StartOption.BotFirst)
+            else if (currentMatch.StartOption == StartOption.White)
             {
-                BotSquad.Player = new Player("Bot", 0, Color.white);
-                Squad.Player = new Player("Jogador", 1, Color.black);
+                WhiteSquad.Player = new Player("Jogador", 0, Color.white);
+                BlackSquad.Player = new Player("Bot", 1, Color.black);
 
-                Squads.Add(BotSquad);
-                Squads.Add(Squad);
+                Squads.Add(WhiteSquad);
+                Squads.Add(BlackSquad);
             }
             else
             {
@@ -150,19 +163,20 @@ public class InteractiveLobby : MonoBehaviour
 
                 if (userStarts)
                 {
-                    Squad.Player = new Player("Jogador", 0, Color.white);
-                    BotSquad.Player = new Player("Bot", 1, Color.black);
+                    BlackSquad.Player = new Player("Jogador", 1, Color.black);
+                    WhiteSquad.Player = new Player("Bot", 0, Color.white);
 
-                    Squads.Add(Squad);
-                    Squads.Add(BotSquad);
+                    Squads.Add(WhiteSquad);
+                    Squads.Add(BlackSquad);
+
                 }
                 else
                 {
-                    Squad.Player = new Player("Jogador", 1, Color.black);
-                    BotSquad.Player = new Player("Bot", 0, Color.white);
+                    WhiteSquad.Player = new Player("Jogador", 0, Color.white);
+                    BlackSquad.Player = new Player("Bot", 1, Color.black);
 
-                    Squads.Add(BotSquad);
-                    Squads.Add(Squad);
+                    Squads.Add(WhiteSquad);
+                    Squads.Add(BlackSquad);
                 }
 
                 Debug.Log($"Começo aleatório → {(userStarts ? "Jogador começa" : "Bot começa")}");
@@ -253,6 +267,29 @@ public class InteractiveLobby : MonoBehaviour
                     if (Enum.TryParse(cleanName, true, out StartOption diff))
                     {
                         currentMatch.StartOption = diff; // agora fica salvo no enum
+
+                        switch (currentMatch.StartOption)
+                        {
+                            case StartOption.White:
+                                crowPlayer1.sprite = crowWhite;
+                                crowPlayer2.sprite = crowBlack;
+                                return;
+
+                            case StartOption.Random:
+                                crowPlayer1.sprite = crowRandon;
+                                crowPlayer2.sprite = crowRandon;
+                                return;
+
+                            case StartOption.Black:
+                                crowPlayer1.sprite = crowBlack;
+                                crowPlayer2.sprite = crowWhite;
+                                return;
+
+                            default:
+                                crowPlayer1.sprite = crowWhite;
+                                crowPlayer2.sprite = crowBlack;
+                                return;
+                        }
                         //Debug.Log("StartOption selecionada: " + currentMatch.StartOption);
                     }
                     else
@@ -281,29 +318,25 @@ public class InteractiveLobby : MonoBehaviour
     void OnLocalGameChanged(bool value)
     {
         currentMatch.localGame = value;
+
+        if (value)
+            ImageBot.sprite = Human;
+        else
+            ImageBot.sprite = Robot;
     }
 
-    public void SelectSquad(string folderName, string jsonFile, Sprite sprite)
+    public void SelectSquad(string folderName, string jsonFile)
     {
 
         managerPieceInfo.pieceSprites.Clear();
 
         if (OnEnemy)
         {
-            BotSquad.Clear();
+            WhiteSquad.Clear();
 
             currentMatch.BotSquadName = folderName;
-            enemySquadTMP.text = folderName;
-
-            if (enemySelectTMP.activeSelf)
-            {
-                //enemySelectTMP.SetActive(false);
-                enemySelect.SetActive(false);
-                enemyView.SetActive(true);
-
-                enemySquadView.GetComponent<Image>().sprite = sprite;
-                //enemyBtn_Squad.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.5f);
-            }
+            whiteSquadTMP.text = folderName;
+            whiteSquadTMP2.text = folderName;
 
             CreatePiecesVisualization(jsonFile, enemyPiecesGrid);
 
@@ -316,21 +349,12 @@ public class InteractiveLobby : MonoBehaviour
         }
         else
         {
-            Squad.Clear();
+            BlackSquad.Clear();
 
             currentMatch.UserSquadName = folderName;
-            userSquadTMP.text = folderName;
+            blackSquadTMP.text = folderName;
+            blackSquadTMP2.text = folderName;
 
-
-            if (userSelectTMP.activeSelf)
-            {
-                //userSelectTMP.SetActive(false);
-                userSelect.SetActive(false);
-                userView.SetActive(true);
-
-                userSquadView.GetComponent<Image>().sprite = sprite;
-                //userBtn_Squad.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.5f);
-            }
 
             CreatePiecesVisualization(jsonFile, userPiecesGrid);
 
@@ -426,20 +450,20 @@ public class InteractiveLobby : MonoBehaviour
             if (OnEnemy)
             {
                 // Inimigo
-                if (!BotSquad.Sprites.ContainsKey(piece.NameInSquad))
-                    BotSquad.Sprites[piece.NameInSquad] = sprite;
+                if (!WhiteSquad.Sprites.ContainsKey(piece.NameInSquad))
+                    WhiteSquad.Sprites[piece.NameInSquad] = sprite;
 
-                if (!BotSquad.Pieces.ContainsKey(piece.NameInSquad))
-                    BotSquad.Pieces[piece.NameInSquad] = wrapper;
+                if (!WhiteSquad.Pieces.ContainsKey(piece.NameInSquad))
+                    WhiteSquad.Pieces[piece.NameInSquad] = wrapper;
             }
             else
             {
                 // Jogador
-                if (!Squad.Sprites.ContainsKey(piece.NameInSquad))
-                    Squad.Sprites[piece.NameInSquad] = sprite;
+                if (!BlackSquad.Sprites.ContainsKey(piece.NameInSquad))
+                    BlackSquad.Sprites[piece.NameInSquad] = sprite;
 
-                if (!Squad.Pieces.ContainsKey(piece.NameInSquad))
-                    Squad.Pieces[piece.NameInSquad] = wrapper;
+                if (!BlackSquad.Pieces.ContainsKey(piece.NameInSquad))
+                    BlackSquad.Pieces[piece.NameInSquad] = wrapper;
             }
 
             elementCount += 1;
@@ -452,11 +476,26 @@ public class InteractiveLobby : MonoBehaviour
 
         }
 
+
+
         // --- 🔹 Ao final, guarda o Squad completo ---
         if (OnEnemy)
-            BotSquad.Data = data;
+            WhiteSquad.Data = data;
         else
-            Squad.Data = data;
+            BlackSquad.Data = data;
+
+
+        posInGrid.Clear();
+
+        if (BlackSquad.Data != null)
+            LoadPiecesInGrid(BlackSquad.Data, BlackSquad.Sprites, true);
+
+        if (WhiteSquad.Data != null)
+            LoadPiecesInGrid(WhiteSquad.Data, WhiteSquad.Sprites);
+
+
+        gridLobby.ClearGrid(posInGrid);
+
     }
 
 
@@ -491,22 +530,22 @@ public class InteractiveLobby : MonoBehaviour
 
         string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
         string jsonFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");
-        string pngFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".png");
+        //string pngFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".png");
 
-        Sprite sprite = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
+        //Sprite sprite = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
 
         if (File.Exists(jsonFile))
-            SelectSquad(currentMatch.UserSquadName, jsonFile, sprite);
+            SelectSquad(currentMatch.UserSquadName, jsonFile);
 
         OnEnemy = true;
         squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BotSquadName);
         jsonFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".json");
-        pngFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".png");
+        //pngFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".png");
 
-        sprite = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
+        //sprite = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
 
         if (File.Exists(jsonFile))
-            SelectSquad(currentMatch.BotSquadName, jsonFile, sprite);
+            SelectSquad(currentMatch.BotSquadName, jsonFile);
 
         foreach (Toggle toggle in difficulty_toggles)
         {
@@ -531,6 +570,129 @@ public class InteractiveLobby : MonoBehaviour
         //map.sprite = Resources.Load<Sprite>("Sprites/Default/Map_Default");
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public List<Vector2Int> posInGrid = new List<Vector2Int>();
+
+
+
+
+    public void LoadPiecesInGrid(Squad squadData, Dictionary<string, Sprite> pieceSprites, bool IsBlack = false)
+    {
+
+        foreach (var piece in squadData.Units)
+        {
+            Vector2Int finalPosition = piece.Position;
+
+            if (IsBlack)
+            {
+                finalPosition = MirrorPosition(piece.Position);
+            }
+
+            posInGrid.Add(finalPosition);
+
+            GameObject cell = gridLobby.GetCellAtPosition(finalPosition);
+
+            SetPieceToCellFromJson(cell, piece, pieceSprites);
+        }
+
+    }
+
+    private Vector2Int MirrorPosition(Vector2Int original)
+    {
+        int boardSize = 8; // padrão do xadrez
+        return new Vector2Int( //boardSize - 1 - 
+            original.x,
+            boardSize - 1 - original.y
+        );
+    }
+
+    public void SetPieceToCellFromJson(GameObject cell, UnitPieceData piece, Dictionary<string, Sprite> pieceSprites)
+    {
+        // coloca o sprite na célula
+        if (!pieceSprites.ContainsKey(piece.Name))
+        {
+            return;
+        }
+
+        SetSpriteFromJson(cell, piece, pieceSprites);
+    }
+
+
+    public void SetSpriteFromJson(GameObject cell, UnitPieceData piece, Dictionary<string, Sprite> pieceSprites)
+    {
+        // procura se já existe um filho chamado "Piece"
+        Transform pieceTransform = cell.transform.Find("Piece");
+        Image pieceImage;
+
+        if (pieceTransform == null)
+        {
+            // cria um novo GameObject dentro da célula
+            GameObject pieceGO = new GameObject("Piece", typeof(RectTransform), typeof(Image));
+
+            // define como filho da célula
+            pieceGO.transform.SetParent(cell.transform, false);
+
+            float margin = 0f; // margem em pixels
+
+            // ajusta o RectTransform para ocupar toda a célula
+            RectTransform rt = pieceGO.GetComponent<RectTransform>();
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.offsetMin = new Vector2(margin, margin);       // distância da borda inferior/esquerda
+            rt.offsetMax = new Vector2(-margin, -margin);     // distância da borda superior/direita
+
+            // pega o componente Image recém-criado
+            pieceImage = pieceGO.GetComponent<Image>();
+        }
+        else
+        {
+            // se já existe, só pega o Image
+            pieceImage = pieceTransform.GetComponent<Image>();
+        }
+        if (pieceSprites.ContainsKey(piece.Name))
+            pieceImage.sprite = pieceSprites[piece.Name];
+
+
+        pieceImage.preserveAspect = true;
+    }
+
+
+
+
+
+
+
+
+
 
 
 
