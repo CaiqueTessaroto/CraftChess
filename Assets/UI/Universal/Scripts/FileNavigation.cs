@@ -42,6 +42,11 @@ public class FileNavigation : MonoBehaviour
     public bool initiate = false;
 
 
+
+    private bool setCursor = false;
+
+
+
     //private string selectRootPath;
 
     // Start is called before the first frame update
@@ -87,7 +92,11 @@ public class FileNavigation : MonoBehaviour
 
         deleteBtw.onClick.AddListener(() =>
         {
-            uIHelperUtils.delete = true;
+            uIHelperUtils.delete = !uIHelperUtils.delete;
+            setCursor = true;
+
+            UIHelperUtils.SetCursor(uIHelperUtils.TrashIcon, CursorHotspot.Center);
+
         });
 
 
@@ -120,7 +129,7 @@ public class FileNavigation : MonoBehaviour
         squadsBtw.onClick.AddListener(() =>
         {
             if (initiate) return;
-            
+
             uIHelperUtils.OnFolder = true;
             uIHelperUtils.OnFiles = false;
 
@@ -141,6 +150,16 @@ public class FileNavigation : MonoBehaviour
             */
         });
 
+
+    }
+
+    void Update()
+    {
+        if (!uIHelperUtils.delete && setCursor)
+        {
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            setCursor = false;
+        }
 
     }
 
@@ -331,7 +350,7 @@ public class FileNavigation : MonoBehaviour
                 {
                     string nameFolder = Path.GetFileName(Path.GetDirectoryName(fileCopy));
                     string fileName = Path.GetFileNameWithoutExtension(fileCopy);
-                    deleteObj.SetActive(false);
+                    //deleteObj.SetActive(false);
 
                     if (manageCreate)
                         manageCreate.HandleSelectionArt(Path.GetFileNameWithoutExtension(fileCopy), nameFolder, sprite, rootPath);

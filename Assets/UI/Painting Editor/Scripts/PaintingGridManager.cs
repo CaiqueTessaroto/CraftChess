@@ -72,8 +72,9 @@ public class PaintingGridManager : MonoBehaviour
         //float targetAlpha = 60f / 255f;
         //baseGridColor = new Color(1, 1, 1, targetAlpha);
 
-        UndoButton.onClick.AddListener(() => {
-            
+        UndoButton.onClick.AddListener(() =>
+        {
+
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             gridStateManager.Undo();
 
@@ -838,15 +839,18 @@ public class PaintingGridManager : MonoBehaviour
 
     public void Save(string fileJson, string filePng, string subfolderName)
     {
-        SavePaintedCells(fileJson, subfolderName);
+        bool hasData = SavePaintedCells(fileJson, subfolderName);
+
+        if (!hasData)
+            return;
+            
         ExportGridAsTextureFromJson(filePng, Application.persistentDataPath, 1000, subfolderName);
     }
 
 
-    public void SavePaintedCells(string fileName, string subfolderName = "Default")
+    public bool SavePaintedCells(string fileName, string subfolderName = "Default")
     {
         List<PixelData> paintedPixels = new List<PixelData>();
-
         Color defaultColor = baseGridColor;
 
         foreach (var kvp in gridCells)
@@ -866,7 +870,13 @@ public class PaintingGridManager : MonoBehaviour
             }
         }
 
-        // Serializa
+        // 🚫 Nenhuma célula pintada → cancela
+        if (paintedPixels.Count == 0)
+        {
+            fileManager.CreateAdvice("Nenhuma célula pintada para salvar.");
+            return false;
+        }
+
         Drawing wrapper = new Drawing
         {
             list = paintedPixels,
@@ -874,8 +884,9 @@ public class PaintingGridManager : MonoBehaviour
         };
 
         string data = JsonUtility.ToJson(wrapper, true);
-
         fileManager.SaveJson(subfolderName, fileName, data, fileManager.basePath_PaintingData);
+
+        return true;
     }
 
 

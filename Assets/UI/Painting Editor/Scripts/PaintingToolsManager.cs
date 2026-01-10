@@ -149,7 +149,8 @@ public class PaitingToolsManager : MonoBehaviour
 
                 Image buttonImage = paintBucketButton.GetComponent<Image>();
 
-                UIHelperUtils.SetCursor(buttonImage.sprite, true);
+                UIHelperUtils.SetCursor(buttonImage.sprite, CursorHotspot.BottomRight);
+
                 manager.paintBucketMode = true;
             });
         }
@@ -171,14 +172,6 @@ public class PaitingToolsManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        //Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-
-
-    }
 
 
     public void SetEraserColor()

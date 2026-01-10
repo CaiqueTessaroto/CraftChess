@@ -56,8 +56,8 @@ public class NavigationManage_Painting : MonoBehaviour
         {
             if (string.IsNullOrEmpty(namePiece.text))
             {
-                fileManager.CreateAdvice("Precisa ter um nome para salvar.");
-                return;
+            //    fileManager.CreateAdvice("Precisa ter um nome para salvar.");
+            //    return;
             }
 
             Debug.Log(namePiece.text);
@@ -88,8 +88,8 @@ public class NavigationManage_Painting : MonoBehaviour
             }
             else if (string.IsNullOrEmpty(namePiece.text))
             {
-                fileManager.CreateAdvice("Precisa ter um nome para salvar.");
-                return;
+            //    fileManager.CreateAdvice("Precisa ter um nome para salvar.");
+            //    return;
             }
 
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
@@ -138,17 +138,19 @@ public class NavigationManage_Painting : MonoBehaviour
 
 
             //string name = null;
-            //if (!string.IsNullOrEmpty(namePiece.text) && namePiece.text != "Name")
-            //{
-            //    name = namePiece.text;
-            //}
+            if (string.IsNullOrEmpty(namePiece.text))
+            {
+                string name = null;
 
-            //fileManager.CreateInput("Salvar Arquivo", "Digite o nome...", (text) =>
-            //{
-            //    SaveArt(text, pasta);
-            //}, name);
+                fileManager.CreateInput("Salvar Arquivo", "Digite o nome...", (text) =>
+                {
+                    SaveArt(text, pasta);
+                }, name);
 
-            SaveArt(namePiece.text, pasta);
+            }
+            else
+                SaveArt(namePiece.text, pasta);
+
         }
         else
         {
@@ -195,7 +197,7 @@ public class NavigationManage_Painting : MonoBehaviour
         else
         {
             //Carrega informações da peça
-            //folderText.text = folder;
+            folderText.text = folder;
             namePiece.text = fileName;
 
             this.fileName = fileName;
@@ -253,10 +255,11 @@ public class NavigationManage_Painting : MonoBehaviour
         panelFolder.SetActive(false);
 
         //folderText.text = subfolderName;
-        //namePiece.text = fileName;
+        namePiece.text = fileName;
 
         this.fileName = fileName;
         this.folderName = subfolderName;
+        folderText.text = subfolderName;
     }
 
     private void QuickSaveArt()
@@ -267,6 +270,11 @@ public class NavigationManage_Painting : MonoBehaviour
         if (string.IsNullOrEmpty(this.folderName)) // || folderText.text == "Squad"
             return;
 
+        if (selectRootPath == Application.streamingAssetsPath)
+        {
+            //    return;
+        }
+
 
         string fileName = namePiece.text; //namePiece.text;
         string subfolderName = this.folderName;
@@ -276,9 +284,6 @@ public class NavigationManage_Painting : MonoBehaviour
 
         if (this.fileName != namePiece.text)
         {
-            if (selectRootPath == Application.streamingAssetsPath)
-                return;
-
             string fileJson_ = this.fileName.Trim() + ".json";
             string filePng_ = this.fileName.Trim() + ".png";
 

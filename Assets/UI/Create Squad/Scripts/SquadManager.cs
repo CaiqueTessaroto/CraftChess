@@ -79,7 +79,7 @@ public class SquadManager : MonoBehaviour
     public bool setKing = false;
     public bool enabledMode = false;
     public bool editMode = false;
-    public bool setCursor = false;
+    private bool setCursor = false;
 
     [Header("Save:")]
     public RectTransform gridPanel;
@@ -190,7 +190,7 @@ public class SquadManager : MonoBehaviour
 
     }
 
-    public void Update()
+    void Update()
     {
         if (!setKing && !removePiece && setCursor)
         {

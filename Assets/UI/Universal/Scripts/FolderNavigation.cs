@@ -40,6 +40,9 @@ public class FolderNavigation : MonoBehaviour
     public bool initiate = false;
 
 
+    private bool setCursor = false;
+
+
 
     void Start()
     {
@@ -107,14 +110,17 @@ public class FolderNavigation : MonoBehaviour
 
         deleteButton.onClick.AddListener(() =>
         {
-            uIHelperUtils.delete = true;
+            uIHelperUtils.delete = !uIHelperUtils.delete;
+            setCursor = true;
+
+            UIHelperUtils.SetCursor(uIHelperUtils.TrashIcon, CursorHotspot.Center);
         });
 
 
         piecesBtw.onClick.AddListener(() =>
         {
             if (initiate) return;
-            
+
             uIHelperUtils.OnFolder = false;
             uIHelperUtils.OnFiles = true;
 
@@ -154,6 +160,16 @@ public class FolderNavigation : MonoBehaviour
 
         });
 
+
+    }
+
+    void Update()
+    {
+        if (!uIHelperUtils.delete && setCursor)
+        {
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            setCursor = false;
+        }
 
     }
 
@@ -242,7 +258,7 @@ public class FolderNavigation : MonoBehaviour
             }
 
             // Carrega pastas do streamingAssetsPath se estiver no "onLibrary"
-            if (uIHelperUtils.onLibrary)
+            if (uIHelperUtils.onLibrary && !uIHelperUtils.save)
             {
                 pastas = fileManager.GetSubfoldersIn(selectBasePath, Application.streamingAssetsPath);
                 yield return StartCoroutine(CreateFolderButtons(pastas, Application.streamingAssetsPath));

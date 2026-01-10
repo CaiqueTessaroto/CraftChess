@@ -12,6 +12,15 @@ public class SpriteData
     public string PngPath { get; set; }
 }
 
+public enum CursorHotspot
+{
+    TopLeft,
+    TopRight,
+    BottomLeft,
+    BottomRight,
+    Center
+}
+
 public class UIHelperUtils : MonoBehaviour
 {
 
@@ -28,6 +37,9 @@ public class UIHelperUtils : MonoBehaviour
     [Header("Control Panels:")]
     public bool OnFiles = false;
     public bool OnFolder = true;
+
+    [Header("Icons Mouse:")]
+    public Sprite TrashIcon;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +61,8 @@ public class UIHelperUtils : MonoBehaviour
 
     public bool setAll()
     {
+        delete = false;
+
         if (onLibrary && onMy)
             return false;
 
@@ -59,6 +73,8 @@ public class UIHelperUtils : MonoBehaviour
 
     public bool setMy()
     {
+        delete = false;
+
         if (!onLibrary)
             return false;
 
@@ -69,6 +85,8 @@ public class UIHelperUtils : MonoBehaviour
 
     public bool setLibrary()
     {
+        delete = false;
+
         if (!onMy)
             return false;
 
@@ -228,23 +246,42 @@ public class UIHelperUtils : MonoBehaviour
 
 
 
-    public static void SetCursor(Sprite sprite, bool bucket = false)
+    public static void SetCursor(Sprite sprite, CursorHotspot hotspotType = CursorHotspot.BottomLeft)
     {
-        Vector2 cursorHotspot = Vector2.zero;
+        if (sprite == null) return;
 
         // Converte o Sprite para Texture2D
         Texture2D cursorTexture = SpriteToTexture2D(sprite);
+        cursorTexture = MakeTextureReadableRGBA(cursorTexture);
 
-        cursorTexture = MakeTextureReadableRGBA(cursorTexture); // garante que é CPU accessible ERGBA
+        Vector2 cursorHotspot = GetHotspot(cursorTexture, hotspotType);
 
-        if (bucket)
-            cursorHotspot = new Vector2(cursorTexture.width - 1, cursorTexture.height - 1);
-        else
-            cursorHotspot = new Vector2(0, cursorTexture.height - 1);
-
-        // Aplica como cursor
         Cursor.SetCursor(cursorTexture, cursorHotspot, CursorMode.Auto);
 
+
+        Vector2 GetHotspot(Texture2D tex, CursorHotspot type)
+        {
+            switch (type)
+            {
+                case CursorHotspot.TopLeft:
+                    return new Vector2(0, 0);
+
+                case CursorHotspot.TopRight:
+                    return new Vector2(tex.width - 1, 0);
+
+                case CursorHotspot.BottomLeft:
+                    return new Vector2(0, tex.height - 1);
+
+                case CursorHotspot.BottomRight:
+                    return new Vector2(tex.width - 1, tex.height - 1);
+
+                case CursorHotspot.Center:
+                    return new Vector2(tex.width / 2f, tex.height / 2f);
+
+                default:
+                    return Vector2.zero;
+            }
+        }
 
 
         Texture2D SpriteToTexture2D(Sprite sprite)

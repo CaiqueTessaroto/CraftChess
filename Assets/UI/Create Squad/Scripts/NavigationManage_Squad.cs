@@ -44,6 +44,8 @@ public class NavigationManage_Squad : MonoBehaviour
     [Header("Panels")]
     public Transform piecesPanel;
 
+
+    private bool setCursor = false;
     //private string selectRootPath;
 
 
@@ -107,7 +109,11 @@ public class NavigationManage_Squad : MonoBehaviour
 
         deleteBtw.onClick.AddListener(() =>
         {
-            uIHelperUtils.delete = true;
+            uIHelperUtils.delete = !uIHelperUtils.delete;
+            setCursor = true;
+
+            UIHelperUtils.SetCursor(uIHelperUtils.TrashIcon, CursorHotspot.Center);
+
         });
 
 
@@ -212,6 +218,15 @@ public class NavigationManage_Squad : MonoBehaviour
 
     }
 
+    void Update()
+    {
+        if (!uIHelperUtils.delete && setCursor)
+        {
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            setCursor = false;
+        }
+
+    }
 
     public void SaveSquad(string name, string title, string text)
     {
