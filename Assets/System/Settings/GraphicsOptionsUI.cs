@@ -57,10 +57,33 @@ public class GraphicsOptionsUI : MonoBehaviour
 
     void SetupFullscreen()
     {
-        fullscreenToggle.isOn =
-            SettingsManager.Instance.Settings.fullscreen;
+        fullscreenToggle.SetIsOnWithoutNotify(
+            SettingsManager.Instance.Settings.fullscreen
+        );
 
         fullscreenToggle.onValueChanged.AddListener(OnFullscreenChanged);
+    }
+
+
+    public void Load()
+    {
+        if (PlayerPrefs.HasKey("Settings"))
+        {
+            SettingsManager.Instance.Settings = JsonUtility.FromJson<GameSettings>(
+                PlayerPrefs.GetString("Settings")
+            );
+        }
+        else
+        {
+            // 🔰 Setup inicial padrão
+            SettingsManager.Instance.Settings = new GameSettings();
+
+            SettingsManager.Instance.Settings.fullscreen = false;
+            SettingsManager.Instance.Settings.resolutionIndex = 0; // menor resolução
+            //SettingsManager.Instance.Settings.qualityLevel = QualitySettings.GetQualityLevel();
+
+            SettingsManager.Instance.Save();
+        }
     }
 
     #endregion
@@ -75,7 +98,30 @@ public class GraphicsOptionsUI : MonoBehaviour
 
     void OnFullscreenChanged(bool value)
     {
-        SettingsManager.Instance.Settings.fullscreen = value;
+        var settings = SettingsManager.Instance.Settings;
+
+        settings.fullscreen = value;
+
+        if (value) // ligou fullscreen
+        {
+            settings.resolutionIndex = GetMaxResolutionIndex();
+
+            // atualiza o dropdown visualmente (sem disparar evento)
+            resolutionDropdown.SetValueWithoutNotify(
+                settings.resolutionIndex
+            );
+        }
+        else
+        {
+
+            settings.resolutionIndex = 0;
+
+            // atualiza o dropdown visualmente (sem disparar evento)
+            resolutionDropdown.SetValueWithoutNotify(
+                settings.resolutionIndex
+            );
+        }
+
         ApplyGraphics();
     }
 
@@ -87,13 +133,22 @@ public class GraphicsOptionsUI : MonoBehaviour
     {
         var s = SettingsManager.Instance.Settings;
 
+        if (resolutions == null || resolutions.Count == 0)
+            return;
+
+        int index = Mathf.Clamp(
+            s.resolutionIndex,
+            0,
+            resolutions.Count - 1
+        );
+
         // 🖥️ Fullscreen / Janela
         Screen.fullScreenMode = s.fullscreen
             ? FullScreenMode.FullScreenWindow
             : FullScreenMode.Windowed;
 
         // 📺 Resolução
-        Resolution res = resolutions[s.resolutionIndex];
+        Resolution res = resolutions[index];
         Screen.SetResolution(
             res.width,
             res.height,
@@ -103,5 +158,28 @@ public class GraphicsOptionsUI : MonoBehaviour
         SettingsManager.Instance.Save();
     }
 
+
     #endregion
+
+
+
+
+    int GetMaxResolutionIndex()
+    {
+        int maxIndex = 0;
+        int maxPixels = 0;
+
+        for (int i = 0; i < resolutions.Count; i++)
+        {
+            int pixels = resolutions[i].width * resolutions[i].height;
+
+            if (pixels > maxPixels)
+            {
+                maxPixels = pixels;
+                maxIndex = i;
+            }
+        }
+
+        return maxIndex;
+    }
 }

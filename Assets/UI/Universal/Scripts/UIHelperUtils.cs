@@ -228,6 +228,64 @@ public class UIHelperUtils : MonoBehaviour
 
 
 
+    public static void SetCursor(Sprite sprite, bool bucket = false)
+    {
+        Vector2 cursorHotspot = Vector2.zero;
+
+        // Converte o Sprite para Texture2D
+        Texture2D cursorTexture = SpriteToTexture2D(sprite);
+
+        cursorTexture = MakeTextureReadableRGBA(cursorTexture); // garante que é CPU accessible ERGBA
+
+        if (bucket)
+            cursorHotspot = new Vector2(cursorTexture.width - 1, cursorTexture.height - 1);
+        else
+            cursorHotspot = new Vector2(0, cursorTexture.height - 1);
+
+        // Aplica como cursor
+        Cursor.SetCursor(cursorTexture, cursorHotspot, CursorMode.Auto);
+
+
+
+        Texture2D SpriteToTexture2D(Sprite sprite)
+        {
+            if (sprite.rect.width != sprite.texture.width || sprite.rect.height != sprite.texture.height)
+            {
+                // Recorta a textura na área do sprite
+                Texture2D newText = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
+                Color[] pixels = sprite.texture.GetPixels((int)sprite.textureRect.x,
+                                                          (int)sprite.textureRect.y,
+                                                          (int)sprite.textureRect.width,
+                                                          (int)sprite.textureRect.height);
+                newText.SetPixels(pixels);
+                newText.Apply();
+                return newText;
+            }
+            else
+            {
+                return sprite.texture;
+            }
+        }
+
+
+        Texture2D MakeTextureReadableRGBA(Texture2D texture)
+        {
+            RenderTexture rt = RenderTexture.GetTemporary(texture.width, texture.height);
+            Graphics.Blit(texture, rt);
+            RenderTexture previous = RenderTexture.active;
+            RenderTexture.active = rt;
+
+            //Texture2D readableTexture = new Texture2D(texture.width, texture.height);
+            Texture2D newTex = new Texture2D(texture.width, texture.height, TextureFormat.RGBA32, false);
+            newTex.SetPixels(texture.GetPixels());
+            newTex.Apply();
+
+            RenderTexture.active = previous;
+            RenderTexture.ReleaseTemporary(rt);
+            return newTex;
+        }
+
+    }
 
 
 

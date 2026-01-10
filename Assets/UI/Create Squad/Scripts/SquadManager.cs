@@ -22,6 +22,10 @@ public class SquadManager : MonoBehaviour
     public string squad;
     public TMP_Text rulesTmp;
 
+    [Header("Icons Mouse:")]
+    public Sprite CrownIcon;
+    public Sprite TrashIcon;
+
     [Header("JSON:")]
     public Squad squadData;
     public List<UnitPieceData> placedPieces = new List<UnitPieceData>();
@@ -75,6 +79,7 @@ public class SquadManager : MonoBehaviour
     public bool setKing = false;
     public bool enabledMode = false;
     public bool editMode = false;
+    public bool setCursor = false;
 
     [Header("Save:")]
     public RectTransform gridPanel;
@@ -122,12 +127,19 @@ public class SquadManager : MonoBehaviour
         {
             removePiece = false;
             setKing = true;
+            setCursor = true;
+
+            UIHelperUtils.SetCursor(CrownIcon);
         });
 
         removeBtw.onClick.AddListener(() =>
         {
             setKing = false;
+            setCursor = true;
+
             removePiece = !removePiece;
+
+            UIHelperUtils.SetCursor(TrashIcon);
         });
 
         clearBtw.onClick.AddListener(() =>
@@ -175,6 +187,16 @@ public class SquadManager : MonoBehaviour
 
 
         });
+
+    }
+
+    public void Update()
+    {
+        if (!setKing && !removePiece && setCursor)
+        {
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            setCursor = false;
+        }
 
     }
 

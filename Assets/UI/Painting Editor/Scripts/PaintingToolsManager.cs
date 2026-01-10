@@ -23,7 +23,6 @@ public class PaitingToolsManager : MonoBehaviour
 
     public Button upscaleButton;
 
-    public Vector2 cursorHotspot = Vector2.zero;
     // Start is called before the first frame update
     void Start()
     {
@@ -90,7 +89,9 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.eraserMode = true;
 
-                SetCursor(eraserButton, false);
+                Image buttonImage = eraserButton.GetComponent<Image>();
+
+                UIHelperUtils.SetCursor(buttonImage.sprite);
                 SetEraserColor();
             });
         }
@@ -103,7 +104,9 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.eraseAll = true;
 
-                SetCursor(eraserAllButton, false);
+                Image buttonImage = eraserAllButton.GetComponent<Image>();
+
+                UIHelperUtils.SetCursor(buttonImage.sprite);
                 SetEraserColor();
             });
         }
@@ -128,7 +131,9 @@ public class PaitingToolsManager : MonoBehaviour
             {
                 manager.DisableTools();
 
-                SetCursor(eyedropperButton, false);
+                Image buttonImage = eyedropperButton.GetComponent<Image>();
+
+                UIHelperUtils.SetCursor(buttonImage.sprite);
                 manager.eyedropperMode = true;
             });
         }
@@ -142,7 +147,9 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.selectedColor = manager.previewSelectColor.color;
 
-                SetCursor(paintBucketButton, true);
+                Image buttonImage = paintBucketButton.GetComponent<Image>();
+
+                UIHelperUtils.SetCursor(buttonImage.sprite, true);
                 manager.paintBucketMode = true;
             });
         }
@@ -153,7 +160,7 @@ public class PaitingToolsManager : MonoBehaviour
             {
                 manager.DisableTools();
 
-                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+                //Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
                 manager.SaveStateForUndo();
                 manager.UpdateScale();
@@ -183,64 +190,8 @@ public class PaitingToolsManager : MonoBehaviour
 
 
 
-    void SetCursor(Button buttonTool, bool bucket)
-    {
-        // Pega a imagem do botão
-        Image buttonImage = buttonTool.GetComponent<Image>();
-
-        if (buttonImage != null && buttonImage.sprite != null)
-        {
-            // Converte o Sprite para Texture2D
-            Texture2D cursorTexture = SpriteToTexture2D(buttonImage.sprite);
-
-            cursorTexture = MakeTextureReadableRGBA(cursorTexture); // garante que é CPU accessible ERGBA
-
-            if (bucket)
-                cursorHotspot = new Vector2(cursorTexture.width - 1, cursorTexture.height - 1);
-            else
-                cursorHotspot = new Vector2(0, cursorTexture.height - 1);
-
-            // Aplica como cursor
-            Cursor.SetCursor(cursorTexture, cursorHotspot, CursorMode.Auto);
-        }
-    }
-
-    Texture2D SpriteToTexture2D(Sprite sprite)
-    {
-        if (sprite.rect.width != sprite.texture.width || sprite.rect.height != sprite.texture.height)
-        {
-            // Recorta a textura na área do sprite
-            Texture2D newText = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
-            Color[] pixels = sprite.texture.GetPixels((int)sprite.textureRect.x,
-                                                      (int)sprite.textureRect.y,
-                                                      (int)sprite.textureRect.width,
-                                                      (int)sprite.textureRect.height);
-            newText.SetPixels(pixels);
-            newText.Apply();
-            return newText;
-        }
-        else
-        {
-            return sprite.texture;
-        }
-    }
 
 
-    Texture2D MakeTextureReadableRGBA(Texture2D texture)
-    {
-        RenderTexture rt = RenderTexture.GetTemporary(texture.width, texture.height);
-        Graphics.Blit(texture, rt);
-        RenderTexture previous = RenderTexture.active;
-        RenderTexture.active = rt;
 
-        //Texture2D readableTexture = new Texture2D(texture.width, texture.height);
-        Texture2D newTex = new Texture2D(texture.width, texture.height, TextureFormat.RGBA32, false);
-        newTex.SetPixels(texture.GetPixels());
-        newTex.Apply();
-
-        RenderTexture.active = previous;
-        RenderTexture.ReleaseTemporary(rt);
-        return newTex;
-    }
 
 }
