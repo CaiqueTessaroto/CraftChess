@@ -837,9 +837,9 @@ public class PaintingGridManager : MonoBehaviour
 
 
 
-    public void Save(string fileJson, string filePng, string subfolderName)
+    public void Save(string filePng, string subfolderName)
     {
-        bool hasData = SavePaintedCells(fileJson, subfolderName);
+        bool hasData = SavePaintedCells("fileJson", subfolderName);
 
         if (!hasData)
             return;
@@ -877,33 +877,34 @@ public class PaintingGridManager : MonoBehaviour
             return false;
         }
 
-        Drawing wrapper = new Drawing
+        wrapper = new Drawing
         {
             list = paintedPixels,
             scale = currentScale
         };
 
         string data = JsonUtility.ToJson(wrapper, true);
-        fileManager.SaveJson(subfolderName, fileName, data, fileManager.basePath_PaintingData);
+        //fileManager.SaveJson(subfolderName, fileName, data, fileManager.basePath_PaintingData);
 
         return true;
     }
 
 
+        private Drawing wrapper = new Drawing();
 
     public void ExportGridAsTextureFromJson(string fileName, string selectRootPath, int textureSize = 1020, string folderName = "Default")
     {
-        string json = fileManager.LoadJson(selectRootPath, fileManager.basePath_PaintingData, folderName, fileName.Replace(".png", ".json"));
+        //string json = fileManager.LoadJson(selectRootPath, fileManager.basePath_PaintingData, folderName, fileName.Replace(".png", ".json"));
 
         //fileName.Replace(".png", ".json"));
 
-        if (string.IsNullOrEmpty(json))
-        {
-            Debug.LogWarning("JSON não encontrado para exportar imagem.");
-            return;
-        }
+        //if (string.IsNullOrEmpty(json))
+        //{
+        //    Debug.LogWarning("JSON não encontrado para exportar imagem.");
+        //    return;
+        //}
 
-        Drawing wrapper = JsonUtility.FromJson<Drawing>(json);
+        //Drawing wrapper = JsonUtility.FromJson<Drawing>(json);
 
         int gridWidth = 17;
         int gridHeight = 17;

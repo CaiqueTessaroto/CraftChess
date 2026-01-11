@@ -38,7 +38,6 @@ public class FileNavigation : MonoBehaviour
     public Button deleteBtw;
 
     [Header("Control")]
-    public GameObject currentButtonFolder;
     public string selectBasePath;
     public bool initiate = false;
 
@@ -113,7 +112,7 @@ public class FileNavigation : MonoBehaviour
                     //    folderNavigation.StartCreatingFolderButtons(selectBasePath, folderNavigation.panelFolders);
                 }
 
-                folderNavigation.RefreshFolderButton(currentButtonFolder.name, Application.persistentDataPath);
+                folderNavigation.RefreshFolderButton(folderNavigation.currentButtonFolder.name);
 
                 folderNavigation.panelFolders.SetActive(true);
                 uIHelperUtils.back = false;
@@ -448,13 +447,12 @@ public class FileNavigation : MonoBehaviour
         else if (selectBasePath == fileManager.basePath_Sprite)
         {
             string pathSprites = Path.Combine(rootPath, fileManager.basePath_Sprite, folder);
-            string pathJsons = Path.Combine(rootPath, fileManager.basePath_PaintingData, folder);
+            //string pathJsons = Path.Combine(rootPath, fileManager.basePath_PaintingData, folder);
 
             List<SpriteData> sprites = new List<SpriteData>();
 
             yield return StartCoroutine(
-                uIHelperUtils.LoadJsonSpritesFromPathCoroutine(
-                    pathJsons,
+                uIHelperUtils.LoadSpritesFromPathCoroutine(
                     pathSprites,
                     sprites
                 )
@@ -473,11 +471,11 @@ public class FileNavigation : MonoBehaviour
                 if (textComp != null)
                     textComp.text = spriteData.Name;
 
-                string jsonCopy = spriteData.JsonPath;
+                string pathCopy = spriteData.PngPath;
                 newButton.GetComponent<Button>().onClick.AddListener(() =>
                 {
-                    string pastaCopy = Path.GetFileName(Path.GetDirectoryName(jsonCopy));
-                    string fileName = Path.GetFileNameWithoutExtension(jsonCopy);
+                    string pastaCopy = Path.GetFileName(Path.GetDirectoryName(pathCopy));
+                    string fileName = Path.GetFileNameWithoutExtension(pathCopy);
 
                     if (managePainting)
                         managePainting.OnFileClick(newButton, fileName, pastaCopy, rootPath);

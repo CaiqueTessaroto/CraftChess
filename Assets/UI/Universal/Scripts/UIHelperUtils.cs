@@ -10,7 +10,6 @@ public class SpriteData
 {
     public string Name { get; set; }
     public Sprite Sprite { get; set; }
-    public string JsonPath { get; set; }
     public string PngPath { get; set; }
 }
 
@@ -330,65 +329,36 @@ public class UIHelperUtils : MonoBehaviour
 
 
 
-    public IEnumerator LoadJsonSpritesFromPathCoroutine(
-        string pathJsons,
+    public IEnumerator LoadSpritesFromPathCoroutine(
         string pathSprites,
         List<SpriteData> sprites
     )
     {
         sprites.Clear();
 
-        if (!Directory.Exists(pathJsons))
+        if (!Directory.Exists(pathSprites))
             yield break;
 
-        List<string> pngValids = new List<string>();
+        string[] filesPng = Directory.GetFiles(pathSprites, "*.png");
 
-        string[] arquivosJson = Directory.GetFiles(pathJsons, "*.json");
-
-        foreach (string arquivoJson in arquivosJson)
+        foreach (string filePng in filesPng)
         {
-            string nameFile = Path.GetFileNameWithoutExtension(arquivoJson);
-            string pathImage = Path.Combine(pathSprites, nameFile + ".png");
+            string nameFile = Path.GetFileNameWithoutExtension(filePng);
 
-            pngValids.Add(nameFile + ".png");
-
-            Sprite sprite = GetSpriteFromPath(pathImage);
+            Sprite sprite = GetSpriteFromPath(filePng);
 
             sprites.Add(new SpriteData
             {
                 Name = nameFile,
                 Sprite = sprite,
-                JsonPath = arquivoJson,
-                PngPath = pathImage
+                PngPath = filePng
             });
 
-            // evita travar o frame
+            // 🔹 evita travar o frame
             yield return null;
         }
-
-        // ===============================
-        // Remove PNGs órfãos
-        // ===============================
-        if (Directory.Exists(pathSprites))
-        {
-            string[] filesPng = Directory.GetFiles(pathSprites, "*.png");
-
-            foreach (string filePng in filesPng)
-            {
-                string namePng = Path.GetFileName(filePng);
-
-                if (!pngValids.Contains(namePng))
-                {
-                    File.Delete(filePng);
-                    Debug.LogWarning(
-                        "PNG excluded because it has no corresponding JSON: " + filePng
-                    );
-                }
-
-                yield return null;
-            }
-        }
     }
+
 
 
 

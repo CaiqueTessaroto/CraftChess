@@ -64,6 +64,10 @@ public class NavigationManage_Painting : MonoBehaviour
 
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             uIHelperUtils.save = true;
+
+            if (!string.IsNullOrEmpty(folderName))
+                folderNavigation.RefreshFolderButton(folderName);
+
             folderNavigation.panelFolders.SetActive(true);
 
             folderNavigation.StartCreatingFolderButtons(fileManager.basePath_Sprite, folderNavigation.panelFolders);
@@ -74,6 +78,10 @@ public class NavigationManage_Painting : MonoBehaviour
         {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             uIHelperUtils.save = false;
+
+            if (!string.IsNullOrEmpty(folderName))
+                folderNavigation.RefreshFolderButton(folderName);
+
             folderNavigation.panelFolders.SetActive(true);
 
             folderNavigation.StartCreatingFolderButtons(fileManager.basePath_Sprite, folderNavigation.panelFolders);
@@ -172,24 +180,21 @@ public class NavigationManage_Painting : MonoBehaviour
         Debug.Log($"Arquivo clicado: {fileName}");
 
         string caminhoPng = Path.Combine(rootPath, fileManager.basePath_Sprite, folder, fileName.Trim() + ".png");
-        string caminhoJson = Path.Combine(rootPath, fileManager.basePath_PaintingData, folder, fileName.Trim() + ".json");
+        //string caminhoJson = Path.Combine(rootPath, fileManager.basePath_PaintingData, folder, fileName.Trim() + ".json");
 
         if (uIHelperUtils.delete)
         {
             //uIHelperUtils.change = true;
 
-            fileManager.HandleDeleteFiles(fileName, caminhoPng, caminhoJson, buttonObj);
+            fileManager.HandleDeleteFile(fileName, caminhoPng, buttonObj);
 
-            string pasta = Path.GetDirectoryName(caminhoJson);
+            string pasta = Path.GetDirectoryName(caminhoPng);
             if (Directory.Exists(pasta) && Directory.GetFiles(pasta).Length == 0 && Directory.GetDirectories(pasta).Length == 0)
             {
-                string pasta2 = Path.GetDirectoryName(caminhoPng);
+                //string pasta2 = Path.GetDirectoryName(caminhoPng);
 
-                fileManager.HandleDeleteFolders(fileName, pasta, pasta2, null);
+                fileManager.HandleDeleteFolder(fileName, pasta, null);
             }
-
-            //if (Directory.Exists(caminhoJson) && Directory.GetFiles(caminhoJson).Length == 0)
-            //    fileManager.HandleDeleteFolder(fileName, caminhoJson, null);
 
             uIHelperUtils.delete = false;
             return;
@@ -204,12 +209,20 @@ public class NavigationManage_Painting : MonoBehaviour
             this.folderName = folder;
             selectRootPath = rootPath;
 
-            gridManager.LoadPaintedCells(Path.GetFileName(caminhoJson), rootPath, folder);
+
+
+            if (imageImporter == null)
+                imageImporter = FindObjectOfType<ImageImporter>();
+
+
+            imageImporter.ImportImage(caminhoPng, 34, 34);
+            // gridManager.LoadPaintedCells(Path.GetFileName(caminhoJson), rootPath, folder);
             panelFile.SetActive(false);
         }
 
     }
 
+    public ImageImporter imageImporter;
 
 
 
@@ -224,18 +237,17 @@ public class NavigationManage_Painting : MonoBehaviour
 
     private void SaveArt(string fileName, string subfolderName)
     {
-        string fileJson = fileName.Trim() + ".json";
+        //string fileJson = fileName.Trim() + ".json";
         string filePng = fileName.Trim() + ".png";
 
-        if (fileManager.FileExists(subfolderName, filePng, fileManager.basePath_Sprite) ||
-            fileManager.FileExists(subfolderName, fileJson, fileManager.basePath_PaintingData))
+        if (fileManager.FileExists(subfolderName, filePng, fileManager.basePath_Sprite))
         {
             string title = "Do you want to replace the file?";
             string text = "There is already a file with the same name in the folder, do you want to replace it?";
 
             fileManager.CreateWarning(title, text, () =>
             {
-                gridManager.Save(fileJson, filePng, subfolderName);
+                gridManager.Save(filePng, subfolderName);
                 //uIHelperUtils.change = true;
                 panelFolder.SetActive(false);
 
@@ -249,7 +261,7 @@ public class NavigationManage_Painting : MonoBehaviour
         }
 
         // Se não existir, salva direto
-        gridManager.Save(fileJson, filePng, subfolderName);
+        gridManager.Save(filePng, subfolderName);
         //uIHelperUtils.change = true;
         panelFolder.SetActive(false);
 
@@ -259,15 +271,18 @@ public class NavigationManage_Painting : MonoBehaviour
         this.folderName = subfolderName;
         folderText.text = subfolderName;
 
-        folderNavigation.RefreshFolderButton(folderName, Application.persistentDataPath);
+        folderNavigation.RefreshFolderButton(folderName);
     }
 
     private void QuickSaveArt()
     {
-        if (string.IsNullOrEmpty(this.fileName)) // || namePiece.text == "Name"
+        // ===============================
+        // Validações básicas
+        // ===============================
+        if (string.IsNullOrEmpty(fileName))
             return;
 
-        if (string.IsNullOrEmpty(this.folderName)) // || folderText.text == "Squad"
+        if (string.IsNullOrEmpty(folderName))
             return;
 
         if (selectRootPath == Application.streamingAssetsPath)
@@ -276,85 +291,86 @@ public class NavigationManage_Painting : MonoBehaviour
             return;
         }
 
+        string name = namePiece.text.Trim();
+        string subfolderName = folderName;
+        string filePng = fileName + ".png";
+        string newfilePng = name + ".png";
 
-        string fileName = namePiece.text; //namePiece.text;
-        string subfolderName = this.folderName;
-
-        string fileJson = fileName.Trim() + ".json";
-        string filePng = fileName.Trim() + ".png";
-
-        if (this.fileName != namePiece.text)
+        // ===============================
+        // Função local de salvar
+        // ===============================
+        void Save()
         {
-            string fileJson_ = this.fileName.Trim() + ".json";
-            string filePng_ = this.fileName.Trim() + ".png";
+            gridManager.Save(newfilePng, subfolderName);
 
-            string caminhoPasta = Path.Combine(selectRootPath, fileManager.basePath_Sprite, this.folderName, filePng_);
-            string caminhoPastaJson = Path.Combine(selectRootPath, fileManager.basePath_PaintingData, this.folderName, fileJson_);
+            panelFolder.SetActive(false);
 
-            fileManager.HandleDeleteFiles(fileName, caminhoPasta, caminhoPastaJson, null);
+            namePiece.text = name;
+            fileName = name;
+            folderName = subfolderName;
+            folderText.text = subfolderName;
+        }
 
+        // ===============================
+        // Caminho completo
+        // ===============================
+        string fullPath = Path.Combine(
+            selectRootPath,
+            fileManager.basePath_Sprite,
+            subfolderName,
+            filePng
+        );
 
-            if (fileManager.FileExists(subfolderName, filePng, fileManager.basePath_Sprite) ||
-                fileManager.FileExists(subfolderName, fileJson, fileManager.basePath_PaintingData))
+        bool fileAlreadyExists =
+            fileManager.FileExists(subfolderName, newfilePng, fileManager.basePath_Sprite);
+
+        bool isRenaming =
+            !string.IsNullOrEmpty(fileName) &&
+            fileName != name;
+
+        // ===============================
+        // Caso: rename + conflito
+        // ===============================
+        if (isRenaming)
+        {
+            if (fileAlreadyExists)
             {
-                string title = "Do you want to Save the file?";
-                string text = "Já existe um artquivo chamado: " + fileName;
+                fileManager.CreateWarning(
+                    "Do you want to Save the file?",
+                    $"Já existe um arquivo chamado: {name}",
+                    () =>
+                    {
+                        fileManager.HandleDeleteFile(fileName, fullPath, null);
+                        Save();
+                    }
+                );
 
-                fileManager.CreateWarning(title, text, () =>
-                {
-                    gridManager.Save(fileJson, filePng, subfolderName);
-                    //uIHelperUtils.change = true;
-                    panelFolder.SetActive(false);
-
-                    namePiece.text = fileName;
-                    this.fileName = fileName;
-                    this.folderName = subfolderName;
-                    folderText.text = subfolderName;
-
-                    folderNavigation.RefreshFolderButton(folderName, Application.persistentDataPath);
-                });
-
-                return; // sai daqui e espera o clique do usuário
+                return;
             }
 
+            fileManager.HandleDeleteFile(fileName, fullPath, null);
+            Save();
+            return;
         }
 
-
-        if (fileManager.FileExists(subfolderName, filePng, fileManager.basePath_Sprite) ||
-            fileManager.FileExists(subfolderName, fileJson, fileManager.basePath_PaintingData))
+        // ===============================
+        // Caso: overwrite normal
+        // ===============================
+        if (fileAlreadyExists)
         {
-            string title = "Do you want to Save the file?";
-            string text = "Are you sure you want to save the file?";
+            fileManager.CreateWarning(
+                "Do you want to Save the file?",
+                "Are you sure you want to save the file?",
+                Save
+            );
 
-            fileManager.CreateWarning(title, text, () =>
-            {
-                gridManager.Save(fileJson, filePng, subfolderName);
-                //uIHelperUtils.change = true;
-                panelFolder.SetActive(false);
-
-                namePiece.text = fileName;
-                this.fileName = fileName;
-                this.folderName = subfolderName;
-                folderText.text = subfolderName;
-
-                folderNavigation.RefreshFolderButton(folderName, Application.persistentDataPath);
-            });
-
-            return; // sai daqui e espera o clique do usuário
+            return;
         }
 
-        // Se não existir, salva direto
-        gridManager.Save(fileJson, filePng, subfolderName);
-        //uIHelperUtils.change = true;
-        panelFolder.SetActive(false);
-
-        namePiece.text = fileName;
-        this.fileName = fileName;
-        this.folderName = subfolderName;
-        folderText.text = subfolderName;
-
-
-        folderNavigation.RefreshFolderButton(folderName, Application.persistentDataPath);
+        // ===============================
+        // Caso: novo arquivo
+        // ===============================
+        Save();
     }
 
 

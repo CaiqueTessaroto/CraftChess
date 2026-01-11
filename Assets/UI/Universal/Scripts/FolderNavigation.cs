@@ -35,6 +35,7 @@ public class FolderNavigation : MonoBehaviour
     public Button deleteButton;
 
     [Header("Control")]
+    public GameObject currentButtonFolder;
     public string selectRootPath;
     private string selectBasePath;
     public bool initiate = false;
@@ -177,7 +178,7 @@ public class FolderNavigation : MonoBehaviour
     private void OnClickFolder(string pasta, GameObject newButton, string rootPath)
     {
         fileNavigation.navigationOptions.SetActive(false);
-        fileNavigation.currentButtonFolder = newButton;
+        currentButtonFolder = newButton;
 
         if (manageCreate)
             manageCreate.OnClickFolder(pasta, newButton, rootPath);
@@ -215,8 +216,12 @@ public class FolderNavigation : MonoBehaviour
         //StartCoroutine(UpdateFolderButtons());
     }
 
-    public void RefreshFolderButton(string folderName, string rootPath)
+    public void RefreshFolderButton(string folderName)
     {
+
+        if (selectRootPath == Application.streamingAssetsPath)
+            return;
+
         Transform content = panelFolders.transform.Find("Scroll View/Viewport/Content");
 
         // 🔍 procura o botão pelo nome
@@ -232,7 +237,7 @@ public class FolderNavigation : MonoBehaviour
         }
 
         // 🔄 recria o botão atualizado
-        StartCoroutine(CreateSingleFolderButton(folderName, rootPath));
+        StartCoroutine(CreateSingleFolderButton(folderName, Application.persistentDataPath));
     }
 
     public void StartCreatingFolderButtons(string basePath, GameObject panel)
@@ -382,8 +387,7 @@ public class FolderNavigation : MonoBehaviour
             List<SpriteData> sprites = new List<SpriteData>();
 
             yield return StartCoroutine(
-                uIHelperUtils.LoadJsonSpritesFromPathCoroutine(
-                    pathJsons,
+                uIHelperUtils.LoadSpritesFromPathCoroutine(
                     pathSprites,
                     sprites
                 )

@@ -55,9 +55,13 @@ public class FileManager : MonoBehaviour
             }
         }
 
-        Button[] buttons = newInput.GetComponentsInChildren<Button>();
-        Button buttonCancel = buttons.Length > 0 ? buttons[0] : null;
-        Button buttonContinue = buttons.Length > 1 ? buttons[1] : null;
+        Button buttonCancel = newInput.transform
+            .Find("PanelBtn/Cancel")
+            .GetComponent<Button>();
+
+        Button buttonContinue = newInput.transform
+            .Find("PanelBtn/Continue")
+            .GetComponent<Button>();
 
         if (buttonCancel != null)
         {
@@ -98,11 +102,11 @@ public class FileManager : MonoBehaviour
             .GetComponent<TMP_Text>();
 
         Button buttonCancel = newWarning.transform
-            .Find("Body/ButtonCancel")
+            .Find("Foot/ButtonCancel")
             .GetComponent<Button>();
 
         Button buttonContinue = newWarning.transform
-            .Find("Body/ButtonContinue")
+            .Find("Foot/ButtonContinue")
             .GetComponent<Button>();
 
 
@@ -162,13 +166,13 @@ public class FileManager : MonoBehaviour
 
     public void HandleDeleteFile(string fileName, string path, GameObject buttonObj)
     {
-        if (warning) return;
-
         string title = "File will be deleted";
         string text = "Do you really want to delete the file " + fileName + " ?";
 
         if (buttonObj)
         {
+            if (warning) return;
+
             CreateWarning(title, text, () =>
             {
                 if (File.Exists(path))
@@ -276,9 +280,6 @@ public class FileManager : MonoBehaviour
 
     public void HandleDeleteFolder(string pasta, string caminhoPasta, GameObject newButton)
     {
-
-        if (warning) return;
-
         if (!Directory.Exists(caminhoPasta))
         {
             Debug.LogWarning("A pasta não existe: " + caminhoPasta);
@@ -293,6 +294,8 @@ public class FileManager : MonoBehaviour
 
         if (newButton)
         {
+            if (warning) return;
+
             string title = "Folder will be deleted";
             string text = "Do you really want to delete the folder " + pasta + " ?";
 

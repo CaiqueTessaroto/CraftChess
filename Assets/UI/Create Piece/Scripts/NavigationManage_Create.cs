@@ -606,7 +606,7 @@ public class NavigationManage_Create : MonoBehaviour
         //StartCoroutine(folderNavigation.UpdateFolderButtons());
         panelFolder.SetActive(false);
 
-        folderNavigation.RefreshFolderButton(subfolderName, Application.persistentDataPath);
+        folderNavigation.RefreshFolderButton(subfolderName);
 
         Debug.Log($"SavePiece: Peça '{fileName}' salva com sucesso no SquadData.");
     }
