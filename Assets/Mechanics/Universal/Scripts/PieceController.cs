@@ -250,6 +250,7 @@ public class PieceController : MonoBehaviour
 
         if (draw)
             gameInterfaceManager.EndGame("Draw");
+
         if (black && botPlayerId == 0)
             gameInterfaceManager.EndGame("Victory");
         else if (white && botPlayerId == 1)
@@ -257,8 +258,8 @@ public class PieceController : MonoBehaviour
         else if (black || white)
             gameInterfaceManager.EndGame("Defeat");
 
-
-        endGame = true;
+        if (black || white || draw)
+            endGame = true;
     }
 
     public void GetCheck()

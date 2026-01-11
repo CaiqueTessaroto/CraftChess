@@ -56,8 +56,8 @@ public class NavigationManage_Painting : MonoBehaviour
         {
             if (string.IsNullOrEmpty(namePiece.text))
             {
-            //    fileManager.CreateAdvice("Precisa ter um nome para salvar.");
-            //    return;
+                //    fileManager.CreateAdvice("Precisa ter um nome para salvar.");
+                //    return;
             }
 
             Debug.Log(namePiece.text);
@@ -88,8 +88,8 @@ public class NavigationManage_Painting : MonoBehaviour
             }
             else if (string.IsNullOrEmpty(namePiece.text))
             {
-            //    fileManager.CreateAdvice("Precisa ter um nome para salvar.");
-            //    return;
+                //    fileManager.CreateAdvice("Precisa ter um nome para salvar.");
+                //    return;
             }
 
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
@@ -239,9 +239,8 @@ public class NavigationManage_Painting : MonoBehaviour
                 uIHelperUtils.change = true;
                 panelFolder.SetActive(false);
 
-                //folderText.text = subfolderName;
-                //namePiece.text = fileName;
-
+                folderText.text = subfolderName;
+                namePiece.text = fileName;
                 this.fileName = fileName;
                 this.folderName = subfolderName;
             });
@@ -256,7 +255,6 @@ public class NavigationManage_Painting : MonoBehaviour
 
         //folderText.text = subfolderName;
         namePiece.text = fileName;
-
         this.fileName = fileName;
         this.folderName = subfolderName;
         folderText.text = subfolderName;
@@ -305,8 +303,10 @@ public class NavigationManage_Painting : MonoBehaviour
                     uIHelperUtils.change = true;
                     panelFolder.SetActive(false);
 
+                    namePiece.text = fileName;
                     this.fileName = fileName;
                     this.folderName = subfolderName;
+                    folderText.text = subfolderName;
                 });
 
                 return; // sai daqui e espera o clique do usuário
@@ -327,8 +327,10 @@ public class NavigationManage_Painting : MonoBehaviour
                 uIHelperUtils.change = true;
                 panelFolder.SetActive(false);
 
+                namePiece.text = fileName;
                 this.fileName = fileName;
                 this.folderName = subfolderName;
+                folderText.text = subfolderName;
             });
 
             return; // sai daqui e espera o clique do usuário
@@ -339,8 +341,10 @@ public class NavigationManage_Painting : MonoBehaviour
         uIHelperUtils.change = true;
         panelFolder.SetActive(false);
 
+        namePiece.text = fileName;
         this.fileName = fileName;
         this.folderName = subfolderName;
+        folderText.text = subfolderName;
     }
 
 

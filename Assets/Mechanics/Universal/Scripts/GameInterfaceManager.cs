@@ -46,7 +46,7 @@ public class GameInterfaceManager : MonoBehaviour
             bool white = false;
             bool draw = false;
 
-            if (boardChessManager.GetBotId() == 0)
+            if (pieceController.botPlayerId == 0)
                 white = true;
             else
                 black = true;
