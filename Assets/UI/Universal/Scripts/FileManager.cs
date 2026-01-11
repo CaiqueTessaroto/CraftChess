@@ -23,7 +23,7 @@ public class FileManager : MonoBehaviour
     public GameObject advicePrefab;
     public GameObject inputPrefab;
     public Transform panel;
-    private bool warning = false;
+    public bool warning = false;
 
     void Start()
     {
@@ -220,17 +220,20 @@ public class FileManager : MonoBehaviour
             string title = "Folder will be deleted";
             string text = "Do you really want to delete the folder " + pasta + " ?";
 
+            //Debug.Log("Pasta: " + caminhoPasta);
+
             CreateWarning(title, text, () =>
             {
                 Directory.Delete(caminhoPasta, true);
                 Destroy(newButton);
-                Debug.Log("Pasta vazia excluída: " + caminhoPasta);
+                Debug.Log("Pasta excluída: " + caminhoPasta);
+                warning = false;
             });
         }
         else
         {
             Directory.Delete(caminhoPasta, true);
-            Debug.Log("Pasta vazia excluída: " + caminhoPasta);
+            Debug.Log("Pasta excluída: " + caminhoPasta);
             warning = false;
         }
 

@@ -5489,6 +5489,7 @@ MonoBehaviour:
   change: 1
   OnFiles: 0
   OnFolder: 1
+  TrashIcon: {fileID: 21300000, guid: f1d11f241380b00409ddec68c9046e9d, type: 3}
 --- !u!114 &938934225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10186,7 +10187,6 @@ MonoBehaviour:
   setKing: 0
   enabledMode: 0
   editMode: 0
-  setCursor: 0
   gridPanel: {fileID: 592527370}
 --- !u!1 &1678358172
 GameObject:

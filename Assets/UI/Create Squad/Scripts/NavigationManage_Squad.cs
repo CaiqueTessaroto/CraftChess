@@ -590,10 +590,13 @@ public class NavigationManage_Squad : MonoBehaviour
             string title = "Folder will be deleted";
             string text = "Do you really want to delete the folder " + folderName + " ?";
 
+            Debug.Log("Pasta: " + squadFolder);
+
             fileManager.CreateWarning(title, text, () =>
             {
-                fileManager.HandleDeleteFile(folderName, jsonPath, null);
-                fileManager.HandleDeleteFile(folderName, pngPath, null);
+                //fileManager.HandleDeleteFile(folderName, jsonPath, null);
+                //fileManager.HandleDeleteFile(folderName, pngPath, null);
+                fileManager.warning = false;
                 fileManager.HandleDeleteFolder(folderName, squadFolder, null);
 
                 Destroy(newButton);
