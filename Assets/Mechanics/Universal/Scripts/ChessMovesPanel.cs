@@ -30,11 +30,13 @@ public class ChessMovesPanel : MonoBehaviour
 
         OpenBtn.onClick.AddListener(() =>
         {
+            OpenBtn.gameObject.SetActive(false);
             sidePanel.SetActive(true);
         });
 
         CloseBtn.onClick.AddListener(() =>
         {
+            OpenBtn.gameObject.SetActive(true);
             sidePanel.SetActive(false);
         });
 

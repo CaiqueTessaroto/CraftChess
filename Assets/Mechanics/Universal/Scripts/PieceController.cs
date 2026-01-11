@@ -13,7 +13,6 @@ public class PieceController : MonoBehaviour
     public ChessMovesPanel chessMovesPanel;
     public CreatePromotionUI createPromotionUI;
     public GameInterfaceManager gameInterfaceManager;
-    public GameObject selectedPiece;
     public ManagerPieceInfo managerPieceInfo;
 
     [Header("AudioClip:")]
@@ -21,10 +20,12 @@ public class PieceController : MonoBehaviour
     public AudioClip captureSound;
 
     [Header("Control:")]
-    public bool KingWhiteIsInCheck;
-    public bool KingBlackIsInCheck;
+    public GameObject selectedPiece;
+    public bool kingWhiteIsInCheck;
+    public bool kingBlackIsInCheck;
     public int botPlayerId;
     public bool IA = false;
+    public bool endGame = false;
     public PieceComponent KingWhite;
     public PieceComponent KingBlack;
 
@@ -61,6 +62,7 @@ public class PieceController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
 
     }
 
@@ -208,7 +210,7 @@ public class PieceController : MonoBehaviour
 
         if (!boardManager.WhiteHasMoves)
         {
-            if (KingWhiteIsInCheck)
+            if (kingWhiteIsInCheck)
             {
                 black = true;
             }
@@ -219,7 +221,7 @@ public class PieceController : MonoBehaviour
         }
         else if (!boardManager.BlackHasMoves)
         {
-            if (KingBlackIsInCheck)
+            if (kingBlackIsInCheck)
             {
                 white = true;
             }
@@ -239,6 +241,13 @@ public class PieceController : MonoBehaviour
         if (KingBlack == null)
             white = true;
 
+        EndGame(black, white, draw);
+
+    }
+
+    public void EndGame(bool black = false, bool white = false, bool draw = false)
+    {
+
         if (draw)
             gameInterfaceManager.EndGame("Draw");
         if (black && botPlayerId == 0)
@@ -248,6 +257,8 @@ public class PieceController : MonoBehaviour
         else if (black || white)
             gameInterfaceManager.EndGame("Defeat");
 
+
+        endGame = true;
     }
 
     public void GetCheck()
@@ -258,7 +269,7 @@ public class PieceController : MonoBehaviour
             .GetCellAtPosition(kingWhitePos.x, kingWhitePos.y)
             .GetComponent<Cell>();
 
-        KingWhiteIsInCheck = cellWhite.house.isControlledByBlack;
+        kingWhiteIsInCheck = cellWhite.house.isControlledByBlack;
 
         // Verificar se o rei preto está em xeque
         Vector2Int kingBlackPos = KingBlack.Position;
@@ -266,11 +277,17 @@ public class PieceController : MonoBehaviour
             .GetCellAtPosition(kingBlackPos.x, kingBlackPos.y)
             .GetComponent<Cell>();
 
-        KingBlackIsInCheck = cellBlack.house.isControlledByWhite;
+        kingBlackIsInCheck = cellBlack.house.isControlledByWhite;
     }
 
     private bool AttemptMoveOrCapture(Vector2Int clickedPosition)
     {
+
+        if (endGame)
+        {
+            DeselectPiece();
+            return false;
+        }
         //List<Vector2Int> validMoves = pieceMovement.GetValidMoves();
         List<Vector2Int> validMoves = pieceComponent.PossibleMoves;
 

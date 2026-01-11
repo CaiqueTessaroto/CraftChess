@@ -32,6 +32,7 @@ public class BoardChessManager : MonoBehaviour
     public bool localGame = false;
 
     [Header("Control")]
+    public bool setCursor = false;
     public bool infoPiece = false;
     public bool WhiteHasMoves = true;
     public bool BlackHasMoves = true;
@@ -140,6 +141,16 @@ public class BoardChessManager : MonoBehaviour
             iA.enabled = true;
         }
 
+    }
+
+
+    void Update()
+    {
+        if (!infoPiece)
+        {
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            setCursor = false;
+        }
     }
 
     public int GetBotId()

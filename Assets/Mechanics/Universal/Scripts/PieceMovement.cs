@@ -109,9 +109,9 @@ public class PieceMovement : MonoBehaviour
             {
                 if (thisPiece.IsKing)
                 {
-                    if (thisPiece.Player.id == 0 && !pieceController.KingWhiteIsInCheck)
+                    if (thisPiece.Player.id == 0 && !pieceController.kingWhiteIsInCheck)
                         validMoves.AddRange(GetCastlingMove(thisPiece.CastlingPieces));
-                    else if (thisPiece.Player.id == 1 && !pieceController.KingBlackIsInCheck)
+                    else if (thisPiece.Player.id == 1 && !pieceController.kingBlackIsInCheck)
                         validMoves.AddRange(GetCastlingMove(thisPiece.CastlingPieces));
                 }
                 else
@@ -400,8 +400,8 @@ public class PieceMovement : MonoBehaviour
 
         bool check =
             piece.Player.id == 0
-                ? pieceController.KingWhiteIsInCheck
-                : pieceController.KingBlackIsInCheck;
+                ? pieceController.kingWhiteIsInCheck
+                : pieceController.kingBlackIsInCheck;
 
         if (!check)
             return validMoves;

@@ -70,6 +70,9 @@ public class PieceControllerIA : MonoBehaviour
 
     public void OnCellClicked(Vector2Int clickedPos, bool IA = false)
     {
+        if (pieceController.endGame)
+            return;
+
         this.IA = IA;
 
         GameObject cell = boardManager.gridCells[clickedPos.x, clickedPos.y];
