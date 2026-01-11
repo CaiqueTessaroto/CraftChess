@@ -38,6 +38,7 @@ public class FileNavigation : MonoBehaviour
     public Button deleteBtw;
 
     [Header("Control")]
+    public GameObject currentButtonFolder;
     public string selectBasePath;
     public bool initiate = false;
 
@@ -109,8 +110,10 @@ public class FileNavigation : MonoBehaviour
 
                 if (uIHelperUtils.change)
                 {
-                    folderNavigation.StartCreatingFolderButtons(selectBasePath, folderNavigation.panelFolders);
+                    //    folderNavigation.StartCreatingFolderButtons(selectBasePath, folderNavigation.panelFolders);
                 }
+
+                folderNavigation.RefreshFolderButton(currentButtonFolder.name, Application.persistentDataPath);
 
                 folderNavigation.panelFolders.SetActive(true);
                 uIHelperUtils.back = false;
@@ -447,7 +450,15 @@ public class FileNavigation : MonoBehaviour
             string pathSprites = Path.Combine(rootPath, fileManager.basePath_Sprite, folder);
             string pathJsons = Path.Combine(rootPath, fileManager.basePath_PaintingData, folder);
 
-            List<SpriteData> sprites = uIHelperUtils.LoadJsonSpritesFromPath(pathJsons, pathSprites);
+            List<SpriteData> sprites = new List<SpriteData>();
+
+            yield return StartCoroutine(
+                uIHelperUtils.LoadJsonSpritesFromPathCoroutine(
+                    pathJsons,
+                    pathSprites,
+                    sprites
+                )
+            );
 
             foreach (var spriteData in sprites)
             {

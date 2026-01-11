@@ -198,6 +198,82 @@ public class FileManager : MonoBehaviour
 
     }
 
+    public void HandleDeleteFiles(string fileName, string path1, string path2, GameObject buttonObj = null)
+    {
+        if (warning) return;
+
+        string title = "Files will be deleted";
+        string text = "Do you really want to delete the file " + fileName + " ?";
+
+        void DeleteFiles()
+        {
+            // Arquivo 1
+            if (File.Exists(path1))
+            {
+                File.Delete(path1);
+                Debug.Log("Arquivo excluído: " + path1);
+            }
+            else
+            {
+                Debug.LogWarning("Arquivo não encontrado: " + path1);
+            }
+
+            // Arquivo 2
+            if (File.Exists(path2))
+            {
+                File.Delete(path2);
+                Debug.Log("Arquivo excluído: " + path2);
+            }
+            else
+            {
+                Debug.LogWarning("Arquivo não encontrado: " + path2);
+            }
+
+            if (buttonObj)
+                Destroy(buttonObj);
+        }
+
+        CreateWarning(title, text, DeleteFiles);
+    }
+
+    public void HandleDeleteFolders(string folderName, string path1, string path2, GameObject buttonObj = null)
+    {
+        if (warning) return;
+
+            string title = "Folder will be deleted";
+            string text = "Do you really want to delete the folder " + folderName + " ?";
+
+        void DeleteFiles()
+        {
+            // Arquivo 1
+            if (Directory.Exists(path1))
+            {
+                Directory.Delete(path1, true);;
+                Debug.Log("Pasta excluída: " + path1);
+            }
+            else
+            {
+                Debug.LogWarning("Pasta não encontrado: " + path1);
+            }
+
+            // Arquivo 2
+            if (Directory.Exists(path2))
+            {
+                Directory.Delete(path2, true);;
+                Debug.Log("Pasta excluída: " + path2);
+            }
+            else
+            {
+                Debug.LogWarning("Pasta não encontrado: " + path2);
+            }
+
+            if (buttonObj)
+                Destroy(buttonObj);
+        }
+
+        CreateWarning(title, text, DeleteFiles);
+    }
+
     public void HandleDeleteFolder(string pasta, string caminhoPasta, GameObject newButton)
     {
 
@@ -450,6 +526,7 @@ public class FileManager : MonoBehaviour
             subfolders.Add(dir.Name);
         }
 
+        subfolders.Reverse();
         return subfolders;
     }
 

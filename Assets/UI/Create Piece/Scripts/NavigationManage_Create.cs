@@ -603,8 +603,10 @@ public class NavigationManage_Create : MonoBehaviour
         string json = movementCreation.CreateJson();
         fileManager.SaveJson(subfolderName, fileJson, json, fileManager.basePath_PieceData);
 
-        StartCoroutine(folderNavigation.UpdateFolderButtons());
+        //StartCoroutine(folderNavigation.UpdateFolderButtons());
         panelFolder.SetActive(false);
+
+        folderNavigation.RefreshFolderButton(subfolderName, Application.persistentDataPath);
 
         Debug.Log($"SavePiece: Peça '{fileName}' salva com sucesso no SquadData.");
     }

@@ -177,6 +177,7 @@ public class FolderNavigation : MonoBehaviour
     private void OnClickFolder(string pasta, GameObject newButton, string rootPath)
     {
         fileNavigation.navigationOptions.SetActive(false);
+        fileNavigation.currentButtonFolder = newButton;
 
         if (manageCreate)
             manageCreate.OnClickFolder(pasta, newButton, rootPath);
@@ -204,18 +205,41 @@ public class FolderNavigation : MonoBehaviour
         {
             Directory.CreateDirectory(squadFullPath);
             Debug.Log("Pasta criada em: " + squadFullPath);
-
+            StartCoroutine(CreateSingleFolderButton(folderName, Application.persistentDataPath));
         }
         else
         {
             fileManager.CreateAdvice("A folder with this name already exists!");
         }
 
-        StartCoroutine(UpdateFolderButtons());
+        //StartCoroutine(UpdateFolderButtons());
+    }
+
+    public void RefreshFolderButton(string folderName, string rootPath)
+    {
+        Transform content = panelFolders.transform.Find("Scroll View/Viewport/Content");
+
+        // 🔍 procura o botão pelo nome
+        Transform existingButton = content.Find(folderName);
+
+        if (existingButton != null)
+        {
+            Destroy(existingButton.gameObject);
+        }
+        else
+        {
+            Debug.LogWarning($"Botão da pasta '{folderName}' não encontrado para atualização.");
+        }
+
+        // 🔄 recria o botão atualizado
+        StartCoroutine(CreateSingleFolderButton(folderName, rootPath));
     }
 
     public void StartCreatingFolderButtons(string basePath, GameObject panel)
     {
+        if (!uIHelperUtils.change)
+            return;
+
         uIHelperUtils.setAll();
 
         panelFolders = panel;
@@ -249,19 +273,19 @@ public class FolderNavigation : MonoBehaviour
 
             List<string> pastas = new List<string>();
 
+            // Carrega pastas do streamingAssetsPath se estiver no "onLibrary"
+            if (uIHelperUtils.onLibrary && !uIHelperUtils.save)
+            {
+                pastas = fileManager.GetSubfoldersIn(selectBasePath, Application.streamingAssetsPath);
+                yield return StartCoroutine(CreateFolderButtons(pastas, Application.streamingAssetsPath));
+            }
+
             // Carrega pastas do persistentDataPath se estiver no "onMy"
             if (uIHelperUtils.onMy)
             {
                 pastas = fileManager.GetSubfoldersIn(selectBasePath, Application.persistentDataPath);
                 // Espera terminar a criação antes de continuar
                 yield return StartCoroutine(CreateFolderButtons(pastas, Application.persistentDataPath));
-            }
-
-            // Carrega pastas do streamingAssetsPath se estiver no "onLibrary"
-            if (uIHelperUtils.onLibrary && !uIHelperUtils.save)
-            {
-                pastas = fileManager.GetSubfoldersIn(selectBasePath, Application.streamingAssetsPath);
-                yield return StartCoroutine(CreateFolderButtons(pastas, Application.streamingAssetsPath));
             }
 
             // Ajusta tamanho do ScrollView
@@ -271,6 +295,7 @@ public class FolderNavigation : MonoBehaviour
         finally
         {
             initiate = false;
+            uIHelperUtils.change = false;
         }
 
     }
@@ -279,110 +304,101 @@ public class FolderNavigation : MonoBehaviour
 
     private IEnumerator CreateFolderButtons(List<string> pastas, string rootPath)
     {
-        Transform content = panelFolders.transform.Find("Scroll View/Viewport/Content");
-
         foreach (string pasta in pastas)
         {
-            // Instancia o prefab da pasta
-            GameObject newButton = Instantiate(folderbuttonPrefab, content);
+            yield return StartCoroutine(CreateSingleFolderButton(pasta, rootPath));
+        }
+    }
 
-            // Define o nome da pasta no Text
-            TextMeshProUGUI nomeTexto = newButton.GetComponentInChildren<TextMeshProUGUI>();
-            if (nomeTexto != null)
-                nomeTexto.text = pasta;
 
-            Button button = newButton.GetComponent<Button>();
-            button.onClick.AddListener(() =>
+
+    private IEnumerator CreateSingleFolderButton(string pasta, string rootPath)
+    {
+        Transform content = panelFolders.transform.Find("Scroll View/Viewport/Content");
+
+        GameObject newButton = Instantiate(folderbuttonPrefab, content);
+        newButton.name = $"{pasta}";
+
+        newButton.transform.SetSiblingIndex(0);
+
+        // Texto
+        TextMeshProUGUI nomeTexto = newButton.GetComponentInChildren<TextMeshProUGUI>();
+        if (nomeTexto != null)
+            nomeTexto.text = pasta;
+
+        // Click
+        Button button = newButton.GetComponent<Button>();
+        button.onClick.AddListener(() =>
+        {
+            OnClickFolder(pasta, newButton, rootPath);
+        });
+
+        // ===============================
+        // PIECE DATA
+        // ===============================
+        if (selectBasePath == fileManager.basePath_PieceData)
+        {
+            string caminhoPasta = Path.Combine(rootPath, selectBasePath, pasta);
+            if (!Directory.Exists(caminhoPasta))
+                yield break;
+
+            string[] arquivosJson = Directory.GetFiles(caminhoPasta, "*.json");
+
+            Transform panelImagens = newButton.transform.Find("Panel");
+
+            foreach (string jsonPath in arquivosJson)
             {
-                OnClickFolder(pasta, newButton, rootPath);
-            });
+                string json = File.ReadAllText(jsonPath);
+                PieceWrapper wrapper = JsonUtility.FromJson<PieceWrapper>(json);
 
-            // Carrega as imagens da pasta se for PieceData
-            if (selectBasePath == fileManager.basePath_PieceData)
-            {
-                string caminhoPasta = Path.Combine(rootPath, selectBasePath, pasta);
-                if (!Directory.Exists(caminhoPasta))
-                {
-                    Debug.LogWarning("Pasta não encontrada: " + caminhoPasta);
+                if (wrapper?.piece == null)
                     continue;
-                }
 
-                string[] arquivosJson = Directory.GetFiles(caminhoPasta, "*.json", SearchOption.TopDirectoryOnly);
+                PieceInfo piece = wrapper.piece;
 
-                Transform panelImagens = newButton.transform.Find("Panel");
+                string caminhoSprite = piece.NativeSprite
+                    ? Path.Combine(Application.streamingAssetsPath, fileManager.basePath_Sprite, piece.FolderSprite, piece.Art + ".png")
+                    : Path.Combine(rootPath, fileManager.basePath_Sprite, piece.FolderSprite, piece.Art + ".png");
 
-                foreach (string jsonPath in arquivosJson)
-                {
-                    try
-                    {
-                        string json = File.ReadAllText(jsonPath);
-                        PieceWrapper wrapper = JsonUtility.FromJson<PieceWrapper>(json);
+                GameObject imgObj = new GameObject(piece.Name, typeof(Image));
+                imgObj.transform.SetParent(panelImagens, false);
 
-                        if (wrapper?.piece == null)
-                        {
-                            fileManager.HandleDeleteFile(jsonPath, jsonPath, null);
-                            Debug.LogWarning("JSON inválido em: " + jsonPath);
-                            continue;
-                        }
+                Image img = imgObj.GetComponent<Image>();
+                img.sprite = UIHelperUtils.GetSpriteFromPath(caminhoSprite);
 
-                        PieceInfo piece = wrapper.piece;
-
-                        string caminhoSprite = piece.NativeSprite
-                            ? Path.Combine(Application.streamingAssetsPath, fileManager.basePath_Sprite, piece.FolderSprite, piece.Art.Trim() + ".png")
-                            : Path.Combine(rootPath, fileManager.basePath_Sprite, piece.FolderSprite, piece.Art.Trim() + ".png");
-
-                        if (!File.Exists(caminhoSprite))
-                        {
-                            Debug.LogWarning("Sprite não encontrado: " + caminhoSprite);
-                            //fileManager.CreateAdvice($"Sprite for piece {piece.Name} not found, add a sprite to use it in the game");
-                            //continue;
-                        }
-
-                        // Cria objeto de imagem no painel
-                        GameObject imgObj = new GameObject(piece.Name, typeof(Image));
-                        imgObj.transform.SetParent(panelImagens, false);
-
-                        Sprite sprite = UIHelperUtils.GetSpriteFromPath(caminhoSprite);
-
-                        Image imgComp = imgObj.GetComponent<Image>();
-                        if (imgComp != null)
-                            imgComp.sprite = sprite;
-
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogError("Erro ao carregar JSON: " + jsonPath + " -> " + e.Message);
-                    }
-
-                    yield return null;
-                }
+                yield return null;
             }
-            else if (selectBasePath == fileManager.basePath_Sprite)
+        }
+        // ===============================
+        // SPRITE
+        // ===============================
+        else if (selectBasePath == fileManager.basePath_Sprite)
+        {
+            Transform panelImagens = newButton.transform.Find("Panel");
+
+            string pathSprites = Path.Combine(rootPath, fileManager.basePath_Sprite, pasta);
+            string pathJsons = Path.Combine(rootPath, fileManager.basePath_PaintingData, pasta);
+
+            List<SpriteData> sprites = new List<SpriteData>();
+
+            yield return StartCoroutine(
+                uIHelperUtils.LoadJsonSpritesFromPathCoroutine(
+                    pathJsons,
+                    pathSprites,
+                    sprites
+                )
+            );
+
+            foreach (var spriteData in sprites)
             {
-                Transform panelImagens = newButton.transform.Find("Panel");
-                if (panelImagens != null)
-                {
-                    string pathSprites = Path.Combine(rootPath, fileManager.basePath_Sprite, pasta);
-                    string pathJsons = Path.Combine(rootPath, fileManager.basePath_PaintingData, pasta);
+                GameObject imgObj = new GameObject(spriteData.Name, typeof(Image));
+                imgObj.transform.SetParent(panelImagens, false);
 
-                    List<SpriteData> sprites = uIHelperUtils.LoadJsonSpritesFromPath(pathJsons, pathSprites);
+                Image img = imgObj.GetComponent<Image>();
+                img.sprite = spriteData.Sprite;
 
-                    foreach (var spriteData in sprites)
-                    {
-                        GameObject imgObj = new GameObject(spriteData.Name, typeof(Image));
-                        imgObj.transform.SetParent(panelImagens, false);
-
-                        Image img = imgObj.GetComponent<Image>();
-
-                        if (img != null)
-                            img.sprite = spriteData.Sprite;
-
-                        yield return null;
-                    }
-                }
-
+                yield return null;
             }
-            yield return null;
         }
     }
 

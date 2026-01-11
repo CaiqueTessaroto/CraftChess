@@ -109,6 +109,7 @@ public class NavigationManage_Painting : MonoBehaviour
 
     public void OnClickFolder(string pasta, GameObject buttonObj, string rootPath)
     {
+
         if (uIHelperUtils.delete)
         {
 
@@ -122,8 +123,7 @@ public class NavigationManage_Painting : MonoBehaviour
             string caminhoPasta = Path.Combine(rootPath, fileManager.basePath_Sprite, pasta);
             string caminhoPastaJson = Path.Combine(rootPath, fileManager.basePath_PaintingData, pasta);
 
-            fileManager.HandleDeleteFolder(pasta, caminhoPasta, buttonObj);
-            fileManager.HandleDeleteFolder(pasta, caminhoPastaJson, null);
+            fileManager.HandleDeleteFolders(pasta, caminhoPasta, caminhoPastaJson, buttonObj);
 
             uIHelperUtils.delete = false;
         }
@@ -151,6 +151,8 @@ public class NavigationManage_Painting : MonoBehaviour
             else
                 SaveArt(namePiece.text, pasta);
 
+
+
         }
         else
         {
@@ -174,22 +176,20 @@ public class NavigationManage_Painting : MonoBehaviour
 
         if (uIHelperUtils.delete)
         {
-            uIHelperUtils.change = true;
+            //uIHelperUtils.change = true;
 
-            fileManager.HandleDeleteFile(fileName, caminhoJson, null);
-            fileManager.HandleDeleteFile(fileName, caminhoPng, buttonObj);
+            fileManager.HandleDeleteFiles(fileName, caminhoPng, caminhoJson, buttonObj);
 
             string pasta = Path.GetDirectoryName(caminhoJson);
             if (Directory.Exists(pasta) && Directory.GetFiles(pasta).Length == 0 && Directory.GetDirectories(pasta).Length == 0)
             {
-                fileManager.HandleDeleteFolder(fileName, pasta, null);
-                pasta = Path.GetDirectoryName(caminhoPng);
-                fileManager.HandleDeleteFolder(fileName, pasta, null);
+                string pasta2 = Path.GetDirectoryName(caminhoPng);
+
+                fileManager.HandleDeleteFolders(fileName, pasta, pasta2, null);
             }
 
             //if (Directory.Exists(caminhoJson) && Directory.GetFiles(caminhoJson).Length == 0)
             //    fileManager.HandleDeleteFolder(fileName, caminhoJson, null);
-
 
             uIHelperUtils.delete = false;
             return;
@@ -236,7 +236,7 @@ public class NavigationManage_Painting : MonoBehaviour
             fileManager.CreateWarning(title, text, () =>
             {
                 gridManager.Save(fileJson, filePng, subfolderName);
-                uIHelperUtils.change = true;
+                //uIHelperUtils.change = true;
                 panelFolder.SetActive(false);
 
                 folderText.text = subfolderName;
@@ -250,7 +250,7 @@ public class NavigationManage_Painting : MonoBehaviour
 
         // Se não existir, salva direto
         gridManager.Save(fileJson, filePng, subfolderName);
-        uIHelperUtils.change = true;
+        //uIHelperUtils.change = true;
         panelFolder.SetActive(false);
 
         //folderText.text = subfolderName;
@@ -258,6 +258,8 @@ public class NavigationManage_Painting : MonoBehaviour
         this.fileName = fileName;
         this.folderName = subfolderName;
         folderText.text = subfolderName;
+
+        folderNavigation.RefreshFolderButton(folderName, Application.persistentDataPath);
     }
 
     private void QuickSaveArt()
@@ -270,7 +272,8 @@ public class NavigationManage_Painting : MonoBehaviour
 
         if (selectRootPath == Application.streamingAssetsPath)
         {
-            //    return;
+            fileManager.CreateAdvice("Não é permitido salvar pastas de StreamingAssets!");
+            return;
         }
 
 
@@ -288,8 +291,8 @@ public class NavigationManage_Painting : MonoBehaviour
             string caminhoPasta = Path.Combine(selectRootPath, fileManager.basePath_Sprite, this.folderName, filePng_);
             string caminhoPastaJson = Path.Combine(selectRootPath, fileManager.basePath_PaintingData, this.folderName, fileJson_);
 
-            fileManager.HandleDeleteFile(fileName, caminhoPastaJson, null);
-            fileManager.HandleDeleteFile(fileName, caminhoPasta, null);
+            fileManager.HandleDeleteFiles(fileName, caminhoPasta, caminhoPastaJson, null);
+
 
             if (fileManager.FileExists(subfolderName, filePng, fileManager.basePath_Sprite) ||
                 fileManager.FileExists(subfolderName, fileJson, fileManager.basePath_PaintingData))
@@ -300,13 +303,15 @@ public class NavigationManage_Painting : MonoBehaviour
                 fileManager.CreateWarning(title, text, () =>
                 {
                     gridManager.Save(fileJson, filePng, subfolderName);
-                    uIHelperUtils.change = true;
+                    //uIHelperUtils.change = true;
                     panelFolder.SetActive(false);
 
                     namePiece.text = fileName;
                     this.fileName = fileName;
                     this.folderName = subfolderName;
                     folderText.text = subfolderName;
+
+                    folderNavigation.RefreshFolderButton(folderName, Application.persistentDataPath);
                 });
 
                 return; // sai daqui e espera o clique do usuário
@@ -324,13 +329,15 @@ public class NavigationManage_Painting : MonoBehaviour
             fileManager.CreateWarning(title, text, () =>
             {
                 gridManager.Save(fileJson, filePng, subfolderName);
-                uIHelperUtils.change = true;
+                //uIHelperUtils.change = true;
                 panelFolder.SetActive(false);
 
                 namePiece.text = fileName;
                 this.fileName = fileName;
                 this.folderName = subfolderName;
                 folderText.text = subfolderName;
+
+                folderNavigation.RefreshFolderButton(folderName, Application.persistentDataPath);
             });
 
             return; // sai daqui e espera o clique do usuário
@@ -338,13 +345,16 @@ public class NavigationManage_Painting : MonoBehaviour
 
         // Se não existir, salva direto
         gridManager.Save(fileJson, filePng, subfolderName);
-        uIHelperUtils.change = true;
+        //uIHelperUtils.change = true;
         panelFolder.SetActive(false);
 
         namePiece.text = fileName;
         this.fileName = fileName;
         this.folderName = subfolderName;
         folderText.text = subfolderName;
+
+
+        folderNavigation.RefreshFolderButton(folderName, Application.persistentDataPath);
     }
 
 

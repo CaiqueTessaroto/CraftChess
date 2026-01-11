@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System.Collections;
+using System;
 
 
 public class SpriteData
@@ -328,18 +330,21 @@ public class UIHelperUtils : MonoBehaviour
 
 
 
-    public List<SpriteData> LoadJsonSpritesFromPath(string pathJsons, string pathSprites)
+    public IEnumerator LoadJsonSpritesFromPathCoroutine(
+        string pathJsons,
+        string pathSprites,
+        List<SpriteData> sprites
+    )
     {
-
-        List<SpriteData> list = new List<SpriteData>();
+        sprites.Clear();
 
         if (!Directory.Exists(pathJsons))
-            return list;
+            yield break;
 
-        // Lista temporária de PNGs válidos
         List<string> pngValids = new List<string>();
 
         string[] arquivosJson = Directory.GetFiles(pathJsons, "*.json");
+
         foreach (string arquivoJson in arquivosJson)
         {
             string nameFile = Path.GetFileNameWithoutExtension(arquivoJson);
@@ -349,31 +354,43 @@ public class UIHelperUtils : MonoBehaviour
 
             Sprite sprite = GetSpriteFromPath(pathImage);
 
-            list.Add(new SpriteData
+            sprites.Add(new SpriteData
             {
                 Name = nameFile,
                 Sprite = sprite,
                 JsonPath = arquivoJson,
                 PngPath = pathImage
             });
+
+            // evita travar o frame
+            yield return null;
         }
-        // Excluir PNGs órfãos
+
+        // ===============================
+        // Remove PNGs órfãos
+        // ===============================
         if (Directory.Exists(pathSprites))
         {
             string[] filesPng = Directory.GetFiles(pathSprites, "*.png");
+
             foreach (string filePng in filesPng)
             {
                 string namePng = Path.GetFileName(filePng);
+
                 if (!pngValids.Contains(namePng))
                 {
                     File.Delete(filePng);
-                    Debug.LogWarning("PNG excluded because it has no corresponding JSON: " + filePng);
+                    Debug.LogWarning(
+                        "PNG excluded because it has no corresponding JSON: " + filePng
+                    );
                 }
+
+                yield return null;
             }
         }
-
-        return list;
     }
+
+
 
 
 
