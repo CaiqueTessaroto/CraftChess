@@ -20,6 +20,7 @@ public class PaintingGridManager : MonoBehaviour
     public GridStateManager gridStateManager;
     public GridPreview gridPreview;
     public FileManager fileManager;
+    public PaitingToolsManager paitingToolsManager;
 
     [Header("Color Control:")]
     public Color baseGridColor;
@@ -81,19 +82,20 @@ public class PaintingGridManager : MonoBehaviour
         });
 
         if (fileManager == null)
-        {
             fileManager = FindObjectOfType<FileManager>();
-        }
+        
 
         if (gridPreview == null)
-        {
             gridPreview = FindObjectOfType<GridPreview>();
-        }
+        
 
         if (gridStateManager == null)
-        {
             gridStateManager = FindObjectOfType<GridStateManager>();
-        }
+        
+
+                if (paitingToolsManager == null)
+            paitingToolsManager = FindObjectOfType<PaitingToolsManager>();
+        
 
         upBtw.onClick.AddListener(() =>
         {
@@ -441,6 +443,7 @@ public class PaintingGridManager : MonoBehaviour
         }
 
         //    Debug.Log("Selecionadas " + selectedCells.Count + " células.");
+        UIHelperUtils.SetCursor(paitingToolsManager.setaSprite, CursorHotspot.TopRight);
 
         isMoveSelection = true;
         isSelecting = true;

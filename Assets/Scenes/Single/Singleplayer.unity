@@ -4615,7 +4615,7 @@ MonoBehaviour:
   CloseBtn: {fileID: 1442584576}
   movesPanel: {fileID: 369755959}
   color1: {r: 0, g: 0, b: 0, a: 0}
-  color2: {r: 0.9019608, g: 0.28235295, b: 0.29803923, a: 0.60784316}
+  color2: {r: 0.17254902, g: 0.23137255, b: 0.27450982, a: 0.60784316}
   turnPrefab: {fileID: 1863042382367089023, guid: 6d34fa4865eca814fb9a800f47bdf507, type: 3}
   movePrefab: {fileID: 2573857315156152756, guid: 611aa71facec12740b5969ac7d1fbce7, type: 3}
 --- !u!1 &693341131
@@ -7215,12 +7215,8 @@ MonoBehaviour:
   selectedPiece: {fileID: 0}
   managerPieceInfo: {fileID: 0}
   pieceController: {fileID: 0}
-  KingWhiteIsInCheck: 0
-  KingBlackIsInCheck: 0
   botPlayerId: 0
   IA: 0
-  KingWhite: {fileID: 0}
-  KingBlack: {fileID: 0}
 --- !u!1 &1071800082
 GameObject:
   m_ObjectHideFlags: 0
@@ -11423,6 +11419,8 @@ MonoBehaviour:
   botPlayerId: 0
   IA: 0
   endGame: 0
+  haskingWhite: 0
+  haskingBlack: 0
   KingWhite: {fileID: 0}
   KingBlack: {fileID: 0}
 --- !u!114 &1726832951

@@ -59,6 +59,7 @@ public class GameInterfaceManager : MonoBehaviour
 
         MenuBtn.onClick.AddListener(() =>
         {
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             SceneManager.LoadScene("Menu");
         });
 
@@ -71,6 +72,7 @@ public class GameInterfaceManager : MonoBehaviour
 
         BackLobbyBtn.onClick.AddListener(() =>
         {
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             SceneManager.LoadScene("Single Lobby");
         });
 

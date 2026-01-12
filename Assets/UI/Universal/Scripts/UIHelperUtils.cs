@@ -205,44 +205,6 @@ public class UIHelperUtils : MonoBehaviour
         return sprite;
     }
 
-    public static Sprite GetSpriteFromPathForLobby(string pathSprite)
-    {
-        Sprite sprite = null;
-
-        if (File.Exists(pathSprite))
-        {
-            byte[] bytes = File.ReadAllBytes(pathSprite);
-            Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-            tex.LoadImage(bytes);
-
-            Rect bottomHalf = new Rect(
-                0,
-                0,
-                tex.width,
-                tex.height / 2
-            );
-
-            sprite = Sprite.Create(
-                tex,
-                bottomHalf,
-                new Vector2(0.5f, 0.5f),
-                100f // pixelsPerUnit (opcional, mas recomendado)
-            );
-        }
-        else
-        {
-            sprite = Resources.Load<Sprite>("Sprites/Default/Piece_Default");
-
-            if (sprite == null)
-            {
-                Debug.LogError("Sprite padrão não encontrado em Resources/Sprites/Piece_Default");
-                return null;
-            }
-        }
-
-        return sprite;
-    }
-
 
 
 
@@ -254,6 +216,8 @@ public class UIHelperUtils : MonoBehaviour
         // Converte o Sprite para Texture2D
         Texture2D cursorTexture = SpriteToTexture2D(sprite);
         cursorTexture = MakeTextureReadableRGBA(cursorTexture);
+
+        //MakeTextureBlack(cursorTexture);
 
         Vector2 cursorHotspot = GetHotspot(cursorTexture, hotspotType);
 
@@ -282,6 +246,23 @@ public class UIHelperUtils : MonoBehaviour
                 default:
                     return Vector2.zero;
             }
+        }
+
+        void MakeTextureBlack(Texture2D tex)
+        {
+            Color32[] pixels = tex.GetPixels32();
+
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                // mantém o alpha original
+                byte a = pixels[i].a;
+
+                if (a > 0)
+                    pixels[i] = new Color32(0, 0, 0, a);
+            }
+
+            tex.SetPixels32(pixels);
+            tex.Apply();
         }
 
 

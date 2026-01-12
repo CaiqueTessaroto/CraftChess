@@ -13985,6 +13985,7 @@ MonoBehaviour:
   gridStateManager: {fileID: 1202885062}
   gridPreview: {fileID: 1202885061}
   fileManager: {fileID: 1202885060}
+  paitingToolsManager: {fileID: 0}
   baseGridColor: {r: 1, g: 1, b: 1, a: 0.23529412}
   parentContainer: {fileID: 176505870}
   selectedColor: {r: 0, g: 0, b: 0, a: 1}
@@ -14087,15 +14088,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 1202885056}
-  eraserSprite: {fileID: 21300000, guid: 163890444a7fde2438bc43f670bb5576, type: 3}
-  eyedropperSprite: {fileID: 21300000, guid: 2cd6a74fc8e47bd479a7b8cc258f1ede, type: 3}
-  paintBucketSprite: {fileID: 21300000, guid: 68b30f2cacd93c2459610aae33568aec, type: 3}
-  circleSprite: {fileID: 21300000, guid: 2882061016e71cd46bc6af13bed5b053, type: 3}
-  lineSprite: {fileID: 21300000, guid: 88c052f0c8ebfaf46877306ea44e5aab, type: 3}
-  rectSprite: {fileID: 21300000, guid: aabf62ef164d951439d186ad8e02acc8, type: 3}
+  eraserSprite: {fileID: 21300000, guid: f01bc434e8e8bc5418eb545e69e63e83, type: 3}
+  eyedropperSprite: {fileID: 21300000, guid: 1cc03187204835f4299a76d8cf94e969, type: 3}
+  paintBucketSprite: {fileID: 21300000, guid: 1389274027dd3f747a88a36fee4ef214, type: 3}
+  circleSprite: {fileID: 21300000, guid: 797dcacde08335547882e7aead63cc1d, type: 3}
+  lineSprite: {fileID: 21300000, guid: 4842dda082304444b8a1400f1b540543, type: 3}
+  rectSprite: {fileID: 21300000, guid: 6ca4c4bdedc7217429aa0c64f8aa0bef, type: 3}
   shadowSprite: {fileID: 21300000, guid: 51fa7a8b97b9f1d4fa865558a4192c21, type: 3}
-  eraserAllSprite: {fileID: 21300000, guid: fd903af3d9358d7498a185ab8e4ba01a, type: 3}
-  selectSprite: {fileID: 21300000, guid: adead6afd34b386459a25e18d3f9c2f7, type: 3}
+  eraserAllSprite: {fileID: 21300000, guid: 484515bbb699f044297abab179f2fdec, type: 3}
+  selectSprite: {fileID: 21300000, guid: 0f35cdb0fa363814ca1b7179f7aa4a6b, type: 3}
+  setaSprite: {fileID: 21300000, guid: ea6bc109960d9bf40b9f131c45534411, type: 3}
   eraserButton: {fileID: 793808145}
   eyedropperButton: {fileID: 356167618}
   paintBucketButton: {fileID: 1517121324}

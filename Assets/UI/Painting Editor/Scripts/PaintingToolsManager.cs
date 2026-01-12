@@ -16,6 +16,7 @@ public class PaitingToolsManager : MonoBehaviour
     public Sprite shadowSprite;
     public Sprite eraserAllSprite;
     public Sprite selectSprite;
+    public Sprite setaSprite;
 
     [Header("Buttons")]
     public Button eraserButton;
@@ -61,7 +62,7 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.rectMode = true;
 
-                UIHelperUtils.SetCursor(rectSprite);
+                UIHelperUtils.SetCursor(rectSprite, CursorHotspot.TopLeft);
             });
         }
 
@@ -73,7 +74,7 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.lineMode = true;
 
-                UIHelperUtils.SetCursor(lineSprite);
+                UIHelperUtils.SetCursor(lineSprite, CursorHotspot.TopLeft);
             });
         }
 
@@ -86,7 +87,7 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.circleMode = true;
 
-                UIHelperUtils.SetCursor(circleSprite);
+                UIHelperUtils.SetCursor(circleSprite, CursorHotspot.TopLeft);
             });
         }
 
@@ -126,7 +127,7 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.OnSelecting = true;
 
-                UIHelperUtils.SetCursor(selectSprite);
+                UIHelperUtils.SetCursor(selectSprite, CursorHotspot.TopLeft);
 
                 //SetCursor(selectButton, false);
             });
