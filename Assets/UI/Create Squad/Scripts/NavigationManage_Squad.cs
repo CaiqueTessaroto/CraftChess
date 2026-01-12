@@ -83,13 +83,13 @@ public class NavigationManage_Squad : MonoBehaviour
         }
 
 
-                allBtw.onClick.AddListener(() =>
-        {
-            if (initiate) return;
-            if (uIHelperUtils.setAll())
-                StartFormationsButtons();
+        allBtw.onClick.AddListener(() =>
+{
+    if (initiate) return;
+    if (uIHelperUtils.setAll())
+        StartFormationsButtons();
 
-        });
+});
         myBtw.onClick.AddListener(() =>
         {
             if (initiate) return;
@@ -242,8 +242,8 @@ public class NavigationManage_Squad : MonoBehaviour
                 //return;
             }
 
-            if (!squadManager.enabledMode)
-                fileManager.CreateAdvice("The squad cannot be used in Strategic mode.");
+            //if (!squadManager.enabledMode)
+            //    fileManager.CreateAdvice("The squad cannot be used in Strategic mode.");
 
         });
 
@@ -267,9 +267,14 @@ public class NavigationManage_Squad : MonoBehaviour
 
     public void SaveSquad(string name, string title, string text)
     {
-        //string title2 = "Strategic mode";
-        //string text2 = "The squad cannot be used in Strategic mode.";
+        string title2 = "Strategic mode";
+        string text2 = "The squad cannot be used in Strategic mode.";
         // Nome do arquivo
+
+        squadManager.squad = name;
+        squadManager.squadnameTmp.text = name;
+        folderNavigation.selectRootPath = Application.persistentDataPath;
+
         string fileName = name + ".json";
 
         string fullPath = Path.Combine(
@@ -286,13 +291,13 @@ public class NavigationManage_Squad : MonoBehaviour
             {
                 if (!squadManager.enabledMode)
                 {
-                    //fileManager.CreateWarning(title2, text2, () =>
-                    //{
-                    //    Save(name, fileName);
-                    //    panelSquad.SetActive(false);
-                    //});
+                    fileManager.CreateWarning(title2, text2, () =>
+                    {
+                        Save(name, fileName);
+                        panelSquad.SetActive(false);
+                    });
 
-                    //return;
+                    return;
                 }
 
                 Save(name, fileName);
@@ -304,13 +309,13 @@ public class NavigationManage_Squad : MonoBehaviour
 
         if (!squadManager.enabledMode)
         {
-            //fileManager.CreateWarning(title2, text2, () =>
-            //{
-            //    Save(name, fileName);
-            //    panelSquad.SetActive(false);
-            //});
+            fileManager.CreateWarning(title2, text2, () =>
+            {
+                Save(name, fileName);
+                panelSquad.SetActive(false);
+            });
 
-            //return;
+            return;
         }
 
 
