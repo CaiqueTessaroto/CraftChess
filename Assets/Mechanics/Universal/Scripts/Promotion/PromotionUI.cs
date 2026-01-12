@@ -29,7 +29,7 @@ public class PromotionUI : MonoBehaviour
     public MatchSquadData squad = new MatchSquadData();
 
 
-    public void Initialize(PieceComponent piecePromotion, GameObject promotionCanvasPrefab, GameObject promotionButtonPrefab, MatchSquadData squadData, Vector2Int pos,bool IA = false, GameObject targetPiece = null)
+    public void Initialize(PieceComponent piecePromotion, GameObject promotionCanvasPrefab, GameObject promotionButtonPrefab, MatchSquadData squadData, Vector2Int pos, bool IA = false, GameObject targetPiece = null)
     {
         this.promotionCanvasPrefab = promotionCanvasPrefab;
         this.promotionButtonPrefab = promotionButtonPrefab;

@@ -25,6 +25,11 @@ public class NavigationManage_Squad : MonoBehaviour
     private GameObject panelFolder;
     private GameObject panelFile;
 
+    [Header("Options")]
+    public Button allBtw;
+    public Button myBtw;
+    public Button libraryBtw;
+
     [Header("Buttons:")]
     public Button saveBtn;
     public Button quickSaveBtn;
@@ -44,7 +49,8 @@ public class NavigationManage_Squad : MonoBehaviour
     [Header("Panels")]
     public Transform piecesPanel;
 
-
+    [Header("Control")]
+    public bool initiate = false;
     private bool setCursor = false;
     //private string selectRootPath;
 
@@ -75,6 +81,32 @@ public class NavigationManage_Squad : MonoBehaviour
         {
             squadManager = FindObjectOfType<SquadManager>();
         }
+
+
+                allBtw.onClick.AddListener(() =>
+        {
+            if (initiate) return;
+            if (uIHelperUtils.setAll())
+                StartFormationsButtons();
+
+        });
+        myBtw.onClick.AddListener(() =>
+        {
+            if (initiate) return;
+            if (uIHelperUtils.setMy())
+                StartFormationsButtons();
+
+        });
+        libraryBtw.onClick.AddListener(() =>
+        {
+            if (initiate) return;
+            if (uIHelperUtils.setLibrary())
+                StartFormationsButtons();
+
+        });
+
+
+        uIHelperUtils.setAll();
 
         backBtw.onClick.AddListener(() =>
         {
@@ -472,8 +504,7 @@ public class NavigationManage_Squad : MonoBehaviour
     }
     public void StartFormationsButtons()
     {
-
-        uIHelperUtils.setAll();
+        initiate = true;
 
         Transform content = panelSquad.transform.Find("Scroll View/Viewport/Content");
 
@@ -496,11 +527,13 @@ public class NavigationManage_Squad : MonoBehaviour
 
         if (uIHelperUtils.onLibrary)
         {
-            //CreateFormationsButtons(Application.streamingAssetsPath, content);
+            CreateFormationsButtons(Application.streamingAssetsPath, content);
         }
 
         // Ajusta tamanho do ScrollView
         UIHelperUtils.SetSizeScrollView(panelSquad);
+
+        initiate = false;
 
     }
 

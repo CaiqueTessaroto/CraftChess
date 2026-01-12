@@ -5130,7 +5130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &657336684
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6628,7 +6628,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &954503012
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15010,7 +15010,7 @@ MonoBehaviour:
   change: 1
   OnFiles: 0
   OnFolder: 1
-  TrashIcon: {fileID: 0}
+  TrashIcon: {fileID: 21300000, guid: f1d11f241380b00409ddec68c9046e9d, type: 3}
 --- !u!114 &2075470870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15026,9 +15026,13 @@ MonoBehaviour:
   uIHelperUtils: {fileID: 2075470869}
   fileManager: {fileID: 904364699}
   interactiveLobby: {fileID: 904364703}
+  allBtw: {fileID: 1076605306}
+  myBtw: {fileID: 1976072684}
+  libraryBtw: {fileID: 867134518}
   panelSquad: {fileID: 1910791533}
   panelbackBtn: {fileID: 1782042149}
   squad_BtnPrefab: {fileID: 7274077136171964200, guid: 43b12bf44bed93d47bc4eaed8ab19139, type: 3}
+  initiate: 0
 --- !u!1 &2086845307
 GameObject:
   m_ObjectHideFlags: 0

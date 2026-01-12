@@ -5547,6 +5547,7 @@ MonoBehaviour:
   backButton: {fileID: 4154379}
   newButton: {fileID: 1302841761}
   deleteButton: {fileID: 1860558898}
+  currentButtonFolder: {fileID: 0}
   selectRootPath: 
   initiate: 0
 --- !u!114 &938934227
@@ -5566,6 +5567,9 @@ MonoBehaviour:
   fileNavigation: {fileID: 938934225}
   folderNavigation: {fileID: 938934226}
   uIHelperUtils: {fileID: 938934224}
+  allBtw: {fileID: 531083853}
+  myBtw: {fileID: 1360807449}
+  libraryBtw: {fileID: 170125837}
   saveBtn: {fileID: 515088190}
   quickSaveBtn: {fileID: 86197270}
   loadBtn: {fileID: 1978327409}
@@ -5577,6 +5581,7 @@ MonoBehaviour:
   backBtw: {fileID: 2035391550}
   deleteBtw: {fileID: 383850082}
   piecesPanel: {fileID: 782768644}
+  initiate: 0
 --- !u!1 &938955928
 GameObject:
   m_ObjectHideFlags: 0
@@ -10111,6 +10116,7 @@ MonoBehaviour:
   advicePrefab: {fileID: 8681817349286575285, guid: 69c790aebce36024bbac98470c0fdc3c, type: 3}
   inputPrefab: {fileID: 4861523131148347322, guid: ddb14cc30c79bff459925aaab5afc042, type: 3}
   panel: {fileID: 696257746}
+  warning: 0
 --- !u!114 &1676805147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10159,7 +10165,6 @@ MonoBehaviour:
   squadPiece: 
   currentPiecepower: 0
   kingCell: {fileID: 0}
-  crownSprite: {fileID: 21300000, guid: a3bcc11ef3700e345a8578a5257a3e5c, type: 3}
   nameTmp: {fileID: 143356921}
   powerTmp: {fileID: 178408118}
   piecepanel: {fileID: 263045118}
@@ -10521,7 +10526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1737840387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12489,7 +12494,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1988708744
 RectTransform:
   m_ObjectHideFlags: 0

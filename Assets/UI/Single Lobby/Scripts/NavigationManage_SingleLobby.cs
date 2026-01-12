@@ -15,14 +15,43 @@ public class NavigationManage_SingleLobby : MonoBehaviour
     [Header("Scripts")]
     public InteractiveLobby interactiveLobby;
 
+    [Header("Options")]
+    public Button allBtw;
+    public Button myBtw;
+    public Button libraryBtw;
+
     [Header("Panel")]
     public GameObject panelSquad;
     public Button panelbackBtn;
     public GameObject squad_BtnPrefab;
+
+    [Header("Control")]
+    public bool initiate = false;
     // Start is called before the first frame update
     void Start()
     {
 
+        allBtw.onClick.AddListener(() =>
+        {
+            if (initiate) return;
+            if (uIHelperUtils.setAll())
+                StartFormationsButtons();
+
+        });
+        myBtw.onClick.AddListener(() =>
+        {
+            if (initiate) return;
+            if (uIHelperUtils.setMy())
+                StartFormationsButtons();
+
+        });
+        libraryBtw.onClick.AddListener(() =>
+        {
+            if (initiate) return;
+            if (uIHelperUtils.setLibrary())
+                StartFormationsButtons();
+
+        });
 
         panelbackBtn.onClick.AddListener(() =>
         {
@@ -30,6 +59,9 @@ public class NavigationManage_SingleLobby : MonoBehaviour
 
             panelSquad.SetActive(false);
         });
+
+
+        uIHelperUtils.setAll();
 
     }
 
@@ -43,9 +75,9 @@ public class NavigationManage_SingleLobby : MonoBehaviour
     //Navegação e seleção -------
     public void StartFormationsButtons()
     {
-        panelSquad.SetActive(true);
+        initiate = true;
 
-        uIHelperUtils.setAll();
+        panelSquad.SetActive(true);
 
         Transform content = panelSquad.transform.Find("Scroll View/Viewport/Content");
 
@@ -76,6 +108,9 @@ public class NavigationManage_SingleLobby : MonoBehaviour
 
         // Ajusta tamanho do ScrollView
         UIHelperUtils.SetSizeScrollView(panelSquad);
+
+
+        initiate = false;
 
     }
 
