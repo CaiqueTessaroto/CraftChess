@@ -248,23 +248,6 @@ public class UIHelperUtils : MonoBehaviour
             }
         }
 
-        void MakeTextureBlack(Texture2D tex)
-        {
-            Color32[] pixels = tex.GetPixels32();
-
-            for (int i = 0; i < pixels.Length; i++)
-            {
-                // mantém o alpha original
-                byte a = pixels[i].a;
-
-                if (a > 0)
-                    pixels[i] = new Color32(0, 0, 0, a);
-            }
-
-            tex.SetPixels32(pixels);
-            tex.Apply();
-        }
-
 
         Texture2D SpriteToTexture2D(Sprite sprite)
         {

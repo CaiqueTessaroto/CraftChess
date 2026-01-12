@@ -6,6 +6,9 @@ public class PaitingToolsManager : MonoBehaviour
 {
     public PaintingGridManager manager;
 
+    [Header("Panel")]
+    public GameObject toolPanel;
+
     [Header("Cursor Sprite")]
     public Sprite eraserSprite;
     public Sprite eyedropperSprite;
@@ -50,6 +53,8 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.shadowMode = true;
 
+                AtiveTool(shadowButton);
+
                 UIHelperUtils.SetCursor(shadowSprite, CursorHotspot.Center);
             });
         }
@@ -62,6 +67,8 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.rectMode = true;
 
+                AtiveTool(rectButton);
+
                 UIHelperUtils.SetCursor(rectSprite, CursorHotspot.TopLeft);
             });
         }
@@ -73,6 +80,8 @@ public class PaitingToolsManager : MonoBehaviour
                 manager.DisableTools();
 
                 manager.lineMode = true;
+
+                AtiveTool(lineButton);
 
                 UIHelperUtils.SetCursor(lineSprite, CursorHotspot.TopLeft);
             });
@@ -87,6 +96,8 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.circleMode = true;
 
+                AtiveTool(circleButton);
+
                 UIHelperUtils.SetCursor(circleSprite, CursorHotspot.TopLeft);
             });
         }
@@ -98,6 +109,8 @@ public class PaitingToolsManager : MonoBehaviour
                 manager.DisableTools();
 
                 manager.eraserMode = true;
+
+                AtiveTool(eraserButton);
 
                 UIHelperUtils.SetCursor(eraserSprite);
                 SetEraserColor();
@@ -111,6 +124,8 @@ public class PaitingToolsManager : MonoBehaviour
                 manager.DisableTools();
 
                 manager.eraseAll = true;
+
+                AtiveTool(eraserAllButton);
 
                 UIHelperUtils.SetCursor(eraserAllSprite);
                 SetEraserColor();
@@ -127,6 +142,8 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.OnSelecting = true;
 
+                AtiveTool(selectButton);
+
                 UIHelperUtils.SetCursor(selectSprite, CursorHotspot.TopLeft);
 
                 //SetCursor(selectButton, false);
@@ -138,6 +155,8 @@ public class PaitingToolsManager : MonoBehaviour
             eyedropperButton.onClick.AddListener(() =>
             {
                 manager.DisableTools();
+
+                 AtiveTool(eyedropperButton);
 
 
                 UIHelperUtils.SetCursor(eyedropperSprite);
@@ -152,6 +171,8 @@ public class PaitingToolsManager : MonoBehaviour
             paintBucketButton.onClick.AddListener(() =>
             {
                 manager.DisableTools();
+
+                AtiveTool(paintBucketButton);
 
                 manager.selectedColor = manager.previewSelectColor.color;
 
@@ -178,7 +199,30 @@ public class PaitingToolsManager : MonoBehaviour
 
     }
 
+    public void AtiveTool(Button toolBtn)
+    {
+        if (toolBtn == null) return;
 
+        Image buttonImage = toolBtn.GetComponent<Image>();
+        if (buttonImage != null)
+        {
+            buttonImage.enabled = true;
+        }
+    }
+
+    public void DisableAllImages()
+    {
+        if (toolPanel == null) return;
+
+        foreach (Transform child in toolPanel.transform)
+        {
+            Image img = child.GetComponent<Image>();
+            if (img != null)
+            {
+                img.enabled = false;
+            }
+        }
+    }
 
     public void SetEraserColor()
     {

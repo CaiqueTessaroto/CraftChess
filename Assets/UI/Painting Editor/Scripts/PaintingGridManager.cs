@@ -221,6 +221,8 @@ public class PaintingGridManager : MonoBehaviour
         if (OnSelecting)
             ClearSelection();
 
+        paitingToolsManager.DisableAllImages();
+
 
         eyedropperMode = false;
         paintBucketMode = false;
@@ -435,6 +437,7 @@ public class PaintingGridManager : MonoBehaviour
         if (selectedCells.Count == 0)
         {
             isSelecting = false;
+            paitingToolsManager.DisableAllImages();
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             //selectionStart = null;
             return;
@@ -454,6 +457,8 @@ public class PaintingGridManager : MonoBehaviour
         isMoveSelection = false;
         isSelecting = false;
         OnSelecting = false;
+
+        paitingToolsManager.DisableAllImages();
 
         if (selectedCells.Count == 0) return;
 
