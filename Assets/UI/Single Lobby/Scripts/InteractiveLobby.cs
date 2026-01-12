@@ -335,10 +335,11 @@ public class InteractiveLobby : MonoBehaviour
             WhiteSquad.Clear();
 
             currentMatch.BotSquadName = folderName;
-            whiteSquadTMP.text = folderName;
-            whiteSquadTMP2.text = folderName;
 
             CreatePiecesVisualization(jsonFile, enemyPiecesGrid);
+
+            whiteSquadTMP.text = $"{folderName}\n{WhiteSquad.Data.Power}";
+            whiteSquadTMP2.text = folderName;
 
             string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
             string jsonFileUser = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");
@@ -352,11 +353,11 @@ public class InteractiveLobby : MonoBehaviour
             BlackSquad.Clear();
 
             currentMatch.UserSquadName = folderName;
-            blackSquadTMP.text = folderName;
-            blackSquadTMP2.text = folderName;
-
 
             CreatePiecesVisualization(jsonFile, userPiecesGrid);
+
+            blackSquadTMP.text = $"{folderName}\n{BlackSquad.Data.Power}";
+            blackSquadTMP2.text = folderName;
 
             string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BotSquadName);
             string jsonFileEnemy = Path.Combine(squadFolder, currentMatch.BotSquadName + ".json");
