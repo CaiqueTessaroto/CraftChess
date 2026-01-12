@@ -536,6 +536,12 @@ public class InteractiveLobby : MonoBehaviour
 
         string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
         string jsonFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");
+
+        if (!File.Exists(jsonFile))
+        {
+            squadFolder = Path.Combine(Application.streamingAssetsPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
+            jsonFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");
+        }
         //string pngFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".png");
 
         //Sprite sprite = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
@@ -548,6 +554,11 @@ public class InteractiveLobby : MonoBehaviour
         jsonFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".json");
         //pngFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".png");
 
+        if (!File.Exists(jsonFile))
+        {
+            squadFolder = Path.Combine(Application.streamingAssetsPath, fileManager.basePath_SquadData, currentMatch.BotSquadName);
+            jsonFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".json");
+        }
         //sprite = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
 
         if (File.Exists(jsonFile))

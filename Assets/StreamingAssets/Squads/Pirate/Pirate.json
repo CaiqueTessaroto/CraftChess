@@ -1,0 +1,195 @@
+{
+    "Name": "Pirate",
+    "Power": 1500,
+    "NativeSquad": true,
+    "King": {
+        "Name": "Pirate King",
+        "Position": {
+            "x": 4,
+            "y": 0
+        }
+    },
+    "Pieces": [
+        {
+            "NameInSquad": "Lighthouse",
+            "Name": "Lighthouse",
+            "Squad": "Pirate",
+            "Power": 180,
+            "Sprite": "Lighthouse",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "Mermaid",
+            "Name": "Mermaid",
+            "Squad": "Pirate",
+            "Power": 290,
+            "Sprite": "Mermaid",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "Pirate King",
+            "Name": "Pirate King",
+            "Squad": "Pirate",
+            "Power": 90,
+            "Sprite": "Pirate King",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": [
+                "Lighthouse"
+            ]
+        },
+        {
+            "NameInSquad": "Shaman",
+            "Name": "Shaman",
+            "Squad": "Pirate",
+            "Power": 100,
+            "Sprite": "Shaman",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "Ship",
+            "Name": "Ship",
+            "Squad": "Pirate",
+            "Power": 96,
+            "Sprite": "Ship",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "Skeleton",
+            "Name": "Skeleton",
+            "Squad": "Pirate",
+            "Power": 46,
+            "Sprite": "Skeleton",
+            "NativePiece": true,
+            "PromotionPieces": [
+                "Ship",
+                "Lighthouse",
+                "Shaman",
+                "Mermaid"
+            ],
+            "CastlingPieces": []
+        }
+    ],
+    "Units": [
+        {
+            "Name": "Lighthouse",
+            "Position": {
+                "x": 7,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Lighthouse",
+            "Position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Skeleton",
+            "Position": {
+                "x": 0,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Skeleton",
+            "Position": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Skeleton",
+            "Position": {
+                "x": 2,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Skeleton",
+            "Position": {
+                "x": 3,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Skeleton",
+            "Position": {
+                "x": 4,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Skeleton",
+            "Position": {
+                "x": 5,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Skeleton",
+            "Position": {
+                "x": 6,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Skeleton",
+            "Position": {
+                "x": 7,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Ship",
+            "Position": {
+                "x": 6,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Ship",
+            "Position": {
+                "x": 1,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Pirate King",
+            "Position": {
+                "x": 4,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Mermaid",
+            "Position": {
+                "x": 3,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Shaman",
+            "Position": {
+                "x": 5,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Shaman",
+            "Position": {
+                "x": 2,
+                "y": 0
+            }
+        }
+    ]
+}

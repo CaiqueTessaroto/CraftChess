@@ -1,0 +1,195 @@
+{
+    "Name": "Fantasy",
+    "Power": 1500,
+    "NativeSquad": true,
+    "King": {
+        "Name": "King",
+        "Position": {
+            "x": 4,
+            "y": 0
+        }
+    },
+    "Pieces": [
+        {
+            "NameInSquad": "Dragon",
+            "Name": "Dragon",
+            "Squad": "Fantasy",
+            "Power": 96,
+            "Sprite": "Dragon",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "Elf",
+            "Name": "Elf",
+            "Squad": "Fantasy",
+            "Power": 290,
+            "Sprite": "Elf",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "King",
+            "Name": "King",
+            "Squad": "Fantasy",
+            "Power": 90,
+            "Sprite": "King",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": [
+                "Tower"
+            ]
+        },
+        {
+            "NameInSquad": "Orc",
+            "Name": "Orc",
+            "Squad": "Fantasy",
+            "Power": 46,
+            "Sprite": "Orc",
+            "NativePiece": true,
+            "PromotionPieces": [
+                "Dragon",
+                "Tower",
+                "Elf",
+                "Wizard"
+            ],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "Tower",
+            "Name": "Tower",
+            "Squad": "Fantasy",
+            "Power": 180,
+            "Sprite": "Tower",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "Wizard",
+            "Name": "Wizard",
+            "Squad": "Fantasy",
+            "Power": 100,
+            "Sprite": "Wizard",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        }
+    ],
+    "Units": [
+        {
+            "Name": "Orc",
+            "Position": {
+                "x": 0,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Orc",
+            "Position": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Orc",
+            "Position": {
+                "x": 3,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Orc",
+            "Position": {
+                "x": 2,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Orc",
+            "Position": {
+                "x": 4,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Orc",
+            "Position": {
+                "x": 5,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Orc",
+            "Position": {
+                "x": 6,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Orc",
+            "Position": {
+                "x": 7,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Tower",
+            "Position": {
+                "x": 7,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Tower",
+            "Position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Dragon",
+            "Position": {
+                "x": 6,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Dragon",
+            "Position": {
+                "x": 1,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Wizard",
+            "Position": {
+                "x": 5,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Wizard",
+            "Position": {
+                "x": 2,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Elf",
+            "Position": {
+                "x": 3,
+                "y": 0
+            }
+        },
+        {
+            "Name": "King",
+            "Position": {
+                "x": 4,
+                "y": 0
+            }
+        }
+    ]
+}

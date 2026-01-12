@@ -81,7 +81,7 @@ public class SingleLobbyManager : MonoBehaviour
 
         return currentMatch;
     }
-    public static SingleMatchConfig CreateMatch(string userSquad, string botSquad, BotDifficulty difficulty, string map, StartOption start)
+    public static SingleMatchConfig CreateMatch(string userSquad, string botSquad, bool nativeSquad, BotDifficulty difficulty, string map, StartOption start)
     {
         SingleMatchConfig currentMatch = new SingleMatchConfig
         {

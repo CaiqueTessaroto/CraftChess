@@ -1,0 +1,48 @@
+{
+    "piece": {
+        "Name": "Bishop",
+        "Squad": "White",
+        "Power": 100,
+        "Art": "Bishop",
+        "FolderSprite": "White",
+        "NativeSprite": true
+    },
+    "straight": {
+        "Active": false,
+        "All": true,
+        "Front": false,
+        "Back": false,
+        "Right": false,
+        "Left": false,
+        "Range": 8,
+        "Move": true,
+        "Capture": false,
+        "Jump": false
+    },
+    "diagonal": {
+        "Active": true,
+        "All": true,
+        "Front": false,
+        "Back": false,
+        "Right": false,
+        "Left": false,
+        "Range": 8,
+        "Move": true,
+        "Capture": true,
+        "Jump": false
+    },
+    "custom": {
+        "Active": false,
+        "Move": true,
+        "Capture": false,
+        "Jump": false,
+        "Moves": []
+    },
+    "special": {
+        "Active": false,
+        "Move": true,
+        "Capture": false,
+        "Jump": false,
+        "Moves": []
+    }
+}

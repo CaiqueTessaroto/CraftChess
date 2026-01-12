@@ -1,0 +1,81 @@
+{
+    "piece": {
+        "Name": "Knight",
+        "Squad": "Black",
+        "Power": 96,
+        "Art": "Knight",
+        "FolderSprite": "Black",
+        "NativeSprite": true
+    },
+    "straight": {
+        "Active": false,
+        "All": true,
+        "Front": false,
+        "Back": false,
+        "Right": false,
+        "Left": false,
+        "Range": 8,
+        "Move": true,
+        "Capture": false,
+        "Jump": false
+    },
+    "diagonal": {
+        "Active": false,
+        "All": true,
+        "Front": false,
+        "Back": false,
+        "Right": false,
+        "Left": false,
+        "Range": 8,
+        "Move": true,
+        "Capture": false,
+        "Jump": false
+    },
+    "custom": {
+        "Active": true,
+        "Move": true,
+        "Capture": true,
+        "Jump": true,
+        "Moves": [
+            {
+                "x": -2,
+                "y": -1
+            },
+            {
+                "x": -2,
+                "y": 1
+            },
+            {
+                "x": -1,
+                "y": -2
+            },
+            {
+                "x": -1,
+                "y": 2
+            },
+            {
+                "x": 1,
+                "y": -2
+            },
+            {
+                "x": 1,
+                "y": 2
+            },
+            {
+                "x": 2,
+                "y": -1
+            },
+            {
+                "x": 2,
+                "y": 1
+            }
+        ]
+    },
+    "special": {
+        "Active": false,
+        "Move": true,
+        "Capture": false,
+        "Jump": false,
+        "Moves": []
+    }
+}

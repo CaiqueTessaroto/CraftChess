@@ -1,0 +1,195 @@
+{
+    "Name": "Red",
+    "Power": 1500,
+    "NativeSquad": true,
+    "King": {
+        "Name": "King",
+        "Position": {
+            "x": 4,
+            "y": 0
+        }
+    },
+    "Pieces": [
+        {
+            "NameInSquad": "Bishop",
+            "Name": "Bishop",
+            "Squad": "Red",
+            "Power": 100,
+            "Sprite": "Bishop",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "King",
+            "Name": "King",
+            "Squad": "Red",
+            "Power": 90,
+            "Sprite": "King",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": [
+                "Rook"
+            ]
+        },
+        {
+            "NameInSquad": "Knight",
+            "Name": "Knight",
+            "Squad": "Red",
+            "Power": 96,
+            "Sprite": "Knight",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "Pawn",
+            "Name": "Pawn",
+            "Squad": "Red",
+            "Power": 46,
+            "Sprite": "Pawn",
+            "NativePiece": true,
+            "PromotionPieces": [
+                "Bishop",
+                "Knight",
+                "Queen",
+                "Rook"
+            ],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "Queen",
+            "Name": "Queen",
+            "Squad": "Red",
+            "Power": 290,
+            "Sprite": "Queen",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "Rook",
+            "Name": "Rook",
+            "Squad": "Red",
+            "Power": 180,
+            "Sprite": "Rook",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        }
+    ],
+    "Units": [
+        {
+            "Name": "Pawn",
+            "Position": {
+                "x": 0,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Pawn",
+            "Position": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Pawn",
+            "Position": {
+                "x": 2,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Pawn",
+            "Position": {
+                "x": 3,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Pawn",
+            "Position": {
+                "x": 4,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Pawn",
+            "Position": {
+                "x": 5,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Pawn",
+            "Position": {
+                "x": 6,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Pawn",
+            "Position": {
+                "x": 7,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Rook",
+            "Position": {
+                "x": 7,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Rook",
+            "Position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Queen",
+            "Position": {
+                "x": 3,
+                "y": 0
+            }
+        },
+        {
+            "Name": "King",
+            "Position": {
+                "x": 4,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Bishop",
+            "Position": {
+                "x": 5,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Bishop",
+            "Position": {
+                "x": 2,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Knight",
+            "Position": {
+                "x": 6,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Knight",
+            "Position": {
+                "x": 1,
+                "y": 0
+            }
+        }
+    ]
+}

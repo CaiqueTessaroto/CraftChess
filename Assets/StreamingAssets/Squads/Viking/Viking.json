@@ -1,0 +1,195 @@
+{
+    "Name": "Viking",
+    "Power": 1500,
+    "NativeSquad": true,
+    "King": {
+        "Name": "King",
+        "Position": {
+            "x": 4,
+            "y": 0
+        }
+    },
+    "Pieces": [
+        {
+            "NameInSquad": "King",
+            "Name": "King",
+            "Squad": "Viking",
+            "Power": 90,
+            "Sprite": "King",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": [
+                "Tower"
+            ]
+        },
+        {
+            "NameInSquad": "Queen",
+            "Name": "Queen",
+            "Squad": "Viking",
+            "Power": 290,
+            "Sprite": "Queen",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "Soldier",
+            "Name": "Soldier",
+            "Squad": "Viking",
+            "Power": 46,
+            "Sprite": "Soldier",
+            "NativePiece": true,
+            "PromotionPieces": [
+                "Queen",
+                "Valkyrie",
+                "Viking Ship",
+                "Tower"
+            ],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "Tower",
+            "Name": "Tower",
+            "Squad": "Viking",
+            "Power": 180,
+            "Sprite": "Tower",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "Valkyrie",
+            "Name": "Valkyrie",
+            "Squad": "Viking",
+            "Power": 100,
+            "Sprite": "Valkyrie",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        },
+        {
+            "NameInSquad": "Viking Ship",
+            "Name": "Viking Ship",
+            "Squad": "Viking",
+            "Power": 96,
+            "Sprite": "Viking Ship",
+            "NativePiece": true,
+            "PromotionPieces": [],
+            "CastlingPieces": []
+        }
+    ],
+    "Units": [
+        {
+            "Name": "Soldier",
+            "Position": {
+                "x": 0,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Soldier",
+            "Position": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Soldier",
+            "Position": {
+                "x": 2,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Soldier",
+            "Position": {
+                "x": 3,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Soldier",
+            "Position": {
+                "x": 4,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Soldier",
+            "Position": {
+                "x": 5,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Soldier",
+            "Position": {
+                "x": 6,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Soldier",
+            "Position": {
+                "x": 7,
+                "y": 1
+            }
+        },
+        {
+            "Name": "Viking Ship",
+            "Position": {
+                "x": 6,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Viking Ship",
+            "Position": {
+                "x": 1,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Tower",
+            "Position": {
+                "x": 7,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Tower",
+            "Position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "Name": "King",
+            "Position": {
+                "x": 4,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Queen",
+            "Position": {
+                "x": 3,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Valkyrie",
+            "Position": {
+                "x": 5,
+                "y": 0
+            }
+        },
+        {
+            "Name": "Valkyrie",
+            "Position": {
+                "x": 2,
+                "y": 0
+            }
+        }
+    ]
+}
