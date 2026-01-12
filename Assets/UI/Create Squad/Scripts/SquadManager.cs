@@ -215,7 +215,7 @@ public class SquadManager : MonoBehaviour
 
     public void CheckStrategicModeRules()
     {
-        bool powerLimit = squadData.Power > 1500;
+        bool powerLimit = squadData.Power > 1510;
         bool hasKing = string.IsNullOrEmpty(squadData.King?.Name);
 
         bool uniqueKing = placedPieces.Count(p => p.Name == squadData.King.Name) > 1;

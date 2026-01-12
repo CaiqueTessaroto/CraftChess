@@ -179,7 +179,7 @@ public class PromotionUI : MonoBehaviour
         {
             if (squad.Pieces.ContainsKey(pieceName))
             {
-                SquadPieceData pieceData = squad.Data.Pieces.Find(p => p.Name == pieceName);
+                SquadPieceData pieceData = squad.Data.Pieces.Find(p => p.NameInSquad == pieceName);
 
                 string spriteName = pieceData.NameInSquad;
                 Sprite sprite = matchData.Sprites[spriteName];
