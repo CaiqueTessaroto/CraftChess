@@ -538,6 +538,21 @@ public class BoardChessManager : MonoBehaviour
                 Debug.LogWarning($"Sprite não encontrado para a peça: {piece.Name}");
             }
         }
+
+        foreach (var piece in squad.Pieces)
+        {
+            if (sprites.TryGetValue(piece.Name, out Sprite sprite))
+            {
+                if (!managerPieceInfo.pieceSprites.ContainsKey(piece.Name + piece.Squad))
+                {
+                    managerPieceInfo.pieceSprites[piece.NameInSquad + piece.Squad] = sprite;
+                }
+            }
+
+        }
+
+
+
     }
 
     // ---------- POSICIONA UMA PEÇA ----------
@@ -647,11 +662,6 @@ public class BoardChessManager : MonoBehaviour
         else
             pieceComponent.Initialize(pieceData.Squad, name, pieceData.Power, pieceData.PromotionPieces, pieceData.CastlingPieces, player, pos, false);
 
-
-        if (!managerPieceInfo.pieceSprites.ContainsKey(pieceData.Name + pieceData.Squad))
-        {
-            managerPieceInfo.pieceSprites[pieceData.NameInSquad + pieceData.Squad] = sprite;
-        }
 
     }
 
