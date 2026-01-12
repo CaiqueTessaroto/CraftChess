@@ -240,7 +240,7 @@ public class PieceController : MonoBehaviour
         if (KingWhite == null && haskingWhite)
             black = true;
 
-        if (KingBlack == null && haskingWhite)
+        if (KingBlack == null && haskingBlack)
             white = true;
 
         EndGame(black, white, draw);
