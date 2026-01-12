@@ -10,15 +10,8 @@ public class DynamicColorPaletteManager : MonoBehaviour
     public FileManager fileManager;
     public PaintingGridManager gridManager;
     public GameObject colorButtonPrefab;
-    public Transform paletteContainer;
-    public Image colorPreview; // Mostra a cor antes de adicionar
-    private Color currentColor = Color.black;
-    public GameObject panel;
-    public GameObject selectedButtonColor;
 
     [Header("Buttons:")]
-    public Button confirm;
-    public Button cancel;
     public Button Add;
     public Button removeColor;
     public Button savePalletsButton;
@@ -111,33 +104,11 @@ public class DynamicColorPaletteManager : MonoBehaviour
 
         removeColor.onClick.AddListener(RemoveSelectedColor);
 
-
-        if (confirm != null)
-        {
-            confirm.onClick.AddListener(() =>
-            {
-                gridManager.SetSelectedColor(currentColor);
-                panel.SetActive(false);
-            });
-        }
-
         if (Add != null)
         {
             Add.onClick.AddListener(() => AddColorToPalette());
         }
 
-        if (confirm != null)
-        {
-            cancel.onClick.AddListener(() => panel.SetActive(false));
-        }
-
-
-
-        sliderR.onValueChanged.AddListener(delegate { OnSliderChanged(); });
-        sliderG.onValueChanged.AddListener(delegate { OnSliderChanged(); });
-        sliderB.onValueChanged.AddListener(delegate { OnSliderChanged(); });
-
-        OnSliderChanged(); // Atualiza já no início
     }
 
     void RemoveSelectedColor()
@@ -149,13 +120,7 @@ public class DynamicColorPaletteManager : MonoBehaviour
         }
     }
 
-    public void SetPreviewColor(Color color)
-    {
-        currentColor = color;
-        colorPreview.color = color;
-    }
-
-    void SelectPanel(GameObject targetPanel)
+    private void SelectPanel(GameObject targetPanel)
     {
         // Desativa todos
         panelPallet1.SetActive(false);
@@ -195,28 +160,6 @@ public class DynamicColorPaletteManager : MonoBehaviour
 
             });
         }
-    }
-
-    [Header("New Color Pallet:")]
-
-    public Slider sliderR;
-    public Slider sliderG;
-    public Slider sliderB;
-
-    public TextMeshProUGUI textR, textG, textB;
-
-    public int decimalPlaces = 2;
-
-
-    public void OnSliderChanged()
-    {
-        Color newColor = new Color(sliderR.value, sliderG.value, sliderB.value);
-
-        textR.text = sliderR.value.ToString($"F{decimalPlaces}");
-        textG.text = sliderG.value.ToString($"F{decimalPlaces}");
-        textB.text = sliderB.value.ToString($"F{decimalPlaces}");
-
-        SetPreviewColor(newColor);
     }
 
 
