@@ -28,6 +28,7 @@ public class SquadPieceData
     public string Squad;
     public int Power;
     public string Sprite;
+    public string SpriteSet;
     public bool NativePiece = false;
     public List<string> PromotionPieces = new List<string>();
     public List<string> CastlingPieces = new List<string>();

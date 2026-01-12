@@ -761,6 +761,7 @@ public class NavigationManage_Squad : MonoBehaviour
                     Squad = piece.Squad,
                     Power = piece.Power,
                     Sprite = piece.Art,
+                    SpriteSet = piece.FolderSprite,
                     NativePiece = nativePiece
                 });
             }
@@ -780,6 +781,7 @@ public class NavigationManage_Squad : MonoBehaviour
                         Squad = piece.Squad,
                         Power = piece.Power,
                         Sprite = piece.Art,
+                        SpriteSet = piece.FolderSprite,
                         NativePiece = nativePiece
                     });
                 }

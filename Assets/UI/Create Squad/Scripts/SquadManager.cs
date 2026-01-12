@@ -220,7 +220,7 @@ public class SquadManager : MonoBehaviour
 
         bool uniqueKing = placedPieces.Count(p => p.Name == squadData.King.Name) > 1;
         bool sameArtPieces = squadData.Pieces.GroupBy(p => p.Sprite)
-                            .Any(g => g.Count() > 1);//&& g.Select(p => p.Name).Distinct().Count() > 1)
+                            .Any(g => g.Count() > 1 && g.Select(p => p.SpriteSet).Distinct().Count() > 1);
 
         string powerLimitTxt = "Squad power must be less than 1500";
         string hasKingTxt = "There must be a King";
