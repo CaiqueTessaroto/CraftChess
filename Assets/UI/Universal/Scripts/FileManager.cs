@@ -34,6 +34,7 @@ public class FileManager : MonoBehaviour
     {
         // Instancia o prefab como filho do panel
         GameObject newInput = Instantiate(inputPrefab, panel);
+
         newInput.transform.localScale = Vector3.one;
 
         TMP_Text titleText = newInput.transform.Find("Title")?.GetComponent<TMP_Text>();
@@ -244,15 +245,15 @@ public class FileManager : MonoBehaviour
     {
         if (warning) return;
 
-            string title = "Folder will be deleted";
-            string text = "Do you really want to delete the folder " + folderName + " ?";
+        string title = "Folder will be deleted";
+        string text = "Do you really want to delete the folder " + folderName + " ?";
 
         void DeleteFiles()
         {
             // Arquivo 1
             if (Directory.Exists(path1))
             {
-                Directory.Delete(path1, true);;
+                Directory.Delete(path1, true); ;
                 Debug.Log("Pasta excluída: " + path1);
             }
             else
@@ -263,7 +264,7 @@ public class FileManager : MonoBehaviour
             // Arquivo 2
             if (Directory.Exists(path2))
             {
-                Directory.Delete(path2, true);;
+                Directory.Delete(path2, true); ;
                 Debug.Log("Pasta excluída: " + path2);
             }
             else

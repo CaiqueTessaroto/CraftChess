@@ -28,10 +28,18 @@ public class DynamicColorPaletteManager : MonoBehaviour
     public Button buttonPallet2;
     public Button buttonPallet3;
     public Button buttonPallet4;
+    public Button buttonPallet5;
+    public Button buttonPallet6;
+    public Button buttonPallet7;
+    public Button buttonPallet8;
     public GameObject panelPallet1;
     public GameObject panelPallet2;
     public GameObject panelPallet3;
     public GameObject panelPallet4;
+    public GameObject panelPallet5;
+    public GameObject panelPallet6;
+    public GameObject panelPallet7;
+    public GameObject panelPallet8;
     //public List<GameObject> panelPallets;
     public GameObject selectPanelPallet;
 
@@ -45,12 +53,21 @@ public class DynamicColorPaletteManager : MonoBehaviour
             SavePalettes("Pallet2.json", panelPallet2.transform, "Pallets");
             SavePalettes("Pallet3.json", panelPallet3.transform, "Pallets");
             SavePalettes("Pallet4.json", panelPallet4.transform, "Pallets");
+
+            SavePalettes("Pallet5.json", panelPallet5.transform, "Pallets");
+            SavePalettes("Pallet6.json", panelPallet6.transform, "Pallets");
+            SavePalettes("Pallet7.json", panelPallet7.transform, "Pallets");
+            SavePalettes("Pallet8.json", panelPallet8.transform, "Pallets");
         });
 
         LoadPalette("Pallet2.json", panelPallet2.transform, "Pallets", colorButtonPrefab);
         LoadPalette("Pallet3.json", panelPallet3.transform, "Pallets", colorButtonPrefab);
         LoadPalette("Pallet4.json", panelPallet4.transform, "Pallets", colorButtonPrefab);
 
+        LoadPalette("Pallet5.json", panelPallet5.transform, "Pallets", colorButtonPrefab);
+        LoadPalette("Pallet6.json", panelPallet6.transform, "Pallets", colorButtonPrefab);
+        LoadPalette("Pallet7.json", panelPallet7.transform, "Pallets", colorButtonPrefab);
+        LoadPalette("Pallet8.json", panelPallet8.transform, "Pallets", colorButtonPrefab);
         // Conectar eventos dos botões
         buttonPallet1.onClick.AddListener(() =>
         {
@@ -67,6 +84,26 @@ public class DynamicColorPaletteManager : MonoBehaviour
         buttonPallet4.onClick.AddListener(() =>
         {
             SelectPanel(panelPallet4);
+        });
+
+        buttonPallet5.onClick.AddListener(() =>
+        {
+            SelectPanel(panelPallet5);
+        });
+
+        buttonPallet6.onClick.AddListener(() =>
+        {
+            SelectPanel(panelPallet6);
+        });
+
+        buttonPallet7.onClick.AddListener(() =>
+        {
+            SelectPanel(panelPallet7);
+        });
+
+        buttonPallet8.onClick.AddListener(() =>
+        {
+            SelectPanel(panelPallet8);
         });
 
         // Define painel padrão ao iniciar (opcional)
@@ -125,6 +162,11 @@ public class DynamicColorPaletteManager : MonoBehaviour
         panelPallet2.SetActive(false);
         panelPallet3.SetActive(false);
         panelPallet4.SetActive(false);
+
+        panelPallet5.SetActive(false);
+        panelPallet6.SetActive(false);
+        panelPallet7.SetActive(false);
+        panelPallet8.SetActive(false);
 
         // Ativa apenas o selecionado
         targetPanel.SetActive(true);

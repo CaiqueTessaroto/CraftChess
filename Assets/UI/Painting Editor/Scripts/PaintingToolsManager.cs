@@ -6,12 +6,21 @@ public class PaitingToolsManager : MonoBehaviour
 {
     public PaintingGridManager manager;
 
+    [Header("Cursor Sprite")]
+    public Sprite eraserSprite;
+    public Sprite eyedropperSprite;
+    public Sprite paintBucketSprite;
+    public Sprite circleSprite;
+    public Sprite lineSprite;
+    public Sprite rectSprite;
+    public Sprite shadowSprite;
+    public Sprite eraserAllSprite;
+    public Sprite selectSprite;
 
-
+    [Header("Buttons")]
     public Button eraserButton;
     public Button eyedropperButton;
     public Button paintBucketButton;
-
     public Button circleButton;
     public Button lineButton;
     public Button rectButton;
@@ -40,7 +49,7 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.shadowMode = true;
 
-                //Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+                UIHelperUtils.SetCursor(shadowSprite, CursorHotspot.Center);
             });
         }
 
@@ -52,7 +61,7 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.rectMode = true;
 
-                //Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+                UIHelperUtils.SetCursor(rectSprite);
             });
         }
 
@@ -64,7 +73,7 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.lineMode = true;
 
-                //Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+                UIHelperUtils.SetCursor(lineSprite);
             });
         }
 
@@ -77,7 +86,7 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.circleMode = true;
 
-                //Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+                UIHelperUtils.SetCursor(circleSprite);
             });
         }
 
@@ -89,9 +98,7 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.eraserMode = true;
 
-                Image buttonImage = eraserButton.GetComponent<Image>();
-
-                UIHelperUtils.SetCursor(buttonImage.sprite);
+                UIHelperUtils.SetCursor(eraserSprite);
                 SetEraserColor();
             });
         }
@@ -104,9 +111,7 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.eraseAll = true;
 
-                Image buttonImage = eraserAllButton.GetComponent<Image>();
-
-                UIHelperUtils.SetCursor(buttonImage.sprite);
+                UIHelperUtils.SetCursor(eraserAllSprite);
                 SetEraserColor();
             });
         }
@@ -121,6 +126,8 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.OnSelecting = true;
 
+                UIHelperUtils.SetCursor(selectSprite);
+
                 //SetCursor(selectButton, false);
             });
         }
@@ -131,9 +138,9 @@ public class PaitingToolsManager : MonoBehaviour
             {
                 manager.DisableTools();
 
-                Image buttonImage = eyedropperButton.GetComponent<Image>();
 
-                UIHelperUtils.SetCursor(buttonImage.sprite);
+                UIHelperUtils.SetCursor(eyedropperSprite);
+
                 manager.eyedropperMode = true;
             });
         }
@@ -147,9 +154,7 @@ public class PaitingToolsManager : MonoBehaviour
 
                 manager.selectedColor = manager.previewSelectColor.color;
 
-                Image buttonImage = paintBucketButton.GetComponent<Image>();
-
-                UIHelperUtils.SetCursor(buttonImage.sprite, CursorHotspot.BottomRight);
+                UIHelperUtils.SetCursor(paintBucketSprite, CursorHotspot.BottomRight);
 
                 manager.paintBucketMode = true;
             });

@@ -161,12 +161,6 @@ public class NavigationManage_Squad : MonoBehaviour
                 return;
             }
 
-            if (string.IsNullOrEmpty(squadManager.squadData.King?.Name))
-            {
-                fileManager.CreateAdvice("There is no king.");
-                //return;
-            }
-
             uIHelperUtils.save = true;
             panelSquad.SetActive(true);
 
@@ -186,6 +180,12 @@ public class NavigationManage_Squad : MonoBehaviour
                 SaveSquad(text, titleSave, textSave);
             }, name);
 
+            if (string.IsNullOrEmpty(squadManager.squadData.King?.Name))
+            {
+                fileManager.CreateAdvice("There is no king.");
+                //return;
+            }
+
 
         });
 
@@ -198,16 +198,21 @@ public class NavigationManage_Squad : MonoBehaviour
                 return;
             }
 
+            string titleSave = "Do you want to Save the file?";
+            string textSave = "Are you sure you want to save the file?";
+
+            SaveSquad(squadManager.squad, titleSave, textSave);
+
+
             if (string.IsNullOrEmpty(squadManager.squadData.King?.Name))
             {
                 fileManager.CreateAdvice("There is no king.");
                 //return;
             }
 
-            string titleSave = "Do you want to Save the file?";
-            string textSave = "Are you sure you want to save the file?";
+            if (!squadManager.enabledMode)
+                fileManager.CreateAdvice("The squad cannot be used in Strategic mode.");
 
-            SaveSquad(squadManager.squad, titleSave, textSave);
         });
 
 
@@ -230,8 +235,8 @@ public class NavigationManage_Squad : MonoBehaviour
 
     public void SaveSquad(string name, string title, string text)
     {
-        string title2 = "Strategic mode";
-        string text2 = "The squad cannot be used in Strategic mode.";
+        //string title2 = "Strategic mode";
+        //string text2 = "The squad cannot be used in Strategic mode.";
         // Nome do arquivo
         string fileName = name + ".json";
 
@@ -249,13 +254,13 @@ public class NavigationManage_Squad : MonoBehaviour
             {
                 if (!squadManager.enabledMode)
                 {
-                    fileManager.CreateWarning(title2, text2, () =>
-                    {
-                        Save(name, fileName);
-                        panelSquad.SetActive(false);
-                    });
+                    //fileManager.CreateWarning(title2, text2, () =>
+                    //{
+                    //    Save(name, fileName);
+                    //    panelSquad.SetActive(false);
+                    //});
 
-                    return;
+                    //return;
                 }
 
                 Save(name, fileName);
@@ -267,13 +272,13 @@ public class NavigationManage_Squad : MonoBehaviour
 
         if (!squadManager.enabledMode)
         {
-            fileManager.CreateWarning(title2, text2, () =>
-            {
-                Save(name, fileName);
-                panelSquad.SetActive(false);
-            });
+            //fileManager.CreateWarning(title2, text2, () =>
+            //{
+            //    Save(name, fileName);
+            //    panelSquad.SetActive(false);
+            //});
 
-            return;
+            //return;
         }
 
 
@@ -754,12 +759,12 @@ public class NavigationManage_Squad : MonoBehaviour
         }
     }
 
-    
+
     private void CreatePieceButton(PieceInfo piece, string nameInSquad, string jsonPath, string rootPath, Transform content)
     {
         // Caminho da sprite
         string caminhoSprite = "";
-        
+
         if (piece.NativeSprite)
         {
             caminhoSprite = Path.Combine(Application.streamingAssetsPath, fileManager.basePath_Sprite, piece.FolderSprite, piece.Art.Trim() + ".png");

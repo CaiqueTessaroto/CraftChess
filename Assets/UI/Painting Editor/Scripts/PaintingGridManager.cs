@@ -433,8 +433,11 @@ public class PaintingGridManager : MonoBehaviour
         if (selectedCells.Count == 0)
         {
             isSelecting = false;
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             //selectionStart = null;
             return;
+
+            
         }
 
         //    Debug.Log("Selecionadas " + selectedCells.Count + " células.");
@@ -460,6 +463,8 @@ public class PaintingGridManager : MonoBehaviour
 
         selectedCells.Clear();
         originalColors.Clear();
+
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
         //Debug.Log("Seleção limpa.");
     }
