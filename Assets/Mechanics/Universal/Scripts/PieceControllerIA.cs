@@ -18,12 +18,8 @@ public class PieceControllerIA : MonoBehaviour
     public PieceController pieceController;
 
     [Header("Control:")]
-    public bool KingWhiteIsInCheck;
-    public bool KingBlackIsInCheck;
     public int botPlayerId;
     public bool IA = false;
-    public PieceComponent KingWhite;
-    public PieceComponent KingBlack;
 
     private PieceComponent pieceComponent;
     private PieceMovement pieceMovement;

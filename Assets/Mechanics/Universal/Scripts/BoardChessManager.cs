@@ -626,16 +626,22 @@ public class BoardChessManager : MonoBehaviour
 
         Player player = matchSquad.Player;
 
-        if (pieceData.NameInSquad == squad.King.Name)
+        if (pos == MirrorPosition(squad.King.Position, player.id) && !string.IsNullOrEmpty(squad.King.Name))
         {
             pieceComponent.Initialize(pieceData.Squad, name, pieceData.Power, pieceData.PromotionPieces, pieceData.CastlingPieces, player, pos, true);
 
             PieceController pieceController = FindObjectOfType<PieceController>();
 
             if (player.id == 0)
+            {
                 pieceController.KingWhite = pieceComponent;
+                pieceController.haskingWhite = true;
+            }
             else
+            {
                 pieceController.KingBlack = pieceComponent;
+                pieceController.haskingBlack = true;
+            }
 
         }
         else
@@ -647,6 +653,19 @@ public class BoardChessManager : MonoBehaviour
             managerPieceInfo.pieceSprites[pieceData.NameInSquad + pieceData.Squad] = sprite;
         }
 
+    }
+
+    private Vector2Int MirrorPosition(Vector2Int original, int id)
+    {
+        if (id == 1)
+        {
+            int boardSize = 8; // padrão do xadrez
+            return new Vector2Int( //boardSize - 1 - 
+                original.x,
+                boardSize - 1 - original.y
+            );
+        }
+        return original;
     }
 
 

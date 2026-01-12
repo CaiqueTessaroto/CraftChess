@@ -93,15 +93,23 @@ public class PieceMovement : MonoBehaviour
 
         if (!gridManager.noRules)
         {
-            List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
-            rawForMovesInCheck.AddRange(validMoves);
+            bool hasKing =
+            thisPiece.Player.id == 0
+                ? pieceController.haskingWhite
+                : pieceController.haskingBlack;
 
-            if (thisPiece.IsKing)
-                validMoves = GetValidKingMoves(rawForMovesInCheck);
-            else
-                validMoves = GetPiecePinnedMoves(rawForMovesInCheck);
+            if (hasKing)
+            {
+                List<Vector2Int> rawForMovesInCheck = new List<Vector2Int>();
+                rawForMovesInCheck.AddRange(validMoves);
 
-            validMoves = GetLegalMovesWhileInCheck(thisPiece, validMoves);
+                if (thisPiece.IsKing)
+                    validMoves = GetValidKingMoves(rawForMovesInCheck);
+                else
+                    validMoves = GetPiecePinnedMoves(rawForMovesInCheck);
+
+                validMoves = GetLegalMovesWhileInCheck(thisPiece, validMoves);
+            }
         }
 
         if (!thisPiece.HasMoved)
@@ -428,7 +436,7 @@ public class PieceMovement : MonoBehaviour
         // Xeque simples
         if (attackers.Count == 0)
             return legalMoves;
-            
+
         PieceComponent attacker = attackers[0];
         PieceMovement attackerMove = attacker.gameObject.GetComponent<PieceMovement>();
 

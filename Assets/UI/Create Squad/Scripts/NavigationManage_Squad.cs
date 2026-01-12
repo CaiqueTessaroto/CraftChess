@@ -163,8 +163,8 @@ public class NavigationManage_Squad : MonoBehaviour
 
             if (string.IsNullOrEmpty(squadManager.squadData.King?.Name))
             {
-                fileManager.CreateAdvice("Must have a king to save.");
-                return;
+                fileManager.CreateAdvice("There is no king.");
+                //return;
             }
 
             uIHelperUtils.save = true;
@@ -200,8 +200,8 @@ public class NavigationManage_Squad : MonoBehaviour
 
             if (string.IsNullOrEmpty(squadManager.squadData.King?.Name))
             {
-                fileManager.CreateAdvice("Must have a king to save.");
-                return;
+                fileManager.CreateAdvice("There is no king.");
+                //return;
             }
 
             string titleSave = "Do you want to Save the file?";
@@ -754,11 +754,21 @@ public class NavigationManage_Squad : MonoBehaviour
         }
     }
 
-
+    
     private void CreatePieceButton(PieceInfo piece, string nameInSquad, string jsonPath, string rootPath, Transform content)
     {
         // Caminho da sprite
-        string caminhoSprite = Path.Combine(rootPath, fileManager.basePath_Sprite, piece.FolderSprite, piece.Art.Trim() + ".png");
+        string caminhoSprite = "";
+        
+        if (piece.NativeSprite)
+        {
+            caminhoSprite = Path.Combine(Application.streamingAssetsPath, fileManager.basePath_Sprite, piece.FolderSprite, piece.Art.Trim() + ".png");
+        }
+        else
+        {
+            caminhoSprite = Path.Combine(rootPath, fileManager.basePath_Sprite, piece.FolderSprite, piece.Art.Trim() + ".png");
+        }
+
         if (!File.Exists(caminhoSprite))
         {
             Debug.LogWarning("Sprite não encontrada: " + caminhoSprite);

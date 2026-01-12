@@ -279,6 +279,9 @@ public class IAn3 : MonoBehaviour
         PieceComponent enemyKing
     )
     {
+        if (enemyKing == null)
+            return false;
+
         List<Vector2Int> ray = pieceMove.GetRayBetweenWithRange(piecePos, enemyKing.Position, pieceMove);
 
         foreach (Vector2Int pos in ray)

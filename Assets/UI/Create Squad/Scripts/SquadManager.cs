@@ -8,6 +8,7 @@ using System.Collections;
 
 using System.Linq;
 using System.Text;
+using UnityEngine.AdaptivePerformance;
 
 
 
@@ -44,7 +45,6 @@ public class SquadManager : MonoBehaviour
 
     [Header("Select King:")]
     public GameObject kingCell;
-    public Sprite crownSprite;
 
 
     [Header("Preview Piece:")]
@@ -646,20 +646,17 @@ public class SquadManager : MonoBehaviour
     public void RemovePieceFromCell(GameObject cell, Vector2Int pos)
     {
 
-        if (kingCell != null)
+
+        if (pos == squadData.King.Position)
         {
-            Transform kingTransform = cell.transform.Find("Crown");
+            // destrói o GameObject "Piece" (junto com o componente Image)
+            squadData.King.Name = "";
+            squadData.King.Position = new Vector2Int();
+            kingCell = null;
 
-            if (kingTransform != null)
-            {
-                // destrói o GameObject "Piece" (junto com o componente Image)
-                GameObject.Destroy(kingTransform.gameObject);
-
-                squadData.King.Name = "";
-                squadData.King.Position = new Vector2Int();
-                kingCell = null;
-            }
+            kingView.sprite = null;
         }
+
 
         RemoveSprite(cell);
 

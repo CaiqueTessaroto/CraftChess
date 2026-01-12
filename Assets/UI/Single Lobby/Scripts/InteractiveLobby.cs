@@ -408,17 +408,22 @@ public class InteractiveLobby : MonoBehaviour
             MovementConfigData wrapper = JsonUtility.FromJson<MovementConfigData>(json);
 
             // Caminho do sprite
-            string caminhoSprite = Path.Combine(
-                loadRootPath,
-                fileManager.basePath_Sprite,
-                wrapper.piece.FolderSprite,
-                wrapper.piece.Art.Trim() + ".png"
-            );
+            string caminhoSprite = "";
+
+            if (wrapper.piece.NativeSprite)
+            {
+                caminhoSprite = Path.Combine(Application.streamingAssetsPath, fileManager.basePath_Sprite, wrapper.piece.FolderSprite, wrapper.piece.Art.Trim() + ".png");
+            }
+            else
+            {
+                caminhoSprite = Path.Combine(loadRootPath, fileManager.basePath_Sprite, wrapper.piece.FolderSprite, wrapper.piece.Art.Trim() + ".png");
+            }
 
             if (!File.Exists(caminhoSprite))
             {
                 Debug.LogWarning("Sprite não encontrada: " + caminhoSprite);
             }
+
 
             Sprite sprite = UIHelperUtils.GetSpriteFromPath(caminhoSprite);
 

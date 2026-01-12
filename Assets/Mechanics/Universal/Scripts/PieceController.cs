@@ -26,6 +26,8 @@ public class PieceController : MonoBehaviour
     public int botPlayerId;
     public bool IA = false;
     public bool endGame = false;
+    public bool haskingWhite = false;
+    public bool haskingBlack = false;
     public PieceComponent KingWhite;
     public PieceComponent KingBlack;
 
@@ -210,7 +212,7 @@ public class PieceController : MonoBehaviour
 
         if (!boardManager.WhiteHasMoves)
         {
-            if (kingWhiteIsInCheck)
+            if (kingWhiteIsInCheck || boardManager.WhitePieces.Count == 0)
             {
                 black = true;
             }
@@ -221,7 +223,7 @@ public class PieceController : MonoBehaviour
         }
         else if (!boardManager.BlackHasMoves)
         {
-            if (kingBlackIsInCheck)
+            if (kingBlackIsInCheck || boardManager.BlackPieces.Count == 0)
             {
                 white = true;
             }
@@ -230,15 +232,15 @@ public class PieceController : MonoBehaviour
                 draw = true;
             }
         }
-        else if (boardManager.AllPieces.Count == 2)
+        else if (boardManager.AllPieces.Count == 2 && haskingBlack && haskingWhite)
         {
             draw = true;
         }
 
-        if (KingWhite == null)
+        if (KingWhite == null && haskingWhite)
             black = true;
 
-        if (KingBlack == null)
+        if (KingBlack == null && haskingWhite)
             white = true;
 
         EndGame(black, white, draw);
@@ -264,21 +266,29 @@ public class PieceController : MonoBehaviour
 
     public void GetCheck()
     {
-        // Verificar se o rei branco está em xeque
-        Vector2Int kingWhitePos = KingWhite.Position;
-        Cell cellWhite = boardManager
-            .GetCellAtPosition(kingWhitePos.x, kingWhitePos.y)
-            .GetComponent<Cell>();
 
-        kingWhiteIsInCheck = cellWhite.house.isControlledByBlack;
+        if (haskingWhite)
+        {
+            // Verificar se o rei branco está em xeque
+            Vector2Int kingWhitePos = KingWhite.Position;
+            Cell cellWhite = boardManager
+                .GetCellAtPosition(kingWhitePos.x, kingWhitePos.y)
+                .GetComponent<Cell>();
 
-        // Verificar se o rei preto está em xeque
-        Vector2Int kingBlackPos = KingBlack.Position;
-        Cell cellBlack = boardManager
-            .GetCellAtPosition(kingBlackPos.x, kingBlackPos.y)
-            .GetComponent<Cell>();
+            kingWhiteIsInCheck = cellWhite.house.isControlledByBlack;
+        }
 
-        kingBlackIsInCheck = cellBlack.house.isControlledByWhite;
+        if (haskingBlack)
+        {
+            // Verificar se o rei preto está em xeque
+            Vector2Int kingBlackPos = KingBlack.Position;
+            Cell cellBlack = boardManager
+                .GetCellAtPosition(kingBlackPos.x, kingBlackPos.y)
+                .GetComponent<Cell>();
+
+            kingBlackIsInCheck = cellBlack.house.isControlledByWhite;
+        }
+
     }
 
     private bool AttemptMoveOrCapture(Vector2Int clickedPosition)
