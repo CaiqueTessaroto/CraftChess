@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,8 @@ public class EditingGridManager : MonoBehaviour
     private GameObject editingGrid;
     public GridViewManager gridView;
     private bool gridGenerated = false;
+    private int centerX = 2;
+    private int centerY = 2;
     void Start()
     {
         GenerateGrid();
@@ -31,13 +34,10 @@ public class EditingGridManager : MonoBehaviour
         Image imagem = editingGrid.GetComponent<Image>();
         imagem.enabled = false; // Desativando o componente Image
 
-        var centerX = 2;
-        var centery = 2;
-
         if (rows == 7 && cols == 7)
         {
             centerX = 3;
-            centery = 3;
+            centerY = 3;
         }
 
 
@@ -47,7 +47,7 @@ public class EditingGridManager : MonoBehaviour
             {
                 if (gridbool == false)
                 {
-                    if (x == centerX && y == centery)
+                    if (x == centerX && y == centerY)
                     {
                         newCell = Instantiate(gridCellPiece, transform);
                     }
@@ -131,8 +131,7 @@ public class EditingGridManager : MonoBehaviour
 
     public void ToggleCellLoadSelection(Vector2Int cellPos)
     {
-
-        Vector2Int newPos = cellPos + new Vector2Int(2, 2);
+        Vector2Int newPos = cellPos + new Vector2Int(centerX, centerY);
         //Vector2Int key = new Vector2Int(Mathf.RoundToInt(newPos.x), Mathf.RoundToInt(newPos.y));
 
         if (gridCells.TryGetValue(newPos, out GameObject cell))
@@ -162,7 +161,7 @@ public class EditingGridManager : MonoBehaviour
             Image cellImage = cell.Value.GetComponent<Image>();
             if (cellImage.color == Color.green)
             {
-                greenCells.Add(new Vector2Int(cell.Key.x - 2, cell.Key.y - 2));
+                greenCells.Add(new Vector2Int(cell.Key.x - centerX, cell.Key.y - centerY));
             }
         }
 

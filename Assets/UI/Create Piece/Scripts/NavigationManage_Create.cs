@@ -22,7 +22,6 @@ public class NavigationManage_Create : MonoBehaviour
 
     [Header("TMP_Text")]
     public TMP_InputField namePiece;
-    //public TMP_Text namePiece;
     public TMP_Text nameArt;
     public TMP_Text squadPiece;
 
@@ -35,6 +34,7 @@ public class NavigationManage_Create : MonoBehaviour
     public Button uploadArtBtw;
 
     [Header("Control Actions:")]
+    public string fileName = "";
     public bool OnSquad = false;
 
     // Start is called before the first frame update
@@ -70,7 +70,7 @@ public class NavigationManage_Create : MonoBehaviour
 
         quickSaveBtw.onClick.AddListener(() =>
         {
-            SavePiece(movementCreation.piece.Name, movementCreation.piece.Squad);
+            QuickSavePiece(namePiece.text);
         });
 
         saveBtn.onClick.AddListener(() =>
@@ -90,7 +90,7 @@ public class NavigationManage_Create : MonoBehaviour
             {
                 fileManager.CreateAdvice("Precisa ter uma arte para salvar.");
             }
-            
+
         });
 
         loadBtn.onClick.AddListener(() =>
@@ -341,6 +341,8 @@ public class NavigationManage_Create : MonoBehaviour
         nameArt.text = movementCreation.piece.Art;
         squadPiece.text = movementCreation.piece.Squad;
 
+        this.fileName = movementCreation.piece.Name;
+
 
         string resourcePath = Path.Combine(rootPath, fileManager.basePath_PieceData, folder, fileName + ".json");
         StartCoroutine(movementCreation.LoadJson(resourcePath));
@@ -470,146 +472,181 @@ public class NavigationManage_Create : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public void SavePiece(string fileName, string subfolderName, string rootPath = null)
+    private void QuickSavePiece(string pieceName)
     {
-
-        if (string.IsNullOrWhiteSpace(fileName))
+        // ===============================
+        // Validações básicas
+        // ===============================
+        if (string.IsNullOrEmpty(fileName))
         {
-            fileManager.CreateAdvice("Nenhum arquivo selecionado");
-            Debug.LogError("SavePiece: Nome do arquivo não pode ser vazio.");
+            fileManager.CreateAdvice("Nenhum arquivo selecionado.");
+            return;
+        }
+        else if (string.IsNullOrEmpty(pieceName))
+        {
+            fileManager.CreateAdvice("Nome do arquivo não pode ser vazio.");
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(subfolderName))
+        if (string.IsNullOrEmpty(squadPiece.text))
         {
-            Debug.LogError("SavePiece: Subpasta não pode ser vazia.");
+            fileManager.CreateAdvice("Nenhuma pasta selecionada.");
             return;
         }
 
-        // Nome do JSON sempre normalizado
-        string fileJson = fileName.Trim() + ".json";
-
-        // salvando de StreamingAssets
         if (folderNavigation.selectRootPath == Application.streamingAssetsPath)
         {
-
-            movementCreation.piece.NativeSprite = true;
-
-            /*
-            try
-            {
-                // Carrega dados originais do JSON
-                string jsonData = fileManager.LoadJson(
-                    folderNavigation.selectRootPath,
-                    fileManager.basePathPaintingData,
-                    subfolderName,
-                    fileName
-                );
-
-                // Caminho completo para o sprite PNG
-                string spritePath = Path.Combine(
-                    folderNavigation.selectRootPath,
-                    fileManager.basePathPng,
-                    movementCreation.piece.FolderSprite,
-                    movementCreation.piece.Art
-                );
-
-                if (!File.Exists(spritePath))
-                {
-                    Debug.LogError($"SavePiece: Arquivo de sprite não encontrado em {spritePath}");
-                    return;
-                }
-
-                // Carrega textura
-                Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-                if (!tex.LoadImage(File.ReadAllBytes(spritePath)))
-                {
-                    Debug.LogError($"SavePiece: Falha ao carregar sprite em Texture2D ({spritePath})");
-                    return;
-                }
-
-                // Nome do JSON para peça (garante extensão correta)
-                string jsonFileName = Path.ChangeExtension(movementCreation.piece.Art, ".json");
-
-                // Salva cópias em PaintingData e PNG
-                fileManager.SaveJson(movementCreation.piece.FolderSprite, jsonFileName, jsonData, fileManager.basePathPaintingData);
-                fileManager.SavePng(movementCreation.piece.FolderSprite, movementCreation.piece.Art, tex, fileManager.basePathPng);
-
-                Debug.Log($"SavePiece: Sprite + JSON salvos para peça '{movementCreation.piece.Art}'.");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"SavePiece: Erro ao salvar assets da peça. Detalhes: {ex.Message}");
-                return;
-            }
-            */
-        }
-
-        // Caso o arquivo já exista
-        if (fileManager.FileExists(subfolderName, fileJson, fileManager.basePath_PieceData))
-        {
-            string title = "Do you want to replace the file?";
-            string text = "There is already a file with the same name in the folder. Do you want to replace it?";
-
-            fileManager.CreateWarning(title, text, () =>
-            {
-                SaveSquadPiece(fileName, subfolderName, fileJson);
-
-                if (!string.IsNullOrEmpty(rootPath))
-                {
-                    folderNavigation.selectRootPath = rootPath;
-                }
-
-            });
-
+            fileManager.CreateAdvice("Não é permitido salvar pastas de StreamingAssets!");
             return;
         }
 
-        SaveSquadPiece(fileName, subfolderName, fileJson);
+        string finalName = pieceName.Trim();
+        string subfolderName = squadPiece.text.Trim();
+        string fileJson = finalName + ".json";
 
-        if (!string.IsNullOrEmpty(rootPath))
+        // ===============================
+        // Função local de salvar
+        // ===============================
+        void Save()
         {
-            folderNavigation.selectRootPath = rootPath;
+            SavePieceInternal(finalName, subfolderName, fileJson);
         }
 
+        string fullPath = Path.Combine(
+            folderNavigation.selectRootPath,
+            fileManager.basePath_PieceData,
+            subfolderName,
+            fileName + ".json"
+        );
+
+        bool fileAlreadyExists = fileManager.FileExists(
+            subfolderName,
+            fileJson,
+            fileManager.basePath_PieceData
+        );
+
+        bool isRenaming = fileName != finalName;
+
+        // ===============================
+        // Caso: rename
+        // ===============================
+        if (isRenaming)
+        {
+            if (fileAlreadyExists)
+            {
+                fileManager.CreateWarning(
+                    "Quick Save",
+                    $"Já existe um arquivo chamado: {finalName}. Deseja substituir?",
+                    Save
+                );
+                return;
+            }
+
+            fileManager.HandleDeleteFile(fileName, fullPath, null);
+            Save();
+            return;
+        }
+
+        // ===============================
+        // Caso: overwrite normal
+        // ===============================
+        if (fileAlreadyExists)
+        {
+            fileManager.CreateWarning(
+                "Quick Save",
+                "Do you want to overwrite the current file?",
+                Save
+            );
+            return;
+        }
+
+        // ===============================
+        // Caso: novo arquivo
+        // ===============================
+        Save();
     }
 
-    private void SaveSquadPiece(string fileName, string subfolderName, string fileJson)
-    {
 
-        //if (folderNavigation.selectRootPath == Application.streamingAssetsPath)
+
+
+    public void SavePiece(
+        string pieceName,
+        string subfolderName,
+        string rootPath = null
+    )
+    {
+        if (string.IsNullOrEmpty(pieceName))
+        {
+            fileManager.CreateAdvice("Nome do arquivo não pode ser vazio.");
+            return;
+        }
+
+        if (string.IsNullOrEmpty(subfolderName))
+        {
+            fileManager.CreateAdvice("Nenhuma pasta selecionada.");
+            return;
+        }
+
+        string fileJson = pieceName.Trim() + ".json";
+
+        if (folderNavigation.selectRootPath == Application.streamingAssetsPath)
+        {
+            movementCreation.piece.NativeSprite = true;
+        }
+
+        bool exists = fileManager.FileExists(
+            subfolderName,
+            fileJson,
+            fileManager.basePath_PieceData
+        );
+
+        void Save()
+        {
+            SavePieceInternal(pieceName, subfolderName, fileJson);
+
+            if (!string.IsNullOrEmpty(rootPath))
+                folderNavigation.selectRootPath = rootPath;
+        }
+
+        if (exists)
+        {
+            fileManager.CreateWarning(
+                "Do you want to replace the file?",
+                "There is already a file with the same name in the folder. Do you want to replace it?",
+                Save
+            );
+            return;
+        }
+
+        Save();
+    }
+
+
+    private void SavePieceInternal(
+        string pieceName,
+        string subfolderName,
+        string fileJson
+    )
+    {
         uIHelperUtils.change = true;
 
-        movementCreation.piece.Name = fileName;
+        movementCreation.piece.Name = pieceName;
         movementCreation.piece.Squad = subfolderName;
 
-        namePiece.text = movementCreation.piece.Name;
-        squadPiece.text = movementCreation.piece.Squad;
+        namePiece.text = pieceName;
+        squadPiece.text = subfolderName;
+
+        fileName = pieceName;
 
         string json = movementCreation.CreateJson();
         fileManager.SaveJson(subfolderName, fileJson, json, fileManager.basePath_PieceData);
 
-        //StartCoroutine(folderNavigation.UpdateFolderButtons());
         panelFolder.SetActive(false);
-
         folderNavigation.RefreshFolderButton(subfolderName);
 
-        Debug.Log($"SavePiece: Peça '{fileName}' salva com sucesso no SquadData.");
+        Debug.Log($"SavePiece: Peça '{pieceName}' salva com sucesso.");
     }
+
 
 
 
