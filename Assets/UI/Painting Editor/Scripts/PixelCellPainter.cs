@@ -97,7 +97,9 @@ public class PixelCellPainter : MonoBehaviour, IPointerEnterHandler, IPointerDow
                 // Ativa o modo conta-gotas: pega a cor da célula e define como a cor atual
                 gridManager.SetSelectedColor(image.color);
             }
-            gridManager.eyedropperMode = false; // Desliga o modo após pegar a cor
+
+            gridManager.DisableTools();
+            //gridManager.eyedropperMode = false; // Desliga o modo após pegar a cor
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
         else if (gridManager.circleMode)

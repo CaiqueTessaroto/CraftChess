@@ -1,0 +1,48 @@
+{
+    "piece": {
+        "Name": "Green Minion",
+        "Squad": "Green",
+        "Power": 80,
+        "Art": "Green Minion",
+        "FolderSprite": "Green Wizard",
+        "NativeSprite": false
+    },
+    "straight": {
+        "Active": true,
+        "All": true,
+        "Front": false,
+        "Back": false,
+        "Right": false,
+        "Left": false,
+        "Range": 1,
+        "Move": true,
+        "Capture": true,
+        "Jump": false
+    },
+    "diagonal": {
+        "Active": true,
+        "All": true,
+        "Front": false,
+        "Back": false,
+        "Right": false,
+        "Left": false,
+        "Range": 1,
+        "Move": true,
+        "Capture": true,
+        "Jump": false
+    },
+    "custom": {
+        "Active": false,
+        "Move": true,
+        "Capture": false,
+        "Jump": false,
+        "Moves": []
+    },
+    "special": {
+        "Active": false,
+        "Move": true,
+        "Capture": false,
+        "Jump": false,
+        "Moves": []
+    }
+}

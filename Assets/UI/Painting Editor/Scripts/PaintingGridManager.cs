@@ -21,6 +21,7 @@ public class PaintingGridManager : MonoBehaviour
     public GridPreview gridPreview;
     public FileManager fileManager;
     public PaitingToolsManager paitingToolsManager;
+    public ColorPickerManager colorPickerManager;
 
     [Header("Color Control:")]
     public Color baseGridColor;
@@ -83,19 +84,22 @@ public class PaintingGridManager : MonoBehaviour
 
         if (fileManager == null)
             fileManager = FindObjectOfType<FileManager>();
-        
+
 
         if (gridPreview == null)
             gridPreview = FindObjectOfType<GridPreview>();
-        
+
+        if (colorPickerManager == null)
+            colorPickerManager = FindObjectOfType<ColorPickerManager>();
+
 
         if (gridStateManager == null)
             gridStateManager = FindObjectOfType<GridStateManager>();
-        
 
-                if (paitingToolsManager == null)
+
+        if (paitingToolsManager == null)
             paitingToolsManager = FindObjectOfType<PaitingToolsManager>();
-        
+
 
         upBtw.onClick.AddListener(() =>
         {
@@ -222,6 +226,9 @@ public class PaintingGridManager : MonoBehaviour
             ClearSelection();
 
         paitingToolsManager.DisableAllImages();
+
+        if (eraseAll || eraserMode)
+            selectedColor = colorPickerManager.currentColor;
 
 
         eyedropperMode = false;
@@ -442,7 +449,7 @@ public class PaintingGridManager : MonoBehaviour
             //selectionStart = null;
             return;
 
-            
+
         }
 
         //    Debug.Log("Selecionadas " + selectedCells.Count + " células.");
@@ -856,7 +863,7 @@ public class PaintingGridManager : MonoBehaviour
 
         if (!hasData)
             return;
-            
+
         ExportGridAsTextureFromJson(filePng, Application.persistentDataPath, 1000, subfolderName);
     }
 
@@ -903,7 +910,7 @@ public class PaintingGridManager : MonoBehaviour
     }
 
 
-        private Drawing wrapper = new Drawing();
+    private Drawing wrapper = new Drawing();
 
     public void ExportGridAsTextureFromJson(string fileName, string selectRootPath, int textureSize = 1020, string folderName = "Default")
     {

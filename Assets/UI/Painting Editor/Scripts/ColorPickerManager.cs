@@ -9,7 +9,7 @@ public class ColorPickerManager : MonoBehaviour
     public PaintingGridManager gridManager;
     public DynamicColorPaletteManager paletteManager;
     public Image colorPreview;
-    private Color currentColor = Color.black;
+    public Color currentColor = Color.white;
 
     [Header("Picker Panel")]
     public GameObject panel;
