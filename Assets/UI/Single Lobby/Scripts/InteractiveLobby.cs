@@ -376,8 +376,8 @@ public class InteractiveLobby : MonoBehaviour
             whiteSquadTMP.text = $"{folderName}\n{WhiteSquad.Data.Power}";
             whiteSquadTMP2.text = folderName;
 
-            string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
-            string jsonFileUser = Path.Combine(squadFolder, currentMatch.BlackSquadName + ".json");
+            string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
+            string jsonFileUser = Path.Combine(squadFolder, currentMatch.WhiteSquadName + ".json");
 
             OnEnemy = false;
             if (File.Exists(jsonFileUser))
@@ -394,8 +394,8 @@ public class InteractiveLobby : MonoBehaviour
             blackSquadTMP.text = $"{folderName}\n{BlackSquad.Data.Power}";
             blackSquadTMP2.text = folderName;
 
-            string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
-            string jsonFileEnemy = Path.Combine(squadFolder, currentMatch.WhiteSquadName + ".json");
+            string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
+            string jsonFileEnemy = Path.Combine(squadFolder, currentMatch.BlackSquadName + ".json");
 
             OnEnemy = true;
             if (File.Exists(jsonFileEnemy))
