@@ -9,6 +9,7 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using UnityEngine.AdaptivePerformance;
+using UnityEngine.Experimental.GlobalIllumination;
 
 
 
@@ -30,6 +31,7 @@ public class SquadManager : MonoBehaviour
     [Header("JSON:")]
     public Squad squadData;
     public List<UnitPieceData> placedPieces = new List<UnitPieceData>();
+    public List<Vector2Int> posInvalidPieces = new List<Vector2Int>();
     public Dictionary<string, Sprite> pieceSprites = new Dictionary<string, Sprite>();
 
     //public void SelectPiece(string namePieceSquad, string json, Sprite sprite, string rootPath, bool selected = true)
@@ -45,6 +47,14 @@ public class SquadManager : MonoBehaviour
 
     [Header("Select King:")]
     public GameObject kingCell;
+
+    [Header("Preview Tool:")]
+
+    public GameObject paneltool;
+    public GameObject toolsetKingImg;
+    public GameObject toolremoveImg;
+    public Button backtoolBtn;
+    public TMP_Text toolTmp;
 
 
     [Header("Preview Piece:")]
@@ -106,6 +116,12 @@ public class SquadManager : MonoBehaviour
             gridSquadManager = FindObjectOfType<GridSquadManager>();
         }
 
+        backtoolBtn.onClick.AddListener(() =>
+        {
+            DesableTool();
+            squadpanel.SetActive(true);
+        });
+
         deselectBtw.onClick.AddListener(() =>
         {
             if (editMode)
@@ -125,21 +141,39 @@ public class SquadManager : MonoBehaviour
 
         crownBtw.onClick.AddListener(() =>
         {
+            squadpanel.SetActive(false);
+
             removePiece = false;
             setKing = true;
             setCursor = true;
 
-            UIHelperUtils.SetCursor(CrownIcon);
+            toolremoveImg.SetActive(false);
+            toolsetKingImg.SetActive(true);
+
+            toolTmp.text = "Select the King";
+
+            paneltool.SetActive(true);
+
+            UIHelperUtils.SetCursor(CrownIcon, CursorHotspot.Center);
         });
 
         removeBtw.onClick.AddListener(() =>
         {
+            squadpanel.SetActive(false);
+
             setKing = false;
             setCursor = true;
 
             removePiece = !removePiece;
 
-            UIHelperUtils.SetCursor(TrashIcon);
+            toolsetKingImg.SetActive(false);
+            toolremoveImg.SetActive(true);
+
+            toolTmp.text = "Remove Pieces";
+
+            paneltool.SetActive(true);
+
+            UIHelperUtils.SetCursor(TrashIcon, CursorHotspot.Center);
         });
 
         clearBtw.onClick.AddListener(() =>
@@ -197,7 +231,17 @@ public class SquadManager : MonoBehaviour
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             setCursor = false;
         }
+    }
 
+    public void DesableTool(bool panel = true)
+    {
+        setKing = false;
+        removePiece = false;
+        paneltool.SetActive(false);
+
+        //if (!squadpanel.activeSelf && !infoGridPanel.activeSelf)
+        if (panel)
+            squadpanel.SetActive(true);
     }
 
     public void DeselectPiece()
@@ -213,6 +257,95 @@ public class SquadManager : MonoBehaviour
         currentjson = "";
     }
 
+    public MovementConfigData getMovementPiece(string name)
+    {
+        string fullPath;
+        string rootPath;
+
+
+        SquadPieceData pieceData = squadData.Pieces.Find(p => p.NameInSquad == name);
+
+        if (pieceData == null)
+            return null;
+
+        if (pieceData.NativePiece)
+            rootPath = Application.streamingAssetsPath;
+        else
+            rootPath = Application.persistentDataPath;
+
+        fullPath = Path.Combine(rootPath, fileManager.basePath_PieceData, pieceData.Squad, pieceData.Name + ".json");
+
+        if (File.Exists(fullPath))
+        {
+            string fileJson = File.ReadAllText(fullPath);
+            MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(fileJson);
+
+            return config;
+        }
+
+
+
+        return null;
+
+    }
+
+    public void SyncInvalidPositions()
+    {
+        posInvalidPieces.RemoveAll(pos =>
+            !placedPieces.Any(p => p.Position == pos));
+    }
+
+    public bool HasInvalidPlacedPieces()
+    {
+        SyncInvalidPositions(); // 🔥 altera dados
+        return placedPieces.Any(p => posInvalidPieces.Contains(p.Position));
+    }
+
+    public void getInvalidPosPieces(UnitPieceData piece)
+    {
+        MovementConfigData move = getMovementPiece(piece.Name);
+
+        int startX = piece.Position.x;
+        int startY = piece.Position.y;
+        bool reachesLastRow = false;
+
+        if (move.straight.Active && move.straight.Jump && (move.straight.All || move.straight.Front))
+        {
+
+            int targetY = startY + move.straight.Range;
+
+            if (targetY >= 7)
+                reachesLastRow = true;
+
+        }
+        if (move.diagonal.Active && move.diagonal.Jump && (move.diagonal.All || move.diagonal.Front))
+        {
+            if (move.diagonal.Left)
+            {
+                if (startX == 7 && startY == 0)
+                    reachesLastRow = true;
+            }
+            if (move.diagonal.Right)
+            {
+                if (startX == 0 && startY == 0)
+                    reachesLastRow = true;
+            }
+
+            if (startX == 0 && startY == 0)
+                reachesLastRow = true;
+
+            if (startX == 7 && startY == 0)
+                reachesLastRow = true;
+        }
+
+        if (reachesLastRow)
+        {
+            if (!posInvalidPieces.Contains(piece.Position))
+                posInvalidPieces.Add(piece.Position);
+        }
+
+    }
+
     public void CheckStrategicModeRules()
     {
         bool powerLimit = squadData.Power > 1510;
@@ -222,12 +355,30 @@ public class SquadManager : MonoBehaviour
         bool sameArtPieces = squadData.Pieces.GroupBy(p => p.Sprite)
                             .Any(g => g.Count() > 1 && g.Select(p => p.SpriteSet).Distinct().Count() > 1);
 
+        bool jumpKing = false;
+        bool powerKing = false;
+
+        MovementConfigData move = getMovementPiece(squadData.King.Name);
+        if (move != null)
+        {
+            jumpKing = (move.straight.Active && move.straight.Jump) || (move.diagonal.Active && move.diagonal.Jump) || (move.custom.Active && move.custom.Jump);
+            powerKing = move.piece.Power > 100;
+        }
+
+        bool instantCheck = HasInvalidPlacedPieces();
+
+
+
         string powerLimitTxt = "Squad power must be less than 1500";
         string hasKingTxt = "There must be a King";
-        string uniqueKingTxt = "The King's Piece must be unique";
+        string uniqueKingTxt = "The King piece must be unique";
         string sameArtPiecesTxt = "You cannot have different pieces with the same art.";
 
-        enabledMode = !powerLimit && !hasKing && !uniqueKing && !sameArtPieces;
+        string jumpKingTxt = "The King cannot be able to jump.";
+        string powerKingTxt = "The King cannot have too much power.";
+        string instantCheckTxt = "The jump pieces cannot reach the last row.";
+
+        enabledMode = !powerLimit && !hasKing && !uniqueKing && !sameArtPieces && !jumpKing && !powerKing && !instantCheck;
 
         string enabledTxt = "Strategic mode enabled";
 
@@ -248,6 +399,15 @@ public class SquadManager : MonoBehaviour
 
             if (sameArtPieces)
                 sb.AppendLine(sameArtPiecesTxt);
+
+            if (jumpKing)
+                sb.AppendLine(jumpKingTxt);
+
+            if (powerKing)
+                sb.AppendLine(powerKingTxt);
+
+            if (instantCheck)
+                sb.AppendLine(instantCheckTxt);
 
             rulesTmp.text = sb.ToString();
 
@@ -364,7 +524,8 @@ public class SquadManager : MonoBehaviour
         else
         {
             // adiciona uma nova peça
-            placedPieces.Add(new UnitPieceData(piece.Name, piece.Position));
+            placedPieces.Add(piece);
+            getInvalidPosPieces(piece);
         }
     }
 
@@ -506,6 +667,7 @@ public class SquadManager : MonoBehaviour
         kingCell = cell;
 
         setKing = false;
+        DesableTool();
 
     }
 
@@ -546,8 +708,10 @@ public class SquadManager : MonoBehaviour
         }
         else
         {
+            UnitPieceData piece = new UnitPieceData(currentPieceName, pos);
             // adiciona uma nova peça
-            placedPieces.Add(new UnitPieceData(currentPieceName, pos));
+            placedPieces.Add(piece);
+            getInvalidPosPieces(piece);
         }
 
         int squadPower = CalculateSquadPower(placedPieces, squadData.Pieces);
@@ -830,7 +994,9 @@ public class SquadManager : MonoBehaviour
 
         PieceInfo piece = config.piece;
 
+        DesableTool();
         squadpanel.SetActive(false);
+
         piecepanel.SetActive(true);
         infoGridPanel.SetActive(true);
 

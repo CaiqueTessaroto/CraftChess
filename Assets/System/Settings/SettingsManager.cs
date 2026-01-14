@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -22,6 +23,10 @@ public class SettingsManager : MonoBehaviour
     public static SettingsManager Instance;
     public GameSettings Settings;
 
+    public GameObject UIsettingsPrefab;
+    public GameObject settingsContent;
+    private GameObject settingsPanel;
+
     void Awake()
     {
         if (Instance == null)
@@ -36,6 +41,56 @@ public class SettingsManager : MonoBehaviour
                 Settings = new GameSettings();
         }
         else Destroy(gameObject);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToggleSettingsPanel();
+        }
+    }
+
+    void ToggleSettingsPanel()
+    {
+        // 🔍 Busca o SettingsPanel apenas UMA vez
+        if (settingsPanel == null)
+        {
+            settingsPanel = GameObject.Find("SettingsPanel");
+
+            // Se encontrou, pega o painel interno
+            if (settingsPanel != null)
+            {
+                settingsContent = settingsPanel.transform
+                    .Find("SettingsContent")
+                    ?.gameObject;
+            }
+        }
+
+        // ❌ Não existe ainda → instancia
+        if (settingsPanel == null)
+        {
+            Canvas canvas = FindObjectOfType<Canvas>();
+            settingsPanel = Instantiate(UIsettingsPrefab, canvas.transform);
+            settingsPanel.name = "SettingsPanel";
+
+            settingsContent = settingsPanel.transform
+                .Find("SettingsContent")
+                ?.gameObject;
+        }
+
+        // 🔐 Segurança
+        if (settingsContent == null)
+        {
+            Debug.LogError("SettingsContent não encontrado dentro de SettingsPanel");
+            return;
+        }
+
+        // ✅ Toggle SOMENTE do painel interno
+        bool newState = !settingsContent.activeSelf;
+        settingsContent.SetActive(newState);
+
+        Time.timeScale = newState ? 0f : 1f; // opcional
     }
 
     public void Save()

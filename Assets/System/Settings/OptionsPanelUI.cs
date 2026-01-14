@@ -19,7 +19,7 @@ public class OptionsPanelUI : MonoBehaviour
 
         close.onClick.AddListener(() =>
         {
-            optionsPanel.SetActive(false);
+            CloseSettings();
         });
 
         apply.onClick.AddListener(() =>
@@ -33,6 +33,11 @@ public class OptionsPanelUI : MonoBehaviour
         });
 
 
+    }
+
+    public void CloseSettings()
+    {
+        SettingsManager.Instance.SendMessage("ToggleSettingsPanel");
     }
 
     void OnEnable()

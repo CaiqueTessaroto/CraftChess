@@ -10,15 +10,14 @@ public class InfoGridView : MonoBehaviour
 
     public GameObject gridCellWhite; // Prefab da célula branca
     public GameObject gridCellBlack; // Prefab da célula preta
-    public int rows = 7; // Número de linhas
-    public int cols = 7; // Número de colunas
+    public int rows = 9; // Número de linhas
+    public int cols = 9; // Número de colunas
 
     public Movement straight;
     public Movement diagonal;
     public PersonalizedMove custom;
     public Special special;
     private Sprite currentSprite;
-
     private Dictionary<Vector2, GameObject> gridCells = new Dictionary<Vector2, GameObject>();
 
     private Dictionary<Vector2Int, CellMovementState> movementStates = new Dictionary<Vector2Int, CellMovementState>();
@@ -108,8 +107,8 @@ public class InfoGridView : MonoBehaviour
         Image imagem = thisObject.GetComponent<Image>();
         imagem.enabled = false; // Desativando o componente Image
 
-        var centerX = 3;
-        var centerY = 3;
+        var centerX = 4;
+        var centerY = 4;
         selectedPosition = new Vector2Int(centerX, centerY);
 
         GenerateGrid();
@@ -155,8 +154,8 @@ public class InfoGridView : MonoBehaviour
                         SetSprite(newCell);
                 }
 
-                //Button button = newCell.GetComponent<Button>();
-                //button.onClick.AddListener(() => ToggleCellSelection(cellPos));
+                Button button = newCell.GetComponent<Button>();
+                button.onClick.AddListener(() => ToggleCellSelection(cellPos));
 
             }
         }
@@ -233,9 +232,9 @@ public class InfoGridView : MonoBehaviour
     void ToggleCellSelection(Vector2Int cellPos)
     {
         Debug.Log("cellPos: " + cellPos);
-        //selectedPosition = new Vector2Int(cellPos.x, cellPos.y);
-        //RegenerateGrid();
-        //HighlightValidMoves();
+        selectedPosition = new Vector2Int(cellPos.x, cellPos.y);
+        RegenerateGrid();
+        HighlightValidMoves(selectConfig);
     }
 
 
@@ -523,7 +522,7 @@ public class InfoGridView : MonoBehaviour
     public void HighlightGrid(Movement movement, List<Vector2Int> validMoves, string sourceType)
     {
 
-        movement.Jump = false;
+        //movement.Jump = false;
 
         foreach (Vector2Int move in validMoves)
         {

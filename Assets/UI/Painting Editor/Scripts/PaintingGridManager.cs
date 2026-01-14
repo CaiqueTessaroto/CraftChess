@@ -25,7 +25,7 @@ public class PaintingGridManager : MonoBehaviour
     [Header("Color Control:")]
     public Color baseGridColor;
     public Transform parentContainer;
-    public Color selectedColor = Color.black;
+    public Color selectedColor = Color.white;
     public GameObject selectedButtonColor;
     public Image previewSelectColor;
 

@@ -143,16 +143,6 @@ public class BoardChessManager : MonoBehaviour
 
     }
 
-
-    void Update()
-    {
-        if (!infoPiece)
-        {
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-            setCursor = false;
-        }
-    }
-
     public int GetBotId()
     {
         int id;

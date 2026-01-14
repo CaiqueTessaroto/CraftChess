@@ -2,7 +2,7 @@
     "piece": {
         "Model": "",
         "Squad": "",
-        "Power": 290
+        "Power": 260
     },
     "presets": {
         "King": false,
@@ -19,7 +19,7 @@
         "Back": false,
         "Right": false,
         "Left": false,
-        "Range": 8,
+        "Range": 7,
         "Move": true,
         "Capture": true,
         "Jump": false
@@ -31,7 +31,7 @@
         "Back": false,
         "Right": false,
         "Left": false,
-        "Range": 8,
+        "Range": 7,
         "Move": true,
         "Capture": true,
         "Jump": false

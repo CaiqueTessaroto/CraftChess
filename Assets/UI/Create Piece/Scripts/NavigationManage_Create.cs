@@ -20,10 +20,13 @@ public class NavigationManage_Create : MonoBehaviour
     private GameObject panelFolder;
     private GameObject panelFile;
 
+
+
     [Header("TMP_Text")]
     public TMP_InputField namePiece;
     public TMP_Text nameArt;
     public TMP_Text squadPiece;
+    public GameObject selectArtText;
 
     [Header("Buttons:")]
     public Button saveBtn;
@@ -343,6 +346,8 @@ public class NavigationManage_Create : MonoBehaviour
 
         this.fileName = movementCreation.piece.Name;
 
+        selectArtText.SetActive(false);
+
 
         string resourcePath = Path.Combine(rootPath, fileManager.basePath_PieceData, folder, fileName + ".json");
         StartCoroutine(movementCreation.LoadJson(resourcePath));
@@ -364,6 +369,8 @@ public class NavigationManage_Create : MonoBehaviour
         movementCreation.piece.Art = name;
         nameArt.text = name;
         movementCreation.piece.FolderSprite = folder;
+
+        selectArtText.SetActive(false);
 
         if (string.IsNullOrEmpty(namePiece.text))
         {

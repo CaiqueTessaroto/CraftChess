@@ -102,31 +102,31 @@ public class GridViewManager : MonoBehaviour
 
         upBtw.onClick.AddListener(() =>
         {
-            selectedPosition = new Vector2Int(3, 6);
+            selectedPosition = new Vector2Int(4, 8);
             RegenerateGrid();
             HighlightValidMoves();
         });
         downBtw.onClick.AddListener(() =>
         {
-            selectedPosition = new Vector2Int(3, 0);
+            selectedPosition = new Vector2Int(4, 0);
             RegenerateGrid();
             HighlightValidMoves();
         });
         rigthBtw.onClick.AddListener(() =>
         {
-            selectedPosition = new Vector2Int(6, 3);
+            selectedPosition = new Vector2Int(8, 4);
             RegenerateGrid();
             HighlightValidMoves();
         });
         leftBtw.onClick.AddListener(() =>
         {
-            selectedPosition = new Vector2Int(0, 3);
+            selectedPosition = new Vector2Int(0, 4);
             RegenerateGrid();
             HighlightValidMoves();
         });
         middleBtw.onClick.AddListener(() =>
         {
-            selectedPosition = new Vector2Int(3, 3);
+            selectedPosition = new Vector2Int(4, 4);
             RegenerateGrid();
             HighlightValidMoves();
         });
@@ -139,8 +139,8 @@ public class GridViewManager : MonoBehaviour
         Image imagem = thisObject.GetComponent<Image>();
         imagem.enabled = false; // Desativando o componente Image
 
-        var centerX = 3;
-        var centerY = 3;
+        var centerX = 4;
+        var centerY = 4;
         selectedPosition = new Vector2Int(centerX, centerY);
 
         GenerateGrid();

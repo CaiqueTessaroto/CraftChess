@@ -21,7 +21,7 @@
         "Back": false,
         "Right": false,
         "Left": false,
-        "Range": 8,
+        "Range": 7,
         "Move": true,
         "Capture": false,
         "Jump": false
@@ -33,7 +33,7 @@
         "Back": false,
         "Right": false,
         "Left": false,
-        "Range": 8,
+        "Range": 7,
         "Move": true,
         "Capture": false,
         "Jump": false

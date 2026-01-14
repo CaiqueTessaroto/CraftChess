@@ -7,28 +7,36 @@ public class GameInterfaceManager : MonoBehaviour
 {
     public BoardChessManager boardChessManager;
     public PieceController pieceController;
+    public GameManager gameManager;
     public Button MenuBtn;
     public Button giveUpBtn;
     public Button switchSide;
     public Button ViewInfoBtn;
     public Button BackLobbyBtn;
 
-    [Header("Panel")]
+    [Header("End Panel")]
     public GameObject panel;
     public TMP_Text tmpEnd;
-    public Button ContinueBtn;
+    public Button returnBtn;
+    public Button continueBtn;
 
     [Header("Icons Mouse:")]
     public Sprite lupaIcon;
+    public Image buttonImage;
     // Start is called before the first frame update
     void Start()
     {
+
+        buttonImage = ViewInfoBtn.GetComponent<Image>();
 
         if (boardChessManager == null)
             boardChessManager = FindObjectOfType<BoardChessManager>();
 
         if (pieceController == null)
             pieceController = FindObjectOfType<PieceController>();
+
+        if (gameManager == null)
+            gameManager = FindObjectOfType<GameManager>();
 
         switchSide.onClick.AddListener(() =>
         {
@@ -64,11 +72,16 @@ public class GameInterfaceManager : MonoBehaviour
         });
 
 
-        ContinueBtn.onClick.AddListener(() =>
+        returnBtn.onClick.AddListener(() =>
         {
             panel.SetActive(false);
-            //SceneManager.LoadScene("Single Lobby");
         });
+
+        continueBtn.onClick.AddListener(() =>
+        {
+            gameManager.ChangeScene("Single Lobby");
+        });
+
 
         BackLobbyBtn.onClick.AddListener(() =>
         {
@@ -80,7 +93,10 @@ public class GameInterfaceManager : MonoBehaviour
         {
             boardChessManager.infoPiece = !boardChessManager.infoPiece;
 
-            boardChessManager.setCursor = !boardChessManager.setCursor;
+            boardChessManager.setCursor = true;
+
+            buttonImage.color = new Color32(118, 130, 162, 255);
+            //buttonImage.color = new Color(240, 75, 79);
 
             UIHelperUtils.SetCursor(lupaIcon, CursorHotspot.TopLeft);
 
@@ -100,6 +116,12 @@ public class GameInterfaceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (!boardChessManager.infoPiece && boardChessManager.setCursor)
+        {
+            buttonImage.color = new Color32(240, 75, 79, 255);
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            boardChessManager.setCursor = false;
+        }
     }
+
 }
