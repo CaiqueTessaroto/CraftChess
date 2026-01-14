@@ -122,12 +122,14 @@ public class InteractiveLobby : MonoBehaviour
         OpenOpt.onClick.AddListener(() =>
         {
             optionsPanel.SetActive(true);
+            currentMatch.options = true;
             OpenOpt.gameObject.SetActive(false);
         });
 
         CloseOpt.onClick.AddListener(() =>
         {
             optionsPanel.SetActive(false);
+            currentMatch.options = false;
             OpenOpt.gameObject.SetActive(true);
         });
 
@@ -135,8 +137,7 @@ public class InteractiveLobby : MonoBehaviour
         noTurnsToggle.onValueChanged.AddListener(OnNoTurnsChanged);
         localGameToggle.onValueChanged.AddListener(OnLocalGameChanged);
 
-        AutoSwitchSideToggle.onValueChanged.AddListener(OnAutoSwitchSideChanged
-);
+        AutoSwitchSideToggle.onValueChanged.AddListener(OnAutoSwitchSideChanged);
 
         IAvsIAToggle.onValueChanged.AddListener(OnIAvsIAChanged);
 
@@ -146,7 +147,7 @@ public class InteractiveLobby : MonoBehaviour
         play.onClick.AddListener(() =>
         {
 
-            if (string.IsNullOrEmpty(currentMatch.BotSquadName) || string.IsNullOrEmpty(currentMatch.UserSquadName))
+            if (string.IsNullOrEmpty(currentMatch.WhiteSquadName) || string.IsNullOrEmpty(currentMatch.BlackSquadName))
                 return;
 
             currentMatch.MapName = "Default";
@@ -342,7 +343,7 @@ public class InteractiveLobby : MonoBehaviour
 
     void OnAutoSwitchSideChanged(bool value)
     {
-        currentMatch.autoSwitchSide = value;
+        currentMatch.switchSide = value;
     }
 
     void OnIAvsIAChanged(bool value)
@@ -368,15 +369,15 @@ public class InteractiveLobby : MonoBehaviour
         {
             WhiteSquad.Clear();
 
-            currentMatch.BotSquadName = folderName;
+            currentMatch.WhiteSquadName = folderName;
 
             CreatePiecesVisualization(jsonFile, enemyPiecesGrid);
 
             whiteSquadTMP.text = $"{folderName}\n{WhiteSquad.Data.Power}";
             whiteSquadTMP2.text = folderName;
 
-            string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
-            string jsonFileUser = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");
+            string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
+            string jsonFileUser = Path.Combine(squadFolder, currentMatch.BlackSquadName + ".json");
 
             OnEnemy = false;
             if (File.Exists(jsonFileUser))
@@ -386,15 +387,15 @@ public class InteractiveLobby : MonoBehaviour
         {
             BlackSquad.Clear();
 
-            currentMatch.UserSquadName = folderName;
+            currentMatch.BlackSquadName = folderName;
 
             CreatePiecesVisualization(jsonFile, userPiecesGrid);
 
             blackSquadTMP.text = $"{folderName}\n{BlackSquad.Data.Power}";
             blackSquadTMP2.text = folderName;
 
-            string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BotSquadName);
-            string jsonFileEnemy = Path.Combine(squadFolder, currentMatch.BotSquadName + ".json");
+            string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
+            string jsonFileEnemy = Path.Combine(squadFolder, currentMatch.WhiteSquadName + ".json");
 
             OnEnemy = true;
             if (File.Exists(jsonFileEnemy))
@@ -562,46 +563,54 @@ public class InteractiveLobby : MonoBehaviour
         if (currentMatch == null)
             return;
 
+        if (!currentMatch.options)
+        {
+            optionsPanel.SetActive(false);
+            OpenOpt.gameObject.SetActive(true);
+            
+        }
+
+
         noRulesToggle.isOn = currentMatch.noRules;
 
         localGameToggle.isOn = currentMatch.localGame;
 
         noTurnsToggle.isOn = currentMatch.noTurns;
 
-        AutoSwitchSideToggle.isOn = currentMatch.autoSwitchSide;
+        AutoSwitchSideToggle.isOn = currentMatch.switchSide;
 
         IAvsIAToggle.isOn = currentMatch.IAvsIA;
 
 
-        string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
-        string jsonFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");
+        string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
+        string jsonFile = Path.Combine(squadFolder, currentMatch.BlackSquadName + ".json");
 
         if (!File.Exists(jsonFile))
         {
-            squadFolder = Path.Combine(Application.streamingAssetsPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
-            jsonFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");
+            squadFolder = Path.Combine(Application.streamingAssetsPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
+            jsonFile = Path.Combine(squadFolder, currentMatch.BlackSquadName + ".json");
         }
         //string pngFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".png");
 
         //Sprite sprite = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
 
         if (File.Exists(jsonFile))
-            SelectSquad(currentMatch.UserSquadName, jsonFile);
+            SelectSquad(currentMatch.BlackSquadName, jsonFile);
 
         OnEnemy = true;
-        squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BotSquadName);
-        jsonFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".json");
+        squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
+        jsonFile = Path.Combine(squadFolder, currentMatch.WhiteSquadName + ".json");
         //pngFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".png");
 
         if (!File.Exists(jsonFile))
         {
-            squadFolder = Path.Combine(Application.streamingAssetsPath, fileManager.basePath_SquadData, currentMatch.BotSquadName);
-            jsonFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".json");
+            squadFolder = Path.Combine(Application.streamingAssetsPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
+            jsonFile = Path.Combine(squadFolder, currentMatch.WhiteSquadName + ".json");
         }
         //sprite = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
 
         if (File.Exists(jsonFile))
-            SelectSquad(currentMatch.BotSquadName, jsonFile);
+            SelectSquad(currentMatch.WhiteSquadName, jsonFile);
 
         foreach (Toggle toggle in difficulty_toggles)
         {

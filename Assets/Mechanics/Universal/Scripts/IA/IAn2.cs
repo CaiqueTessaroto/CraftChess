@@ -17,7 +17,10 @@ public class IAn2 : MonoBehaviour
     void Start()
     {
         boardManager = FindObjectOfType<BoardChessManager>();
-        pieceController = FindObjectOfType<PieceControllerIA>();
+
+        if (!pieceController)
+            pieceController = GetComponent<PieceControllerIA>();
+
         moveTracker = FindObjectOfType<MoveTracker>();
 
         if (!selectId)
@@ -36,7 +39,7 @@ public class IAn2 : MonoBehaviour
         {
             StartCoroutine(ThinkAndPlay());
         }
-        
+
     }
 
     IEnumerator ThinkAndPlay()

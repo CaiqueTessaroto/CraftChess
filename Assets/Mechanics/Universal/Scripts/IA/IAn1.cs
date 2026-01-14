@@ -20,7 +20,7 @@ public class IAn1 : MonoBehaviour
             boardManager = FindObjectOfType<BoardChessManager>();
 
         if (!pieceController)
-            pieceController = FindObjectOfType<PieceControllerIA>();
+            pieceController = GetComponent<PieceControllerIA>();
 
         if (!moveTracker)
             moveTracker = FindObjectOfType<MoveTracker>();

@@ -16,7 +16,7 @@ public class MatchData : MonoBehaviour
     public bool noRules = false;
     public bool noTurns = false;
     public bool localGame = false;
-    public bool autoSwitchSide = false;
+    public bool autoSwitchSide = true;
     public bool IAvsIA = false;
 
     [Header("Data")]
@@ -36,4 +36,12 @@ public class MatchData : MonoBehaviour
             Destroy(gameObject); // impede duplicatas
         }
     }
+
+    void OnDestroy()
+    {
+        // 🔒 Garante limpeza da instância
+        if (Instance == this)
+            Instance = null;
+    }
+
 }

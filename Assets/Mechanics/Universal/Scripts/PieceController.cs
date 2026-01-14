@@ -94,7 +94,7 @@ public class PieceController : MonoBehaviour
                 return;
             }
 
-            if (!boardManager.localGame && comp.Player.id == botPlayerId && IA == false)
+            if ((!boardManager.localGame && comp.Player.id == botPlayerId && IA == false) || boardManager.IAvsIA)
                 return;
 
             if (boardManager.noTurns || comp.Player.id == moveTracker.GetTurnPlayer())
@@ -243,7 +243,41 @@ public class PieceController : MonoBehaviour
         if (KingBlack == null && haskingBlack)
             white = true;
 
-        EndGame(black, white, draw);
+
+        SetEndGame(black, white, draw);
+
+    }
+
+    public void SetEndGame(bool black = false, bool white = false, bool draw = false)
+    {
+        if (boardManager.localGame || boardManager.IAvsIA)
+            EndGameLocal(black, white, draw);
+        else
+            EndGame(black, white, draw);
+    }
+
+    public void EndGameLocal(bool black = false, bool white = false, bool draw = false)
+    {
+        if (draw)
+            gameInterfaceManager.EndGame("Draw");
+
+        if (black)
+        {
+            if (haskingBlack)
+            {
+                Sprite sprite = managerPieceInfo.pieceSprites[KingBlack.Name + KingBlack.Squad];
+                gameInterfaceManager.EndGameLocal(KingBlack.Squad, sprite);
+            }
+
+        }
+        else if (white)
+        {
+            if (haskingWhite)
+            {
+                Sprite sprite = managerPieceInfo.pieceSprites[KingWhite.Name + KingWhite.Squad];
+                gameInterfaceManager.EndGameLocal(KingWhite.Squad, sprite);
+            }
+        }
 
     }
 

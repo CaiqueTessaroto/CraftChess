@@ -8,6 +8,7 @@ using UnityEngine;
 public class BoardChessManager : MonoBehaviour
 {
     public CapturedPiecesManager capturedManager;
+    public GameInterfaceManager gameInterfaceManager;
 
     [Header("Grid Settings")]
     public int gridWidth = 8;
@@ -71,6 +72,9 @@ public class BoardChessManager : MonoBehaviour
         if (capturedManager == null)
             capturedManager = FindObjectOfType<CapturedPiecesManager>();
 
+                    if (gameInterfaceManager == null)
+            gameInterfaceManager = FindObjectOfType<GameInterfaceManager>();
+
         //Debug.Log("Mapa: " + MatchData.Instance.mapName);
         //Debug.Log("Esquadrão do Jogador: " + MatchData.Instance.userSquadName);
         //Debug.Log("Dificuldade: " + MatchData.Instance.botDifficulty);
@@ -122,32 +126,63 @@ public class BoardChessManager : MonoBehaviour
 
         StartCoroutine(AfterStart());
 
-
-        if (MatchData.Instance.botDifficulty == BotDifficulty.Easy)
+        if (!localGame)
         {
-            if (localGame)
-                return;
+            GameObject iAgameObject = GameObject.Find("IA");
 
-            IAn1 iA = FindObjectOfType<IAn1>();
-            iA.enabled = true;
-        }
-        else if (MatchData.Instance.botDifficulty == BotDifficulty.Medium)
-        {
-            if (localGame)
-                return;
-
-            IAn2 iA = FindObjectOfType<IAn2>();
-            iA.enabled = true;
-        }
-        else
-        {
-            if (localGame)
-                return;
-
-            IAn3 iA = FindObjectOfType<IAn3>();
-            iA.enabled = true;
+            if (MatchData.Instance.botDifficulty == BotDifficulty.Easy)
+            {
+                IAn1 iA = iAgameObject.GetComponent<IAn1>();
+                iA.enabled = true;
+            }
+            else if (MatchData.Instance.botDifficulty == BotDifficulty.Medium)
+            {
+                IAn2 iA = iAgameObject.GetComponent<IAn2>();
+                iA.enabled = true;
+            }
+            else
+            {
+                IAn3 iA = iAgameObject.GetComponent<IAn3>();
+                iA.enabled = true;
+            }
         }
 
+        if (IAvsIA)
+        {
+            gameInterfaceManager.giveUpBtn.gameObject.SetActive(false);
+
+            gameInterfaceManager.BackLobbyBtn.gameObject.SetActive(true);
+            gameInterfaceManager.MenuBtn.gameObject.SetActive(true);
+
+            GameObject iAgameObject = GameObject.Find("IA2");
+
+            if (MatchData.Instance.botDifficulty == BotDifficulty.Easy)
+            {
+                IAn1 iA = iAgameObject.GetComponent<IAn1>();
+                iA.enabled = true;
+                iA.selectId = true;
+                iA.botPlayerId = GetPlayerId();
+            }
+            else if (MatchData.Instance.botDifficulty == BotDifficulty.Medium)
+            {
+                IAn2 iA = iAgameObject.GetComponent<IAn2>();
+                iA.enabled = true;
+                iA.selectId = true;
+                iA.botPlayerId = GetPlayerId();
+            }
+            else
+            {
+                IAn3 iA = iAgameObject.GetComponent<IAn3>();
+                iA.enabled = true;
+                iA.selectId = true;
+                iA.botPlayerId = GetPlayerId();
+            }
+        }
+    }
+
+    public bool getIAvsIA()
+    {
+        return IAvsIA;
     }
 
     public int GetBotId()
@@ -164,6 +199,26 @@ public class BoardChessManager : MonoBehaviour
         else
         {
             id = 1;
+        }
+
+        return id;
+
+    }
+
+    public int GetPlayerId()
+    {
+        int id;
+
+
+        Squads = MatchData.Instance.Squads;
+
+        if (Squads[0].Player.name == "Bot")
+        {
+            id = 1;
+        }
+        else
+        {
+            id = 0;
         }
 
         return id;

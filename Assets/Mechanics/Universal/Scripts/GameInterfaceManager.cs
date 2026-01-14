@@ -7,6 +7,7 @@ public class GameInterfaceManager : MonoBehaviour
 {
     public BoardChessManager boardChessManager;
     public PieceController pieceController;
+    public MoveTracker moveTracker;
     public GameManager gameManager;
     public Button MenuBtn;
     public Button giveUpBtn;
@@ -19,6 +20,13 @@ public class GameInterfaceManager : MonoBehaviour
     public TMP_Text tmpEnd;
     public Button returnBtn;
     public Button continueBtn;
+
+    [Header("EndLocal Panel")]
+    public GameObject panelLocal;
+    public Image imageAvatar;
+    public TMP_Text tmpSquad;
+    public Button returnBtn2;
+    public Button continueBtn2;
 
     [Header("Icons Mouse:")]
     public Sprite lupaIcon;
@@ -38,6 +46,9 @@ public class GameInterfaceManager : MonoBehaviour
         if (gameManager == null)
             gameManager = FindObjectOfType<GameManager>();
 
+        if (moveTracker == null)
+            moveTracker = FindObjectOfType<MoveTracker>();
+
         switchSide.onClick.AddListener(() =>
         {
             boardChessManager.SwitchSide();
@@ -54,19 +65,31 @@ public class GameInterfaceManager : MonoBehaviour
             bool white = false;
             bool draw = false;
 
-            if (pieceController.botPlayerId == 0)
-                white = true;
+            if (boardChessManager.localGame)
+            {
+                if (moveTracker.GetTurnPlayer() == 0)
+                    black = true;
+                else
+                    white = true;
+            }
             else
-                black = true;
+            {
+                if (pieceController.botPlayerId == 0)
+                    white = true;
+                else
+                    black = true;
+            }
 
 
 
-            pieceController.EndGame(black, white, draw);
+            pieceController.SetEndGame(black, white, draw);
 
         });
 
         MenuBtn.onClick.AddListener(() =>
         {
+
+
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             SceneManager.LoadScene("Menu");
         });
@@ -79,6 +102,18 @@ public class GameInterfaceManager : MonoBehaviour
 
         continueBtn.onClick.AddListener(() =>
         {
+
+            gameManager.ChangeScene("Single Lobby");
+        });
+
+        returnBtn2.onClick.AddListener(() =>
+        {
+            panelLocal.SetActive(false);
+        });
+
+        continueBtn2.onClick.AddListener(() =>
+        {
+
             gameManager.ChangeScene("Single Lobby");
         });
 
@@ -86,6 +121,7 @@ public class GameInterfaceManager : MonoBehaviour
         BackLobbyBtn.onClick.AddListener(() =>
         {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+
             SceneManager.LoadScene("Single Lobby");
         });
 
@@ -103,12 +139,24 @@ public class GameInterfaceManager : MonoBehaviour
 
         });
 
+
     }
 
     public void EndGame(string result)
     {
         tmpEnd.text = result;
         panel.SetActive(true);
+
+        BackLobbyBtn.gameObject.SetActive(true);
+        MenuBtn.gameObject.SetActive(true);
+    }
+
+    public void EndGameLocal(string squadName, Sprite avatar)
+    {
+        panelLocal.SetActive(true);
+        imageAvatar.sprite = avatar;
+        tmpSquad.text = squadName;
+
         BackLobbyBtn.gameObject.SetActive(true);
         MenuBtn.gameObject.SetActive(true);
     }
@@ -116,6 +164,7 @@ public class GameInterfaceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (!boardChessManager.infoPiece && boardChessManager.setCursor)
         {
             buttonImage.color = new Color32(240, 75, 79, 0);

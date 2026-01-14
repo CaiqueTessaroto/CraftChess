@@ -8,16 +8,17 @@ using UnityEngine.UI;
 [System.Serializable]
 public class SingleMatchConfig
 {
-    public string UserSquadName;
-    public string BotSquadName;
+    public string BlackSquadName;
+    public string WhiteSquadName;
     public BotDifficulty BotDifficulty;
     public string MapName;
     public StartOption StartOption;
     public bool noRules = false;
     public bool noTurns = false;
     public bool localGame = false;
-    public bool autoSwitchSide = false;
+    public bool switchSide = true;
     public bool IAvsIA = false;
+    public bool options = true;
 }
 
 public enum BotDifficulty
@@ -52,8 +53,10 @@ public class SingleLobbyManager : MonoBehaviour
     public void StartMatch(SingleMatchConfig currentMatch, List<MatchSquadData> Squads)
     {
         // preenche os dados da partida
-        MatchData.Instance.userSquadName = currentMatch.UserSquadName;
-        MatchData.Instance.botSquadName = currentMatch.BotSquadName;
+        MatchData.Instance.autoSwitchSide = currentMatch.switchSide;
+
+        MatchData.Instance.userSquadName = currentMatch.BlackSquadName;
+        MatchData.Instance.botSquadName = currentMatch.WhiteSquadName;
         MatchData.Instance.mapName = currentMatch.MapName;
         MatchData.Instance.whoStarts = currentMatch.StartOption;
         MatchData.Instance.botDifficulty = currentMatch.BotDifficulty;
@@ -61,8 +64,6 @@ public class SingleLobbyManager : MonoBehaviour
         MatchData.Instance.noRules = currentMatch.noRules;
         MatchData.Instance.localGame = currentMatch.localGame;
         MatchData.Instance.noTurns = currentMatch.noTurns;
-
-        MatchData.Instance.autoSwitchSide = currentMatch.autoSwitchSide;
 
         MatchData.Instance.IAvsIA = currentMatch.IAvsIA;
 
@@ -91,8 +92,8 @@ public class SingleLobbyManager : MonoBehaviour
     {
         SingleMatchConfig currentMatch = new SingleMatchConfig
         {
-            UserSquadName = userSquad,
-            BotSquadName = botSquad,
+            BlackSquadName = userSquad,
+            WhiteSquadName = botSquad,
             BotDifficulty = difficulty,
             MapName = map,
             StartOption = start

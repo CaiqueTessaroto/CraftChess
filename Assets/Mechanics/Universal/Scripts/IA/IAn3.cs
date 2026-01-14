@@ -18,9 +18,11 @@ public class IAn3 : MonoBehaviour
     void Start()
     {
         boardManager = FindObjectOfType<BoardChessManager>();
-        pieceControllerIA = FindObjectOfType<PieceControllerIA>();
         pieceController = FindObjectOfType<PieceController>();
         moveTracker = FindObjectOfType<MoveTracker>();
+
+        if (!pieceControllerIA)
+            pieceControllerIA = GetComponent<PieceControllerIA>();
 
         if (!selectId)
             botPlayerId = boardManager.GetBotId();
