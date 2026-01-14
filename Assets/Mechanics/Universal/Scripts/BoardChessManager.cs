@@ -30,6 +30,8 @@ public class BoardChessManager : MonoBehaviour
     public bool noRules = false;
     public bool noTurns = false;
     public bool localGame = false;
+    public bool autoSwitchSide = false;
+    public bool IAvsIA = false;
 
     [Header("Control")]
     public bool setCursor = false;
@@ -89,6 +91,11 @@ public class BoardChessManager : MonoBehaviour
         noTurns = MatchData.Instance.noTurns;
         localGame = MatchData.Instance.localGame;
 
+        if (localGame)
+            autoSwitchSide = MatchData.Instance.autoSwitchSide;
+        else
+            IAvsIA = MatchData.Instance.IAvsIA;
+
         if (cellPrefab == null)
         {
             Debug.LogError("Cell prefab não atribuído no GridManager!");
@@ -101,7 +108,7 @@ public class BoardChessManager : MonoBehaviour
 
         Squads = MatchData.Instance.Squads;
 
-        if (Squads[0].Player.name == "Bot")
+        if (Squads[0].Player.name == "Bot" && !localGame)
             GenerateGrid_reverse();
         else
             GenerateGrid();

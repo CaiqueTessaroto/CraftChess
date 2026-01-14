@@ -16,6 +16,8 @@ public class SingleMatchConfig
     public bool noRules = false;
     public bool noTurns = false;
     public bool localGame = false;
+    public bool autoSwitchSide = false;
+    public bool IAvsIA = false;
 }
 
 public enum BotDifficulty
@@ -59,6 +61,10 @@ public class SingleLobbyManager : MonoBehaviour
         MatchData.Instance.noRules = currentMatch.noRules;
         MatchData.Instance.localGame = currentMatch.localGame;
         MatchData.Instance.noTurns = currentMatch.noTurns;
+
+        MatchData.Instance.autoSwitchSide = currentMatch.autoSwitchSide;
+
+        MatchData.Instance.IAvsIA = currentMatch.IAvsIA;
 
         MatchData.Instance.Squads = Squads;
 

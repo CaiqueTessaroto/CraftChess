@@ -6,7 +6,7 @@ using UnityEngine;
 public class Move
 {
 
-    
+
     public GameObject PieceObject;
     public PieceComponent PieceComponet;
     public Vector2Int OriginPosition;
@@ -23,12 +23,24 @@ public class Move
 
 public class MoveTracker : MonoBehaviour
 {
+    public BoardChessManager boardChess;
     public List<Move> moveHistory = new List<Move>();
+
+    public void Start()
+    {
+
+        if (boardChess == null)
+            boardChess = FindObjectOfType<BoardChessManager>();
+
+    }
 
     public void AddMove(GameObject pieceObject, PieceComponent pieceData, Vector2Int originPosition, Vector2Int targetPosition)
     {
         Move move = new Move(pieceObject, pieceData, originPosition, targetPosition);
         moveHistory.Add(move);
+
+        if (boardChess.autoSwitchSide)
+            boardChess.SwitchSide();
     }
 
     public Move GetLastMoved()

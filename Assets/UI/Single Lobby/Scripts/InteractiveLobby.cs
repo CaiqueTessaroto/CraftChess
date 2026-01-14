@@ -43,6 +43,8 @@ public class InteractiveLobby : MonoBehaviour
     public Toggle noRulesToggle;
     public Toggle noTurnsToggle;
     public Toggle localGameToggle;
+    public Toggle AutoSwitchSideToggle;
+    public Toggle IAvsIAToggle;
 
     [Header("Buttons")]
     public Button play;
@@ -51,6 +53,7 @@ public class InteractiveLobby : MonoBehaviour
     public Image map;
 
     [Header("BotView")]
+    public Image ImageHuman;
     public Image ImageBot;
     public Sprite Human;
     public Sprite Robot;
@@ -131,6 +134,14 @@ public class InteractiveLobby : MonoBehaviour
         noRulesToggle.onValueChanged.AddListener(OnNoRulesChanged);
         noTurnsToggle.onValueChanged.AddListener(OnNoTurnsChanged);
         localGameToggle.onValueChanged.AddListener(OnLocalGameChanged);
+
+        AutoSwitchSideToggle.onValueChanged.AddListener(OnAutoSwitchSideChanged
+);
+
+        IAvsIAToggle.onValueChanged.AddListener(OnIAvsIAChanged);
+
+        //OnAutoSwitchSideChanged
+
 
         play.onClick.AddListener(() =>
         {
@@ -319,10 +330,33 @@ public class InteractiveLobby : MonoBehaviour
     {
         currentMatch.localGame = value;
 
+        ImageHuman.sprite = Human;
+        ImageBot.sprite = value ? Human : Robot;
+
         if (value)
-            ImageBot.sprite = Human;
-        else
-            ImageBot.sprite = Robot;
+        {
+            IAvsIAToggle.SetIsOnWithoutNotify(false);
+            currentMatch.IAvsIA = false;
+        }
+    }
+
+    void OnAutoSwitchSideChanged(bool value)
+    {
+        currentMatch.autoSwitchSide = value;
+    }
+
+    void OnIAvsIAChanged(bool value)
+    {
+        currentMatch.IAvsIA = value;
+
+        ImageBot.sprite = Robot;
+        ImageHuman.sprite = value ? Robot : Human;
+
+        if (value)
+        {
+            localGameToggle.SetIsOnWithoutNotify(false);
+            currentMatch.localGame = false;
+        }
     }
 
     public void SelectSquad(string folderName, string jsonFile)
@@ -533,6 +567,11 @@ public class InteractiveLobby : MonoBehaviour
         localGameToggle.isOn = currentMatch.localGame;
 
         noTurnsToggle.isOn = currentMatch.noTurns;
+
+        AutoSwitchSideToggle.isOn = currentMatch.autoSwitchSide;
+
+        IAvsIAToggle.isOn = currentMatch.IAvsIA;
+
 
         string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.UserSquadName);
         string jsonFile = Path.Combine(squadFolder, currentMatch.UserSquadName + ".json");

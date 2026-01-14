@@ -16,6 +16,8 @@ public class MatchData : MonoBehaviour
     public bool noRules = false;
     public bool noTurns = false;
     public bool localGame = false;
+    public bool autoSwitchSide = false;
+    public bool IAvsIA = false;
 
     [Header("Data")]
     public List<MatchSquadData> Squads = new List<MatchSquadData>();

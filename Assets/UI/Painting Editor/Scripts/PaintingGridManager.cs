@@ -157,9 +157,6 @@ public class PaintingGridManager : MonoBehaviour
             DisableTools();
         });
 
-
-        previewSelectColor.color = Color.black;
-
         GridLayoutGroup layout = parentContainer.GetComponent<GridLayoutGroup>();
 
         originalCellSize = layout.cellSize;

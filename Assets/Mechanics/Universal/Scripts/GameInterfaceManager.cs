@@ -96,7 +96,7 @@ public class GameInterfaceManager : MonoBehaviour
             boardChessManager.setCursor = true;
 
             buttonImage.color = new Color32(118, 130, 162, 255);
-            //buttonImage.color = new Color(240, 75, 79);
+            //buttonImage.color = new Color32(240, 75, 79,255);
 
             UIHelperUtils.SetCursor(lupaIcon, CursorHotspot.TopLeft);
 
@@ -118,7 +118,7 @@ public class GameInterfaceManager : MonoBehaviour
     {
         if (!boardChessManager.infoPiece && boardChessManager.setCursor)
         {
-            buttonImage.color = new Color32(240, 75, 79, 255);
+            buttonImage.color = new Color32(240, 75, 79, 0);
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             boardChessManager.setCursor = false;
         }
