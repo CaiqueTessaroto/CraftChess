@@ -10,6 +10,9 @@ public class ThemeImage : MonoBehaviour
 
     void Start()
     {
+        if (!ThemeManager.Instance)
+            return;
+
         img = GetComponent<Image>();
         ApplyTheme(ThemeManager.Instance.currentTheme);
         ThemeManager.OnThemeChanged += ApplyTheme;

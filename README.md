@@ -4,6 +4,8 @@ A Creative Strategy Game Reinventing Chess
 Developed by: Caique Leandro Tessaroto (Indie Game Developer)
 Platform: PC (Steam) and Mobile
 
+⚖️ License: This project is proprietary. See the LICENSE file for more details.
+
 ## Game Overview
 
 CraftChess is an indie strategy game that expands the traditional chess experience by
@@ -22,6 +24,7 @@ depth for competitive audiences.
 - Unique movements for pieces
 - Strategic depth inspired by classic chess
 - Single-player and multiplayer focus
+- Creation of chess variants
 
 ## Target Audience
 
@@ -41,14 +44,13 @@ games that offer replayability and competitive depth.
 
 - Core gameplay systems implemented
 - Customizing pieces in pixel-art, movements and squads
-- Test prototype available
 - Ongoing iteration and balancing
+- UI/UX improvements, performance optimization, and extensive testing
+- Alpha: Core game systems and rule functionalities
 
 ## Development Roadmap
 
-- Alpha: Completion of core game systems and rule functionalities
 - Alpha: Multiplayer implementation and initial stability testing
-- Beta: Polishing, UI/UX improvements, performance optimization, and extensive testing
 - Release (PC): PC (Steam) launch with post-launch support and updates
 - Release (Mobile): Mobile (Google Play Store) launch with post-launch support and updates
 

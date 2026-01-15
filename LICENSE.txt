@@ -1,0 +1,14 @@
+INTELLECTUAL PROPERTY AND COPYRIGHT NOTICE
+Copyright (c) 2026 Caique Leandro Tessaroto. All rights reserved.
+
+This software and all associated files (source code, graphical assets, sounds, storyline, and design) are the exclusive property of Caique Leandro Tessaroto.
+
+It is strictly prohibited to:
+
+Copy, distribute, or modify any part of this project.
+
+Use this code or its assets in any commercial or non-commercial projects.
+
+Perform reverse engineering, decompilation, or disassembly of the game.
+
+This code is made publicly available for portfolio demonstration and educational purposes (reading) only. Downloading, cloning, or "forking" this repository does not grant any license for use, redistribution, or derivation.

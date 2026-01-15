@@ -7,7 +7,11 @@ public class ThemeText : MonoBehaviour
 
     void Start()
     {
+        if (!ThemeManager.Instance)
+            return;
+
         text = GetComponent<TMP_Text>();
+
         ApplyTheme(ThemeManager.Instance.currentTheme);
         ThemeManager.OnThemeChanged += ApplyTheme;
     }

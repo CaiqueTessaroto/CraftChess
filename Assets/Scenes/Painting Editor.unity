@@ -668,7 +668,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8c3e0738ba3ab7b47a0f42224aef9b0d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9914ec7a55a415e4ab315f81e81799b5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6702,7 +6702,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8c3e0738ba3ab7b47a0f42224aef9b0d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9914ec7a55a415e4ab315f81e81799b5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9159,6 +9159,7 @@ RectTransform:
   m_Children:
   - {fileID: 39372619}
   - {fileID: 1070163650}
+  - {fileID: 1707311888}
   m_Father: {fileID: 1053997845}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
@@ -10023,14 +10024,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.46274513, g: 0.50980395, b: 0.63529414, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2a42e2f314bc86041853b503e1777351, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 19501b046a3086545a7c6aeaeb9125ef, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13833,7 +13834,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 706995727}
-  - {fileID: 1707311888}
   - {fileID: 730899855}
   - {fileID: 1829990116}
   - {fileID: 301142168}
@@ -13991,7 +13991,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8c3e0738ba3ab7b47a0f42224aef9b0d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9914ec7a55a415e4ab315f81e81799b5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15428,6 +15428,7 @@ MonoBehaviour:
   gridPreview: {fileID: 1202885061}
   fileManager: {fileID: 1202885060}
   paitingToolsManager: {fileID: 0}
+  colorPickerManager: {fileID: 0}
   baseGridColor: {r: 1, g: 1, b: 1, a: 0.23529412}
   parentContainer: {fileID: 176505870}
   selectedColor: {r: 1, g: 1, b: 1, a: 1}
@@ -15633,6 +15634,7 @@ MonoBehaviour:
   gridManager: {fileID: 1202885056}
   paletteManager: {fileID: 1202885057}
   colorPreview: {fileID: 1053001860}
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
   panel: {fileID: 133008347}
   confirmBtn: {fileID: 540602665}
   cancelBtn: {fileID: 6670211}
@@ -18747,14 +18749,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.46274513, g: 0.50980395, b: 0.63529414, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2a42e2f314bc86041853b503e1777351, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 19501b046a3086545a7c6aeaeb9125ef, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19154,14 +19156,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.46274513, g: 0.50980395, b: 0.63529414, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2a42e2f314bc86041853b503e1777351, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 19501b046a3086545a7c6aeaeb9125ef, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -23511,11 +23513,11 @@ RectTransform:
   m_Children:
   - {fileID: 521319894}
   - {fileID: 1997808025}
-  m_Father: {fileID: 1053997845}
+  m_Father: {fileID: 730899855}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -176.8364, y: 67.56}
+  m_AnchoredPosition: {x: -177.24484, y: -104.241516}
   m_SizeDelta: {x: 960, y: 165}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1707311889
@@ -23582,7 +23584,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8c3e0738ba3ab7b47a0f42224aef9b0d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9914ec7a55a415e4ab315f81e81799b5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -24211,14 +24213,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.46274513, g: 0.50980395, b: 0.63529414, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2a42e2f314bc86041853b503e1777351, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 19501b046a3086545a7c6aeaeb9125ef, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -24754,14 +24756,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.46274513, g: 0.50980395, b: 0.63529414, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2a42e2f314bc86041853b503e1777351, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 19501b046a3086545a7c6aeaeb9125ef, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
