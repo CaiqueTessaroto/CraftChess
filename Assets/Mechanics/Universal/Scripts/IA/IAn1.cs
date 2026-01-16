@@ -5,7 +5,8 @@ using UnityEngine;
 public class IAn1 : MonoBehaviour
 {
     public BoardChessManager boardManager;
-    public PieceControllerIA pieceController;
+    public PieceControllerIA pieceControllerIA;
+    public PieceController pieceController;
     public MoveTracker moveTracker;
 
     public float thinkDelay = 0.6f;
@@ -19,8 +20,10 @@ public class IAn1 : MonoBehaviour
         if (!boardManager)
             boardManager = FindObjectOfType<BoardChessManager>();
 
-        if (!pieceController)
-            pieceController = GetComponent<PieceControllerIA>();
+        if (!pieceControllerIA)
+            pieceControllerIA = GetComponent<PieceControllerIA>();
+
+        pieceController = FindObjectOfType<PieceController>();
 
         if (!moveTracker)
             moveTracker = FindObjectOfType<MoveTracker>();
@@ -32,8 +35,8 @@ public class IAn1 : MonoBehaviour
 
     void Update()
     {
-        //if (boardManager.localGame)
-        //    return;
+        if (pieceController.endGame)
+            return;
 
         if (isThinking)
             return;
@@ -71,12 +74,12 @@ public class IAn1 : MonoBehaviour
             chosenMove = possibleMoves[Random.Range(0, possibleMoves.Count)];
 
         // Simula clique na peça
-        pieceController.OnCellClicked(chosenMove.from, true);
+        pieceControllerIA.OnCellClicked(chosenMove.from, true);
 
         yield return new WaitForSecondsRealtime(0.1f);
 
         // Simula clique na casa de destino
-        pieceController.OnCellClicked(chosenMove.to, true);
+        pieceControllerIA.OnCellClicked(chosenMove.to, true);
 
         isThinking = false;
     }

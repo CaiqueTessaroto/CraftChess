@@ -30,6 +30,9 @@ public class IAn3 : MonoBehaviour
 
     void Update()
     {
+        if (pieceController.endGame)
+            return;
+
         if (isThinking)
             return;
 

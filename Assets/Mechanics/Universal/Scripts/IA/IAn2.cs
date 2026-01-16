@@ -5,8 +5,9 @@ using UnityEngine;
 public class IAn2 : MonoBehaviour
 {
     public BoardChessManager boardManager;
-    public PieceControllerIA pieceController;
+    public PieceControllerIA pieceControllerIA;
     public MoveTracker moveTracker;
+    public PieceController pieceController;
 
     public int botPlayerId = 0;
     public bool selectId = true;
@@ -18,8 +19,10 @@ public class IAn2 : MonoBehaviour
     {
         boardManager = FindObjectOfType<BoardChessManager>();
 
-        if (!pieceController)
-            pieceController = GetComponent<PieceControllerIA>();
+        pieceController = FindObjectOfType<PieceController>();
+
+        if (!pieceControllerIA)
+            pieceControllerIA = GetComponent<PieceControllerIA>();
 
         moveTracker = FindObjectOfType<MoveTracker>();
 
@@ -29,6 +32,9 @@ public class IAn2 : MonoBehaviour
 
     void Update()
     {
+        if (pieceController.endGame)
+            return;
+
         if (isThinking)
             return;
 
@@ -51,9 +57,9 @@ public class IAn2 : MonoBehaviour
 
         if (bestMove.isValid)
         {
-            pieceController.OnCellClicked(bestMove.from, true);
+            pieceControllerIA.OnCellClicked(bestMove.from, true);
             yield return new WaitForSecondsRealtime(0.1f);
-            pieceController.OnCellClicked(bestMove.to, true);
+            pieceControllerIA.OnCellClicked(bestMove.to, true);
         }
 
         isThinking = false;
