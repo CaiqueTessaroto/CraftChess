@@ -5,7 +5,7 @@
         "Power": 290,
         "Art": "Green Wizard",
         "FolderSprite": "Green Wizard",
-        "NativeSprite": false
+        "NativeSprite": true
     },
     "straight": {
         "Active": true,

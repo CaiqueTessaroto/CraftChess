@@ -1,0 +1,8 @@
+{
+  "entries": [
+    { "key": "MENU_PLAY", "value": "Play" },
+    { "key": "MENU_CREATE", "value": "Create" },
+    { "key": "MENU_SETTINGS", "value": "Settings" },
+    { "key": "MENU_EXIT", "value": "Exit" }
+  ]
+}

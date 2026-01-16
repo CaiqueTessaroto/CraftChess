@@ -34,7 +34,7 @@ public class IAn3 : MonoBehaviour
             return;
 
         if (boardManager.noTurns)
-            thinkDelay = Random.Range(1f, 2.5f);
+            thinkDelay = Random.Range(1.5f, 3f);
 
         if (moveTracker.GetTurnPlayer() == botPlayerId || boardManager.noTurns)
         {
@@ -229,6 +229,14 @@ public class IAn3 : MonoBehaviour
 
         if (GetKingInRay(target, pieceMove, enemyKing))
             score += 10;
+
+        if (moveTracker.GetAllMoves().Count > 50)
+        {
+            if (piece.IsKing && piece.Power < 100)
+                score += 10;
+            if (piece.PromotionPieces.Count > 0)
+                score += 10;
+        }
 
 
         // 📌 Promoção

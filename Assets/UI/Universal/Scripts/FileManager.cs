@@ -490,7 +490,15 @@ public class FileManager : MonoBehaviour
 
 
 
+    public int GetSubfolderCount(string basePath, string rootPath)
+    {
+        string fullPath = Path.Combine(rootPath, basePath);
 
+        if (!Directory.Exists(fullPath))
+            return 0;
+
+        return Directory.GetDirectories(fullPath).Length;
+    }
 
 
 
@@ -534,27 +542,5 @@ public class FileManager : MonoBehaviour
         return subfolders;
     }
 
-
-    //string caminho = Path.Combine(Application.persistentDataPath, "Art", "MinhaSubpasta");
-    //List<string> arquivosJson = GetJsonFilesInFolder(caminho);
-    public List<string> GetJsonFilesInFolder(string folderPath)
-    {
-        List<string> jsonFiles = new List<string>();
-
-        // Se a pasta não existir, retorna vazio
-        if (!Directory.Exists(folderPath))
-            return jsonFiles;
-
-        // Busca todos os arquivos com extensão .json
-        string[] files = Directory.GetFiles(folderPath, "*.json");
-
-        foreach (string file in files)
-        {
-            // Adiciona apenas o nome do arquivo (sem caminho completo)
-            jsonFiles.Add(Path.GetFileName(file));
-        }
-
-        return jsonFiles;
-    }
 
 }

@@ -6905,26 +6905,29 @@ MonoBehaviour:
   userSquadView: {fileID: 372447553}
   blackSquadTMP: {fileID: 1573191324}
   blackSquadTMP2: {fileID: 54751231}
-  userBtn_Squad: {fileID: 1609167944}
-  userPiecesGrid: {fileID: 230138876}
+  blackBtn: {fileID: 1609167946}
+  BlackPiecesGrid: {fileID: 230138876}
   enemySquadView: {fileID: 264182129}
   whiteSquadTMP: {fileID: 1514950502}
   whiteSquadTMP2: {fileID: 1271882229}
-  enemyBtn_Squad: {fileID: 124944895}
-  enemyPiecesGrid: {fileID: 1233290807}
+  whiteBtn: {fileID: 124944897}
+  WhitePiecesGrid: {fileID: 1233290807}
   piece_ImgPrefab: {fileID: 5251047543970744015, guid: 70cd7860d851e4548bb42aa9f34c3be1, type: 3}
   currentMatch:
-    UserSquadName: 
-    BotSquadName: 
+    BlackSquadName: 
+    WhiteSquadName: 
     BotDifficulty: 0
     MapName: 
     StartOption: 0
     noRules: 0
     noTurns: 0
     localGame: 0
-    autoSwitchSide: 0
+    switchSide: 1
     IAvsIA: 0
-  OnEnemy: 0
+    options: 1
+  OnWhite: 0
+  currentWhiteRootPath: 
+  currentBlackRootPath: 
   Squads: []
   posInGrid: []
 --- !u!1 &940105260

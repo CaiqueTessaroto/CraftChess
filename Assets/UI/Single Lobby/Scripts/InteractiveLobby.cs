@@ -78,18 +78,16 @@ public class InteractiveLobby : MonoBehaviour
     public Button userSquadView;
     public TMP_Text blackSquadTMP;
     public TMP_Text blackSquadTMP2;
-    public GameObject userBtn_Squad;
-    private Button userBtn;
-    public Transform userPiecesGrid;
+    public Button blackBtn;
+    public Transform BlackPiecesGrid;
 
     [Header("WhiteSquad")]
     //public GameObject enemySelect;
     public Button enemySquadView;
     public TMP_Text whiteSquadTMP;
     public TMP_Text whiteSquadTMP2;
-    public GameObject enemyBtn_Squad;
-    private Button enemyBtn;
-    public Transform enemyPiecesGrid;
+    public Button whiteBtn;
+    public Transform WhitePiecesGrid;
 
     [Header("Prefabs")]
     public GameObject piece_ImgPrefab;
@@ -98,7 +96,9 @@ public class InteractiveLobby : MonoBehaviour
     public SingleMatchConfig currentMatch;
 
     [Header("Control")]
-    public bool OnEnemy = false;
+    public bool OnWhite = false;
+    public string currentWhiteRootPath;
+    public string currentBlackRootPath;
 
     public List<MatchSquadData> Squads = new List<MatchSquadData>();
 
@@ -147,8 +147,16 @@ public class InteractiveLobby : MonoBehaviour
         play.onClick.AddListener(() =>
         {
 
-            if (string.IsNullOrEmpty(currentMatch.WhiteSquadName) || string.IsNullOrEmpty(currentMatch.BlackSquadName))
+            if (string.IsNullOrEmpty(currentMatch.WhiteSquadName))
+            {
+                fileManager.CreateAdvice("Select the white squad");
                 return;
+            }
+            if (string.IsNullOrEmpty(currentMatch.BlackSquadName))
+            {
+                fileManager.CreateAdvice("Select the black squad");
+                return;
+            }
 
             currentMatch.MapName = "Default";
 
@@ -191,24 +199,16 @@ public class InteractiveLobby : MonoBehaviour
                     Squads.Add(BlackSquad);
                 }
 
-                Debug.Log($"Começo aleatório → {(userStarts ? "Jogador começa" : "Bot começa")}");
+                //Debug.Log($"Começo aleatório → {(userStarts ? "Jogador começa" : "Bot começa")}");
             }
 
             managerLobby.SaveMatchConfig(currentMatch);
             managerLobby.StartMatch(currentMatch, Squads);
         });
 
-
-
-        userBtn = userBtn_Squad.GetComponent<Button>();
-        //userPiecesGrid = userBtn_Squad.transform;
-
-        enemyBtn = enemyBtn_Squad.GetComponent<Button>();
-        //enemyPiecesGrid = enemyBtn_Squad.transform;
-
-        userBtn.onClick.AddListener(() =>
+        blackBtn.onClick.AddListener(() =>
         {
-            OnEnemy = false;
+            OnWhite = false;
 
             navigationManage.StartFormationsButtons();
 
@@ -216,15 +216,15 @@ public class InteractiveLobby : MonoBehaviour
 
         userSquadView.onClick.AddListener(() =>
         {
-            OnEnemy = false;
+            OnWhite = false;
 
             navigationManage.StartFormationsButtons();
 
         });
 
-        enemyBtn.onClick.AddListener(() =>
+        whiteBtn.onClick.AddListener(() =>
         {
-            OnEnemy = true;
+            OnWhite = true;
 
             navigationManage.StartFormationsButtons();
         });
@@ -232,7 +232,7 @@ public class InteractiveLobby : MonoBehaviour
 
         enemySquadView.onClick.AddListener(() =>
         {
-            OnEnemy = true;
+            OnWhite = true;
 
             navigationManage.StartFormationsButtons();
         });
@@ -360,46 +360,48 @@ public class InteractiveLobby : MonoBehaviour
         }
     }
 
-    public void SelectSquad(string folderName, string jsonFile)
+    public void SelectSquad(string rootPath, string folderName, string jsonFile)
     {
-
         managerPieceInfo.pieceSprites.Clear();
 
-        if (OnEnemy)
+        if (OnWhite)
         {
+            currentWhiteRootPath = rootPath;
+
             WhiteSquad.Clear();
 
             currentMatch.WhiteSquadName = folderName;
 
-            CreatePiecesVisualization(jsonFile, enemyPiecesGrid);
+            CreatePiecesVisualization(jsonFile, WhitePiecesGrid);
 
             whiteSquadTMP.text = $"{folderName}\n{WhiteSquad.Data.Power}";
             whiteSquadTMP2.text = folderName;
 
-            string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
-            string jsonFileUser = Path.Combine(squadFolder, currentMatch.WhiteSquadName + ".json");
+            string squadFolder = Path.Combine(currentWhiteRootPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
+            //string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
+            string jsonFileWhite = Path.Combine(squadFolder, currentMatch.WhiteSquadName + ".json");
 
-            OnEnemy = false;
-            if (File.Exists(jsonFileUser))
-                CreatePiecesVisualization(jsonFileUser, userPiecesGrid);
+            if (File.Exists(jsonFileWhite))
+                CreatePiecesVisualization(jsonFileWhite, WhitePiecesGrid);
         }
         else
         {
+            currentBlackRootPath = rootPath;
             BlackSquad.Clear();
 
             currentMatch.BlackSquadName = folderName;
 
-            CreatePiecesVisualization(jsonFile, userPiecesGrid);
+            CreatePiecesVisualization(jsonFile, BlackPiecesGrid);
 
             blackSquadTMP.text = $"{folderName}\n{BlackSquad.Data.Power}";
             blackSquadTMP2.text = folderName;
 
-            string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
-            string jsonFileEnemy = Path.Combine(squadFolder, currentMatch.BlackSquadName + ".json");
+            string squadFolder = Path.Combine(currentBlackRootPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
+            //string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
+            string jsonFileBlack = Path.Combine(squadFolder, currentMatch.BlackSquadName + ".json");
 
-            OnEnemy = true;
-            if (File.Exists(jsonFileEnemy))
-                CreatePiecesVisualization(jsonFileEnemy, enemyPiecesGrid);
+            if (File.Exists(jsonFileBlack))
+                CreatePiecesVisualization(jsonFileBlack, BlackPiecesGrid);
         }
 
         navigationManage.panelSquad.SetActive(false);
@@ -452,7 +454,7 @@ public class InteractiveLobby : MonoBehaviour
             }
             else
             {
-                caminhoSprite = Path.Combine(loadRootPath, fileManager.basePath_Sprite, wrapper.piece.FolderSprite, wrapper.piece.Art.Trim() + ".png");
+                caminhoSprite = Path.Combine(Application.persistentDataPath, fileManager.basePath_Sprite, wrapper.piece.FolderSprite, wrapper.piece.Art.Trim() + ".png");
             }
 
             if (!File.Exists(caminhoSprite))
@@ -463,7 +465,7 @@ public class InteractiveLobby : MonoBehaviour
 
             Sprite sprite = UIHelperUtils.GetSpriteFromPath(caminhoSprite);
 
-            if (elementCount <= 16)
+            if (elementCount < 16)
             {
                 // Instancia o botão/imagem da peça no painel
                 GameObject newImage = Instantiate(piece_ImgPrefab, content);
@@ -488,9 +490,8 @@ public class InteractiveLobby : MonoBehaviour
             }
 
             // --- 🔹 Guarda dados em cache conforme o lado (usuário ou inimigo) ---
-            if (OnEnemy)
+            if (OnWhite)
             {
-                // Inimigo
                 if (!WhiteSquad.Sprites.ContainsKey(piece.NameInSquad))
                     WhiteSquad.Sprites[piece.NameInSquad] = sprite;
 
@@ -499,7 +500,6 @@ public class InteractiveLobby : MonoBehaviour
             }
             else
             {
-                // Jogador
                 if (!BlackSquad.Sprites.ContainsKey(piece.NameInSquad))
                     BlackSquad.Sprites[piece.NameInSquad] = sprite;
 
@@ -512,7 +512,7 @@ public class InteractiveLobby : MonoBehaviour
 
             if (!managerPieceInfo.pieceSprites.ContainsKey(piece.NameInSquad + piece.Squad))
             {
-                managerPieceInfo.pieceSprites[piece.NameInSquad + piece.Squad] = sprite;
+                managerPieceInfo.pieceSprites[$"{piece.NameInSquad}{piece.Squad}"] = sprite;
             }
 
         }
@@ -520,7 +520,7 @@ public class InteractiveLobby : MonoBehaviour
 
 
         // --- 🔹 Ao final, guarda o Squad completo ---
-        if (OnEnemy)
+        if (OnWhite)
             WhiteSquad.Data = data;
         else
             BlackSquad.Data = data;
@@ -528,8 +528,10 @@ public class InteractiveLobby : MonoBehaviour
 
         posInGrid.Clear();
 
+
         if (BlackSquad.Data != null)
             LoadPiecesInGrid(BlackSquad.Data, BlackSquad.Sprites, true);
+
 
         if (WhiteSquad.Data != null)
             LoadPiecesInGrid(WhiteSquad.Data, WhiteSquad.Sprites);
@@ -567,7 +569,7 @@ public class InteractiveLobby : MonoBehaviour
         {
             optionsPanel.SetActive(false);
             OpenOpt.gameObject.SetActive(true);
-            
+
         }
 
 
@@ -581,12 +583,15 @@ public class InteractiveLobby : MonoBehaviour
 
         IAvsIAToggle.isOn = currentMatch.IAvsIA;
 
+        string currentRootPath = Application.persistentDataPath;
+
 
         string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
         string jsonFile = Path.Combine(squadFolder, currentMatch.BlackSquadName + ".json");
 
         if (!File.Exists(jsonFile))
         {
+            currentRootPath = Application.streamingAssetsPath;
             squadFolder = Path.Combine(Application.streamingAssetsPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
             jsonFile = Path.Combine(squadFolder, currentMatch.BlackSquadName + ".json");
         }
@@ -595,22 +600,26 @@ public class InteractiveLobby : MonoBehaviour
         //Sprite sprite = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
 
         if (File.Exists(jsonFile))
-            SelectSquad(currentMatch.BlackSquadName, jsonFile);
+            SelectSquad(currentRootPath, currentMatch.BlackSquadName, jsonFile);
 
-        OnEnemy = true;
+
+        currentRootPath = Application.persistentDataPath;
+
+        OnWhite = true;
         squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
         jsonFile = Path.Combine(squadFolder, currentMatch.WhiteSquadName + ".json");
         //pngFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".png");
 
         if (!File.Exists(jsonFile))
         {
+            currentRootPath = Application.streamingAssetsPath;
             squadFolder = Path.Combine(Application.streamingAssetsPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
             jsonFile = Path.Combine(squadFolder, currentMatch.WhiteSquadName + ".json");
         }
         //sprite = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
 
         if (File.Exists(jsonFile))
-            SelectSquad(currentMatch.WhiteSquadName, jsonFile);
+            SelectSquad(currentRootPath, currentMatch.WhiteSquadName, jsonFile);
 
         foreach (Toggle toggle in difficulty_toggles)
         {

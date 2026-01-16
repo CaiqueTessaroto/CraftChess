@@ -3,18 +3,24 @@ using TMPro;
 
 public class ThemeText : MonoBehaviour
 {
-    TMP_Text text;
+    public string key;
+    private TMP_Text text;
 
     void Start()
     {
         if (!ThemeManager.Instance)
             return;
 
-        text = GetComponent<TMP_Text>();
-
         ApplyTheme(ThemeManager.Instance.currentTheme);
         ThemeManager.OnThemeChanged += ApplyTheme;
     }
+
+    void Awake()
+    {
+        text = GetComponent<TMP_Text>();
+        UpdateText();
+    }
+
 
     void OnDestroy()
     {
@@ -25,5 +31,18 @@ public class ThemeText : MonoBehaviour
     {
         if (theme == null) return;
         text.color = theme.textColor;
+    }
+
+    public void UpdateText()
+    {
+        if (LocalizationManager.Instance == null)
+            return;
+
+        if (text == null)
+            text = GetComponent<TMP_Text>();
+
+        string txt = LocalizationManager.Instance.Get(key);
+        if (!string.IsNullOrEmpty(txt))
+            text.text = txt;
     }
 }

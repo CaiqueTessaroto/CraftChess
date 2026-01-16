@@ -39,7 +39,7 @@ public class IAn1 : MonoBehaviour
             return;
 
         if (boardManager.noTurns)
-            thinkDelay = Random.Range(1f, 2.5f);
+            thinkDelay = Random.Range(1.5f, 3f);
 
         if (moveTracker.GetTurnPlayer() == botPlayerId || boardManager.noTurns)
         {

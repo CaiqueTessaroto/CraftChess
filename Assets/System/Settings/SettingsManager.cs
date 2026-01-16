@@ -14,7 +14,33 @@ public class GameSettings
     // 🖥️ Gráficos
     public int resolutionIndex = 0;
     public bool fullscreen = true;
+    public Language language = Language.PortugueseBR;
     //public int qualityLevel = 0;
+}
+
+public static class LanguageHelper
+{
+    public static string ToCode(Language lang)
+    {
+        return lang switch
+        {
+            Language.PortugueseBR => "pt-BR",
+            Language.EnglishUS => "en-US",
+            Language.SpanishES => "es-ES",
+            _ => "pt-BR"
+        };
+    }
+
+    public static string ToDisplayName(Language lang)
+    {
+        return lang switch
+        {
+            Language.PortugueseBR => "Português (Brasil)",
+            Language.EnglishUS => "English (US)",
+            Language.SpanishES => "Español",
+            _ => lang.ToString()
+        };
+    }
 }
 
 
@@ -39,6 +65,8 @@ public class SettingsManager : MonoBehaviour
             // 🔒 garantia absoluta
             if (Settings == null)
                 Settings = new GameSettings();
+
+            //LocalizationManager.Instance.LoadLanguage(Settings.language);
         }
         else Destroy(gameObject);
     }
@@ -108,4 +136,9 @@ public class SettingsManager : MonoBehaviour
         else
             Settings = new GameSettings();
     }
+
+
+
+
+
 }

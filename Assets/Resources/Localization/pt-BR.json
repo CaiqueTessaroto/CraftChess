@@ -1,0 +1,22 @@
+{
+  "entries": [
+
+    { "key": "MENU_PLAY", "value": "Jogar" },
+    { "key": "MENU_CREATE", "value": "Criar" },
+    { "key": "MENU_SETTINGS", "value": "Configurações" },
+    { "key": "MENU_EXIT", "value": "Sair" },
+
+    { "key": "MENU_SQUAD", "value": "Criar Esquadrão" },
+    { "key": "MENU_PIECE", "value": "Criar Peça" },
+    { "key": "MENU_PAINTING", "value": "Editor de Arte" },
+
+    { "key": "MASTER", "value": "Geral:" },
+    { "key": "MUSIC", "value": "Música: " },
+    { "key": "SFX", "value": "Efeitos: " },
+    { "key": "FULLSCREEN", "value": "Tela Cheia: " },
+    { "key": "RESOLUTION", "value": "Resolução: " },
+    { "key": "LANGUAGES", "value": "Idiomas: " }
+
+
+  ]
+}

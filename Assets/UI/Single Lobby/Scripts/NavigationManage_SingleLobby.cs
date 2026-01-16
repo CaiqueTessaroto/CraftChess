@@ -181,7 +181,7 @@ public class NavigationManage_SingleLobby : MonoBehaviour
                 buttonComponent.onClick.AddListener(() =>
                 {
                     //OnButtonClicked(folderName, newButton, piecesPanel, squadName, rootPath, jsonFile);
-                    interactiveLobby.SelectSquad(folderName, jsonFile);
+                    interactiveLobby.SelectSquad(rootPath, folderName, jsonFile);
                 });
             }
         }

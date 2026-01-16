@@ -5,7 +5,7 @@
         "Power": 80,
         "Art": "Green Minion",
         "FolderSprite": "Green Wizard",
-        "NativeSprite": false
+        "NativeSprite": true
     },
     "straight": {
         "Active": true,
