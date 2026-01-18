@@ -356,6 +356,7 @@ public class FolderNavigation : MonoBehaviour
         // ===============================
         // PIECE DATA
         // ===============================
+        /*
         if (selectBasePath == fileManager.basePath_PieceData)
         {
             string caminhoPasta = Path.Combine(rootPath, selectBasePath, pasta);
@@ -419,6 +420,9 @@ public class FolderNavigation : MonoBehaviour
                 yield return null;
             }
         }
+        */
+
+        yield return null;
     }
 
 }

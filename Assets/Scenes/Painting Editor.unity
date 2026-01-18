@@ -2355,8 +2355,8 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 0, y: 0}
+  m_CellSize: {x: 1900, y: 100}
+  m_Spacing: {x: 0, y: 10}
   m_Constraint: 1
   m_ConstraintCount: 1
 --- !u!1 &176505869
@@ -9055,7 +9055,7 @@ MonoBehaviour:
   manageCreate: {fileID: 0}
   managePainting: {fileID: 710094143}
   manageSquad: {fileID: 0}
-  folderbuttonPrefab: {fileID: 5958870891905502169, guid: acfccf86f315c3346b5171b5cd849221, type: 3}
+  folderbuttonPrefab: {fileID: 5958870891905502169, guid: d5eb4afa808384c4788ba4227acaebcd, type: 3}
   panelFolders: {fileID: 828177973}
   allBtw: {fileID: 2131717471}
   myBtw: {fileID: 1634229785}
@@ -15813,6 +15813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6835d4d2987c1224aa8eb7bb95390592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkInterval: 2
 --- !u!114 &1202885064
 MonoBehaviour:
   m_ObjectHideFlags: 0

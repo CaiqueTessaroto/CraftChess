@@ -40,6 +40,7 @@ public class FileNavigation : MonoBehaviour
     [Header("Control")]
     public string selectBasePath;
     public bool initiate = false;
+    public int count = 0;
 
 
 
@@ -179,7 +180,7 @@ public class FileNavigation : MonoBehaviour
         foreach (Transform child in content)
             Destroy(child.gameObject);
 
-
+        count = 0;
         StartCoroutine(CreateFileButtons(folder, rootPath));
     }
 
@@ -196,6 +197,8 @@ public class FileNavigation : MonoBehaviour
                 Destroy(child.gameObject);
 
             string rootPath;
+
+            count = 0;
 
             if (uIHelperUtils.onMy)
             {
@@ -244,6 +247,8 @@ public class FileNavigation : MonoBehaviour
 
             foreach (string arquivo in arquivosOrdenados)
             {
+                if (count >= 90) break;
+                count++;
                 string pasta = Path.GetFileName(Path.GetDirectoryName(arquivo));
                 string json = File.ReadAllText(arquivo); // ainda síncrono
                 PieceWrapper wrapper = JsonUtility.FromJson<PieceWrapper>(json);
@@ -332,8 +337,11 @@ public class FileNavigation : MonoBehaviour
                     .Select(f => f.FullName)
                     .ToArray();
 
+
             foreach (string file in orderedfiles)
             {
+                if (count >= 90) break;
+                count++;
                 GameObject newButton = Instantiate(fileButtonPrefab, content);
                 //Transform newButton = painelNewButton.transform.GetChild(0);
 
@@ -371,6 +379,9 @@ public class FileNavigation : MonoBehaviour
 
     private IEnumerator CreateFileButtons(string folder, string rootPath)
     {
+
+        int count = 0;
+
         Transform content = panelFile.transform.Find("Scroll View/Viewport/Content");
         if (content == null)
         {
@@ -391,6 +402,8 @@ public class FileNavigation : MonoBehaviour
 
             foreach (string jsonPath in arquivosJson)
             {
+                if (count >= 36) break;
+                count++;
                 try
                 {
                     string json = File.ReadAllText(jsonPath);
@@ -457,9 +470,10 @@ public class FileNavigation : MonoBehaviour
                     sprites
                 )
             );
-
             foreach (var spriteData in sprites)
             {
+                if (count >= 36) break;
+                count++;
                 GameObject newButton = Instantiate(fileButtonPrefab, content);
                 //Transform newButton = painelNewButton.transform.GetChild(0);
 
