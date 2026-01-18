@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.IO;
 
 
 public class PaintingGridManager : MonoBehaviour

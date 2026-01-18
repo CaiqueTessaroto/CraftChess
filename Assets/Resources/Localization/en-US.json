@@ -197,6 +197,8 @@
 
     { "key": "none.cell.txt", "value": "No painted cell to save." },
 
+    { "key": "file.limit.txt", "value": "The limit of 16 files in this folder has been reached." },
+
     { "key": "select_white", "value": "Select the white pieces." },
     { "key": "select_black", "value": "Select the black pieces." }
 

@@ -383,18 +383,26 @@ public class FileManager : MonoBehaviour
     public void SaveJson(string folderName, string fileName, string json, string basePath)
     {
         // Caminho base -> persistentDataPath/Art
-        string artFolderPath = Path.Combine(Application.persistentDataPath, basePath);
+        string pieceFolderPath = Path.Combine(Application.persistentDataPath, basePath);
 
         // Garante que a pasta exista
-        if (!Directory.Exists(artFolderPath))
-            Directory.CreateDirectory(artFolderPath);
+        if (!Directory.Exists(pieceFolderPath))
+            Directory.CreateDirectory(pieceFolderPath);
 
         // Caminho da subpasta desejada
-        string targetFolderPath = Path.Combine(artFolderPath, folderName);
+        string targetFolderPath = Path.Combine(pieceFolderPath, folderName);
 
         // Garante que a subpasta exista
         if (!Directory.Exists(targetFolderPath))
             Directory.CreateDirectory(targetFolderPath);
+
+        int jsonCount = Directory.GetFiles(targetFolderPath, "*.json").Length;
+
+        if (jsonCount >= 16)
+        {
+
+            return;
+        }
 
         // Caminho completo do arquivo
         string filePath = Path.Combine(targetFolderPath, fileName);
@@ -416,6 +424,19 @@ public class FileManager : MonoBehaviour
 
         if (!Directory.Exists(targetFolderPath))
             Directory.CreateDirectory(targetFolderPath);
+
+        int pngCount = Directory.GetFiles(targetFolderPath, "*.png").Length;
+
+        if (pngCount >= 22)
+        {
+            string text = UIHelperUtils.T("file.limit.txt");
+
+            if (string.IsNullOrEmpty(text))
+                text = "The limit of 16 files in this folder has been reached.";
+
+            CreateAdvice(text);
+            return;
+        }
 
         string filePath = Path.Combine(targetFolderPath, fileName);
 

@@ -197,6 +197,8 @@
 
     { "key": "none.cell.txt", "value": "Ninguna celda pintada para guardar." },
 
+     { "key": "file.limit.txt", "value": "Se ha alcanzado el límite de 16 archivos en esta carpeta." },
+
     { "key": "select_white", "value": "Selecciona las piezas blancas." },
     { "key": "select_black", "value": "Selecciona las piezas negras." }
 

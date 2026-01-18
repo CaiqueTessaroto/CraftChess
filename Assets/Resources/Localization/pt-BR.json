@@ -191,6 +191,8 @@
 
     { "key": "none.cell.txt", "value": "Nenhuma célula pintada para salvar." },
 
+     { "key": "file.limit.txt", "value": "Limite de 16 arquivos atingido nesta pasta." },
+
     { "key": "select_white", "value": "Selecione as peças brancas." },
     { "key": "select_black", "value": "Selecione as peças pretas" }
 

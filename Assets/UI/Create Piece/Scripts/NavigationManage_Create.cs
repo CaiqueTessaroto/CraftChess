@@ -199,10 +199,10 @@ public class NavigationManage_Create : MonoBehaviour
 
 
             string pathPiece = Path.Combine(rootPath, fileManager.basePath_PieceData, pasta);
-            string pathSquad = Path.Combine(rootPath, fileManager.basePath_SquadData, pasta);
+            //string pathSquad = Path.Combine(rootPath, fileManager.basePath_SquadData, pasta);
 
             fileManager.HandleDeleteFolder(pasta, pathPiece, newButton);
-            fileManager.HandleDeleteFolder(pasta, pathSquad, newButton);
+            //fileManager.HandleDeleteFolder(pasta, pathSquad, newButton);
 
             uIHelperUtils.delete = false;
         }
