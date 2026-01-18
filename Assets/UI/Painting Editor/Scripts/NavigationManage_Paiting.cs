@@ -91,7 +91,12 @@ public class NavigationManage_Painting : MonoBehaviour
         {
             if (string.IsNullOrEmpty(folderName) && string.IsNullOrEmpty(fileName))
             {
-                fileManager.CreateAdvice("Nenhuma arte selecionada.");
+                string text = UIHelperUtils.T("file.none.art.txt");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "No art selected.";
+
+                fileManager.CreateAdvice(text);
                 return;
             }
             else if (string.IsNullOrEmpty(namePiece.text))
@@ -123,8 +128,12 @@ public class NavigationManage_Painting : MonoBehaviour
 
             if (rootPath == Application.streamingAssetsPath)
             {
-                //Debug.LogWarning("Não é permitido excluir pastas de StreamingAssets!");
-                fileManager.CreateAdvice("Não é permitido excluir pastas de StreamingAssets!");
+                string text = UIHelperUtils.T("file.native.delete.txt");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "Deleting the native library is not allowed.";
+
+                fileManager.CreateAdvice(text);
                 return;
             }
 
@@ -139,8 +148,12 @@ public class NavigationManage_Painting : MonoBehaviour
         {
             if (rootPath == Application.streamingAssetsPath)
             {
-                //Debug.LogWarning("Não é permitido salvar pastas de StreamingAssets!");
-                fileManager.CreateAdvice("Não é permitido salvar pastas de StreamingAssets!");
+                string text = UIHelperUtils.T("file.native.save.txt");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "Saving to the native library is not allowed.";
+
+                fileManager.CreateAdvice(text);
                 return;
             }
 
@@ -150,7 +163,16 @@ public class NavigationManage_Painting : MonoBehaviour
             {
                 string name = null;
 
-                fileManager.CreateInput("Salvar Arquivo", "Digite o nome...", (text) =>
+                string title = UIHelperUtils.T("file.save");
+                string inputText = UIHelperUtils.T("file.create.txt");
+
+                if (string.IsNullOrEmpty(title))
+                    title = "Create Set";
+
+                if (string.IsNullOrEmpty(inputText))
+                    inputText = "Enter the name...";
+
+                fileManager.CreateInput(title, inputText, (text) =>
                 {
                     SaveArt(text, pasta);
                 }, name);
@@ -242,8 +264,15 @@ public class NavigationManage_Painting : MonoBehaviour
 
         if (fileManager.FileExists(subfolderName, filePng, fileManager.basePath_Sprite))
         {
-            string title = "Do you want to replace the file?";
-            string text = "There is already a file with the same name in the folder, do you want to replace it?";
+
+            string title = UIHelperUtils.T("file.replace.title");
+            string text = UIHelperUtils.T("file.replace.txt");
+
+            if (string.IsNullOrEmpty(title))
+                title = "Do you want to replace the file?";
+            if (string.IsNullOrEmpty(text))
+                text = "There is already a file with the same name in the folder, do you want to replace it?";
+
 
             fileManager.CreateWarning(title, text, () =>
             {
@@ -287,7 +316,12 @@ public class NavigationManage_Painting : MonoBehaviour
 
         if (selectRootPath == Application.streamingAssetsPath)
         {
-            fileManager.CreateAdvice("Não é permitido salvar pastas de StreamingAssets!");
+            string text = UIHelperUtils.T("file.native.save.txt");
+
+            if (string.IsNullOrEmpty(text))
+                text = "Saving to the native library is not allowed.";
+
+            fileManager.CreateAdvice(text);
             return;
         }
 
@@ -335,9 +369,15 @@ public class NavigationManage_Painting : MonoBehaviour
         {
             if (fileAlreadyExists)
             {
-                fileManager.CreateWarning(
-                    "Do you want to Save the file?",
-                    $"Já existe um arquivo chamado: {name}",
+                string title = UIHelperUtils.T("file.replace.title");
+                string text = UIHelperUtils.T("file.replace.txt");
+
+                if (string.IsNullOrEmpty(title))
+                    title = "Do you want to replace the file?";
+                if (string.IsNullOrEmpty(text))
+                    text = "There is already a file with the same name in the folder, do you want to replace it?";
+
+                fileManager.CreateWarning(title, text,
                     () =>
                     {
                         fileManager.HandleDeleteFile(fileName, fullPath, null);
@@ -358,9 +398,16 @@ public class NavigationManage_Painting : MonoBehaviour
         // ===============================
         if (fileAlreadyExists)
         {
-            fileManager.CreateWarning(
-                "Do you want to Save the file?",
-                "Are you sure you want to save the file?",
+
+            string title = UIHelperUtils.T("file.overwrite.title");
+            string text = UIHelperUtils.T("file.overwrite.txt");
+
+            if (string.IsNullOrEmpty(title))
+                title = "Do you want to Save the file?";
+            if (string.IsNullOrEmpty(text))
+                text = "You are about to overwrite an existing file. Please note that the original content will be permanently deleted and cannot be recovered.";
+
+            fileManager.CreateWarning(title, text,
                 Save
             );
 

@@ -53,6 +53,31 @@ public class UIHelperUtils : MonoBehaviour
     }
 
 
+    public static string T(string key, params object[] args)
+    {
+        if (LocalizationManager.Instance != null)
+            return string.Format(LocalizationManager.Instance.Get(key), args);
+
+        return null;
+    }
+
+    public static string SetPowerText(int power)
+    {
+        string Tpower = T("power", power);
+        if (string.IsNullOrEmpty(Tpower))
+            Tpower = $"Power: {power}";
+
+        return Tpower;
+
+        string T(string key, params object[] args)
+        {
+            if (LocalizationManager.Instance != null)
+                return string.Format(LocalizationManager.Instance.Get(key), args);
+
+            return null;
+        }
+    }
+
     public void ResetAllControlBooleans()
     {
         save = false;

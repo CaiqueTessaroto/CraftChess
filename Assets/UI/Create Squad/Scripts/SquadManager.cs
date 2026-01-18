@@ -150,7 +150,11 @@ public class SquadManager : MonoBehaviour
             toolremoveImg.SetActive(false);
             toolsetKingImg.SetActive(true);
 
-            toolTmp.text = "Select the King";
+            string Ttool = UIHelperUtils.T("squad.selectking");
+            if (string.IsNullOrEmpty(Ttool))
+                Ttool = "Select the King";
+
+            toolTmp.text = Ttool;
 
             paneltool.SetActive(true);
 
@@ -169,7 +173,11 @@ public class SquadManager : MonoBehaviour
             toolsetKingImg.SetActive(false);
             toolremoveImg.SetActive(true);
 
-            toolTmp.text = "Remove Pieces";
+            string Ttool = UIHelperUtils.T("squad.remove");
+            if (string.IsNullOrEmpty(Ttool))
+                Ttool = "Remove Pieces";
+
+            toolTmp.text = Ttool;
 
             paneltool.SetActive(true);
 
@@ -196,7 +204,7 @@ public class SquadManager : MonoBehaviour
 
             currentPiecepower = pieceData.Power;
 
-            powerTmp.text = $"Power: {currentPiecepower}";
+            powerTmp.text = UIHelperUtils.SetPowerText(currentPiecepower);
 
             UpdateSquadPower();
 
@@ -221,6 +229,9 @@ public class SquadManager : MonoBehaviour
 
 
         });
+
+
+        squadpowerTmp.text = UIHelperUtils.SetPowerText(0);
 
     }
 
@@ -367,20 +378,35 @@ public class SquadManager : MonoBehaviour
 
         bool instantCheck = HasInvalidPlacedPieces();
 
+        string powerLimitTxt = UIHelperUtils.T("rules.power_limit");
+        string hasKingTxt = UIHelperUtils.T("rules.has_king");
+        string uniqueKingTxt = UIHelperUtils.T("rules.unique_king");
+        string sameArtPiecesTxt = UIHelperUtils.T("rules.same_art");
+        string jumpKingTxt = UIHelperUtils.T("rules.jump_king");
+        string powerKingTxt = UIHelperUtils.T("rules.power_king");
+        string instantCheckTxt = UIHelperUtils.T("rules.instant_check");
 
+        string enabledTxt = UIHelperUtils.T("rules.enabled");
 
-        string powerLimitTxt = "Squad power must be less than 1500";
-        string hasKingTxt = "There must be a King";
-        string uniqueKingTxt = "The King piece must be unique";
-        string sameArtPiecesTxt = "You cannot have different pieces with the same art.";
-
-        string jumpKingTxt = "The King cannot be able to jump.";
-        string powerKingTxt = "The King cannot have too much power.";
-        string instantCheckTxt = "The jump pieces cannot reach the last row.";
+        if (string.IsNullOrEmpty(powerLimitTxt))
+            powerLimitTxt = "Squad power must be less than 1500";
+        if (string.IsNullOrEmpty(hasKingTxt))
+            hasKingTxt = "There must be a King";
+        if (string.IsNullOrEmpty(uniqueKingTxt))
+            uniqueKingTxt = "The King piece must be unique";
+        if (string.IsNullOrEmpty(sameArtPiecesTxt))
+            sameArtPiecesTxt = "You cannot have different pieces with the same art.";
+        if (string.IsNullOrEmpty(jumpKingTxt))
+            jumpKingTxt = "The King cannot be able to jump.";
+        if (string.IsNullOrEmpty(powerKingTxt))
+            powerKingTxt = "The King cannot have too much power.";
+        if (string.IsNullOrEmpty(instantCheckTxt))
+            instantCheckTxt = "The jump pieces cannot reach the last row.";
 
         enabledMode = !powerLimit && !hasKing && !uniqueKing && !sameArtPieces && !jumpKing && !powerKing && !instantCheck;
 
-        string enabledTxt = "Strategic mode enabled";
+        if (string.IsNullOrEmpty(enabledTxt))
+            enabledTxt = "Strategic mode enabled";
 
         StringBuilder sb = new StringBuilder();
 
@@ -453,7 +479,7 @@ public class SquadManager : MonoBehaviour
         {
             Debug.LogWarning("Nenhum squad carregado.");
             squadData = new Squad();
-            squadpowerTmp.text = $"Power: {0}";
+            squadpowerTmp.text = UIHelperUtils.SetPowerText(0);
             squadgridpowerTmp.text = $"{0}";
             placedPieces.Clear();
             UpdatePieceCountUI();
@@ -490,7 +516,7 @@ public class SquadManager : MonoBehaviour
         int squadPower = CalculateSquadPower(placedPieces, squadData.Pieces);
 
         squadData.Power = squadPower;
-        squadpowerTmp.text = $"Power: {squadPower}";
+        squadpowerTmp.text = UIHelperUtils.SetPowerText(squadPower);
         squadgridpowerTmp.text = $"{squadPower}";
         squadData.Units = new List<UnitPieceData>(placedPieces);
 
@@ -718,7 +744,7 @@ public class SquadManager : MonoBehaviour
 
         squadData.Power = squadPower;
 
-        squadpowerTmp.text = $"Power: {squadPower}";
+        squadpowerTmp.text = UIHelperUtils.SetPowerText(squadPower);
         squadgridpowerTmp.text = $"{squadPower}";
 
         UpdatePieceCountUI();
@@ -835,7 +861,7 @@ public class SquadManager : MonoBehaviour
 
         squadData.Power = squadPower;
 
-        squadpowerTmp.text = $"Power: {squadPower}";
+        squadpowerTmp.text = UIHelperUtils.SetPowerText(squadPower);
         squadgridpowerTmp.text = $"{squadPower}";
 
         UpdatePieceCountUI();
@@ -1005,7 +1031,7 @@ public class SquadManager : MonoBehaviour
         squadPiece = piece.Squad;
 
         nameTmp.text = currentPieceName;
-        powerTmp.text = $"Power: {currentPiecepower}";
+        powerTmp.text = UIHelperUtils.SetPowerText(currentPiecepower);
 
         spritePiece = sprite;
         previewImage.sprite = sprite;

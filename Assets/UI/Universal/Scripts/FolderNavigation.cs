@@ -154,7 +154,16 @@ public class FolderNavigation : MonoBehaviour
         newButton.onClick.AddListener(() =>
         {
 
-            fileManager.CreateInput("Criar Pasta", "Digite o nome...", (text) =>
+            string title = UIHelperUtils.T("file.create.title");
+            string inputText = UIHelperUtils.T("file.create.txt");
+
+            if (string.IsNullOrEmpty(title))
+                title = "Create Set";
+
+            if (string.IsNullOrEmpty(inputText))
+                inputText = "Enter the name...";
+
+            fileManager.CreateInput(title, inputText, (text) =>
             {
                 CreateFolder(text);
             });
@@ -210,7 +219,12 @@ public class FolderNavigation : MonoBehaviour
         }
         else
         {
-            fileManager.CreateAdvice("A folder with this name already exists!");
+            string text2 = UIHelperUtils.T("folder.exist");
+
+            if (string.IsNullOrEmpty(text2))
+                text2 = "A folder with this name already exists!";
+
+            fileManager.CreateAdvice(text2);
         }
 
         //StartCoroutine(UpdateFolderButtons());

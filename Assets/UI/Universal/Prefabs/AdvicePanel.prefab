@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 1457172500556215145}
   - component: {fileID: 1427429762212013502}
   - component: {fileID: 2110344798731980306}
+  - component: {fileID: 6664637355337874246}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -255,6 +256,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6664637355337874246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2249153929869712756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32aee1b39ef411649bef5262669d8a33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: OK
 --- !u!1 &6340907171425123686
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,7 +281,7 @@ GameObject:
   - component: {fileID: 7258890223141780878}
   - component: {fileID: 2700260521659407651}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -313,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9411765, g: 0.29411766, b: 0.30980393, a: 1}
+  m_Color: {r: 0.4627451, g: 0.50980395, b: 0.63529414, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

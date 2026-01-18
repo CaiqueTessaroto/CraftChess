@@ -149,12 +149,22 @@ public class InteractiveLobby : MonoBehaviour
 
             if (string.IsNullOrEmpty(currentMatch.WhiteSquadName))
             {
-                fileManager.CreateAdvice("Select the white squad");
+                string text = UIHelperUtils.T("select_white");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "Select the white pieces.";
+
+                fileManager.CreateAdvice(text);
                 return;
             }
             if (string.IsNullOrEmpty(currentMatch.BlackSquadName))
             {
-                fileManager.CreateAdvice("Select the black squad");
+                string text = UIHelperUtils.T("select_black");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "Select the black pieces.";
+
+                fileManager.CreateAdvice(text);
                 return;
             }
 

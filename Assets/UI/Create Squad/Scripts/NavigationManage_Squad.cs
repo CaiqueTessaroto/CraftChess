@@ -189,7 +189,12 @@ public class NavigationManage_Squad : MonoBehaviour
 
             if (squadManager.squadData.Power == 0)
             {
-                fileManager.CreateAdvice("The squad is empty.");
+                string text = UIHelperUtils.T("file.empty_squad.txt");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "The squad is empty.";
+
+                fileManager.CreateAdvice(text);
                 return;
             }
 
@@ -203,18 +208,36 @@ public class NavigationManage_Squad : MonoBehaviour
             {
                 name = squadManager.squad;
             }
+                string title = UIHelperUtils.T("file.save");
+                string inputText = UIHelperUtils.T("file.create.txt");
 
-            fileManager.CreateInput("Salvar Arquivo", "Digite o nome...", (text) =>
+                if (string.IsNullOrEmpty(title))
+                    title = "Create Set";
+
+                if (string.IsNullOrEmpty(inputText))
+                    inputText = "Enter the name...";
+
+            fileManager.CreateInput(title, inputText, (text) =>
             {
-                string titleSave = "Do you want to replace the file?";
-                string textSave = "There is already a file with the same name in the folder, do you want to replace it?";
+                string titleSave = UIHelperUtils.T("file.replace.title");
+                string textSave = UIHelperUtils.T("file.replace.txt");
+
+                if (string.IsNullOrEmpty(titleSave))
+                    titleSave = "Do you want to replace the file?";
+                if (string.IsNullOrEmpty(textSave))
+                    textSave = "There is already a file with the same name in the folder, do you want to replace it?";
 
                 SaveSquad(text, titleSave, textSave);
             }, name);
 
             if (string.IsNullOrEmpty(squadManager.squadData.King?.Name))
             {
-                fileManager.CreateAdvice("There is no king.");
+                string text = UIHelperUtils.T("file.no_king.txt");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "There is no king.";
+
+                fileManager.CreateAdvice(text);
                 //return;
             }
 
@@ -226,19 +249,34 @@ public class NavigationManage_Squad : MonoBehaviour
         {
             if (squadManager.squadData.Power == 0)
             {
-                fileManager.CreateAdvice("The squad is empty.");
+                string text = UIHelperUtils.T("file.empty_squad.txt");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "The squad is empty.";
+
+                fileManager.CreateAdvice(text);
                 return;
             }
 
-            string titleSave = "Do you want to Save the file?";
-            string textSave = "Are you sure you want to save the file?";
+            string titleSave = UIHelperUtils.T("file.replace.title");
+            string textSave = UIHelperUtils.T("file.replace.txt");
+
+            if (string.IsNullOrEmpty(titleSave))
+                titleSave = "Do you want to replace the file?";
+            if (string.IsNullOrEmpty(textSave))
+                textSave = "There is already a file with the same name in the folder, do you want to replace it?";
 
             SaveSquad(squadManager.squad, titleSave, textSave);
 
 
             if (string.IsNullOrEmpty(squadManager.squadData.King?.Name))
             {
-                fileManager.CreateAdvice("There is no king.");
+                string text = UIHelperUtils.T("file.no_king.txt");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "There is no king.";
+
+                fileManager.CreateAdvice(text);
                 //return;
             }
 
@@ -267,9 +305,15 @@ public class NavigationManage_Squad : MonoBehaviour
 
     public void SaveSquad(string name, string title, string text)
     {
-        string title2 = "Strategic mode";
-        string text2 = "The squad cannot be used in Strategic mode.";
-        // Nome do arquivo
+
+        string title2 = UIHelperUtils.T("mode.alert.title");
+        string text2 = UIHelperUtils.T("mode.alert.txt");
+
+        if (string.IsNullOrEmpty(title2))
+            title2 = "Strategic mode";
+        if (string.IsNullOrEmpty(text2))
+            text2 = "The squad cannot be used in Strategic mode.";
+
 
         squadManager.squad = name;
         squadManager.squadnameTmp.text = name;
@@ -401,7 +445,13 @@ public class NavigationManage_Squad : MonoBehaviour
         else
         {
             panelFile.SetActive(false);
-            fileManager.CreateAdvice("The squad is full");
+
+            string text = UIHelperUtils.T("file.fulls_squad.txt");
+
+            if (string.IsNullOrEmpty(text))
+                text = "The squad is full.";
+
+            fileManager.CreateAdvice(text);
         }
 
 
@@ -419,8 +469,13 @@ public class NavigationManage_Squad : MonoBehaviour
             // Se for StreamingAssets, não pode excluir
             if (rootPath == Application.streamingAssetsPath)
             {
+                string text2 = UIHelperUtils.T("file.native.delete.txt");
+
+                if (string.IsNullOrEmpty(text2))
+                    text2 = "Deleting the native library is not allowed.";
+
                 //Debug.LogWarning("Não é permitido excluir pastas de StreamingAssets!");
-                fileManager.CreateAdvice("Deleting StreamingAssets folders is not allowed!");
+                fileManager.CreateAdvice(text2);
                 uIHelperUtils.delete = false;
                 return;
             }
@@ -619,7 +674,12 @@ public class NavigationManage_Squad : MonoBehaviour
 
             if (rootPath == Application.streamingAssetsPath)
             {
-                fileManager.CreateAdvice("Não é permitido excluir pastas de StreamingAssets!");
+                string text2 = UIHelperUtils.T("file.native.save.txt");
+
+                if (string.IsNullOrEmpty(text2))
+                    text2 = "Saving to the native library is not allowed.";
+
+                fileManager.CreateAdvice(text2);
                 uIHelperUtils.delete = false;
                 return;
             }
@@ -629,9 +689,13 @@ public class NavigationManage_Squad : MonoBehaviour
             string jsonPath = Path.Combine(squadFolder, folderName.TrimEnd() + ".json");
             string pngPath = Path.Combine(squadFolder, folderName + ".png");
 
+            string title = UIHelperUtils.T("folder.delete.title");
+            string text = UIHelperUtils.T("folder.delete.txt", folderName);
 
-            string title = "Folder will be deleted";
-            string text = "Do you really want to delete the folder " + folderName + " ?";
+            if (string.IsNullOrEmpty(title))
+                title = "Folder will be deleted";
+            if (string.IsNullOrEmpty(text))
+                text = "Are you sure you want to delete " + folderName + " and all its contents? This action is permanent and cannot be undone.";
 
             Debug.Log("Pasta: " + squadFolder);
 
@@ -724,7 +788,14 @@ public class NavigationManage_Squad : MonoBehaviour
             else
             {
                 panelFile.SetActive(false);
-                fileManager.CreateAdvice("The squad is full");
+
+                string text = UIHelperUtils.T("file.fulls_squad.txt");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "The squad is full.";
+
+
+                fileManager.CreateAdvice(text);
                 return;
             }
 

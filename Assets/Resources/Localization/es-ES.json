@@ -1,0 +1,204 @@
+{
+  "entries": [
+
+    { "key": "PLAY", "value": "Jugar" },
+    { "key": "CREATE", "value": "Crear" },
+    { "key": "SETTINGS", "value": "Configuración" },
+    { "key": "EXIT", "value": "Salir" },
+
+    { "key": "MENU_SQUAD", "value": "Crear Escuadrón" },
+    { "key": "MENU_PIECE", "value": "Crear Pieza" },
+    { "key": "MENU_PAINTING", "value": "Editor de Arte" },
+
+    { "key": "MASTER", "value": "General:" },
+    { "key": "MUSIC", "value": "Música:" },
+    { "key": "SFX", "value": "Efectos:" },
+    { "key": "FULLSCREEN", "value": "Pantalla Completa:" },
+    { "key": "RESOLUTION", "value": "Resolución:" },
+    { "key": "LANGUAGES", "value": "Idiomas:" },
+
+    { "key": "art.set", "value": "| Conjunto |" },
+    { "key": "ENTERNAME", "value": "Nombre" },
+    { "key": "IMPORT", "value": "Importar" },
+    { "key": "PREVIEW", "value": "Vista previa" },
+    { "key": "X", "value": "X" },
+    { "key": "QUICKSAVE", "value": "Guardado Rápido" },
+    { "key": "LOAD", "value": "Cargar" },
+    { "key": "SAVE", "value": "Guardar" },
+
+    { "key": "RGB", "value": "RGB" },
+    { "key": "HEX", "value": "HEX" },
+    { "key": "HSL", "value": "HSL" },
+    { "key": "R", "value": "R" },
+    { "key": "G", "value": "G" },
+    { "key": "B", "value": "B" },
+    { "key": "HEXADECIMAL", "value": "Hexadecimal" },
+
+    { "key": "CANCEL", "value": "Cancelar" },
+    { "key": "OK", "value": "Ok" },
+
+    { "key": "NEW", "value": "Crear" },
+    { "key": "DELETE", "value": "Eliminar" },
+
+    { "key": "ALL", "value": "Todos" },
+    { "key": "MY", "value": "Mis" },
+    { "key": "LIBRARY", "value": "Nativo" },
+    { "key": "SETS", "value": "Conjuntos" },
+    { "key": "ARTS", "value": "Artes" },
+    { "key": "PIECES", "value": "Piezas" },
+    { "key": "CLEAR", "value": "Limpiar" },
+    { "key": "squad.pieces", "value": "Piezas:" },
+
+    { "key": "ADD", "value": "Agregar" },
+    { "key": "REMOVE", "value": "Eliminar" },
+    { "key": "DESELECT", "value": "Deseleccionar" },
+
+    {
+      "key": "rules.power_limit",
+      "value": "El poder del escuadrón debe ser menor que 1500"
+    },
+    {
+      "key": "rules.has_king",
+      "value": "Es necesario tener un Rey"
+    },
+    {
+      "key": "rules.unique_king",
+      "value": "La pieza Rey debe ser única"
+    },
+    {
+      "key": "rules.same_art",
+      "value": "No puedes tener piezas diferentes con el mismo arte."
+    },
+    {
+      "key": "rules.jump_king",
+      "value": "El Rey no puede saltar piezas."
+    },
+    {
+      "key": "rules.power_king",
+      "value": "El Rey no puede tener poder excesivo."
+    },
+    {
+      "key": "rules.instant_check",
+      "value": "Las piezas que saltan no pueden alcanzar la última fila."
+    },
+    {
+      "key": "rules.enabled",
+      "value": "Modo estratégico activado"
+    },
+
+    {
+      "key": "power",
+      "value": "Poder: {0}"
+    },
+
+    { "key": "squad.selectking", "value": "Selecciona el Rey" },
+    { "key": "squad.remove", "value": "Eliminar Piezas" },
+
+    { "key": "SELECTART", "value": "Seleccionar Arte" },
+    { "key": "CHANGESQUAD", "value": "Cambiar Escuadrón" },
+    { "key": "RESET", "value": "Restablecer" },
+    { "key": "piece.squad", "value": "| Escuadrón |" },
+    { "key": "PRESETS", "value": "Preajustes" },
+    { "key": "MOVES", "value": "Movimientos" },
+    { "key": "SPECIAL", "value": "Especiales" },
+
+    { "key": "KING", "value": "Rey" },
+    { "key": "QUEEN", "value": "Reina" },
+    { "key": "BISHOP", "value": "Alfil" },
+    { "key": "KNIGHT", "value": "Caballo" },
+    { "key": "ROOK", "value": "Torre" },
+    { "key": "PAWN", "value": "Peón" },
+
+    { "key": "ACTIVE", "value": "Activo" },
+    { "key": "piece.active", "value": "Activar Movimiento" },
+
+    { "key": "STRAIGHT", "value": "Recto" },
+    { "key": "DIAGONAL", "value": "Diagonal" },
+    { "key": "CUSTOM", "value": "Personalizado" },
+
+    { "key": "MOVE", "value": "Mover" },
+    { "key": "CAPTURE", "value": "Capturar" },
+    { "key": "JUMP", "value": "Saltar" },
+
+    { "key": "FRONT", "value": "Adelante" },
+    { "key": "BACK", "value": "Atrás" },
+    { "key": "RIGHT", "value": "Derecha" },
+    { "key": "LEFT", "value": "Izquierda" },
+
+    { "key": "piece.selecthouses", "value": "Seleccionar casillas:" },
+
+    { "key": "NORULES", "value": "Sin Reglas" },
+    { "key": "NOTURNS", "value": "Sin Turnos" },
+    { "key": "LOCALGAME", "value": "Juego Local" },
+    { "key": "IAVSIA", "value": "IA vs IA" },
+
+    { "key": "EASY", "value": "Fácil" },
+    { "key": "MEDIUM", "value": "Medio" },
+    { "key": "HARD", "value": "Difícil" },
+
+    { "key": "Victory", "value": "Victoria" },
+    { "key": "Draw", "value": "Empate" },
+    { "key": "Defeat", "value": "Derrota" },
+
+    { "key": "match.return", "value": "Volver al Tablero" },
+    { "key": "CONTINUE", "value": "Continuar" },
+
+    { "key": "file.create.title", "value": "Crear Conjunto" },
+    { "key": "file.create.txt", "value": "Escribe el nombre..." },
+
+    { "key": "file.save", "value": "Guardar" },
+
+    { "key": "folder.delete.title", "value": "La carpeta será eliminada" },
+    {
+      "key": "folder.delete.txt",
+      "value": "¿Estás seguro de que deseas eliminar {0} y todo su contenido? Esta acción es permanente y no se puede deshacer."
+    },
+
+    { "key": "folder.exist", "value": "¡Ya existe un conjunto con este nombre!" },
+
+    { "key": "file.save.title", "value": "¿Reemplazar archivo?" },
+    {
+      "key": "file.save.txt",
+      "value": "Ya existe un archivo con el mismo nombre en la carpeta. ¿Deseas reemplazarlo?"
+    },
+
+    { "key": "file.replace.title", "value": "¿Reemplazar archivo?" },
+    {
+      "key": "file.replace.txt",
+      "value": "Ya existe un archivo con el mismo nombre en la carpeta. ¿Deseas reemplazarlo?"
+    },
+
+    { "key": "file.overwrite.title", "value": "¿Guardar archivo?" },
+    {
+      "key": "file.overwrite.txt",
+      "value": "Estás a punto de sobrescribir un archivo existente. El contenido original será eliminado permanentemente y no podrá recuperarse."
+    },
+
+    { "key": "file.native.save.txt", "value": "No está permitido guardar en la biblioteca nativa." },
+    { "key": "file.native.delete.txt", "value": "No está permitido eliminar de la biblioteca nativa." },
+
+    { "key": "file.none.art.txt", "value": "Ningún arte seleccionado." },
+
+    { "key": "file.fulls_squad.txt", "value": "El escuadrón está lleno." },
+    { "key": "file.empty_squad.txt", "value": "El escuadrón está vacío." },
+    { "key": "file.no_king.txt", "value": "No hay Rey." },
+
+    { "key": "mode.alert.title", "value": "Modo Estratégico" },
+    {
+      "key": "mode.alert.txt",
+      "value": "El escuadrón no puede usarse en el Modo Estratégico."
+    },
+
+    { "key": "none.art.txt", "value": "Necesitas un arte para guardar." },
+    { "key": "none.name.txt", "value": "Necesitas un nombre para guardar." },
+
+    { "key": "none.file.txt", "value": "Ningún archivo seleccionado." },
+    { "key": "none.folder.txt", "value": "Ninguna carpeta seleccionada." },
+
+    { "key": "none.cell.txt", "value": "Ninguna celda pintada para guardar." },
+
+    { "key": "select_white", "value": "Selecciona las piezas blancas." },
+    { "key": "select_black", "value": "Selecciona las piezas negras." }
+
+  ]
+}

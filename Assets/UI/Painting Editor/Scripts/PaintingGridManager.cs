@@ -890,7 +890,12 @@ public class PaintingGridManager : MonoBehaviour
         // 🚫 Nenhuma célula pintada → cancela
         if (paintedPixels.Count == 0)
         {
-            fileManager.CreateAdvice("Nenhuma célula pintada para salvar.");
+            string text = UIHelperUtils.T("none.cell.txt");
+
+            if (string.IsNullOrEmpty(text))
+                text = "No painted cells to save.";
+
+            fileManager.CreateAdvice(text);
             return false;
         }
 

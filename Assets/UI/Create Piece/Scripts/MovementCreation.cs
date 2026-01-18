@@ -91,10 +91,8 @@ public class MovementCreation : MonoBehaviour
 
         GetPresetToggles(presets);
 
-
+        powerPreview.text = UIHelperUtils.SetPowerText(0);
     }
-
-
 
 
     public bool AddPiece(string pieceName, List<string> targetList)
@@ -269,7 +267,8 @@ public class MovementCreation : MonoBehaviour
 
             ApplyDataToUI();
 
-            powerPreview.text = $"Power: {piece.Power}";
+            //powerPreview.text = $"Power: {piece.Power}";
+            powerPreview.text = UIHelperUtils.SetPowerText(piece.Power);
 
             isLoading = false;
 
@@ -350,7 +349,8 @@ public class MovementCreation : MonoBehaviour
 
             ApplyDataToUI();
 
-            powerPreview.text = $"Power: {piece.Power}";
+            //powerPreview.text = $"Power: {piece.Power}";
+            powerPreview.text = UIHelperUtils.SetPowerText(piece.Power);
 
             isLoading = false;
 
@@ -1032,7 +1032,8 @@ public class MovementCreation : MonoBehaviour
 
         // Atribui o poder à peça
         piece.Power = poderTotal;
-        powerPreview.text = $"Power: {piece.Power}";
+        //powerPreview.text = $"Power: {piece.Power}";
+        powerPreview.text = UIHelperUtils.SetPowerText(piece.Power);
     }
 
     private int GetAccumulatedPowerByDirection(Movement movement)

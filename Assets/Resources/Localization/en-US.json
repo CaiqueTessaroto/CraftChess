@@ -1,8 +1,204 @@
 {
   "entries": [
-    { "key": "MENU_PLAY", "value": "Play" },
-    { "key": "MENU_CREATE", "value": "Create" },
-    { "key": "MENU_SETTINGS", "value": "Settings" },
-    { "key": "MENU_EXIT", "value": "Exit" }
+
+    { "key": "PLAY", "value": "Play" },
+    { "key": "CREATE", "value": "Create" },
+    { "key": "SETTINGS", "value": "Settings" },
+    { "key": "EXIT", "value": "Exit" },
+
+    { "key": "MENU_SQUAD", "value": "Create Squad" },
+    { "key": "MENU_PIECE", "value": "Create Piece" },
+    { "key": "MENU_PAINTING", "value": "Art Editor" },
+
+    { "key": "MASTER", "value": "Master:" },
+    { "key": "MUSIC", "value": "Music:" },
+    { "key": "SFX", "value": "Effects:" },
+    { "key": "FULLSCREEN", "value": "Fullscreen:" },
+    { "key": "RESOLUTION", "value": "Resolution:" },
+    { "key": "LANGUAGES", "value": "Languages:" },
+
+    { "key": "art.set", "value": "| Set |" },
+    { "key": "ENTERNAME", "value": "Name" },
+    { "key": "IMPORT", "value": "Import" },
+    { "key": "PREVIEW", "value": "Preview" },
+    { "key": "X", "value": "X" },
+    { "key": "QUICKSAVE", "value": "Quick Save" },
+    { "key": "LOAD", "value": "Load" },
+    { "key": "SAVE", "value": "Save" },
+
+    { "key": "RGB", "value": "RGB" },
+    { "key": "HEX", "value": "HEX" },
+    { "key": "HSL", "value": "HSL" },
+    { "key": "R", "value": "R" },
+    { "key": "G", "value": "G" },
+    { "key": "B", "value": "B" },
+    { "key": "HEXADECIMAL", "value": "Hexadecimal" },
+
+    { "key": "CANCEL", "value": "Cancel" },
+    { "key": "OK", "value": "Ok" },
+
+    { "key": "NEW", "value": "Create" },
+    { "key": "DELETE", "value": "Delete" },
+
+    { "key": "ALL", "value": "All" },
+    { "key": "MY", "value": "My" },
+    { "key": "LIBRARY", "value": "Native" },
+    { "key": "SETS", "value": "Sets" },
+    { "key": "ARTS", "value": "Arts" },
+    { "key": "PIECES", "value": "Pieces" },
+    { "key": "CLEAR", "value": "Clear" },
+    { "key": "squad.pieces", "value": "Pieces:" },
+
+    { "key": "ADD", "value": "Add" },
+    { "key": "REMOVE", "value": "Remove" },
+    { "key": "DESELECT", "value": "Deselect" },
+
+    {
+      "key": "rules.power_limit",
+      "value": "Squad power must be less than 1500"
+    },
+    {
+      "key": "rules.has_king",
+      "value": "A King is required"
+    },
+    {
+      "key": "rules.unique_king",
+      "value": "The King piece must be unique"
+    },
+    {
+      "key": "rules.same_art",
+      "value": "You cannot have different pieces using the same art."
+    },
+    {
+      "key": "rules.jump_king",
+      "value": "The King cannot jump over pieces."
+    },
+    {
+      "key": "rules.power_king",
+      "value": "The King cannot have excessive power."
+    },
+    {
+      "key": "rules.instant_check",
+      "value": "Jumping pieces cannot reach the last rank."
+    },
+    {
+      "key": "rules.enabled",
+      "value": "Strategic mode enabled"
+    },
+
+    {
+      "key": "power",
+      "value": "Power: {0}"
+    },
+
+    { "key": "squad.selectking", "value": "Select the King" },
+    { "key": "squad.remove", "value": "Remove Pieces" },
+
+    { "key": "SELECTART", "value": "Select Art" },
+    { "key": "CHANGESQUAD", "value": "Change Squad" },
+    { "key": "RESET", "value": "Reset" },
+    { "key": "piece.squad", "value": "| Squad |" },
+    { "key": "PRESETS", "value": "Presets" },
+    { "key": "MOVES", "value": "Moves" },
+    { "key": "SPECIAL", "value": "Special" },
+
+    { "key": "KING", "value": "King" },
+    { "key": "QUEEN", "value": "Queen" },
+    { "key": "BISHOP", "value": "Bishop" },
+    { "key": "KNIGHT", "value": "Knight" },
+    { "key": "ROOK", "value": "Rook" },
+    { "key": "PAWN", "value": "Pawn" },
+
+    { "key": "ACTIVE", "value": "Active" },
+    { "key": "piece.active", "value": "Enable Move" },
+
+    { "key": "STRAIGHT", "value": "Straight" },
+    { "key": "DIAGONAL", "value": "Diagonal" },
+    { "key": "CUSTOM", "value": "Custom" },
+
+    { "key": "MOVE", "value": "Move" },
+    { "key": "CAPTURE", "value": "Capture" },
+    { "key": "JUMP", "value": "Jump" },
+
+    { "key": "FRONT", "value": "Forward" },
+    { "key": "BACK", "value": "Backward" },
+    { "key": "RIGHT", "value": "Right" },
+    { "key": "LEFT", "value": "Left" },
+
+    { "key": "piece.selecthouses", "value": "Select squares:" },
+
+    { "key": "NORULES", "value": "No Rules" },
+    { "key": "NOTURNS", "value": "No Turns" },
+    { "key": "LOCALGAME", "value": "Local Game" },
+    { "key": "IAVSIA", "value": "AI vs AI" },
+
+    { "key": "EASY", "value": "Easy" },
+    { "key": "MEDIUM", "value": "Medium" },
+    { "key": "HARD", "value": "Hard" },
+
+    { "key": "Victory", "value": "Victory" },
+    { "key": "Draw", "value": "Draw" },
+    { "key": "Defeat", "value": "Defeat" },
+
+    { "key": "match.return", "value": "Return to Board" },
+    { "key": "CONTINUE", "value": "Continue" },
+
+    { "key": "file.create.title", "value": "Create Set" },
+    { "key": "file.create.txt", "value": "Enter the name..." },
+
+    { "key": "file.save", "value": "Save" },
+
+    { "key": "folder.delete.title", "value": "The folder will be deleted" },
+    {
+      "key": "folder.delete.txt",
+      "value": "Are you sure you want to delete {0} and all its contents? This action is permanent and cannot be undone."
+    },
+
+    { "key": "folder.exist", "value": "A set with this name already exists!" },
+
+    { "key": "file.save.title", "value": "Replace file?" },
+    {
+      "key": "file.save.txt",
+      "value": "A file with the same name already exists in the folder. Do you want to replace it?"
+    },
+
+    { "key": "file.replace.title", "value": "Replace file?" },
+    {
+      "key": "file.replace.txt",
+      "value": "A file with the same name already exists in the folder. Do you want to replace it?"
+    },
+
+    { "key": "file.overwrite.title", "value": "Save file?" },
+    {
+      "key": "file.overwrite.txt",
+      "value": "You are about to overwrite an existing file. The original content will be permanently deleted and cannot be recovered."
+    },
+
+    { "key": "file.native.save.txt", "value": "Saving to the native library is not allowed." },
+    { "key": "file.native.delete.txt", "value": "Deleting from the native library is not allowed." },
+
+    { "key": "file.none.art.txt", "value": "No art selected." },
+
+    { "key": "file.fulls_squad.txt", "value": "The squad is full." },
+    { "key": "file.empty_squad.txt", "value": "The squad is empty." },
+    { "key": "file.no_king.txt", "value": "There is no King." },
+
+    { "key": "mode.alert.title", "value": "Strategic Mode" },
+    {
+      "key": "mode.alert.txt",
+      "value": "The squad cannot be used in Strategic Mode."
+    },
+
+    { "key": "none.art.txt", "value": "You need an art to save." },
+    { "key": "none.name.txt", "value": "You need a name to save." },
+
+    { "key": "none.file.txt", "value": "No file selected." },
+    { "key": "none.folder.txt", "value": "No folder selected." },
+
+    { "key": "none.cell.txt", "value": "No painted cell to save." },
+
+    { "key": "select_white", "value": "Select the white pieces." },
+    { "key": "select_black", "value": "Select the black pieces." }
+
   ]
 }

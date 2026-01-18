@@ -23,6 +23,7 @@ public class GameInterfaceManager : MonoBehaviour
 
     [Header("EndLocal Panel")]
     public GameObject panelLocal;
+    public TMP_Text tmpEndLocal;
     public Image imageAvatar;
     public TMP_Text tmpSquad;
     public Button returnBtn2;
@@ -144,7 +145,12 @@ public class GameInterfaceManager : MonoBehaviour
 
     public void EndGame(string result)
     {
-        tmpEnd.text = result;
+        string endTxt = UIHelperUtils.T(result);
+
+        if (string.IsNullOrEmpty(endTxt))
+            endTxt = result;
+
+        tmpEnd.text = endTxt;
         panel.SetActive(true);
 
         BackLobbyBtn.gameObject.SetActive(true);
@@ -153,6 +159,13 @@ public class GameInterfaceManager : MonoBehaviour
 
     public void EndGameLocal(string squadName, Sprite avatar)
     {
+        string endTxt = UIHelperUtils.T("Victory");
+
+        if (string.IsNullOrEmpty(endTxt))
+            endTxt = "Victory";
+
+        tmpEndLocal.text = endTxt;
+
         panelLocal.SetActive(true);
         imageAvatar.sprite = avatar;
         tmpSquad.text = squadName;

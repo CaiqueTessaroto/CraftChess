@@ -1005,7 +1005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32aee1b39ef411649bef5262669d8a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: MENU_CREATE
+  key: CREATE
 --- !u!1 &315495992
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,7 +2063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32aee1b39ef411649bef5262669d8a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: MENU_SETTINGS
+  key: SETTINGS
 --- !u!1 &623179236
 GameObject:
   m_ObjectHideFlags: 0
@@ -3377,7 +3377,6 @@ GameObject:
   - component: {fileID: 957110017}
   - component: {fileID: 957110019}
   - component: {fileID: 957110018}
-  - component: {fileID: 957110020}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3501,19 +3500,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 957110016}
   m_CullTransparentMesh: 1
---- !u!114 &957110020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 957110016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32aee1b39ef411649bef5262669d8a33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 
 --- !u!1 &1018428356
 GameObject:
   m_ObjectHideFlags: 0
@@ -3736,7 +3722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32aee1b39ef411649bef5262669d8a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: MENU_EXIT
+  key: EXIT
 --- !u!1 &1138894130
 GameObject:
   m_ObjectHideFlags: 0
@@ -4287,7 +4273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32aee1b39ef411649bef5262669d8a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: MENU_PLAY
+  key: PLAY
 --- !u!1 &1427128802
 GameObject:
   m_ObjectHideFlags: 0
@@ -5522,7 +5508,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7039793897165363615, guid: 1cedfa925259d2c40a0c747c916a6f91, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
