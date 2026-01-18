@@ -1,0 +1,504 @@
+[33mcommit 7a46c6640899bf2f2408a8dd6b65292a92a3455f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Jan 18 12:35:33 2026 -0300
+
+    Buttons language
+
+[33mcommit 12dcfd07c31ba13a5e5c00a89d6bcc3b183b9f27[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sat Jan 17 23:31:20 2026 -0300
+
+    Get Language in the first open game
+
+[33mcommit 04e522183a72d786c0b4719d9955c73669b7957b[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sat Jan 17 23:11:57 2026 -0300
+
+    Improvements UI
+
+[33mcommit 1a087562c6084d521dd77651e2903a689868842b[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sat Jan 17 22:32:50 2026 -0300
+
+    Fix: Bug promotion in the update board and side
+
+[33mcommit 492e1d2b0f62d05d206166b5be8e2f8a6ec47973[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sat Jan 17 22:07:20 2026 -0300
+
+    Fix: EndGame Local and move null
+
+[33mcommit 202c1c00064784d1a7ae72b0013b287068c14a6a[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sat Jan 17 21:06:36 2026 -0300
+
+    Feature: Translate
+
+[33mcommit 2b6dce0eda01f97c99a423bfef9e46e1b6daf54f[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Jan 16 16:02:25 2026 -0300
+
+    fIX: BUG IAvsIA endGame
+
+[33mcommit f545b6fc8d4709f34eba9bb822c98126e912366f[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Jan 16 15:28:15 2026 -0300
+
+    Init translate and fix bug in the lobby
+
+[33mcommit 64806fd3a9660af0d601137a232835465ec6623e[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Thu Jan 15 19:41:12 2026 -0300
+
+    License
+
+[33mcommit 5da887471f627b58fec5694323bb8743a2e5406c[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Wed Jan 14 16:27:09 2026 -0300
+
+    Fix: Rename variable bug
+
+[33mcommit 8f128d601a738c99ad1bf4bf19c098faf5997c69[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Wed Jan 14 16:17:05 2026 -0300
+
+    Feature: EndGame On locaGame mode
+
+[33mcommit 7e0e0b23d1b678d3a0c160357aef9cd3e845274a[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Wed Jan 14 13:20:31 2026 -0300
+
+    Feature: AutoSwicthSide On localGame
+
+[33mcommit ed229a6c872aa8a6e51d5ffb207ba8c111d979dc[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Wed Jan 14 11:40:32 2026 -0300
+
+    Fix: Bugs color on eraser
+
+[33mcommit 9fda2e0df6e6beb393e51df352f2d50ef5a721c0[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Tue Jan 13 21:23:28 2026 -0300
+
+    UI/UX improvements
+
+[33mcommit 33afb8694085abfc8cc1ff1639168d81f1150fa6[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Tue Jan 13 14:36:12 2026 -0300
+
+    Fix: Quick save in the pieces create
+
+[33mcommit 3cbf02c9b3ee31b33939ed9e7acb33fea52b5c48[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Jan 12 20:48:54 2026 -0300
+
+    Fix: sprites pieces info
+
+[33mcommit 0e900856579b060888dfde599c3467c68f970b35[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Jan 12 20:24:12 2026 -0300
+
+    Fix: Bug hasking end game
+
+[33mcommit 416830e7bba81afed016f77803734176fe757a90[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Jan 12 19:44:08 2026 -0300
+
+    Fix: Bug sprites in the game promotion
+
+[33mcommit 2068b1a4181ba0dcfcaa36699de0c13ecf461c49[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Jan 12 19:24:27 2026 -0300
+
+    Fix: Bug same sprites in the  Squads
+
+[33mcommit 646ffc1909ab712e2e05e43b3cfa4453c24a1aa8[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Jan 12 19:14:17 2026 -0300
+
+    Fix: Bug in the load Squads
+
+[33mcommit 13e57acc60bd787f5fcc99b039f4a76a9bad404f[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Jan 12 19:05:51 2026 -0300
+
+    Feature: Navegation Squads
+
+[33mcommit 10a0aa1d81803ac0d21da891a4e54348a36e835f[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Jan 12 18:11:13 2026 -0300
+
+    Feature: Hex and Spectrun Picker Color
+
+[33mcommit fd00a25914a8c490b7fe93474850bb51a460ff52[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Jan 12 16:44:35 2026 -0300
+
+    Feature: Highlight tools in the paiting
+
+[33mcommit 571550246293735b549a7d8df04a3fb98ffc2c65[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Jan 12 12:37:15 2026 -0300
+
+    Fix: Icon cursor in the paiting
+
+[33mcommit d4e543ce710090e966d5507c0ebdf9f31bf59f28[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Jan 11 23:05:46 2026 -0300
+
+    Fix: bug native squad in the singleLobby load
+
+[33mcommit ff93bd19f9308fb366ffe766c1aede7aa94d630d[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Jan 11 22:44:18 2026 -0300
+
+    Feature: More Pallets Init Cursor Icons Upgrade and Fix Bug in the save Squad
+
+[33mcommit 043bd806acae048701a1b17ed4cce06dfc28533a[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Jan 11 22:02:17 2026 -0300
+
+    Feacture: See Power in the lobby
+
+[33mcommit 2b9305a38edf62643bdce1d08a647e18f0ef0e91[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Jan 11 21:39:24 2026 -0300
+
+    Fix: King pos and Variant possibles
+
+[33mcommit e4f2f0b5340e80a7068351299813452f96bbdda5[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Jan 11 18:34:48 2026 -0300
+
+    Fix: QuickSave in the paiting
+
+[33mcommit f5f57769c6be5df77bb1a8f4f4ded6823530fd24[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Jan 11 16:22:50 2026 -0300
+
+    Feature: Perfomance navigation
+
+[33mcommit a6a29c680edd539c3e9519f409d36ab35f05475a[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Jan 11 14:13:46 2026 -0300
+
+    Fix: Delete squad folder bug
+
+[33mcommit 7ac1078bc8d06e5403e3a73c05ec64cd46f8accb[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Jan 11 00:06:05 2026 -0300
+
+    Fix: Play Bugs and Paiting
+
+[33mcommit 51a0d333177a5c134156658f9b7441286e4d1f35[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sat Jan 10 22:26:31 2026 -0300
+
+    Feature: Play UI
+
+[33mcommit 68e8328d083f2ad92fc661b6ed285292f15f28a7[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sat Jan 10 19:40:06 2026 -0300
+
+    Feature: Lobby UI
+
+[33mcommit 48601fcaf32a77a727da8d7443cd9795e30bd76f[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sat Jan 10 13:01:06 2026 -0300
+
+    Feature: UI Upgrade and Fixing Paiting Save Bug
+
+[33mcommit 3624b5d59bb8dddd841c4725242d97925964b117[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Jan 9 21:03:57 2026 -0300
+
+    Feature: SetCurso and Settings Upgrade
+
+[33mcommit d53b9248072e03b1c7261c5a3c3b237178aeb170[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Thu Jan 8 19:53:49 2026 -0300
+
+    Feature: UI Pieces and Squad
+
+[33mcommit 401af7d1caf811b113a7607b9b8a32c5ab9a7c22[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Tue Jan 6 19:34:08 2026 -0300
+
+    Init Feature: Themes and UI Paiting Editor
+
+[33mcommit 4dc3927b3f70075f9707432d1c057f2665351e4b[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Jan 5 16:27:04 2026 -0300
+
+    Init Feature: Themes and UI
+
+[33mcommit 77c79154450fa8e009f6d7f384e0f33008bd1418[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Jan 4 14:30:07 2026 -0300
+
+    Fix: IAn3 Kings is Null
+
+[33mcommit 1cb8baf20ec2fb7f0f89d94e2a501618ee46c9c4[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Jan 4 13:13:56 2026 -0300
+
+    Feature: Game Modes Options
+
+[33mcommit f3c4606b404f1e8072b6cff51093d6409ab84f11[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sat Jan 3 20:57:16 2026 -0300
+
+    Feature: Settings
+
+[33mcommit f7692e8c403ac140e1dbf570dc71ad0434bf6973[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sat Jan 3 00:31:49 2026 -0300
+
+    Fix: Dictionary Sprites
+
+[33mcommit 4e4e7df88369a9ceb75d7bd7f98587faae2ff2af[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Jan 2 22:39:27 2026 -0300
+
+    Feature: View piece info in the match
+
+[33mcommit c2aca171ceba570f43f78c405a53904a0fe6a652[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Jan 2 21:47:30 2026 -0300
+
+    Feature: DraggablePanel
+
+[33mcommit bdd83a3bd55336ae432ee7f26d7b7d303419dc3a[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Jan 2 21:39:57 2026 -0300
+
+    Feature: Pieces info in the Lobby
+
+[33mcommit 3cc4c58381be83749dc0880c61230b4dfbe95320[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Jan 2 20:17:49 2026 -0300
+
+    Feature: Pieces info in the Lobby
+
+[33mcommit 0d2c114459b6809ea432fd761fc266c3094d0f95[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Wed Dec 31 19:53:34 2025 -0300
+
+    Feature: EndGame
+
+[33mcommit 7a9c76d6a2866514b26d64ce2b035b8608895b0c[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Wed Dec 31 19:17:41 2025 -0300
+
+    Feature: IAn3
+
+[33mcommit e7b21abcef4bf3e91547f8921241857c4180e34d[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Dec 29 19:55:46 2025 -0300
+
+    Init: checkmate system
+
+[33mcommit 41ab99db59786a9ee72b8c92576a861f4a439f0d[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Dec 29 19:35:02 2025 -0300
+
+    Feature: IA in the controller and IAn2
+
+[33mcommit 2fa318d57a93024999c1520a9628f196b0bfba0f[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Dec 29 18:33:58 2025 -0300
+
+    Fix: bug on squad load set after load squad
+
+[33mcommit d446e2e4703f06e52d59f91251cf6c20a61f736a[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Dec 29 18:24:03 2025 -0300
+
+    Fix: passant move
+
+[33mcommit 080c193327863a73e3a694d25cd0b42e163fb884[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Dec 29 17:39:45 2025 -0300
+
+    Starting IA and fix kings moves in check
+
+[33mcommit 4870ca942849b2cebd486694d4cede5fd60c1f92[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Dec 28 16:49:59 2025 -0300
+
+    Fix: double warning
+
+[33mcommit 2c00b457ded63da636a48ef481f3e91f28651e1c[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Dec 28 16:47:04 2025 -0300
+
+    Fix: double warning
+
+[33mcommit 9db3504364d55bb2b0e5a25e1ecf6c2741729cc8[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Dec 28 16:33:54 2025 -0300
+
+    Feature: Navegation protection
+
+[33mcommit 95521a0f50a65b095a6197435b7dad6b94c268fe[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Dec 28 15:20:46 2025 -0300
+
+    Remove: Useless using libs
+
+[33mcommit db6998b54378274560328aa73651f4c81b3361b4[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Dec 28 15:17:41 2025 -0300
+
+    Add: rule rook in check
+
+[33mcommit f7a3b8e286243d92dd7872b7fd5fb11a4c127110[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sat Dec 27 22:05:46 2025 -0300
+
+    Add: Piece pinned check system
+
+[33mcommit e61f64fed2343fd24a607cdea58be20c57bb7a28[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sat Dec 27 16:57:00 2025 -0300
+
+    fix: check system
+
+[33mcommit dd624ab435b262f5aca8df0c8adb3239142ef15e[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Dec 26 22:17:55 2025 -0300
+
+    fix: control booleans
+
+[33mcommit 0e7bedf05bc1eb2046a74d7a7341612ab5298456[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Dec 26 22:14:47 2025 -0300
+
+    fix: add bool NoRule
+
+[33mcommit 9c29aaeac6a8ce36c5d158158f3999761bfa3ff4[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Dec 26 22:13:41 2025 -0300
+
+    Mechanic: add bool NoRule
+
+[33mcommit 7f633bb7809bafc664152473b60306d6f4a928ca[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Dec 26 22:09:01 2025 -0300
+
+    Mechanic: check on castling
+
+[33mcommit 5947689e7f281819119ab9e6f8709ebd4e00a6e6[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Dec 26 20:14:46 2025 -0300
+
+    Mechanic: rules of the game
+
+[33mcommit 5704e36f5b808d59eedabe8b704e55c0c3b0c06a[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Dec 26 16:00:21 2025 -0300
+
+    Mechanic: Kings Move Rule
+
+[33mcommit 2781392be5615dbc07b45d5086e9d043d621ca32[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Dec 26 13:33:19 2025 -0300
+
+    fix: update power in the squad
+
+[33mcommit ffb4fdac03d35ed0055a41e56852935b2084dbb2[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Dec 26 13:01:47 2025 -0300
+
+    starting avatar implementation
+
+[33mcommit 4bead2674b8fe3d3553b699f4618a76e07268fbc[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Tue Dec 23 19:51:35 2025 -0300
+
+    simplification: sprite import in the promotion and castling system
+
+[33mcommit 77eebadbc36366f4a6a4dd05dc11c2ac7190ead5[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Tue Dec 23 19:05:38 2025 -0300
+
+    remove: promotion and castling system in the create piece
+
+[33mcommit 12e3af41ab7ca6a66bd045c5ecedfdfbba008743[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Tue Dec 23 18:16:34 2025 -0300
+
+    feature: new Promotion and Castling System in the Matches
+
+[33mcommit 25fa3389e5369fae9de9d5cf6b3790864c8963b1[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Tue Dec 23 17:45:55 2025 -0300
+
+    fix: load NativeSprite
+
+[33mcommit e934bcc4d249b682f33a1b74068d16d049e4422c[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Tue Dec 23 16:02:46 2025 -0300
+
+    feature: Promotion and Castling System in the Squads
+
+[33mcommit 67fff0367ec4f1ba9c0d329ea79d2b090b4ca12e[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Dec 22 23:22:04 2025 -0300
+
+    feature: Drag and Drop Squad
+
+[33mcommit 8fe03f03a435373a7195db3a102572d2642463d6[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Dec 22 19:52:00 2025 -0300
+
+    Fix: AppData User
+
+[33mcommit e562bbdc99154dedaaec486c48d2ab337d2118a6[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Mon Dec 22 17:07:41 2025 -0300
+
+    Fix: LastMove on SwitchSide
+
+[33mcommit 4382a9dc7eaf8271aa18dfd0cd95f5d66c9c94cc[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Dec 21 15:49:25 2025 -0300
+
+    Add: Native Squad
+
+[33mcommit f8ecffdebe006d8b3f967e9c5beffc31f7f87654[m
+Merge: 75d378b 18e6085
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Dec 21 15:28:46 2025 -0300
+
+    Fix: File AppData
+
+[33mcommit 75d378be2e4b7ab1d4e90c84d6244710ca7d168c[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Sun Dec 21 15:25:40 2025 -0300
+
+    Fix: File AppData
+
+[33mcommit 18e6085b17acbc4c65c2c96e1b5127f900d5ea2d[m
+Author: Caique Leandro Tessaroto <87505774+Zinbo20@users.noreply.github.com>
+Date:   Sat Dec 20 21:35:11 2025 -0300
+
+    Fix: ReadMe
+
+[33mcommit 17630a0181260d3c7e06fdb52f40cea4d7b36e99[m
+Author: Caique Leandro Tessaroto <87505774+Zinbo20@users.noreply.github.com>
+Date:   Sat Dec 20 21:33:36 2025 -0300
+
+    ReadMe
+
+[33mcommit c722a8763ac16c8689929b47903a00450974a0e5[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Dec 19 16:32:43 2025 -0300
+
+    Initial Unity project commit
+
+[33mcommit 029a2368b8167547e8a04ebc6369a7bdb3ca22c4[m
+Author: Zinbo20 <caiqueleandrotessaroto@gmail.com>
+Date:   Fri Dec 19 16:02:54 2025 -0300
+
+    Initial Unity project commit

@@ -188,6 +188,7 @@ public class FolderNavigation : MonoBehaviour
     {
         fileNavigation.navigationOptions.SetActive(false);
         currentButtonFolder = newButton;
+        selectRootPath = rootPath;
 
         if (manageCreate)
             manageCreate.OnClickFolder(pasta, newButton, rootPath);
