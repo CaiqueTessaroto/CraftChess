@@ -89,5 +89,18 @@ public class LocalizationManager : MonoBehaviour
         SettingsManager.Instance.Save();
     }
 
+    public static Language DetectSystemLanguage()
+    {
+        return Application.systemLanguage switch
+        {
+            SystemLanguage.Portuguese => Language.PortugueseBR,
+            SystemLanguage.English => Language.EnglishUS,
+            SystemLanguage.Spanish => Language.SpanishES,
+
+            // fallback seguro
+            _ => Language.EnglishUS
+        };
+    }
+
     public string CurrentLanguage => currentLanguageCode;
 }

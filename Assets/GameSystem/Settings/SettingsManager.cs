@@ -66,6 +66,8 @@ public class SettingsManager : MonoBehaviour
             if (Settings == null)
                 Settings = new GameSettings();
 
+            LocalizationManager.Instance.ApplyLanguage(Settings.language);
+
             //LocalizationManager.Instance.LoadLanguage(Settings.language);
         }
         else Destroy(gameObject);
@@ -134,7 +136,14 @@ public class SettingsManager : MonoBehaviour
                 PlayerPrefs.GetString("Settings")
             );
         else
+        {
             Settings = new GameSettings();
+
+            // 🌍 PRIMEIRA EXECUÇÃO → detectar idioma
+            Settings.language = LocalizationManager.DetectSystemLanguage();
+
+            Save();
+        }
     }
 
 
