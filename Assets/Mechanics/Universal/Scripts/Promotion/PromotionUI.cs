@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 
 
 public class PromotionUI : MonoBehaviour
@@ -224,12 +225,7 @@ public class PromotionUI : MonoBehaviour
 
         component.IsPromoted = true;
 
-        // 5️⃣ Garante inicialização de movimentos
-        //if (newMovement != null)
-        //{
-        //component.PossibleMoves = new List<Vector2Int>();
-        //component.PossibleMoves = new List<Move>();
-        //}
+
 
         string letter = $"{(char)('a' + pos.x)}";
         string number = $"{pos.y + 1}";
@@ -249,21 +245,29 @@ public class PromotionUI : MonoBehaviour
 
         pieceController.DeselectPiece();
 
+        // 5️⃣ Garante inicialização de movimentos
+        if (newMovement != null)
+        {
+            //component.PossibleMoves = new List<Vector2Int>();
+            newMovement.enabled = true;
+        }
+
         boardManager.AllPieces.Remove(currentPiece.gameObject);
-        Destroy(currentPiece.gameObject);
 
         SpriteRenderer sr = currentPiece.GetComponent<SpriteRenderer>();
+
+        StartCoroutine(BoardUpdate(house, sr, sprite));
+    }
+
+    public IEnumerator BoardUpdate(string house, SpriteRenderer sr, Sprite sprite)
+    {
+        yield return StartCoroutine(pieceController.DelayedBoardUpdate());
 
         moveTracker.AddMove(currentPiece.gameObject, currentPiece, currentPiece.Position, pos);
         chessMovesPanel.AddMove(house, sr.sprite, sprite);
 
-        //boardManager.UpdateBoardControl();
-        //Debug.Log("UpdateBoardControl");
+        Destroy(currentPiece.gameObject);
 
-        pieceController.BoardUpdate();
-
-        //StartCoroutine(pieceController.DelayedBoardUpdate(newPiece));
-        //Debug.Log("DelayedBoardUpdate2");
         if (currentPromotionCanvas)
             Destroy(currentPromotionCanvas);
     }
