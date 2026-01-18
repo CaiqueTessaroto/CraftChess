@@ -69,7 +69,8 @@ public class ManagerPieceInfo : MonoBehaviour
         previewImage.sprite = sprite;
 
         nameTmp.text = namePieceSquad;
-        powerTmp.text = $"Power: {pieceData.Power}";
+
+        powerTmp.text = UIHelperUtils.SetPowerText(pieceData.Power);
 
     }
 

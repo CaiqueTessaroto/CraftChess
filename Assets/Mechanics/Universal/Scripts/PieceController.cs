@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PieceController : MonoBehaviour
@@ -148,6 +149,7 @@ public class PieceController : MonoBehaviour
             selectedPiece = piece;
             pieceComponent = piece.GetComponent<PieceComponent>();
             pieceMovement = piece.GetComponent<PieceMovement>();
+            pieceMovement.enabled = true;
 
 
             if (!IA) // pieceComponent.Player.id != botPlayerId
@@ -260,23 +262,15 @@ public class PieceController : MonoBehaviour
     {
         if (draw)
             gameInterfaceManager.EndGame("Draw");
-
-        if (black)
+        else if (black)
         {
-            if (haskingBlack)
-            {
-                Sprite sprite = managerPieceInfo.pieceSprites[KingBlack.Name + KingBlack.Squad];
-                gameInterfaceManager.EndGameLocal(KingBlack.Squad, sprite);
-            }
-
+            Sprite sprite = managerPieceInfo.pieceSprites[KingBlack.Name + KingBlack.Squad];
+            gameInterfaceManager.EndGameLocal(MatchData.Instance.blackSquadName, sprite);
         }
         else if (white)
         {
-            if (haskingWhite)
-            {
-                Sprite sprite = managerPieceInfo.pieceSprites[KingWhite.Name + KingWhite.Squad];
-                gameInterfaceManager.EndGameLocal(KingWhite.Squad, sprite);
-            }
+            Sprite sprite = managerPieceInfo.pieceSprites[KingWhite.Name + KingWhite.Squad];
+            gameInterfaceManager.EndGameLocal(MatchData.Instance.whiteSquadName, sprite);
         }
 
     }
@@ -303,6 +297,11 @@ public class PieceController : MonoBehaviour
 
         if (haskingWhite)
         {
+            if (KingWhite == null)
+            {
+                kingWhiteIsInCheck = false;
+                return;
+            }
             // Verificar se o rei branco está em xeque
             Vector2Int kingWhitePos = KingWhite.Position;
             Cell cellWhite = boardManager
@@ -314,6 +313,11 @@ public class PieceController : MonoBehaviour
 
         if (haskingBlack)
         {
+            if (KingBlack == null)
+            {
+                kingBlackIsInCheck = false;
+                return;
+            }
             // Verificar se o rei preto está em xeque
             Vector2Int kingBlackPos = KingBlack.Position;
             Cell cellBlack = boardManager

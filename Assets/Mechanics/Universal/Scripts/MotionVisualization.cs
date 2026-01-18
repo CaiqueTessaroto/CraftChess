@@ -58,10 +58,8 @@ public class MotionVisualization : MonoBehaviour
 
         if (thisPiece.PossibleMoves == null)
         {
-            //pieceController.DeselectPiece();
-            //gridManager.UpdateBoardControl();
-            //pieceController.SelectPiece(thisPiece.gameObject);
             Debug.LogWarning("PossibleMoves is null for piece: " + thisPiece.name);
+            //thisPiece.PossibleMoves = new List<Vector2Int>();
             return;
         }
 

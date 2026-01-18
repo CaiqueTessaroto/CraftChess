@@ -9,6 +9,7 @@ public class BoardChessManager : MonoBehaviour
 {
     public CapturedPiecesManager capturedManager;
     public GameInterfaceManager gameInterfaceManager;
+    public PieceController pieceController;
 
     [Header("Grid Settings")]
     public int gridWidth = 8;
@@ -72,8 +73,11 @@ public class BoardChessManager : MonoBehaviour
         if (capturedManager == null)
             capturedManager = FindObjectOfType<CapturedPiecesManager>();
 
-                    if (gameInterfaceManager == null)
+        if (gameInterfaceManager == null)
             gameInterfaceManager = FindObjectOfType<GameInterfaceManager>();
+
+        if (pieceController == null)
+            pieceController = FindObjectOfType<PieceController>();
 
         //Debug.Log("Mapa: " + MatchData.Instance.mapName);
         //Debug.Log("Esquadrão do Jogador: " + MatchData.Instance.userSquadName);
@@ -591,6 +595,17 @@ public class BoardChessManager : MonoBehaviour
             }
         }
 
+        if (matchSquad.Player.id == 0)
+        {
+            if (pieceController.KingWhite == null)
+                pieceController.KingWhite = powerfullPiece;
+        }
+        else
+        {
+            if (pieceController.KingBlack == null)
+                pieceController.KingBlack = powerfullPiece;
+        }
+
         foreach (var piece in squad.Pieces)
         {
             if (sprites.TryGetValue(piece.Name, out Sprite sprite))
@@ -672,6 +687,8 @@ public class BoardChessManager : MonoBehaviour
         return pieceObj;
     }
 
+    private PieceComponent powerfullPiece;
+
     private void LoadPieceData(string name, GameObject pieceObj, Vector2Int pos, MatchSquadData matchSquad, Sprite sprite = null)
     {
 
@@ -683,7 +700,10 @@ public class BoardChessManager : MonoBehaviour
         if (yourPieces.TryGetValue(name, out MovementConfigData data))
         {
             if (movementScript != null)
+            {
                 movementScript.LoadConfigFromJson(data);
+                movementScript.enabled = true;
+            }
         }
 
         Squad squad = matchSquad.Data;
@@ -691,13 +711,14 @@ public class BoardChessManager : MonoBehaviour
 
         PieceComponent pieceComponent = pieceObj.AddComponent<PieceComponent>();
 
+        if (powerfullPiece == null || powerfullPiece.Power < pieceData.Power)
+            powerfullPiece = pieceComponent;
+
         Player player = matchSquad.Player;
 
         if (pos == MirrorPosition(squad.King.Position, player.id) && !string.IsNullOrEmpty(squad.King.Name))
         {
             pieceComponent.Initialize(pieceData.Squad, name, pieceData.Power, pieceData.PromotionPieces, pieceData.CastlingPieces, player, pos, true);
-
-            PieceController pieceController = FindObjectOfType<PieceController>();
 
             if (player.id == 0)
             {

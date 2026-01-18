@@ -55,8 +55,8 @@ public class SingleLobbyManager : MonoBehaviour
         // preenche os dados da partida
         MatchData.Instance.autoSwitchSide = currentMatch.switchSide;
 
-        MatchData.Instance.userSquadName = currentMatch.BlackSquadName;
-        MatchData.Instance.botSquadName = currentMatch.WhiteSquadName;
+        MatchData.Instance.blackSquadName = currentMatch.BlackSquadName;
+        MatchData.Instance.whiteSquadName = currentMatch.WhiteSquadName;
         MatchData.Instance.mapName = currentMatch.MapName;
         MatchData.Instance.whoStarts = currentMatch.StartOption;
         MatchData.Instance.botDifficulty = currentMatch.BotDifficulty;

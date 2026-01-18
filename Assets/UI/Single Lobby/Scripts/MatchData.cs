@@ -6,8 +6,8 @@ public class MatchData : MonoBehaviour
     public static MatchData Instance;
 
     [Header("Lobby")]
-    public string userSquadName;
-    public string botSquadName;
+    public string blackSquadName;
+    public string whiteSquadName;
     public string mapName;
     public StartOption whoStarts; // "User", "Bot" ou "Random"
     public BotDifficulty botDifficulty;
