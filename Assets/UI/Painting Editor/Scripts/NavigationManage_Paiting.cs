@@ -112,6 +112,9 @@ public class NavigationManage_Painting : MonoBehaviour
         panelFolder = folderNavigation.panelFolders;
         panelFile = fileNavigation.panelFile;
 
+        fileNavigation.selectBasePath = fileManager.basePath_Sprite;
+        folderNavigation.selectBasePath = fileManager.basePath_Sprite;
+
 
     }
 

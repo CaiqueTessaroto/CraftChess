@@ -117,6 +117,8 @@ public class NavigationManage_Squad : MonoBehaviour
 
         AddBtn.onClick.AddListener(() =>
         {
+            fileNavigation.selectBasePath = fileManager.basePath_PieceData;
+
             uIHelperUtils.save = false;
 
             if (uIHelperUtils.OnFiles)
@@ -176,6 +178,7 @@ public class NavigationManage_Squad : MonoBehaviour
 
         loadBtn.onClick.AddListener(() =>
         {
+            folderNavigation.selectBasePath = fileManager.basePath_PieceData;
 
             panelSquad.SetActive(true);
 
@@ -186,6 +189,7 @@ public class NavigationManage_Squad : MonoBehaviour
 
         saveBtn.onClick.AddListener(() =>
         {
+            folderNavigation.selectBasePath = fileManager.basePath_PieceData;
 
             if (squadManager.squadData.Power == 0)
             {
@@ -247,6 +251,8 @@ public class NavigationManage_Squad : MonoBehaviour
 
         quickSaveBtn.onClick.AddListener(() =>
         {
+            folderNavigation.selectBasePath = fileManager.basePath_PieceData;
+
             if (squadManager.squadData.Power == 0)
             {
                 string text = UIHelperUtils.T("file.empty_squad.txt");

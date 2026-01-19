@@ -278,7 +278,7 @@ public class FolderNavigation : MonoBehaviour
     {
         initiate = true;
 
-        Debug.Log("basePath: " + basePath);
+        //Debug.Log("basePath: " + basePath);
 
         try
         {

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using System.Timers;
 
 
 public class PromotionUI : MonoBehaviour
@@ -211,6 +212,7 @@ public class PromotionUI : MonoBehaviour
 
     public void Promotion(string pieceName, Sprite sprite)
     {
+
         GameObject newPiece = boardManager.PlacePiece(pieceName, sprite, pos, squad);
 
         if (newPiece == null)
@@ -219,11 +221,20 @@ public class PromotionUI : MonoBehaviour
             return;
         }
 
-
         PieceComponent component = newPiece.GetComponent<PieceComponent>();
         PieceMovement newMovement = newPiece.GetComponent<PieceMovement>();
 
         component.IsPromoted = true;
+
+        if (currentPiece.IsKing)
+        {
+            if (currentPiece.Player.id == 0)
+                pieceController.KingWhite = component;
+            else
+                pieceController.KingBlack = component;
+
+            component.IsKing = true;
+        }
 
 
 
