@@ -142,7 +142,7 @@ public class FileNavigation : MonoBehaviour
 
             folderNavigation.panelFolders.SetActive(true);
 
-            StartCoroutine(folderNavigation.UpdateFolderButtons());
+            StartCoroutine(folderNavigation.UpdateFolderButtons(selectBasePath));
 
             /*
             if (uIHelperUtils.change)
@@ -491,7 +491,10 @@ public class FileNavigation : MonoBehaviour
                     string pastaCopy = Path.GetFileName(Path.GetDirectoryName(pathCopy));
                     string fileName = Path.GetFileNameWithoutExtension(pathCopy);
 
-                    if (managePainting)
+
+                    if (manageCreate)
+                        manageCreate.HandleSelectionArt(fileName, pastaCopy, spriteData.Sprite, rootPath);
+                    else if (managePainting)
                         managePainting.OnFileClick(newButton, fileName, pastaCopy, rootPath);
                 });
 

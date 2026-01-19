@@ -37,7 +37,7 @@ public class FolderNavigation : MonoBehaviour
     [Header("Control")]
     public GameObject currentButtonFolder;
     public string selectRootPath;
-    private string selectBasePath;
+    public string selectBasePath;
     public bool initiate = false;
 
 
@@ -79,21 +79,21 @@ public class FolderNavigation : MonoBehaviour
         {
             if (initiate) return;
             if (uIHelperUtils.setAll())
-                StartCoroutine(UpdateFolderButtons());
+                StartCoroutine(UpdateFolderButtons(selectBasePath));
 
         });
         myBtw.onClick.AddListener(() =>
         {
             if (initiate) return;
             if (uIHelperUtils.setMy())
-                StartCoroutine(UpdateFolderButtons());
+                StartCoroutine(UpdateFolderButtons(selectBasePath));
 
         });
         libraryBtw.onClick.AddListener(() =>
         {
             if (initiate) return;
             if (uIHelperUtils.setLibrary())
-                StartCoroutine(UpdateFolderButtons());
+                StartCoroutine(UpdateFolderButtons(selectBasePath));
 
         });
 
@@ -127,10 +127,10 @@ public class FolderNavigation : MonoBehaviour
 
             uIHelperUtils.setAll();
 
-            if (managePainting)
-                fileNavigation.selectBasePath = fileManager.basePath_Sprite;
-            else
-                fileNavigation.selectBasePath = fileManager.basePath_PieceData;
+            //if (managePainting)
+            //    fileNavigation.selectBasePath = fileManager.basePath_Sprite;
+            //else
+            //    fileNavigation.selectBasePath = fileManager.basePath_PieceData;
 
             panelFolders.SetActive(false);
 
@@ -271,12 +271,14 @@ public class FolderNavigation : MonoBehaviour
             Destroy(child.gameObject);
 
 
-        StartCoroutine(UpdateFolderButtons());
+        StartCoroutine(UpdateFolderButtons(selectBasePath));
     }
 
-    public IEnumerator UpdateFolderButtons()
+    public IEnumerator UpdateFolderButtons(string basePath)
     {
         initiate = true;
+
+        Debug.Log("basePath: " + basePath);
 
         try
         {
@@ -296,14 +298,14 @@ public class FolderNavigation : MonoBehaviour
             // Carrega pastas do streamingAssetsPath se estiver no "onLibrary"
             if (uIHelperUtils.onLibrary && !uIHelperUtils.save)
             {
-                pastas = fileManager.GetSubfoldersIn(selectBasePath, Application.streamingAssetsPath);
+                pastas = fileManager.GetSubfoldersIn(basePath, Application.streamingAssetsPath);
                 yield return StartCoroutine(CreateFolderButtons(pastas, Application.streamingAssetsPath));
             }
 
             // Carrega pastas do persistentDataPath se estiver no "onMy"
             if (uIHelperUtils.onMy)
             {
-                pastas = fileManager.GetSubfoldersIn(selectBasePath, Application.persistentDataPath);
+                pastas = fileManager.GetSubfoldersIn(basePath, Application.persistentDataPath);
                 // Espera terminar a criação antes de continuar
                 yield return StartCoroutine(CreateFolderButtons(pastas, Application.persistentDataPath));
             }

@@ -70,11 +70,14 @@ public class NavigationManage_Create : MonoBehaviour
 
         quickSaveBtw.onClick.AddListener(() =>
         {
+            fileNavigation.selectBasePath = fileManager.basePath_PieceData;
             QuickSavePiece(namePiece.text);
         });
 
         saveBtn.onClick.AddListener(() =>
         {
+            fileNavigation.selectBasePath = fileManager.basePath_PieceData;
+
             if (string.IsNullOrEmpty(namePiece.text))
             {
                 string text = UIHelperUtils.T("none.name.txt");
@@ -105,6 +108,7 @@ public class NavigationManage_Create : MonoBehaviour
 
         loadBtn.onClick.AddListener(() =>
         {
+            fileNavigation.selectBasePath = fileManager.basePath_PieceData;
             uIHelperUtils.save = false;
             StartFolderNavigation();
         });
@@ -112,6 +116,7 @@ public class NavigationManage_Create : MonoBehaviour
 
         newBtw.onClick.AddListener(() =>
         {
+            fileNavigation.selectBasePath = fileManager.basePath_PieceData;
             Scene currentScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(currentScene.name);
         });
@@ -149,6 +154,20 @@ public class NavigationManage_Create : MonoBehaviour
 
     public void StartFolderNavigation()
     {
+
+        TextMeshProUGUI textoBotao = folderNavigation.piecesBtw.GetComponentInChildren<TextMeshProUGUI>();
+
+        string text = UIHelperUtils.T("PIECES");
+
+        if (string.IsNullOrEmpty(text))
+            text = "Pieces";
+
+        textoBotao.text = text;
+
+
+
+        uIHelperUtils.change = true;
+
         uIHelperUtils.setAll();
         panelFolder.SetActive(true);
         folderNavigation.StartCreatingFolderButtons(fileManager.basePath_PieceData, panelFolder);
@@ -157,12 +176,28 @@ public class NavigationManage_Create : MonoBehaviour
     public void CreateSelectionArt()
     {
 
+        //uIHelperUtils.change = true;
+
         fileNavigation.navigationOptions.SetActive(true);
-        fileNavigation.squadsBtw.gameObject.SetActive(false);
+        //fileNavigation.squadsBtw.gameObject.SetActive(false);
+
+        TextMeshProUGUI textoBotao = folderNavigation.piecesBtw.GetComponentInChildren<TextMeshProUGUI>();
+
+        string text = UIHelperUtils.T("ARTS");
+
+        if (string.IsNullOrEmpty(text))
+            text = "Arts";
+
+        textoBotao.text = text;
+
 
         panelFile.SetActive(true);
 
         fileNavigation.selectBasePath = fileManager.basePath_Sprite;
+        folderNavigation.selectBasePath = fileManager.basePath_Sprite;
+
+        //folderNavigation.StartCreatingFolderButtons(fileManager.basePath_Sprite, panelFolder);
+        //StartCoroutine(folderNavigation.UpdateFolderButtons(fileManager.basePath_Sprite));
 
         Transform content = panelFile.transform.Find("Scroll View/Viewport/Content");
 
@@ -175,6 +210,9 @@ public class NavigationManage_Create : MonoBehaviour
         uIHelperUtils.setAll();
 
         StartCoroutine(fileNavigation.UpdateFilesButtons());
+
+        panelFile.SetActive(true);
+        //panelFolder.SetActive(true);
     }
 
     public void OnClickFolder(string pasta, GameObject newButton, string rootPath)
@@ -287,7 +325,7 @@ public class NavigationManage_Create : MonoBehaviour
             {
                 uIHelperUtils.back = true;
                 uIHelperUtils.change = false;
-                fileNavigation.StartCreatingFileButtons(pasta, rootPath, fileManager.basePath_PieceData);
+                fileNavigation.StartCreatingFileButtons(pasta, rootPath, folderNavigation.selectBasePath);
                 panelFile.SetActive(true);
             }
 
