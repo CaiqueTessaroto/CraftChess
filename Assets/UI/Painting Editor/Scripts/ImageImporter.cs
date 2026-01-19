@@ -54,26 +54,34 @@ public class ImageImporter : MonoBehaviour
 
 #elif UNITY_ANDROID || UNITY_IOS
         // Mobile
-        if (NativeFilePicker.IsFilePickerSupported())
-        {
-            string[] mimeTypes = { "image/png", "image/jpeg" };
+        if (NativeFilePicker.IsFilePickerBusy()) return;
 
-            NativeFilePicker.PickFile((path) =>
-            {
-                if (path != null)
-                {
-                    ImportImage(path, 34, 34);
-                }
-                else
-                {
-                    Debug.Log("Usuário cancelou a seleção de arquivo.");
-                }
-            }, mimeTypes);
-        }
-        else
+        // 1. Verifica a permissão (Nesta versão o retorno é bool)
+        // O parâmetro 'false' geralmente é para permissão de leitura
+        bool hasPermission = NativeFilePicker.CheckPermission(false);
+
+        if (!hasPermission)
         {
-            Debug.LogWarning("FilePicker não é suportado nesta plataforma.");
+            // Em versões que não têm 'RequestPermission', 
+            // basta chamar o PickFile que ele solicita a permissão automaticamente.
+            Debug.Log("Permissão ainda não concedida ou pendente.");
         }
+
+        // 2. Tenta abrir o seletor diretamente
+        // O plugin cuidará de pedir a permissão se necessário
+        string[] mimeTypes = { "image/png", "image/jpeg" };
+
+        NativeFilePicker.PickFile((path) =>
+        {
+            if (path != null)
+            {
+                ImportImage(path, 34, 34);
+            }
+            else
+            {
+                Debug.Log("Usuário cancelou a seleção ou permissão negada.");
+            }
+        }, mimeTypes);
 #endif
     }
 

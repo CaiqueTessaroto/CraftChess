@@ -3,9 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using TMPro;
-using System;
-using System.Collections;
-using Ookii.Dialogs;
 using UnityEngine.SceneManagement;
 
 
