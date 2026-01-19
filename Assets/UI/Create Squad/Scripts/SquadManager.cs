@@ -271,7 +271,7 @@ public class SquadManager : MonoBehaviour
     public MovementConfigData getMovementPiece(string name)
     {
         string fullPath;
-        string rootPath;
+        string rootPath = Application.persistentDataPath;;
 
 
         SquadPieceData pieceData = squadData.Pieces.Find(p => p.NameInSquad == name);
@@ -279,10 +279,10 @@ public class SquadManager : MonoBehaviour
         if (pieceData == null)
             return null;
 
-        if (pieceData.NativePiece)
-            rootPath = Application.streamingAssetsPath;
-        else
-            rootPath = Application.persistentDataPath;
+        //if (pieceData.NativePiece)
+        //    rootPath = Application.streamingAssetsPath;
+        //else
+        //    rootPath = Application.persistentDataPath;
 
         fullPath = Path.Combine(rootPath, fileManager.basePath_PieceData, pieceData.Squad, pieceData.Name + ".json");
 

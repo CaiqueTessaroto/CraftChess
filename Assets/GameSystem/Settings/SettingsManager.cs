@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 
 [System.Serializable]
 public class GameSettings
@@ -53,6 +55,9 @@ public class SettingsManager : MonoBehaviour
     public GameObject settingsContent;
     private GameObject settingsPanel;
 
+    const string FIRST_RUN_KEY = "StreamingAssetsCopied";
+
+
     void Awake()
     {
         if (Instance == null)
@@ -60,15 +65,19 @@ public class SettingsManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
+            //#if UNITY_ANDROID && !UNITY_EDITOR
+            //if (!PlayerPrefs.HasKey("StreamingAssetsCopied"))
+            //{
+            StartCoroutine(CopyInitialNativeData());
+            //}
+            //#endif
+
             Load();
 
-            // 🔒 garantia absoluta
             if (Settings == null)
                 Settings = new GameSettings();
 
             LocalizationManager.Instance.ApplyLanguage(Settings.language);
-
-            //LocalizationManager.Instance.LoadLanguage(Settings.language);
         }
         else Destroy(gameObject);
     }
@@ -146,8 +155,50 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
+    IEnumerator CopyInitialNativeData()
+    {
+        // 🔁 Adicione aqui TODAS as pastas que você precisa listar depois
+        yield return StartCoroutine(CopyStreamingAssetsFolder("Pieces"));
+        yield return StartCoroutine(CopyStreamingAssetsFolder("Sprites"));
+        yield return StartCoroutine(CopyStreamingAssetsFolder("Squads"));
+
+        PlayerPrefs.SetInt("StreamingAssetsCopied", 1);
+        PlayerPrefs.Save();
+
+        Debug.Log("✔ StreamingAssets copiado para persistentDataPath");
+    }
 
 
+    IEnumerator CopyStreamingAssetsFolder(string folderName)
+    {
+
+        string extractPath = Path.Combine(Application.persistentDataPath, folderName);
+
+        if (Directory.Exists(extractPath))
+        {
+            Debug.Log("Exists: " + extractPath);
+            yield break;
+        }
+
+        string zipPath = Path.Combine(Application.streamingAssetsPath, folderName + ".zip");
+        string targetZip = Path.Combine(Application.persistentDataPath, folderName + ".zip");
+
+        using (UnityWebRequest www = UnityWebRequest.Get(zipPath))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError(www.error);
+                yield break;
+            }
+
+            File.WriteAllBytes(targetZip, www.downloadHandler.data);
+        }
+
+        System.IO.Compression.ZipFile.ExtractToDirectory(targetZip, extractPath);
+        File.Delete(targetZip);
+    }
 
 
 }

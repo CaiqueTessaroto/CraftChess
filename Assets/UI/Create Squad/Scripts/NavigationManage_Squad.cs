@@ -208,14 +208,14 @@ public class NavigationManage_Squad : MonoBehaviour
             {
                 name = squadManager.squad;
             }
-                string title = UIHelperUtils.T("file.save");
-                string inputText = UIHelperUtils.T("file.create.txt");
+            string title = UIHelperUtils.T("file.save");
+            string inputText = UIHelperUtils.T("file.create.txt");
 
-                if (string.IsNullOrEmpty(title))
-                    title = "Create Set";
+            if (string.IsNullOrEmpty(title))
+                title = "Create Set";
 
-                if (string.IsNullOrEmpty(inputText))
-                    inputText = "Enter the name...";
+            if (string.IsNullOrEmpty(inputText))
+                inputText = "Enter the name...";
 
             fileManager.CreateInput(title, inputText, (text) =>
             {
@@ -739,7 +739,7 @@ public class NavigationManage_Squad : MonoBehaviour
             // 🔹 Cria botões das peças
             foreach (SquadPieceData piece in data.Pieces)
             {
-                string loadRootPath = piece.NativePiece ? Application.streamingAssetsPath : Application.persistentDataPath;
+                string loadRootPath = Application.persistentDataPath;//piece.NativePiece ? Application.streamingAssetsPath :
 
                 string jsonPath = Path.Combine(
                     loadRootPath,
@@ -806,7 +806,7 @@ public class NavigationManage_Squad : MonoBehaviour
     private bool AddPieceToSquad(string jsonPath, string rootPath, Transform content)
     {
         string nameInSquad = string.Empty;
-        bool nativePiece = (rootPath == Application.streamingAssetsPath);
+        bool nativePiece = rootPath == Application.streamingAssetsPath;
 
         try
         {
@@ -821,6 +821,7 @@ public class NavigationManage_Squad : MonoBehaviour
 
             PieceInfo piece = wrapper.piece;
             nameInSquad = piece.Name;
+            piece.NativeSprite = nativePiece;
 
             // Adiciona ao squad
             if (!squadManager.squadData.Pieces.Any(p => p.NameInSquad == nameInSquad))

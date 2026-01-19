@@ -436,7 +436,7 @@ public class InteractiveLobby : MonoBehaviour
         foreach (SquadPieceData piece in data.Pieces)
         {
 
-            string loadRootPath = piece.NativePiece ? Application.streamingAssetsPath : Application.persistentDataPath;
+            string loadRootPath = Application.persistentDataPath;//piece.NativePiece ? Application.streamingAssetsPath :
 
             string jsonPath = Path.Combine(
                 loadRootPath,

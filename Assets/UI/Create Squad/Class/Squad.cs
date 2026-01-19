@@ -7,7 +7,6 @@ public class Squad
 {
     public string Name;
     public int Power;
-    public bool NativeSquad = false;
     public King King;
     public List<SquadPieceData> Pieces = new List<SquadPieceData>();
     public List<UnitPieceData> Units = new List<UnitPieceData>();

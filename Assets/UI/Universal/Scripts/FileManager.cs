@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Linq;
+using System.Collections;
+using UnityEngine.Networking;
 
 
 
@@ -528,6 +530,12 @@ public class FileManager : MonoBehaviour
     {
         List<string> subfolders = new List<string>();
 
+        //#if UNITY_ANDROID && !UNITY_EDITOR
+        // No Android não faz nada
+        if (rootPath == Application.streamingAssetsPath)
+            return subfolders;
+        //#endif
+
         string fullPath = Path.Combine(rootPath, basePath);
 
         if (!Directory.Exists(fullPath))
@@ -562,6 +570,7 @@ public class FileManager : MonoBehaviour
         subfolders.Reverse();
         return subfolders;
     }
+
 
 
 }

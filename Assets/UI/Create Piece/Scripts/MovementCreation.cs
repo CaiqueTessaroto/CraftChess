@@ -227,7 +227,7 @@ public class MovementCreation : MonoBehaviour
         if (config != null)
         {
             this.piece.Power = config.piece.Power;
-            this.piece.NativeSprite = config.piece.NativeSprite;
+            this.piece.NativeSprite = false;//config.piece.NativeSprite;
 
             this.straight = config.straight;
             this.diagonal = config.diagonal;
