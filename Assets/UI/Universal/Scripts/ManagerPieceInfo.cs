@@ -21,14 +21,22 @@ public class ManagerPieceInfo : MonoBehaviour
     public GameObject viewPiecePrefab;
     public Button closePiecebtn;
 
+    public BoardChessManager boardChessManager;
+
     public Dictionary<string, Sprite> pieceSprites = new Dictionary<string, Sprite>();
 
     // Start is called before the first frame update
     void Start()
     {
 
+        if (boardChessManager == null)
+            boardChessManager = FindObjectOfType<BoardChessManager>();
+
         closePiecebtn.onClick.AddListener(() =>
         {
+            if (boardChessManager)
+                boardChessManager.infoPiece = false;
+
             Panel.SetActive(false);
         });
 

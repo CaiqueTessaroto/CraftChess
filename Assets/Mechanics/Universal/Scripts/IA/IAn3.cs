@@ -196,6 +196,9 @@ public class IAn3 : MonoBehaviour
                     score += enemy.Power;
                 }
 
+                if (enemy.IsKing)
+                    score += 100;
+
             }
         }
 

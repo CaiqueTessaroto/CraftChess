@@ -116,6 +116,9 @@ public class IAn2 : MonoBehaviour
             if (enemy != null && enemy.Player.id != botPlayerId)
             {
                 score += enemy.Power * 1.2f;
+
+                if (enemy.IsKing)
+                    score += 100;
             }
         }
 
