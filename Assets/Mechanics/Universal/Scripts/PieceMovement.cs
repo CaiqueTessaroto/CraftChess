@@ -1006,7 +1006,7 @@ public class PieceMovement : MonoBehaviour
                 {
                     validMoves.Add(move);
 
-                    blocked = true; //!canJumpOverPieces
+                    blocked = !canJumpOverPieces; //true;
                 }
                 else if (captureMovement && control)
                 {
