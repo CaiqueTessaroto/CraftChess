@@ -6406,6 +6406,7 @@ MonoBehaviour:
   testMode: 1
   rewardedAdUnitAndroid: Rewarded_Android
   interstitialAdUnitAndroid: Interstitial_Android
+  firstAdDelay: 60
   interstitialCooldown: 300
 --- !u!114 &1952963227
 MonoBehaviour:
@@ -6419,7 +6420,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e0af8adb39220a49bd4ea4a5779b523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  androidAdUnit: Rewarded_Android
 --- !u!1 &2060607021
 GameObject:
   m_ObjectHideFlags: 0

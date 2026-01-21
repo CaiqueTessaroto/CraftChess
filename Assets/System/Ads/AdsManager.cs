@@ -19,9 +19,13 @@ public class AdsManager : MonoBehaviour,
     [SerializeField] string interstitialAdUnitAndroid = "Interstitial_Android";
 
     [Header("Interstitial Time Settings")]
+    [SerializeField] float firstAdDelay = 60f;
     [SerializeField] float interstitialCooldown = 300f; // 5 minutos
 
-    float lastInterstitialTime = -999f;
+    float lastInterstitialTime = 0;
+    float gameStartTime;
+
+    bool firstAd = false;
 
 
     string rewardedAdUnit;
@@ -45,6 +49,9 @@ public class AdsManager : MonoBehaviour,
 
     void Start()
     {
+
+        gameStartTime = Time.time;
+
         if (Advertisement.isInitialized)
             return;
 
@@ -63,6 +70,21 @@ public class AdsManager : MonoBehaviour,
         if (Instance == null)
             return;
 
+        float elapsed = Time.time - Instance.gameStartTime;
+
+        // Primeiro anúncio só após 1 minuto
+        if (!Instance.firstAd)
+        {
+            if (elapsed < Instance.firstAdDelay)
+                return;
+
+            Instance.firstAd = true;
+            Instance.lastInterstitialTime = Time.time;
+            Advertisement.Show(Instance.interstitialAdUnit, Instance);
+            return;
+        }
+
+        // Próximos anúncios
         if (Time.time - Instance.lastInterstitialTime < Instance.interstitialCooldown)
             return;
 
