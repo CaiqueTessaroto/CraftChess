@@ -41,6 +41,9 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(string sceneName)
     {
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+
+        AdsManager.TryShowInterstitial();
+
         SceneManager.LoadScene(sceneName);
     }
 

@@ -338,7 +338,7 @@ public class NavigationManage_Painting : MonoBehaviour
         // ===============================
         void Save()
         {
-            gridManager.Save(newfilePng, subfolderName);
+            gridManager.Save(newfilePng, subfolderName, false);
 
             panelFolder.SetActive(false);
 

@@ -92,7 +92,7 @@ public class GameInterfaceManager : MonoBehaviour
 
 
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-            SceneManager.LoadScene("Menu");
+            gameManager.ChangeScene("Menu");
         });
 
 
@@ -123,7 +123,7 @@ public class GameInterfaceManager : MonoBehaviour
         {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
-            SceneManager.LoadScene("Single Lobby");
+            gameManager.ChangeScene("Single Lobby");
         });
 
         ViewInfoBtn.onClick.AddListener(() =>

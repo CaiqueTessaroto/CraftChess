@@ -52,6 +52,7 @@ public class NavigationManage_Squad : MonoBehaviour
     [Header("Control")]
     public bool initiate = false;
     private bool setCursor = false;
+    private bool ads = false;
     //private string selectRootPath;
 
 
@@ -231,6 +232,8 @@ public class NavigationManage_Squad : MonoBehaviour
                 if (string.IsNullOrEmpty(textSave))
                     textSave = "There is already a file with the same name in the folder, do you want to replace it?";
 
+                ads = true;
+
                 SaveSquad(text, titleSave, textSave);
             }, name);
 
@@ -271,6 +274,8 @@ public class NavigationManage_Squad : MonoBehaviour
                 titleSave = "Do you want to replace the file?";
             if (string.IsNullOrEmpty(textSave))
                 textSave = "There is already a file with the same name in the folder, do you want to replace it?";
+
+            ads = false;
 
             SaveSquad(squadManager.squad, titleSave, textSave);
 
@@ -402,7 +407,6 @@ public class NavigationManage_Squad : MonoBehaviour
     public IEnumerator CapturePanel(string name)
     {
         yield return null;
-        yield return null;
 
         Texture2D screenTex = ScreenCapture.CaptureScreenshotAsTexture();
 
@@ -432,6 +436,12 @@ public class NavigationManage_Squad : MonoBehaviour
         //Debug.Log("Print do painel salvo em: " + filePath);
 
         Destroy(screenTex);
+
+        yield return new WaitForEndOfFrame();
+
+        if (ads)
+            AdsManager.TryShowInterstitial();
+
         yield break;
     }
 

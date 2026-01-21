@@ -592,7 +592,7 @@ public class NavigationManage_Create : MonoBehaviour
         // ===============================
         void Save()
         {
-            SavePieceInternal(finalName, subfolderName, fileJson);
+            SavePieceInternal(finalName, subfolderName, fileJson, false);
         }
 
         string fullPath = Path.Combine(
@@ -737,7 +737,8 @@ public class NavigationManage_Create : MonoBehaviour
     private void SavePieceInternal(
         string pieceName,
         string subfolderName,
-        string fileJson
+        string fileJson,
+        bool ads = true
     )
     {
         uIHelperUtils.change = true;
@@ -755,6 +756,9 @@ public class NavigationManage_Create : MonoBehaviour
 
         panelFolder.SetActive(false);
         folderNavigation.RefreshFolderButton(subfolderName);
+
+        if (ads)
+            AdsManager.TryShowInterstitial();
 
         //Debug.Log($"SavePiece: Peça '{pieceName}' salva com sucesso.");
     }

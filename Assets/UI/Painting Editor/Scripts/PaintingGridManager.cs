@@ -855,12 +855,15 @@ public class PaintingGridManager : MonoBehaviour
 
 
 
-    public void Save(string filePng, string subfolderName)
+    public void Save(string filePng, string subfolderName, bool Ads = true)
     {
         bool hasData = SavePaintedCells("fileJson", subfolderName);
 
         if (!hasData)
             return;
+
+        if (Ads)
+            AdsManager.TryShowInterstitial();
 
         ExportGridAsTextureFromJson(filePng, Application.persistentDataPath, 1000, subfolderName);
     }

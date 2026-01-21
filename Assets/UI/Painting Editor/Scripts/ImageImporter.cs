@@ -138,6 +138,8 @@ public class ImageImporter : MonoBehaviour
             painting.namePiece.text = fileNameWithoutExtension;
 
         Debug.Log("Imagem importada e aplicada no grid!");
+
+        AdsManager.TryShowInterstitial();
     }
 
 }
