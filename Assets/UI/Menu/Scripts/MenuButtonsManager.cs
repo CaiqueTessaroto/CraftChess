@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class MenuButtonsManager : MonoBehaviour
 {
     public GameManager gameManager;
+    public RewardedAd rewardedAd;
+    public Button testBtn;
 
     [Header("Main:")]
     public Button playBtn;
@@ -27,6 +29,13 @@ public class MenuButtonsManager : MonoBehaviour
 
     void Start()
     {
+
+        if (rewardedAd == null)
+            rewardedAd = FindObjectOfType<RewardedAd>();
+
+        testBtn.onClick.AddListener(() => rewardedAd.ShowAd());
+
+
 
         if (gameManager == null)
         {
