@@ -31,7 +31,7 @@ public class Movement
     public bool Active = false;
 
     [Header("Configuração de Direção:")]
-    public bool All = true;
+    public bool All = false;
     public bool Front = false;
     public bool Back = false;
     public bool Right = false;

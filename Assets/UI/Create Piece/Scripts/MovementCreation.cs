@@ -624,6 +624,11 @@ public class MovementCreation : MonoBehaviour
             }
         }
 
+        if (straight.All || straight.Front || straight.Back || straight.Right || straight.Left)
+            straight.Active = true;
+        else
+            straight.Active = false;
+
         return validMoves;
     }
 
@@ -688,6 +693,11 @@ public class MovementCreation : MonoBehaviour
                 }
             }
         }
+
+        if (diagonal.All || diagonal.Front || diagonal.Back || diagonal.Right || diagonal.Left)
+            diagonal.Active = true;
+        else
+            diagonal.Active = false;
 
         return validMoves;
     }

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16356fe3b9ef6fc4cb033cf0da1bdbec, type: 3}
+  m_Name: TutorialSquad
+  m_EditorClassIdentifier: 
+  pages:
+  - image: {fileID: 21300000, guid: ee80f227e5838a840a5e4555493f3338, type: 3}
+    description: "Ao pressionar Adicionar, os conjuntos dispon\xEDveis ser\xE3o exibidos.\nEscolha
+      um conjunto para adicionar todas as suas pe\xE7as de uma vez.\nPara adicionar
+      pe\xE7as individualmente, use o bot\xE3o Pe\xE7as no canto superior direito."
+  - image: {fileID: 21300000, guid: db897da984dddc04c837b2bb613ea10a, type: 3}
+    description: "Quando nenhuma pe\xE7a ou bot\xE3o estiver selecionado, as informa\xE7\xF5es
+      do seu esquadr\xE3o aparecem no centro da tela.\nAli, voc\xEA pode ver o total
+      de pe\xE7as, o poder do esquadr\xE3o e qual \xE9 o rei do esquadr\xE3o."
+  - image: {fileID: 21300000, guid: 2420db8c7c505a740b42b35150ffb53a, type: 3}
+    description: "Use o bot\xE3o da coroa para escolher qual pe\xE7a ser\xE1 o rei
+      do seu esquadr\xE3o.\nUse o bot\xE3o X para remover uma pe\xE7a do tabuleiro."
+  - image: {fileID: 21300000, guid: eb59ac111f29b744cba4fd306b70d81c, type: 3}
+    description: "Selecione uma pe\xE7a no canto direito para ver suas informa\xE7\xF5es
+      no centro da tela.\nDepois, basta clicar na posi\xE7\xE3o do tabuleiro onde
+      deseja coloc\xE1-la."
+  - image: {fileID: 21300000, guid: bfb826fa04a4cca4983696b6df5237c9, type: 3}
+    description: "Use o bot\xE3o + para configurar as promo\xE7\xF5es e roques da
+      pe\xE7a selecionada.\nBasta arrastar as pe\xE7as desejadas.\nPe\xE7as muito
+      poderosas t\xEAm limita\xE7\xF5es: acima de 15 de poder n\xE3o podem promover,
+      e acima de 80 de poder n\xE3o podem realizar roque."

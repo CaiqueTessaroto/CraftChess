@@ -67,6 +67,11 @@ public class GridSquadManager : MonoBehaviour
                     Button button = newCell.GetComponent<Button>();
                     button.onClick.AddListener(() => ToggleCellSelection(cellPos));
                 }
+                else
+                {
+                    Button button = newCell.GetComponent<Button>();
+                    button.interactable = false;
+                }
             }
         }
     }

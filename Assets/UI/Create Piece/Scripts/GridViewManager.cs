@@ -335,12 +335,13 @@ public class GridViewManager : MonoBehaviour
 
 
         // Straight
+        validMoves = movementCreation.GetStraightMoves(selectedPosition);
         if (straight.Active)
         {
             if (!allowHighlightRefresh)
                 ClearMovementFlagsFromSource("straight");
 
-            validMoves = movementCreation.GetStraightMoves(selectedPosition);
+            //validMoves = movementCreation.GetStraightMoves(selectedPosition);
             HighlightGrid(straight, validMoves, "straight");
             wasStraightActive = true;
         }
@@ -351,12 +352,13 @@ public class GridViewManager : MonoBehaviour
         }
 
         // Diagonal
+        validMoves = movementCreation.GetDiagonalMoves(selectedPosition);
         if (diagonal.Active)
         {
             if (!allowHighlightRefresh)
                 ClearMovementFlagsFromSource("diagonal");
 
-            validMoves = movementCreation.GetDiagonalMoves(selectedPosition);
+            //validMoves = movementCreation.GetDiagonalMoves(selectedPosition);
             HighlightGrid(diagonal, validMoves, "diagonal");
             wasDiagonalActive = true;
         }

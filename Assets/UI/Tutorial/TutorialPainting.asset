@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16356fe3b9ef6fc4cb033cf0da1bdbec, type: 3}
+  m_Name: TutorialPainting
+  m_EditorClassIdentifier: 
+  pages:
+  - image: {fileID: 21300000, guid: c9f68e6b2a1e5ab4b94e1962285423ab, type: 3}
+    description: "Para usar as ferramentas de criar c\xEDrculo, ret\xE2ngulo, linha
+      ou sele\xE7\xE3o, clique em dois pontos na grade.\nNo PC, a bolinha no canto
+      superior esquerdo indica a posi\xE7\xE3o do mouse."
+  - image: {fileID: 21300000, guid: 1ded4a904ddf0d64fbfe55dedf147a0b, type: 3}
+    description: "Depois de selecionar uma \xE1rea, utilize as setas no canto inferior
+      esquerdo para mov\xEA-la.\nPressione o bot\xE3o central para confirmar o movimento
+      e encerrar a ferramenta."
+  - image: {fileID: 21300000, guid: 37c2f38c97e1d11478132e1b240704c9, type: 3}
+    description: "O bot\xE3o de salvamento r\xE1pido \xE9 usado para artes que j\xE1
+      foram salvas ou carregadas.\nO conjunto ao qual elas pertencem ser\xE1 exibido
+      logo abaixo do bot\xE3o."
+  - image: {fileID: 21300000, guid: 6c6d490bef29cf845a7d485cb3d6e86c, type: 3}
+    description: "Ao clicar em Salvar, os conjuntos dispon\xEDveis ser\xE3o exibidos
+      em seguida, clique novamente no conjunto desejado para confirmar o salvamento.
+      No canto superior direito, \xE9 poss\xEDvel criar um novo conjunto. Para excluir,
+      clique em Excluir, selecione o conjunto desejado e confirme a a\xE7\xE3o."

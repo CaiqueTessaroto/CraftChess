@@ -15,8 +15,10 @@ public class TutorialController : MonoBehaviour
 {
     [Header("Data")]
     public TutorialData tutorialData;
+    public string tutorialSeen = "TutorialSeen";
 
     [Header("UI")]
+    public GameObject body;
     public Image image;
     public TextMeshProUGUI text;
     public TextMeshProUGUI pagination;
@@ -39,6 +41,17 @@ public class TutorialController : MonoBehaviour
         prevButton.onClick.AddListener(() => Previous());
 
         closeButton.onClick.AddListener(() => CloseTutorial());
+
+        bool tutorial = PlayerPrefs.GetInt(tutorialSeen, 0) == 1;
+
+        if (tutorial)
+        {
+            body.SetActive(false); // não mostra
+        }
+        else
+        {
+            body.SetActive(true);  // mostra só na primeira vez
+        }
 
     }
 
@@ -72,7 +85,7 @@ public class TutorialController : MonoBehaviour
 
         prevButton.interactable = index > 0;
         //nextButton.interactable = index < tutorialData.pages.Count - 1;
-        
+
         nextButton.gameObject.SetActive(index < tutorialData.pages.Count - 1);
 
         closeButton.gameObject.SetActive(index == tutorialData.pages.Count - 1);
@@ -94,8 +107,8 @@ public class TutorialController : MonoBehaviour
 
     public void CloseTutorial()
     {
-        gameObject.SetActive(false);
-        PlayerPrefs.SetInt("TutorialSeen", 1);
+        body.SetActive(false);
+        PlayerPrefs.SetInt(tutorialSeen, 1);
     }
 
     void UpdatePagination()

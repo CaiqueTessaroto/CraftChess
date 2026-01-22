@@ -9,4 +9,3 @@ public class TutorialData : ScriptableObject
 {
     public List<TutorialPage> pages;
 }
-

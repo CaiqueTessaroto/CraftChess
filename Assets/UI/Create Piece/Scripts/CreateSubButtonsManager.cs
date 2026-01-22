@@ -17,12 +17,28 @@ public class CreateSubButtonsManager : MonoBehaviour
     public GameObject diagonalPanel;
     public GameObject customPanel;
 
+    [Header("Select Colors:")]
+    public Color32 corPadrao = new Color32(255, 255, 255, 100);
+    public Color32 corDestaque = new Color32(240, 75, 79, 255);
+
     // Start is called before the first frame update
     void Start()
     {
-        straightButton.onClick.AddListener(() => SelectSubOptionsPanels(straightPanel));
-        diagonalButton.onClick.AddListener(() => SelectSubOptionsPanels(diagonalPanel));
-        customButton.onClick.AddListener(() => SelectSubOptionsPanels(customPanel));
+        straightButton.onClick.AddListener(() =>
+        {
+            SelecionarPainel(straightButton.gameObject);
+            SelectSubOptionsPanels(straightPanel);
+        });
+        diagonalButton.onClick.AddListener(() =>
+        {
+            SelecionarPainel(diagonalButton.gameObject);
+            SelectSubOptionsPanels(diagonalPanel);
+        });
+        customButton.onClick.AddListener(() =>
+        {
+            SelecionarPainel(customButton.gameObject);
+            SelectSubOptionsPanels(customPanel);
+        });
 
     }
 
@@ -30,11 +46,29 @@ public class CreateSubButtonsManager : MonoBehaviour
 
     private void SelectSubOptionsPanels(GameObject subPanel)
     {
+
         straightPanel.SetActive(false);
         diagonalPanel.SetActive(false);
         customPanel.SetActive(false);
 
         subPanel.SetActive(true);
     }
-    
+
+    public void SelecionarPainel(GameObject painelAtivo)
+    {
+        MudarCor(straightButton.gameObject, corPadrao);
+        MudarCor(diagonalButton.gameObject, corPadrao);
+        MudarCor(customButton.gameObject, corPadrao);
+
+        MudarCor(painelAtivo, corDestaque);
+    }
+
+    private void MudarCor(GameObject obj, Color32 cor)
+    {
+        if (obj != null && obj.TryGetComponent<Image>(out Image img))
+        {
+            img.color = cor;
+        }
+    }
+
 }

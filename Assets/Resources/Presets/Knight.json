@@ -16,7 +16,7 @@
     },
     "straight": {
         "Active": false,
-        "All": true,
+        "All": false,
         "Front": false,
         "Back": false,
         "Right": false,
@@ -28,7 +28,7 @@
     },
     "diagonal": {
         "Active": false,
-        "All": true,
+        "All": false,
         "Front": false,
         "Back": false,
         "Right": false,
