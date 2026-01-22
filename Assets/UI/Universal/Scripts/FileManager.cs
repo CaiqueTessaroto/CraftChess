@@ -398,14 +398,6 @@ public class FileManager : MonoBehaviour
         if (!Directory.Exists(targetFolderPath))
             Directory.CreateDirectory(targetFolderPath);
 
-        int jsonCount = Directory.GetFiles(targetFolderPath, "*.json").Length;
-
-        if (jsonCount >= 16)
-        {
-
-            return;
-        }
-
         // Caminho completo do arquivo
         string filePath = Path.Combine(targetFolderPath, fileName);
 
@@ -429,9 +421,9 @@ public class FileManager : MonoBehaviour
 
         int pngCount = Directory.GetFiles(targetFolderPath, "*.png").Length;
 
-        if (pngCount >= 22)
+        if (pngCount >= 16)
         {
-            string text = UIHelperUtils.T("file.limit.txt");
+            string text = UIHelperUtils.T("file.limit.txt", 16);
 
             if (string.IsNullOrEmpty(text))
                 text = "The limit of 16 files in this folder has been reached.";

@@ -41,6 +41,7 @@ public class FileNavigation : MonoBehaviour
     public string selectBasePath;
     public bool initiate = false;
     public int count = 0;
+    private int fileLimit = 72;
 
 
 
@@ -247,7 +248,7 @@ public class FileNavigation : MonoBehaviour
 
             foreach (string arquivo in arquivosOrdenados)
             {
-                if (count >= 90) break;
+                if (count >= fileLimit) break;
                 count++;
                 string pasta = Path.GetFileName(Path.GetDirectoryName(arquivo));
                 string json = File.ReadAllText(arquivo); // ainda síncrono
@@ -340,7 +341,7 @@ public class FileNavigation : MonoBehaviour
 
             foreach (string file in orderedfiles)
             {
-                if (count >= 90) break;
+                if (count >= fileLimit) break;
                 count++;
                 GameObject newButton = Instantiate(fileButtonPrefab, content);
                 //Transform newButton = painelNewButton.transform.GetChild(0);

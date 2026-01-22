@@ -263,8 +263,6 @@ public class MovementCreation : MonoBehaviour
             // Destaca células
             gridView.HighlightValidMoves();
 
-            navigationManage.ProcessPendingRemoves();
-
             ApplyDataToUI();
 
             //powerPreview.text = $"Power: {piece.Power}";
@@ -865,7 +863,7 @@ public class MovementCreation : MonoBehaviour
     void GetDropdown(Movement movement, GameObject movesObject)
     {
         // Encontra o GameObject "Range" dentro de movesObject
-        Transform columnObject = movesObject.transform.Find("Column (3)");
+        Transform columnObject = movesObject.transform.Find("Column (1)");
         Transform rangeObject = columnObject.Find("Range");
 
         if (rangeObject == null)

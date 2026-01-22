@@ -458,82 +458,6 @@ public class NavigationManage_Create : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    [System.Serializable]
-    public class PendingRemove
-    {
-        public string fileName;
-        public List<string> pieces;
-
-        public PendingRemove(string fileName, List<string> pieces)
-        {
-            this.fileName = fileName;
-            this.pieces = pieces;
-        }
-    }
-
-    // Lista de pendentes
-    private List<PendingRemove> pendingRemoves = new List<PendingRemove>();
-
-    public void ProcessPendingRemoves()
-    {
-
-        if (pendingRemoves.Count > 0)
-            Debug.Log("Pieces from other squads in Promotion and Castling have been removed.");
-        //    fileManager.CreateAdvice("Pieces from other squads in Promotion and Castling have been removed.");
-
-        foreach (var item in pendingRemoves)
-        {
-            movementCreation.RemovePiece(item.fileName, item.pieces);
-        }
-
-        movementCreation.CalcularPoderTotal();
-        // se quiser limpar a lista depois
-        pendingRemoves.Clear();
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private void QuickSavePiece(string pieceName)
     {
         // ===============================
@@ -741,6 +665,27 @@ public class NavigationManage_Create : MonoBehaviour
         bool ads = true
     )
     {
+
+        string targetFolderPath = Path.Combine(Application.persistentDataPath, fileManager.basePath_PieceData, subfolderName, fileJson);
+
+        if (Directory.Exists(targetFolderPath))
+        {
+            int jsonCount = Directory.GetFiles(targetFolderPath, "*.json").Length;
+
+            if (jsonCount >= 16)
+            {
+                string text = UIHelperUtils.T("file.limit.txt", 16);
+
+                if (string.IsNullOrEmpty(text))
+                    text = "The limit of {0} files in this folder has been reached.";
+
+                fileManager.CreateAdvice(text);
+                return;
+            }
+
+        }
+
+
         uIHelperUtils.change = true;
 
         movementCreation.piece.Name = pieceName;

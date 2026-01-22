@@ -8,6 +8,7 @@ public class ManagerPieceInfo : MonoBehaviour
 {
 
     public InfoGridView infoGridView;
+    public GameObject crowView;
     public string currentPieceName;
     public string squadPiece;
     public TMP_Text nameTmp;
@@ -77,6 +78,8 @@ public class ManagerPieceInfo : MonoBehaviour
         previewImage.sprite = sprite;
 
         nameTmp.text = namePieceSquad;
+
+        //crowView.SetActive(pieceData.Is);
 
         powerTmp.text = UIHelperUtils.SetPowerText(pieceData.Power);
 

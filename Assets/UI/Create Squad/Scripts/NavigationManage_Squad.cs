@@ -51,6 +51,8 @@ public class NavigationManage_Squad : MonoBehaviour
 
     [Header("Control")]
     public bool initiate = false;
+    public int count = 0;
+    private int fileLimit = 72;
     private bool setCursor = false;
     private bool ads = false;
     //private string selectRootPath;
@@ -635,6 +637,8 @@ public class NavigationManage_Squad : MonoBehaviour
         // 🔹 Itera todas as pastas dentro de SquadData
         foreach (string squadFolder in Directory.GetDirectories(squadsRoot))
         {
+            if (count >= fileLimit) break;
+            count++;
 
             string folderName = Path.GetFileName(squadFolder);
 
