@@ -184,10 +184,7 @@
     { "key": "file.no_king.txt", "value": "There is no King." },
 
     { "key": "mode.alert.title", "value": "Strategic Mode" },
-    {
-      "key": "mode.alert.txt",
-      "value": "The squad cannot be used in Strategic Mode."
-    },
+    { "key": "mode.alert.txt", "value": "The squad cannot be used in Strategic Mode."},
 
     { "key": "none.art.txt", "value": "You need an art to save." },
     { "key": "none.name.txt", "value": "You need a name to save." },
@@ -200,7 +197,96 @@
     { "key": "file.limit.txt", "value": "The limit of {0} files in this folder has been reached." },
 
     { "key": "select_white", "value": "Select the white pieces." },
-    { "key": "select_black", "value": "Select the black pieces." }
+    { "key": "select_black", "value": "Select the black pieces." },
+
+
+
+
+
+  {
+    "key": "TutorialSeenMenu0",
+    "value": "Create the artwork that will be used for your pieces in 17x17 and 34x34 proportions. You can also import images, which will be automatically converted to the grid."
+  },
+  {
+    "key": "TutorialSeenMenu1",
+    "value": "After creating your artwork, turn it into a board piece.\nThis piece represents the movement you just created."
+  },
+  {
+    "key": "TutorialSeenMenu2",
+    "value": "With your pieces ready, it’s time to build your squad.\nArrange the pieces on the board however you like and define which one will be the King."
+  },
+  {
+    "key": "TutorialSeenMenu3",
+    "value": "In the lobby, select which squads will play as black and white pieces by clicking on the board.\nThen choose which one you will play with, indicated by the crown color.\nAdditional game options are available in the top-right corner."
+  },
+  {
+    "key": "TutorialSeenMenu4",
+    "value": "Now it’s time to play the match.\nIn the top-left corner, you can surrender if the situation becomes difficult.\nIn the top-right corner are the view options.\nOn the right side of the screen, you can follow the match history."
+  },
+
+  {
+    "key": "TutorialSeenPainting0",
+    "value": "To use the circle, rectangle, line, or selection tools, click on two points on the grid.\nOn PC, the small dot in the top-left corner indicates the mouse position."
+  },
+  {
+    "key": "TutorialSeenPainting1",
+    "value": "After selecting an area, use the arrows in the bottom-left corner to move it.\nPress the center button to confirm the movement and finish the tool."
+  },
+  {
+    "key": "TutorialSeenPainting2",
+    "value": "The quick save button is used for artwork that has already been saved or loaded.\nThe set it belongs to will be displayed just below the button."
+  },
+  {
+    "key": "TutorialSeenPainting3",
+    "value": "When clicking Save, the available sets will be shown next. Click the desired set again to confirm saving.\nIn the top-right corner, you can create a new set.\nTo delete, click Delete, select the desired set, and confirm the action."
+  },
+
+  {
+    "key": "TutorialSeenPiece0",
+    "value": "Each color shows what the piece can do on that square.\nGreen: movement only.\nRed: capture only.\nYellow: movement + capture.\nBlue: jump movement.\nPurple: jump + capture."
+  },
+  {
+    "key": "TutorialSeenPiece1",
+    "value": "In Moves, you shape how the piece behaves on the board.\nDefine how far it can go, which directions it can move, and what type of action the move allows.\nEach adjustment changes the strategy and creates new gameplay possibilities."
+  },
+  {
+    "key": "TutorialSeenPiece2",
+    "value": "The special move is a unique ability of the Pawn that can only be used once.\nJust like the Knight’s custom movement, simply select the desired squares and activate the move."
+  },
+  {
+    "key": "TutorialSeenPiece3",
+    "value": "After finishing a piece, use the Reset button to clear the data and create a new piece from scratch.\nWarning: creating a new piece without resetting and using Quick Save will overwrite the previous piece."
+  },
+  {
+    "key": "TutorialSeenPiece4",
+    "value": "When clicking Save, the available sets will be shown next. Click the desired set again to confirm saving.\nIn the top-right corner, you can create a new set.\nTo delete, click Delete, select the desired set, and confirm the action."
+  },
+
+  {
+    "key": "TutorialSeenSquad0",
+    "value": "When pressing Add, the available sets will be displayed.\nChoose a set to add all of its pieces at once.\nTo add pieces individually, use the Pieces button in the top-right corner."
+  },
+  {
+    "key": "TutorialSeenSquad1",
+    "value": "When no piece or button is selected, your squad information appears in the center of the screen.\nThere you can see the total number of pieces, the squad power, and which piece is the King."
+  },
+  {
+    "key": "TutorialSeenSquad2",
+    "value": "Use the crown button to choose which piece will be the King of your squad.\nUse the X button to remove a piece from the board."
+  },
+  {
+    "key": "TutorialSeenSquad3",
+    "value": "Select a piece on the right side to see its information in the center of the screen.\nThen simply click on the board position where you want to place it."
+  },
+  {
+    "key": "TutorialSeenSquad4",
+    "value": "Use the + button to configure promotions and castling for the selected piece.\nSimply drag the desired pieces.\nVery powerful pieces have limitations: above 15 power they cannot promote, and above 80 power they cannot castle."
+  },
+
+
+  { "key": "GOTIT", "value": "Got It" },
+
+  { "key": "RESTART_TUTORIAL", "value": "Restart Tutorial" }
 
   ]
 }

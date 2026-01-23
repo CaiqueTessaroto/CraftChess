@@ -194,7 +194,37 @@
      { "key": "file.limit.txt", "value": "Limite de 16 arquivos atingido nesta pasta." },
 
     { "key": "select_white", "value": "Selecione as peças brancas." },
-    { "key": "select_black", "value": "Selecione as peças pretas" }
+    { "key": "select_black", "value": "Selecione as peças pretas" },
+
+
+
+    { "key": "TutorialSeenMenu0", "value": "Crie as artes que serão usadas em suas peças nas proporções de 17x17 e 34x34. Também é possível importar imagens, que serão convertidas para o grid automaticamente." },
+    { "key": "TutorialSeenMenu1", "value": "Após criar sua arte, transforme-a em uma peça do tabuleiro.\nEssa peça representa o movimento que você acabou de criar." },
+    { "key": "TutorialSeenMenu2", "value": "Com suas peças prontas, é hora de montar o seu esquadrão.\nOrganize as peças no tabuleiro da forma que desejar e defina qual será o rei." },
+    { "key": "TutorialSeenMenu3", "value": "No lobby, selecione quais esquadrões jogarão com as peças pretas e brancas clicando no tabuleiro.\nEm seguida, escolha com qual deles você irá jogar  indicado pela cor da coroa.\nOpções extras de jogo estão disponíveis no canto superior direito." },
+    { "key": "TutorialSeenMenu4", "value": "Agora é só jogar a partida.\nNo canto superior esquerdo, você pode se render caso a situação fique difícil.\nNo canto superior direito, estão as opções de visualização.\nÀ direita da tela, você pode acompanhar o histórico de movimentos." },
+
+    { "key": "TutorialSeenPainting0", "value": "Para usar as ferramentas de criar círculo, retângulo, linha ou seleção, clique em dois pontos na grade.\nNo PC, a bolinha no canto superior esquerdo indica a posição do mouse." },
+    { "key": "TutorialSeenPainting1", "value": "Depois de selecionar uma área, utilize as setas no canto inferior esquerdo para movê-la.\nPressione o botão central para confirmar o movimento e encerrar a ferramenta." },
+    { "key": "TutorialSeenPainting2", "value": "O botão de salvamento rápido é usado para artes que já foram salvas ou carregadas.\nO conjunto ao qual elas pertencem será exibido logo abaixo do botão." },
+    { "key": "TutorialSeenPainting3", "value": "Ao clicar em Salvar, os conjuntos disponíveis serão exibidos em seguida, clique novamente no conjunto desejado para confirmar o salvamento. No canto superior direito, é possível criar um novo conjunto. Para excluir, clique em Excluir, selecione o conjunto desejado e confirme a ação." },
+
+    { "key": "TutorialSeenPiece0", "value": "Cada cor mostra o que a peça pode fazer naquela casa. Verde: só movimento. \nVermelho: só captura. \nAmarelo: movimento + captura. \nAzul: movimento de pulo. \nRoxo: pulo + captura" },
+    { "key": "TutorialSeenPiece1", "value": "Em Movimentos, você molda a forma como a peça se comporta no tabuleiro.\nDefina até onde ela pode ir, em quais direções pode se mover e que tipo de ação esse movimento permite.\nCada ajuste transforma a estratégia e cria novas possibilidades de jogo." },
+    { "key": "TutorialSeenPiece2", "value": "O movimento especial é uma habilidade única do peão, que só pode ser usada uma vez.\nAssim como no movimento personalizado do cavalo, basta selecionar as casas desejadas e ativar o movimento." },
+    { "key": "TutorialSeenPiece3", "value": "Depois de finalizar uma peça, use o botão Resetar para limpar os dados e criar uma nova peça do zero.\nCuidado: criar uma nova peça sem resetar e usar o Salvamento Rápido irá sobrescrever a peça anterior." },
+    { "key": "TutorialSeenPiece4", "value": "Ao clicar em Salvar, os conjuntos disponíveis serão exibidos em seguida, clique novamente no conjunto desejado para confirmar o salvamento. No canto superior direito, é possível criar um novo conjunto. Para excluir, clique em Excluir, selecione o conjunto desejado e confirme a ação." },
+
+    { "key": "TutorialSeenSquad0", "value": "Ao pressionar Adicionar, os conjuntos disponíveis serão exibidos.\nEscolha um conjunto para adicionar todas as suas peças de uma vez.\nPara adicionar peças individualmente, use o botão Peças no canto superior direito." },
+    { "key": "TutorialSeenSquad1", "value": "Quando nenhuma peça ou botão estiver selecionado, as informações do seu esquadrão aparecem no centro da tela.\nAli, você pode ver o total de peças, o poder do esquadrão e qual é o rei do esquadrão." },
+    { "key": "TutorialSeenSquad2", "value": "Use o botão da coroa para escolher qual peça será o rei do seu esquadrão.\nUse o botão X para remover uma peça do tabuleiro." },
+    { "key": "TutorialSeenSquad3", "value": "Selecione uma peça no canto direito para ver suas informações no centro da tela.\nDepois, basta clicar na posição do tabuleiro onde deseja colocá-la." },
+    { "key": "TutorialSeenSquad4", "value": "Use o botão + para configurar as promoções e roques da peça selecionada.\nBasta arrastar as peças desejadas.\nPeças muito poderosas têm limitações: acima de 15 de poder não podem promover, e acima de 80 de poder não podem realizar roque." },
+
+
+    { "key": "GOTIT", "value": "Entendi!" },
+
+    { "key": "RESTART_TUTORIAL", "value": "Reiniciar Tutorial" }
 
   ]
 }

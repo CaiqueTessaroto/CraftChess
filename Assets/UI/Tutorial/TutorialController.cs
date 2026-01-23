@@ -53,6 +53,8 @@ public class TutorialController : MonoBehaviour
             body.SetActive(true);  // mostra só na primeira vez
         }
 
+        ShowPage(0);
+
     }
 
     void Update()
@@ -71,17 +73,22 @@ public class TutorialController : MonoBehaviour
 
     void OnEnable()
     {
-        ShowPage(0);
+    //    ShowPage(0);
     }
 
-    void ShowPage(int index)
+    public void ShowPage(int index)
     {
         currentIndex = index;
 
         var page = tutorialData.pages[index];
 
         image.sprite = page.image;
-        text.text = page.description;
+
+        string des = UIHelperUtils.T(tutorialSeen + index);
+        if (string.IsNullOrEmpty(des))
+            text.text = page.description;
+        else
+            text.text = des;
 
         prevButton.interactable = index > 0;
         //nextButton.interactable = index < tutorialData.pages.Count - 1;

@@ -86,6 +86,11 @@ public class LocalizationManager : MonoBehaviour
         foreach (var txt in FindObjectsOfType<ThemeText>(true))
             txt.UpdateText();
 
+
+        TutorialController tutorial = FindObjectOfType<TutorialController>();
+        if (tutorial != null)
+            tutorial.ShowPage(0);
+
         SettingsManager.Instance.Save();
     }
 
