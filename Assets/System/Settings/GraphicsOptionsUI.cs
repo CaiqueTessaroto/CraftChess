@@ -7,13 +7,13 @@ public class GraphicsOptionsUI : MonoBehaviour
 {
     [Header("UI")]
     public TMP_Dropdown resolutionDropdown;
-    public TMP_Dropdown qualityDropdown;
     public Toggle fullscreenToggle;
 
     List<Resolution> resolutions = new List<Resolution>();
 
     void Start()
     {
+        Load();
         SetupResolutions();
         SetupFullscreen();
         ApplyGraphics(); // aplica ao abrir

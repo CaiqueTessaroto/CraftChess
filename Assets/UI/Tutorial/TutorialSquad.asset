@@ -33,3 +33,9 @@ MonoBehaviour:
       pe\xE7a selecionada.\nBasta arrastar as pe\xE7as desejadas.\nPe\xE7as muito
       poderosas t\xEAm limita\xE7\xF5es: acima de 15 de poder n\xE3o podem promover,
       e acima de 80 de poder n\xE3o podem realizar roque."
+  - image: {fileID: 21300000, guid: 28ca66e83923c3a41ae0d4c1c84861f2, type: 3}
+    description: "As mensagens exibidas abaixo do tabuleiro indicam o status do Modo
+      Estrat\xE9gico. Esse modo avalia se o seu esquadr\xE3o est\xE1 balanceado em
+      compara\xE7\xE3o com um conjunto cl\xE1ssico de xadrez. Embora seja poss\xEDvel
+      salvar e jogar com esquadr\xF5es fora desse padr\xE3o, o Modo Estrat\xE9gico
+      \xE9 recomendado para garantir maior competitividade."

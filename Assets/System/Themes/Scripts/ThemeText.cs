@@ -41,6 +41,9 @@ public class ThemeText : MonoBehaviour
         if (text == null)
             text = GetComponent<TMP_Text>();
 
+        if (text == null)
+            return;
+
         string txt = LocalizationManager.Instance.Get(key);
         if (!string.IsNullOrEmpty(txt))
             text.text = txt;

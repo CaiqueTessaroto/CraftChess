@@ -280,10 +280,14 @@
   },
   {
     "key": "TutorialSeenSquad4",
-    "value": "Use the + button to configure promotions and castling for the selected piece.\nSimply drag the desired pieces.\nVery powerful pieces have limitations: above 15 power they cannot promote, and above 80 power they cannot castle."
+    "value": "Use the + button to configure promotions and castling for the selected piece.\nSimply drag the desired pieces.\nVery powerful pieces have limitations: above 25 power they cannot promote, and above 80 power they cannot castle."
   },
 
-
+  {
+  "key": "TutorialSeenSquad5",
+  "value": "The messages displayed below the board indicate the status of Strategic Mode. This mode evaluates whether your squad is balanced compared to a classic chess set. Although it is possible to save and play with squads outside this standard, Strategic Mode is recommended to ensure greater competitiveness."
+  },
+  
   { "key": "GOTIT", "value": "Got It" },
 
   { "key": "RESTART_TUTORIAL", "value": "Restart Tutorial" }

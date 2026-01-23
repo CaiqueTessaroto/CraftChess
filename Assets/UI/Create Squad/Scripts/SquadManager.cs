@@ -215,7 +215,7 @@ public class SquadManager : MonoBehaviour
 
             infoGridPanel.SetActive(false);
 
-            if (currentPiecepower <= 15)
+            if (currentPiecepower <= 25)
                 promotion.SetActive(true);
 
             if (currentPiecepower <= 80)

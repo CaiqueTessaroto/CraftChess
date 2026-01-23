@@ -127,7 +127,7 @@ public class SettingsManager : MonoBehaviour
 
         // ✅ Toggle SOMENTE do painel interno
         bool newState = !settingsContent.activeSelf;
-        settingsContent.SetActive(newState);
+        settingsContent?.SetActive(newState);
 
         Time.timeScale = newState ? 0f : 1f; // opcional
     }

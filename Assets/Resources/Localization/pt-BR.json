@@ -219,7 +219,8 @@
     { "key": "TutorialSeenSquad1", "value": "Quando nenhuma peça ou botão estiver selecionado, as informações do seu esquadrão aparecem no centro da tela.\nAli, você pode ver o total de peças, o poder do esquadrão e qual é o rei do esquadrão." },
     { "key": "TutorialSeenSquad2", "value": "Use o botão da coroa para escolher qual peça será o rei do seu esquadrão.\nUse o botão X para remover uma peça do tabuleiro." },
     { "key": "TutorialSeenSquad3", "value": "Selecione uma peça no canto direito para ver suas informações no centro da tela.\nDepois, basta clicar na posição do tabuleiro onde deseja colocá-la." },
-    { "key": "TutorialSeenSquad4", "value": "Use o botão + para configurar as promoções e roques da peça selecionada.\nBasta arrastar as peças desejadas.\nPeças muito poderosas têm limitações: acima de 15 de poder não podem promover, e acima de 80 de poder não podem realizar roque." },
+    { "key": "TutorialSeenSquad4", "value": "Use o botão + para configurar as promoções e roques da peça selecionada.\nBasta arrastar as peças desejadas.\nPeças muito poderosas têm limitações: acima de 25 de poder não podem promover, e acima de 80 de poder não podem realizar roque." },
+    { "key": "TutorialSeenSquad5", "value": "As mensagens exibidas abaixo do tabuleiro indicam o status do Modo Estratégico. Esse modo avalia se o seu esquadrão está balanceado em comparação com um conjunto clássico de xadrez. Embora seja possível salvar e jogar com esquadrões fora desse padrão, o Modo Estratégico é recomendado para garantir maior competitividade." },
 
 
     { "key": "GOTIT", "value": "Entendi!" },

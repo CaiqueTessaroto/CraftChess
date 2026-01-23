@@ -280,7 +280,12 @@
   },
   {
     "key": "TutorialSeenSquad4",
-    "value": "Usa el botón + para configurar las promociones y los enroques de la pieza seleccionada.\nSimplemente arrastra las piezas deseadas.\nLas piezas muy poderosas tienen limitaciones: por encima de 15 de poder no pueden promocionar, y por encima de 80 de poder no pueden realizar enroque."
+    "value": "Usa el botón + para configurar las promociones y los enroques de la pieza seleccionada.\nSimplemente arrastra las piezas deseadas.\nLas piezas muy poderosas tienen limitaciones: por encima de 25 de poder no pueden promocionar, y por encima de 80 de poder no pueden realizar enroque."
+  },
+
+  {
+  "key": "TutorialSeenSquad5",
+  "value": "Los mensajes que se muestran debajo del tablero indican el estado del Modo Estratégico. Este modo evalúa si tu escuadrón está equilibrado en comparación con un conjunto clásico de ajedrez. Aunque es posible guardar y jugar con escuadrones fuera de este estándar, se recomienda el Modo Estratégico para garantizar una mayor competitividad."
   },
 
 
