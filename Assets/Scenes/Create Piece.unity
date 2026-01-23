@@ -4204,7 +4204,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 30
   m_Viewport: {fileID: 214865478}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 696059459}
@@ -9489,6 +9489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6835d4d2987c1224aa8eb7bb95390592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musics: []
   checkInterval: 2
 --- !u!4 &587538573
 Transform:
@@ -18441,7 +18442,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 30
   m_Viewport: {fileID: 556692036}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 538738354}

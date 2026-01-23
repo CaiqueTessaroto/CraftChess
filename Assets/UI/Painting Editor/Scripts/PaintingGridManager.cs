@@ -865,7 +865,7 @@ public class PaintingGridManager : MonoBehaviour
         if (Ads)
             AdsManager.TryShowInterstitial();
 
-        ExportGridAsTextureFromJson(filePng, Application.persistentDataPath, 1000, subfolderName);
+        ExportGridAsTextureFromJson(filePng, Application.persistentDataPath, 440, subfolderName);
     }
 
 
@@ -918,7 +918,7 @@ public class PaintingGridManager : MonoBehaviour
 
     private Drawing wrapper = new Drawing();
 
-    public void ExportGridAsTextureFromJson(string fileName, string selectRootPath, int textureSize = 1020, string folderName = "Default")
+    public void ExportGridAsTextureFromJson(string fileName, string selectRootPath, int textureSize = 440, string folderName = "Default")
     {
         //string json = fileManager.LoadJson(selectRootPath, fileManager.basePath_PaintingData, folderName, fileName.Replace(".png", ".json"));
 

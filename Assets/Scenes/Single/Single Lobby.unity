@@ -390,7 +390,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 30
   m_Viewport: {fileID: 75103360}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 978924316}
@@ -2503,8 +2503,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 799125729}
   m_HandleRect: {fileID: 799125728}
   m_Direction: 2
-  m_Value: -0.019607844
-  m_Size: 0.9999967
+  m_Value: 0
+  m_Size: 0.9999966
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7513,6 +7513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6835d4d2987c1224aa8eb7bb95390592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musics: []
   checkInterval: 2
 --- !u!4 &904364701
 Transform:
@@ -9671,7 +9672,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 30
   m_Viewport: {fileID: 1812986650}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 200864661}
@@ -17620,7 +17621,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 30
   m_Viewport: {fileID: 1439593581}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1100831613}

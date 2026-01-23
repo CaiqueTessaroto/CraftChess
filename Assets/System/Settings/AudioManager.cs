@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections.Generic; // Necessário para Listas
+using System.Collections; // Necessário para Corrotinas
 
 public class AudioManager : MonoBehaviour
 {
@@ -13,6 +13,8 @@ public class AudioManager : MonoBehaviour
     private AudioClip[] currentPlaylist;
     private int currentTrackIndex = 0;
     private bool isPlaylistActive = false;
+    private bool isWaitingNextTrack = false; // Nova flag para o intervalo
+    public float delayBetweenTracks = 180f; // 120 segundos = 2 minutos
 
     void Awake()
     {
@@ -25,46 +27,31 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+
+        ApplyVolumes();
+
     }
 
     void Update()
     {
-        // Verifica se a música atual acabou para tocar a próxima da lista
-        if (isPlaylistActive && !musicSource.isPlaying)
+        // Se a playlist está ativa, a música parou e NÃO estamos no meio de uma espera
+        if (isPlaylistActive && !musicSource.isPlaying && !isWaitingNextTrack)
         {
-            PlayNextTrack();
+            StartCoroutine(WaitAndPlayNext());
         }
     }
 
-    void Start()
-    {
-        ApplyVolumes();
-    }
-
-    public void ApplyVolumes()
-    {
-        var s = SettingsManager.Instance.Settings;
-        AudioListener.volume = s.masterVolume;
-
-        if (musicSource != null)
-            musicSource.volume = s.musicVolume;
-
-        foreach (AudioSource sfx in sfxSources)
-        {
-            if (sfx != null)
-                sfx.volume = s.sfxVolume;
-        }
-    }
-
-    // --- SISTEMA DE PLAYLIST ---
+    // --- SISTEMA DE PLAYLIST COM PAUSA ---
 
     public void PlayMusicPlaylist(AudioClip[] playlist)
     {
-        // Se a lista for nula ou vazia, ignora e continua o que estava tocando
         if (playlist == null || playlist.Length == 0) return;
-
-        // Se a playlist enviada for a mesma que já está tocando, não reinicia
         if (currentPlaylist == playlist) return;
+
+        // Para qualquer espera atual se uma nova playlist for carregada
+        StopAllCoroutines();
+        isWaitingNextTrack = false;
 
         currentPlaylist = playlist;
         currentTrackIndex = 0;
@@ -78,15 +65,19 @@ public class AudioManager : MonoBehaviour
         if (currentPlaylist == null || index >= currentPlaylist.Length) return;
 
         musicSource.clip = currentPlaylist[index];
-        musicSource.loop = false; // Loop falso para podermos detectar o fim da música no Update
+        musicSource.loop = false;
         musicSource.Play();
+        isWaitingNextTrack = false;
     }
 
-    private void PlayNextTrack()
+    // Corrotina para gerenciar a pausa
+    IEnumerator WaitAndPlayNext()
     {
-        currentTrackIndex++;
+        isWaitingNextTrack = true; // Bloqueia o Update de chamar a corrotina várias vezes
 
-        // Se chegou ao fim da lista, volta para o começo
+        yield return new WaitForSeconds(delayBetweenTracks);
+
+        currentTrackIndex++;
         if (currentTrackIndex >= currentPlaylist.Length)
         {
             currentTrackIndex = 0;
@@ -95,7 +86,16 @@ public class AudioManager : MonoBehaviour
         PlayTrack(currentTrackIndex);
     }
 
-    // --- SFX ---
+    // --- RESTANTE DO SCRIPT (SFX / VOLUMES) ---
+
+    public void ApplyVolumes()
+    {
+        var s = SettingsManager.Instance.Settings;
+        AudioListener.volume = s.masterVolume;
+        if (musicSource != null) musicSource.volume = s.musicVolume;
+        foreach (AudioSource sfx in sfxSources) { if (sfx != null) sfx.volume = s.sfxVolume; }
+    }
+
     public void PlaySFX(AudioClip clip)
     {
         if (clip == null) return;
@@ -106,10 +106,7 @@ public class AudioManager : MonoBehaviour
 
     AudioSource GetFreeSFXSource()
     {
-        foreach (AudioSource sfx in sfxSources)
-        {
-            if (!sfx.isPlaying) return sfx;
-        }
+        foreach (AudioSource sfx in sfxSources) { if (!sfx.isPlaying) return sfx; }
         return sfxSources[0];
     }
 }

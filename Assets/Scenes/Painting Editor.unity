@@ -11741,7 +11741,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 30
   m_Viewport: {fileID: 167595157}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1991076642}
@@ -16369,6 +16369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6835d4d2987c1224aa8eb7bb95390592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musics: []
   checkInterval: 2
 --- !u!114 &1202885064
 MonoBehaviour:
@@ -21816,7 +21817,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 30
   m_Viewport: {fileID: 985034460}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1442541141}

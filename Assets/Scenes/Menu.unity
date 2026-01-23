@@ -659,7 +659,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.7253589
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -5807,8 +5807,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Settings:
     masterVolume: 1
-    musicVolume: 0.8
-    sfxVolume: 0.8
+    musicVolume: 0.5
+    sfxVolume: 0.5
     resolutionIndex: 0
     fullscreen: 1
     language: 0
@@ -5831,6 +5831,7 @@ MonoBehaviour:
   - {fileID: 230520060}
   - {fileID: 717768865}
   - {fileID: 575503196}
+  delayBetweenTracks: 120
 --- !u!1 &1430197030
 GameObject:
   m_ObjectHideFlags: 0
@@ -6282,9 +6283,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musics:
-  - {fileID: 8300000, guid: 3989e9599651c2f409037b93b121ffad, type: 3}
   - {fileID: 8300000, guid: 015739d6a25ace445b5c758a30520740, type: 3}
-  - {fileID: 8300000, guid: 2a7b2185e38044c47b8dde204b64faa6, type: 3}
+  - {fileID: 8300000, guid: 3989e9599651c2f409037b93b121ffad, type: 3}
   checkInterval: 2
 --- !u!1 &1680361630
 GameObject:

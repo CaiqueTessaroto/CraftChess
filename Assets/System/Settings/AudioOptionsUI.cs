@@ -21,7 +21,7 @@ public class AudioOptionsUI : MonoBehaviour
         masterSlider.onValueChanged.AddListener(OnMasterChanged);
         musicSlider.onValueChanged.AddListener(OnMusicChanged);
         sfxSlider.onValueChanged.AddListener(OnSfxChanged);
-    }
+    } 
 
     void OnMasterChanged(float value)
     {
