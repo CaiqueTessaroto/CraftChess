@@ -17,6 +17,14 @@ public class GraphicsOptionsUI : MonoBehaviour
         SetupResolutions();
         SetupFullscreen();
         ApplyGraphics(); // aplica ao abrir
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+
+        resolutionDropdown.gameObject.SetActive(false);
+        fullscreenToggle.gameObject.SetActive(false);
+
+#endif
+
     }
 
     #region Setup

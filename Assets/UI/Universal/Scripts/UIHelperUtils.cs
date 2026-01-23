@@ -56,7 +56,16 @@ public class UIHelperUtils : MonoBehaviour
     public static string T(string key, params object[] args)
     {
         if (LocalizationManager.Instance != null)
-            return string.Format(LocalizationManager.Instance.Get(key), args);
+        {
+            try
+            {
+                return string.Format(LocalizationManager.Instance.Get(key), args);
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         return null;
     }
@@ -72,7 +81,16 @@ public class UIHelperUtils : MonoBehaviour
         string T(string key, params object[] args)
         {
             if (LocalizationManager.Instance != null)
-                return string.Format(LocalizationManager.Instance.Get(key), args);
+            {
+                try
+                {
+                    return string.Format(LocalizationManager.Instance.Get(key), args);
+                }
+                catch
+                {
+                    return null;
+                }
+            }
 
             return null;
         }

@@ -38,6 +38,7 @@ public class InteractiveLobby : MonoBehaviour
 
     [Header("Options")]
     public GameObject optionsPanel;
+    public GameObject localPanel;
     public Button OpenOpt;
     public Button CloseOpt;
     public Toggle noRulesToggle;
@@ -325,6 +326,23 @@ public class InteractiveLobby : MonoBehaviour
 
         LoadMatchConfig();
 
+
+        if (GameModeManager.SelectedMode == GameMode.AIVsAI)
+        {
+            OnIAvsIAChanged(true);
+        }
+        else if (GameModeManager.SelectedMode == GameMode.PlayerVsPlayerLocal)
+        {
+            //AutoSwitchSideToggle.gameObject.SetActive(true);
+            localPanel.SetActive(true);
+            OnLocalGameChanged(true);
+        }
+        else
+        {
+            OnIAvsIAChanged(false);
+            OnLocalGameChanged(false);
+        }
+
     }
 
     void OnNoRulesChanged(bool value)
@@ -346,9 +364,31 @@ public class InteractiveLobby : MonoBehaviour
 
         if (value)
         {
+            crowPlayer1.gameObject.SetActive(false);
+            crowPlayer2.gameObject.SetActive(false);
+
+
+            difficultyOption.gameObject.SetActive(false);
+            startOption.gameObject.SetActive(false);
+
             IAvsIAToggle.SetIsOnWithoutNotify(false);
             currentMatch.IAvsIA = false;
         }
+        else
+        {
+            difficultyOption.gameObject.SetActive(true);
+
+            if (!currentMatch.IAvsIA)
+            {
+                startOption.gameObject.SetActive(true);
+
+                crowPlayer1.gameObject.SetActive(true);
+                crowPlayer2.gameObject.SetActive(true);
+
+            }
+        }
+
+
     }
 
     void OnAutoSwitchSideChanged(bool value)
@@ -365,8 +405,21 @@ public class InteractiveLobby : MonoBehaviour
 
         if (value)
         {
+            crowPlayer1.gameObject.SetActive(false);
+            crowPlayer2.gameObject.SetActive(false);
+
+            difficultyOption.gameObject.SetActive(true);
+
+            startOption.gameObject.SetActive(false);
             localGameToggle.SetIsOnWithoutNotify(false);
             currentMatch.localGame = false;
+        }
+        else if (!currentMatch.localGame)
+        {
+            startOption.gameObject.SetActive(true);
+
+            crowPlayer1.gameObject.SetActive(true);
+            crowPlayer2.gameObject.SetActive(true);
         }
     }
 
@@ -493,7 +546,11 @@ public class InteractiveLobby : MonoBehaviour
 
                 newImage.GetComponent<Button>().onClick.AddListener(() =>
                 {
-                    managerPieceInfo.SelectPiece(piece.NameInSquad, piece, wrapper, sprite);
+                    bool IsKing = false;
+                    if (piece.NameInSquad == data.King.Name)
+                        IsKing = true;
+
+                    managerPieceInfo.SelectPiece(piece.NameInSquad, piece, wrapper, sprite, IsKing);
                     //    squadManager.SelectPiece(nameInSquad, pieceData, File.ReadAllText(jsonPath), sprite, rootPath);
                 });
 

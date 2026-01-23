@@ -2,6 +2,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Profiling;
 
+public static class GameModeManager
+{
+    public static GameMode SelectedMode;
+}
+
+public enum GameMode
+{
+    PlayerVsAI,
+    PlayerVsPlayerLocal,
+    AIVsAI
+}
 
 public class GameManager : MonoBehaviour
 {

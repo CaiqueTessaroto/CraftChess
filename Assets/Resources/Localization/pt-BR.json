@@ -225,7 +225,12 @@
 
     { "key": "GOTIT", "value": "Entendi!" },
 
-    { "key": "RESTART_TUTORIAL", "value": "Reiniciar Tutorial" }
+    { "key": "RESTART_TUTORIAL", "value": "Reiniciar Tutorial" },
+
+
+  { "key": "PLAY_VS_IA", "value": "Jogador vs IA" },
+  { "key": "local", "value": "Multijogador Local" },
+  { "key": "simulation", "value": "Simulação de IA" }
 
   ]
 }

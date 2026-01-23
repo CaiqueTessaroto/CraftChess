@@ -49,21 +49,21 @@ public class ManagerPieceInfo : MonoBehaviour
 
     }
 
-    public void SelectPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite)
+    public void SelectPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite, bool IsKing)
     {
 
         //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
 
         if (config.piece.Name != currentPieceName || config.piece.Squad != squadPiece || Panel.activeSelf == false)
         {
-            SetInfoPiece(namePieceSquad, pieceData, config, sprite);
+            SetInfoPiece(namePieceSquad, pieceData, config, sprite, IsKing);
             StartCoroutine(SetPromotionsAndCastelingPieces(pieceData, config, sprite));
         }
 
     }
 
 
-    public void SetInfoPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite)
+    public void SetInfoPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite, bool IsKing)
     {
         //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
 
@@ -79,7 +79,7 @@ public class ManagerPieceInfo : MonoBehaviour
 
         nameTmp.text = namePieceSquad;
 
-        //crowView.SetActive(pieceData.Is);
+        crowView.SetActive(IsKing);
 
         powerTmp.text = UIHelperUtils.SetPowerText(pieceData.Power);
 

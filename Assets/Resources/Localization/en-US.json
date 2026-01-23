@@ -224,6 +224,11 @@
     "value": "Now it’s time to play the match.\nIn the top-left corner, you can surrender if the situation becomes difficult.\nIn the top-right corner are the view options.\nOn the right side of the screen, you can follow the match history."
   },
 
+
+
+
+
+
   {
     "key": "TutorialSeenPainting0",
     "value": "To use the circle, rectangle, line, or selection tools, click on two points on the grid.\nOn PC, the small dot in the top-left corner indicates the mouse position."
@@ -262,6 +267,9 @@
     "value": "When clicking Save, the available sets will be shown next. Click the desired set again to confirm saving.\nIn the top-right corner, you can create a new set.\nTo delete, click Delete, select the desired set, and confirm the action."
   },
 
+
+
+  
   {
     "key": "TutorialSeenSquad0",
     "value": "When pressing Add, the available sets will be displayed.\nChoose a set to add all of its pieces at once.\nTo add pieces individually, use the Pieces button in the top-right corner."
@@ -290,7 +298,11 @@
   
   { "key": "GOTIT", "value": "Got It" },
 
-  { "key": "RESTART_TUTORIAL", "value": "Restart Tutorial" }
+  { "key": "RESTART_TUTORIAL", "value": "Restart Tutorial" },
+
+  { "key": "PLAY_VS_IA", "value": "Play vs AI" },
+  { "key": "local", "value": "Local Multiplayer" },
+  { "key": "simulation", "value": "AI Simulation" }
 
   ]
 }

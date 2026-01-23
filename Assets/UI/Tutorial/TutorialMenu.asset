@@ -14,22 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pages:
   - image: {fileID: 21300000, guid: 998c995bb5ee2284689dc3135e771633, type: 3}
-    description: "Crie as artes que ser\xE3o usadas em suas pe\xE7as nas propor\xE7\xF5es
-      de 17x17 e 34x34. Tamb\xE9m \xE9 poss\xEDvel importar imagens, que ser\xE3o
-      convertidas para o grid automaticamente."
+    description: Create the artwork that will be used for your pieces in 17x17 and
+      34x34 proportions. You can also import images, which will be automatically
+      converted to the grid.
   - image: {fileID: 21300000, guid: 8646145575cf5c64e847bcd1d08ce879, type: 3}
-    description: "Ap\xF3s criar sua arte, transforme-a em uma pe\xE7a do tabuleiro.\nEssa
-      pe\xE7a representa o movimento que voc\xEA acabou de criar."
+    description: 'After creating your artwork, turn it into a board piece.
+
+      This
+      piece represents the movement you just created.'
   - image: {fileID: 21300000, guid: 467148fb260c4aa46a79ea859a49e34d, type: 3}
-    description: "Com suas pe\xE7as prontas, \xE9 hora de montar o seu esquadr\xE3o.\nOrganize
-      as pe\xE7as no tabuleiro da forma que desejar e defina qual ser\xE1 o rei."
+    description: "With your pieces ready, it\u2019s time to build your squad.\nArrange
+      the pieces on the board however you like and define which one will be the King."
   - image: {fileID: 21300000, guid: d80a624c5e472be479ab4e8f777bd368, type: 3}
-    description: "No lobby, selecione quais esquadr\xF5es jogar\xE3o com as pe\xE7as
-      pretas e brancas clicando no tabuleiro.\nEm seguida, escolha com qual deles
-      voc\xEA ir\xE1 jogar  indicado pela cor da coroa.\nOp\xE7\xF5es extras de jogo
-      est\xE3o dispon\xEDveis no canto superior direito."
+    description: 'In the lobby, select which squads will play as black and white
+      pieces by clicking on the board.
+
+      Then choose which one you will play
+      with, indicated by the crown color.
+
+      Additional game options are available
+      in the top-right corner.'
   - image: {fileID: 21300000, guid: 561fb7b20d22f2848bc5aad414f63f5e, type: 3}
-    description: "Agora \xE9 s\xF3 jogar a partida.\nNo canto superior esquerdo,
-      voc\xEA pode se render caso a situa\xE7\xE3o fique dif\xEDcil.\nNo canto superior
-      direito, est\xE3o as op\xE7\xF5es de visualiza\xE7\xE3o.\n\xC0 direita da tela,
-      voc\xEA pode acompanhar o hist\xF3rico de movimentos."
+    description: "Now it\u2019s time to play the match.\nIn the top-left corner,
+      you can surrender if the situation becomes difficult.\nIn the top-right corner
+      are the view options.\nOn the right side of the screen, you can follow the
+      match history."

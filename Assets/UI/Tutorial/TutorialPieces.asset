@@ -14,24 +14,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pages:
   - image: {fileID: 21300000, guid: b84b2768ae4f42b4ab6804dc7dd2d962, type: 3}
-    description: "Cada cor mostra o que a pe\xE7a pode fazer naquela casa. Verde:
-      s\xF3 movimento. \nVermelho: s\xF3 captura. \nAmarelo: movimento + captura.
-      \nAzul: movimento de pulo. \nRoxo: pulo + captura"
+    description: 'Each color shows what the piece can do on that square.
+
+      Green:
+      movement only.
+
+      Red: capture only.
+
+      Yellow: movement + capture.
+
+      Blue:
+      jump movement.
+
+      Purple: jump + capture.'
   - image: {fileID: 21300000, guid: e70eb1da73412c947906c73c270e93e4, type: 3}
-    description: "Em Movimentos, voc\xEA molda a forma como a pe\xE7a se comporta
-      no tabuleiro.\nDefina at\xE9 onde ela pode ir, em quais dire\xE7\xF5es pode
-      se mover e que tipo de a\xE7\xE3o esse movimento permite.\nCada ajuste transforma
-      a estrat\xE9gia e cria novas possibilidades de jogo."
+    description: 'In Moves, you shape how the piece behaves on the board.
+
+      Define
+      how far it can go, which directions it can move, and what type of action the
+      move allows.
+
+      Each adjustment changes the strategy and creates new gameplay
+      possibilities.'
   - image: {fileID: 21300000, guid: 3042319b692afe84eb122c5f4f9d503b, type: 3}
-    description: "O movimento especial \xE9 uma habilidade \xFAnica do pe\xE3o, que
-      s\xF3 pode ser usada uma vez.\nAssim como no movimento personalizado do cavalo,
-      basta selecionar as casas desejadas e ativar o movimento."
+    description: "The special move is a unique ability of the Pawn that can only
+      be used once.\nJust like the Knight\u2019s custom movement, simply select the
+      desired squares and activate the move."
   - image: {fileID: 21300000, guid: 8186bac7c661d804eb742c591c98ee58, type: 3}
-    description: "Depois de finalizar uma pe\xE7a, use o bot\xE3o Resetar para limpar
-      os dados e criar uma nova pe\xE7a do zero.\nCuidado: criar uma nova pe\xE7a
-      sem resetar e usar o Salvamento R\xE1pido ir\xE1 sobrescrever a pe\xE7a anterior."
+    description: 'After finishing a piece, use the Reset button to clear the data
+      and create a new piece from scratch.
+
+      Warning: creating a new piece without
+      resetting and using Quick Save will overwrite the previous piece.'
   - image: {fileID: 21300000, guid: 4cb2050ff0ab07c40a027386d7393ad2, type: 3}
-    description: "Ao clicar em Salvar, os conjuntos dispon\xEDveis ser\xE3o exibidos
-      em seguida, clique novamente no conjunto desejado para confirmar o salvamento.
-      No canto superior direito, \xE9 poss\xEDvel criar um novo conjunto. Para excluir,
-      clique em Excluir, selecione o conjunto desejado e confirme a a\xE7\xE3o."
+    description: 'When clicking Save, the available sets will be shown next. Click
+      the desired set again to confirm saving.
+
+      In the top-right corner, you
+      can create a new set.
+
+      To delete, click Delete, select the desired set,
+      and confirm the action.'

@@ -14,8 +14,9 @@ public class MenuButtonsManager : MonoBehaviour
     public GameObject settingsPanel;
 
     [Header("Play:")]
-    public Button singleBtn;
-    public Button multiplayerBtn;
+    public Button playIA;
+    public Button local;
+    public Button simulation;
     public GameObject playPanel;
 
     [Header("Create:")]
@@ -38,15 +39,33 @@ public class MenuButtonsManager : MonoBehaviour
             gameManager = FindObjectOfType<GameManager>();
         }
 
-        playBtn.onClick.AddListener(() => gameManager.ChangeScene("Single Lobby"));
+        //playBtn.onClick.AddListener(() => gameManager.ChangeScene("Single Lobby"));
 
-        //playBtn.onClick.AddListener(() =>
-        //{
-        //    if (playPanel.activeSelf)
-        //        playPanel.SetActive(false);
-        //    else
-        //        SwitchPainelTo(playPanel);
-        //});
+        playBtn.onClick.AddListener(() =>
+        {
+            if (playPanel.activeSelf)
+                playPanel.SetActive(false);
+            else
+                SwitchPainelTo(playPanel);
+        });
+
+        playIA.onClick.AddListener(() =>
+        {
+            GameModeManager.SelectedMode = GameMode.PlayerVsAI;
+            gameManager.ChangeScene("Single Lobby");
+        });
+        local.onClick.AddListener(() =>
+        {
+            GameModeManager.SelectedMode = GameMode.PlayerVsPlayerLocal;
+            gameManager.ChangeScene("Single Lobby");
+
+        });
+        simulation.onClick.AddListener(() =>
+        {
+            GameModeManager.SelectedMode = GameMode.AIVsAI;
+            gameManager.ChangeScene("Single Lobby");
+
+        });
 
 
         createBtn.onClick.AddListener(() =>
@@ -70,8 +89,6 @@ public class MenuButtonsManager : MonoBehaviour
         createPieceBtn.onClick.AddListener(() => gameManager.ChangeScene("Create Piece"));
 
         createSquadBtn.onClick.AddListener(() => gameManager.ChangeScene("Create Squad"));
-
-        singleBtn.onClick.AddListener(() => gameManager.ChangeScene("Single Lobby"));
 
         exitBtn.onClick.AddListener(() => QuitGame());
 

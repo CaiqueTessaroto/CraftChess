@@ -38,6 +38,7 @@ public enum StartOption
 public class SingleLobbyManager : MonoBehaviour
 {
     public GameManager gameManager;
+    public InteractiveLobby interactiveLobby;
 
     [Header("Buttons")]
     public Button Back;
@@ -45,8 +46,15 @@ public class SingleLobbyManager : MonoBehaviour
     void Start()
     {
 
+        if (interactiveLobby == null)
+            interactiveLobby = FindObjectOfType<InteractiveLobby>();
 
-        Back.onClick.AddListener(() => gameManager.ChangeScene("Menu"));
+
+        Back.onClick.AddListener(() =>
+        {
+            SaveMatchConfig(interactiveLobby.currentMatch);
+            gameManager.ChangeScene("Menu");
+        });
 
     }
 

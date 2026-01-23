@@ -14,28 +14,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pages:
   - image: {fileID: 21300000, guid: ee80f227e5838a840a5e4555493f3338, type: 3}
-    description: "Ao pressionar Adicionar, os conjuntos dispon\xEDveis ser\xE3o exibidos.\nEscolha
-      um conjunto para adicionar todas as suas pe\xE7as de uma vez.\nPara adicionar
-      pe\xE7as individualmente, use o bot\xE3o Pe\xE7as no canto superior direito."
+    description: 'When pressing Add, the available sets will be displayed.
+
+      Choose
+      a set to add all of its pieces at once.
+
+      To add pieces individually,
+      use the Pieces button in the top-right corner.'
   - image: {fileID: 21300000, guid: db897da984dddc04c837b2bb613ea10a, type: 3}
-    description: "Quando nenhuma pe\xE7a ou bot\xE3o estiver selecionado, as informa\xE7\xF5es
-      do seu esquadr\xE3o aparecem no centro da tela.\nAli, voc\xEA pode ver o total
-      de pe\xE7as, o poder do esquadr\xE3o e qual \xE9 o rei do esquadr\xE3o."
+    description: 'When no piece or button is selected, your squad information appears
+      in the center of the screen.
+
+      There you can see the total number of pieces,
+      the squad power, and which piece is the King.'
   - image: {fileID: 21300000, guid: 2420db8c7c505a740b42b35150ffb53a, type: 3}
-    description: "Use o bot\xE3o da coroa para escolher qual pe\xE7a ser\xE1 o rei
-      do seu esquadr\xE3o.\nUse o bot\xE3o X para remover uma pe\xE7a do tabuleiro."
+    description: 'Use the crown button to choose which piece will be the King of
+      your squad.
+
+      Use the X button to remove a piece from the board.'
   - image: {fileID: 21300000, guid: eb59ac111f29b744cba4fd306b70d81c, type: 3}
-    description: "Selecione uma pe\xE7a no canto direito para ver suas informa\xE7\xF5es
-      no centro da tela.\nDepois, basta clicar na posi\xE7\xE3o do tabuleiro onde
-      deseja coloc\xE1-la."
+    description: 'Select a piece on the right side to see its information in the
+      center of the screen.
+
+      Then simply click on the board position where
+      you want to place it.'
   - image: {fileID: 21300000, guid: bfb826fa04a4cca4983696b6df5237c9, type: 3}
-    description: "Use o bot\xE3o + para configurar as promo\xE7\xF5es e roques da
-      pe\xE7a selecionada.\nBasta arrastar as pe\xE7as desejadas.\nPe\xE7as muito
-      poderosas t\xEAm limita\xE7\xF5es: acima de 15 de poder n\xE3o podem promover,
-      e acima de 80 de poder n\xE3o podem realizar roque."
+    description: 'Use the + button to configure promotions and castling for the selected
+      piece.
+
+      Simply drag the desired pieces.
+
+      Very powerful pieces have
+      limitations: above 25 power they cannot promote, and above 80 power they cannot
+      castle.'
   - image: {fileID: 21300000, guid: 28ca66e83923c3a41ae0d4c1c84861f2, type: 3}
-    description: "As mensagens exibidas abaixo do tabuleiro indicam o status do Modo
-      Estrat\xE9gico. Esse modo avalia se o seu esquadr\xE3o est\xE1 balanceado em
-      compara\xE7\xE3o com um conjunto cl\xE1ssico de xadrez. Embora seja poss\xEDvel
-      salvar e jogar com esquadr\xF5es fora desse padr\xE3o, o Modo Estrat\xE9gico
-      \xE9 recomendado para garantir maior competitividade."
+    description: The messages displayed below the board indicate the status of Strategic
+      Mode. This mode evaluates whether your squad is balanced compared to a classic
+      chess set. Although it is possible to save and play with squads outside this
+      standard, Strategic Mode is recommended to ensure greater competitiveness.

@@ -180,7 +180,7 @@ public class PieceController : MonoBehaviour
         Squad squad = matchSquad.Data;
         SquadPieceData pieceData = squad.Pieces.Find(p => p.NameInSquad == component.name);
 
-        managerPieceInfo.SelectPiece(component.name, pieceData, movement.configData, sprite);
+        managerPieceInfo.SelectPiece(component.name, pieceData, movement.configData, sprite, component.IsKing);
 
     }
 

@@ -14,19 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pages:
   - image: {fileID: 21300000, guid: c9f68e6b2a1e5ab4b94e1962285423ab, type: 3}
-    description: "Para usar as ferramentas de criar c\xEDrculo, ret\xE2ngulo, linha
-      ou sele\xE7\xE3o, clique em dois pontos na grade.\nNo PC, a bolinha no canto
-      superior esquerdo indica a posi\xE7\xE3o do mouse."
+    description: 'To use the circle, rectangle, line, or selection tools, click on
+      two points on the grid.
+
+      On PC, the small dot in the top-left corner
+      indicates the mouse position.'
   - image: {fileID: 21300000, guid: 1ded4a904ddf0d64fbfe55dedf147a0b, type: 3}
-    description: "Depois de selecionar uma \xE1rea, utilize as setas no canto inferior
-      esquerdo para mov\xEA-la.\nPressione o bot\xE3o central para confirmar o movimento
-      e encerrar a ferramenta."
+    description: 'After selecting an area, use the arrows in the bottom-left corner
+      to move it.
+
+      Press the center button to confirm the movement and finish
+      the tool.'
   - image: {fileID: 21300000, guid: 37c2f38c97e1d11478132e1b240704c9, type: 3}
-    description: "O bot\xE3o de salvamento r\xE1pido \xE9 usado para artes que j\xE1
-      foram salvas ou carregadas.\nO conjunto ao qual elas pertencem ser\xE1 exibido
-      logo abaixo do bot\xE3o."
+    description: 'The quick save button is used for artwork that has already been
+      saved or loaded.
+
+      The set it belongs to will be displayed just below
+      the button.'
   - image: {fileID: 21300000, guid: 6c6d490bef29cf845a7d485cb3d6e86c, type: 3}
-    description: "Ao clicar em Salvar, os conjuntos dispon\xEDveis ser\xE3o exibidos
-      em seguida, clique novamente no conjunto desejado para confirmar o salvamento.
-      No canto superior direito, \xE9 poss\xEDvel criar um novo conjunto. Para excluir,
-      clique em Excluir, selecione o conjunto desejado e confirme a a\xE7\xE3o."
+    description: 'When clicking Save, the available sets will be shown next. Click
+      the desired set again to confirm saving.
+
+      In the top-right corner, you
+      can create a new set.
+
+      To delete, click Delete, select the desired set,
+      and confirm the action.'
