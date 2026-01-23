@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Profiling;
+using System.Linq;
 
 public static class GameModeManager
 {
@@ -17,6 +18,8 @@ public enum GameMode
 public class GameManager : MonoBehaviour
 {
 
+    public AudioClip[] musics;
+
     // Limite em bytes (1 GB)
     private const long RAM_LIMIT = 1L * 1024 * 1024 * 1024;
 
@@ -27,6 +30,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (musics != null)
+            if (musics.Length > 0)
+                AudioManager.Instance.PlayMusicPlaylist(musics);
 
     }
 

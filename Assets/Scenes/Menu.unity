@@ -6281,6 +6281,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6835d4d2987c1224aa8eb7bb95390592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musics:
+  - {fileID: 8300000, guid: 3989e9599651c2f409037b93b121ffad, type: 3}
+  - {fileID: 8300000, guid: 015739d6a25ace445b5c758a30520740, type: 3}
+  - {fileID: 8300000, guid: 2a7b2185e38044c47b8dde204b64faa6, type: 3}
   checkInterval: 2
 --- !u!1 &1680361630
 GameObject:
