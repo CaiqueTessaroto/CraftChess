@@ -107,7 +107,7 @@
     { "key": "KING", "value": "Rei" },
     { "key": "QUEEN", "value": "Rainha" },
     { "key": "BISHOP", "value": "Bispo" },
-    { "key": "KNIGHT", "value": "Cavaleiro" },
+    { "key": "KNIGHT", "value": "Cavalo" },
     { "key": "ROOK", "value": "Torre" },
     { "key": "PAWN", "value": "Peão" },
 
@@ -238,7 +238,20 @@
 
   { "key": "PLAY_VS_IA", "value": "Jogador vs IA" },
   { "key": "local", "value": "Multijogador Local" },
-  { "key": "simulation", "value": "Simulação de IA" }
+  { "key": "simulation", "value": "Simulação de IA" },
+
+
+  { "key": "squad_piece", "value": "{0} {1}" },
+
+  { "key": "Black", "value": "Pretas" },
+  { "key": "White", "value": "Brancas" },
+
+  { "key": "Bishop", "value": "Bispo" },
+  { "key": "King", "value": "Rei" },
+  { "key": "Knight", "value": "Cavalo" },
+  { "key": "Pawn", "value": "Peão" },
+  { "key": "Queen", "value": "Rainha" },
+  { "key": "Rook", "value": "Torre" }
 
   ]
 }

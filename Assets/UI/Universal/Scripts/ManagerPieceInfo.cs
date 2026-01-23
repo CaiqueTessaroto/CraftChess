@@ -69,6 +69,18 @@ public class ManagerPieceInfo : MonoBehaviour
 
         PieceInfo piece = config.piece;
 
+        bool translate = UIHelperUtils.CheckTranslationFile(Application.persistentDataPath, "Pieces", pieceData.Squad);
+
+        string currentTname = namePieceSquad;
+
+        if (translate)
+        {
+            currentTname = UIHelperUtils.T(namePieceSquad);
+            if (string.IsNullOrEmpty(currentTname))
+                currentTname = namePieceSquad;
+        }
+
+
         Panel.SetActive(true);
 
         currentPieceName = namePieceSquad;
@@ -77,7 +89,7 @@ public class ManagerPieceInfo : MonoBehaviour
         //spritePiece = sprite;
         previewImage.sprite = sprite;
 
-        nameTmp.text = namePieceSquad;
+        nameTmp.text = currentTname;
 
         crowView.SetActive(IsKing);
 

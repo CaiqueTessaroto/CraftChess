@@ -213,6 +213,15 @@ public class UIHelperUtils : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(content);
     }
 
+    public static bool CheckTranslationFile(string rootPath, string selectBasePath, string pasta)
+    {
+        // Combina os caminhos e adiciona o nome do arquivo com a extensão
+        string caminhoCompleto = Path.Combine(rootPath, selectBasePath, pasta, "translate.txt");
+
+        // Retorna true se o arquivo existir, caso contrário, false
+        return File.Exists(caminhoCompleto);
+    }
+
 
     public static Sprite GetSpriteFromPath(string pathSprite) //GameObject buttonObj, string pathSprite, Vector2? size = null new Vector2(90, 90)
     {

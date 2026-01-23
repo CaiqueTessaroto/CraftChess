@@ -311,7 +311,21 @@
 
   { "key": "PLAY_VS_IA", "value": "Play vs AI" },
   { "key": "local", "value": "Local Multiplayer" },
-  { "key": "simulation", "value": "AI Simulation" }
+  { "key": "simulation", "value": "AI Simulation" },
+
+
+  { "key": "squad_piece", "value": "{0} {1}" },
+
+  { "key": "Black", "value": "Black" },
+  { "key": "White", "value": "White" },
+
+
+  { "key": "Bishop", "value": "Bishop" },
+  { "key": "King", "value": "King" },
+  { "key": "Knight", "value": "Knight" },
+  { "key": "Pawn", "value": "Pawn" },
+  { "key": "Queen", "value": "Queen" },
+  { "key": "Rook", "value": "Rook" }
 
   ]
 }

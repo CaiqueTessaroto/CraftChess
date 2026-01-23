@@ -271,7 +271,7 @@ public class SquadManager : MonoBehaviour
     public MovementConfigData getMovementPiece(string name)
     {
         string fullPath;
-        string rootPath = Application.persistentDataPath;;
+        string rootPath = Application.persistentDataPath; ;
 
 
         SquadPieceData pieceData = squadData.Pieces.Find(p => p.NameInSquad == name);
@@ -990,6 +990,17 @@ public class SquadManager : MonoBehaviour
         MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
         //squadManager.spritePiece = sprite;
 
+        bool translate = UIHelperUtils.CheckTranslationFile(rootPath, fileManager.basePath_PieceData, pieceData.Squad);
+
+        string currentTname = namePieceSquad;
+
+        if (translate)
+        {
+            currentTname = UIHelperUtils.T(namePieceSquad);
+            if (string.IsNullOrEmpty(currentTname))
+                currentTname = namePieceSquad;
+        }
+
         if (config.piece.Power > 80)
             moreSpecialBtw.gameObject.SetActive(false);
         else
@@ -1003,7 +1014,7 @@ public class SquadManager : MonoBehaviour
             currentRootPath = rootPath;
             currentPieceData = pieceData;
 
-            SetInfoPiece(namePieceSquad, pieceData, config, sprite, selected);
+            SetInfoPiece(namePieceSquad, pieceData, config, sprite, currentTname, selected);
             StartCoroutine(SetPromotionsAndCastelingPieces(currentPieceData, json, rootPath));
 
             editMode = false;
@@ -1014,7 +1025,7 @@ public class SquadManager : MonoBehaviour
 
 
 
-    public void SetInfoPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite, bool selected = true)
+    public void SetInfoPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite, string currentTname, bool selected = true)
     {
         //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
 
@@ -1030,7 +1041,7 @@ public class SquadManager : MonoBehaviour
         currentPiecepower = pieceData.Power;
         squadPiece = piece.Squad;
 
-        nameTmp.text = currentPieceName;
+        nameTmp.text = currentTname;
         powerTmp.text = UIHelperUtils.SetPowerText(currentPiecepower);
 
         spritePiece = sprite;

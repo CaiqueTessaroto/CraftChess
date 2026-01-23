@@ -339,14 +339,26 @@ public class FolderNavigation : MonoBehaviour
         Transform content = panelFolders.transform.Find("Scroll View/Viewport/Content");
 
         GameObject newButton = Instantiate(folderbuttonPrefab, content);
+
         newButton.name = $"{pasta}";
 
         newButton.transform.SetSiblingIndex(0);
 
         // Texto
+        bool translate = UIHelperUtils.CheckTranslationFile(rootPath, selectBasePath, pasta);
+
+        string name = pasta;
+
+        if (translate)
+        {
+            name = UIHelperUtils.T(pasta);
+            if (string.IsNullOrEmpty(name))
+                name = pasta;
+        }
+
         TextMeshProUGUI nomeTexto = newButton.GetComponentInChildren<TextMeshProUGUI>();
         if (nomeTexto != null)
-            nomeTexto.text = pasta;
+            nomeTexto.text = name;
 
         // Click
         Button button = newButton.GetComponent<Button>();

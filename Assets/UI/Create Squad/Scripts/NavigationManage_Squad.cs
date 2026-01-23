@@ -448,12 +448,12 @@ public class NavigationManage_Squad : MonoBehaviour
     }
 
 
-    public void OnClickFile(string jsonPath, string rootPath)
+    public void OnClickFile(string jsonPath, string rootPath, string pasta)
     {
 
         if (squadManager.squadData.Pieces.Count < 16)
         {
-            if (AddPieceToSquad(jsonPath, rootPath, piecesPanel))
+            if (AddPieceToSquad(jsonPath, rootPath, piecesPanel, pasta))
             {
                 squadManager.CheckStrategicModeRules();
                 panelFile.SetActive(false);
@@ -519,8 +519,19 @@ public class NavigationManage_Squad : MonoBehaviour
             {
                 RenamePieces(pasta);
 
+                bool translate = UIHelperUtils.CheckTranslationFile(rootPath, fileManager.basePath_PieceData, pasta);
+
+                string nameSquad = pasta;
+
+                if (translate)
+                {
+                    nameSquad = UIHelperUtils.T(pasta);
+                    if (string.IsNullOrEmpty(nameSquad))
+                        nameSquad = pasta;
+                }
+
                 squadManager.squad = pasta;
-                squadManager.squadnameTmp.text = pasta;
+                squadManager.squadnameTmp.text = nameSquad;
 
             }
 
@@ -566,7 +577,7 @@ public class NavigationManage_Squad : MonoBehaviour
                     squadManager.squadData.King.Name = "";
                     squadManager.squadData.King.Position = new Vector2Int();
 
-                    squadManager.kingView.sprite = Resources.Load<Sprite>("Sprites/Default/Piece_Default");
+                    squadManager.kingView.sprite = null;//Resources.Load<Sprite>("Sprites/Default/Piece_Default");
                 }
             }
 
@@ -576,7 +587,7 @@ public class NavigationManage_Squad : MonoBehaviour
             squadManager.squadData.King.Name = "";
             squadManager.squadData.King.Position = new Vector2Int();
 
-            squadManager.kingView.sprite = Resources.Load<Sprite>("Sprites/Default/Piece_Default");
+            squadManager.kingView.sprite = null;//Resources.Load<Sprite>("Sprites/Default/Piece_Default");
         }
 
     }
@@ -656,10 +667,22 @@ public class NavigationManage_Squad : MonoBehaviour
             // Instancia o botão
             GameObject newButton = Instantiate(squad_BtnPrefab, content);
 
+            bool translate = UIHelperUtils.CheckTranslationFile(rootPath, fileManager.basePath_SquadData, squadName);
+
+            string name = squadName;
+
+            if (translate)
+            {
+                Debug.Log("translate: " + translate);
+                name = UIHelperUtils.T(squadName);
+                if (string.IsNullOrEmpty(name))
+                    name = squadName;
+            }
+
             // Nome no botão
             TMP_Text textComponent = newButton.GetComponentInChildren<TMP_Text>();
             if (textComponent != null)
-                textComponent.text = squadName;
+                textComponent.text = name;
 
             // Imagem
             Image imageComponent = newButton.GetComponentInChildren<Image>();
@@ -680,14 +703,14 @@ public class NavigationManage_Squad : MonoBehaviour
             {
                 buttonComponent.onClick.AddListener(() =>
                 {
-                    OnButtonClicked(folderName, newButton, piecesPanel, squadName, rootPath, jsonFile);
+                    OnButtonClicked(folderName, newButton, piecesPanel, squadName, rootPath, jsonFile, name);
                 });
             }
         }
     }
 
 
-    public void OnButtonClicked(string folderName, GameObject newButton, Transform piecesPanel, string squadName, string rootPath, string jsonFile)
+    public void OnButtonClicked(string folderName, GameObject newButton, Transform piecesPanel, string squadName, string rootPath, string jsonFile, string name)
     {
         if (uIHelperUtils.delete)
         {
@@ -742,7 +765,7 @@ public class NavigationManage_Squad : MonoBehaviour
             squadManager.squadData.Pieces.Clear();
 
             squadManager.squad = folderName;
-            squadManager.squadnameTmp.text = folderName;
+            squadManager.squadnameTmp.text = name;
             folderNavigation.selectRootPath = rootPath;
 
             // Remove botões antigos
@@ -803,7 +826,7 @@ public class NavigationManage_Squad : MonoBehaviour
         {
             if (squadManager.squadData.Pieces.Count < 16)
             {
-                AddPieceToSquad(jsonPath, rootPath, content);
+                AddPieceToSquad(jsonPath, rootPath, content, squadManager.squad);
             }
             else
             {
@@ -823,7 +846,7 @@ public class NavigationManage_Squad : MonoBehaviour
     }
 
 
-    private bool AddPieceToSquad(string jsonPath, string rootPath, Transform content)
+    private bool AddPieceToSquad(string jsonPath, string rootPath, Transform content, string folder)
     {
         string nameInSquad = string.Empty;
         bool nativePiece = rootPath == Application.streamingAssetsPath;
@@ -839,8 +862,26 @@ public class NavigationManage_Squad : MonoBehaviour
                 return false;
             }
 
+            bool translate = UIHelperUtils.CheckTranslationFile(rootPath, fileManager.basePath_PieceData, folder);
+
             PieceInfo piece = wrapper.piece;
-            nameInSquad = piece.Name;
+
+            string name = piece.Name;
+            string squadName = piece.Squad;
+
+            if (translate)
+            {
+                name = UIHelperUtils.T(piece.Name);
+                if (string.IsNullOrEmpty(name))
+                    name = piece.Name;
+
+
+                squadName = UIHelperUtils.T(piece.Squad);
+                if (string.IsNullOrEmpty(squadName))
+                    squadName = piece.Squad;
+            }
+
+            nameInSquad = name;
             piece.NativeSprite = nativePiece;
 
             // Adiciona ao squad
@@ -859,10 +900,19 @@ public class NavigationManage_Squad : MonoBehaviour
             }
             else
             {
-                if (piece.Squad == squadManager.squad)
+                if (squadName == squadManager.squad)
                     return false;
 
-                nameInSquad = piece.Squad + " " + piece.Name;
+                string newPieceName = piece.Squad + " " + piece.Name;
+
+                if (translate)
+                {
+                    newPieceName = UIHelperUtils.T("squad_piece", squadName, name);
+                    if (string.IsNullOrEmpty(newPieceName))
+                        newPieceName = piece.Squad + " " + piece.Name;
+                }
+
+                nameInSquad = newPieceName;
 
                 if (!squadManager.squadData.Pieces.Any(p => p.NameInSquad == nameInSquad))
                 {

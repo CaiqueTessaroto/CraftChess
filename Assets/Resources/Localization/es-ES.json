@@ -302,7 +302,19 @@
 
   { "key": "PLAY_VS_IA", "value": "Jugador vs IA" },
   { "key": "local", "value": "Multijugador Local" },
-  { "key": "simulation", "value": "Simulación de IA" }
+  { "key": "simulation", "value": "Simulación de IA" },
+
+
+  { "key": "Black", "value": "Negras" },
+  { "key": "White", "value": "Blancas" },
+
+
+  { "key": "Bishop", "value": "Alfil" },
+  { "key": "King", "value": "Rey" },
+  { "key": "Knight", "value": "Caballo" },
+  { "key": "Pawn", "value": "Peón" },
+  { "key": "Queen", "value": "Reina" },
+  { "key": "Rook", "value": "Torre" }
 
   ]
 }

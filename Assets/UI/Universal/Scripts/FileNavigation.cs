@@ -227,6 +227,7 @@ public class FileNavigation : MonoBehaviour
     public IEnumerator CreatePathFileButtons(Transform content, string rootPath)
     {
 
+
         // Caminho base
         if (selectBasePath == fileManager.basePath_PieceData)
         {
@@ -266,6 +267,8 @@ public class FileNavigation : MonoBehaviour
                 GameObject newButton = Instantiate(fileButtonPrefab, content);
                 //Transform newButton = painelNewButton.transform.GetChild(0);
 
+                bool translate = UIHelperUtils.CheckTranslationFile(rootPath, selectBasePath, piece.Squad);
+
 
                 string caminhoSprite;
 
@@ -298,9 +301,20 @@ public class FileNavigation : MonoBehaviour
                 if (imgComp != null)
                     imgComp.sprite = sprite;
 
+
+                string name = piece.Name;
+
+                if (translate)
+                {
+                    Debug.Log("translate: " + translate);
+                    name = UIHelperUtils.T(piece.Name);
+                    if (string.IsNullOrEmpty(name))
+                        name = piece.Name;
+                }
+
                 TextMeshProUGUI textComp = newButton.GetComponentInChildren<TextMeshProUGUI>();
                 if (textComp != null)
-                    textComp.text = Path.GetFileNameWithoutExtension(piece.Name);
+                    textComp.text = name;
 
                 string jsonPathCopy = arquivo; // evita closure
                 string pastaCopy = pasta;
@@ -310,7 +324,7 @@ public class FileNavigation : MonoBehaviour
                     if (manageCreate)
                         manageCreate.OnFileClick(newButton, fileName, jsonPathCopy, pastaCopy, sprite, rootPath);
                     else if (manageSquad)
-                        manageSquad.OnClickFile(jsonPathCopy, rootPath);
+                        manageSquad.OnClickFile(jsonPathCopy, rootPath, pastaCopy);
 
                 });
 
@@ -348,13 +362,26 @@ public class FileNavigation : MonoBehaviour
 
                 Sprite sprite = UIHelperUtils.GetSpriteFromPath(file);
 
+                string pasta = Path.GetDirectoryName(file);
+                bool translate = UIHelperUtils.CheckTranslationFile(rootPath, selectBasePath, pasta);
+
                 Image imgComp = newButton.GetComponent<Image>();
                 if (imgComp != null)
                     imgComp.sprite = sprite;
 
+
+                string name = Path.GetFileNameWithoutExtension(file);
+
+                if (translate)
+                {
+                    name = UIHelperUtils.T(name);
+                    if (string.IsNullOrEmpty(name))
+                        name = Path.GetFileNameWithoutExtension(file);
+                }
+
                 TextMeshProUGUI textComp = newButton.GetComponentInChildren<TextMeshProUGUI>();
                 if (textComp != null)
-                    textComp.text = Path.GetFileNameWithoutExtension(file);
+                    textComp.text = name;
 
                 string fileCopy = file; // evita closure
                 newButton.GetComponent<Button>().onClick.AddListener(() =>
@@ -397,6 +424,8 @@ public class FileNavigation : MonoBehaviour
             yield break;
         }
 
+        bool translate = UIHelperUtils.CheckTranslationFile(rootPath, selectBasePath, folder);
+
         if (selectBasePath == fileManager.basePath_PieceData)
         {
             string[] arquivosJson = Directory.GetFiles(caminhoCompleto, "*.json", SearchOption.TopDirectoryOnly);
@@ -432,9 +461,18 @@ public class FileNavigation : MonoBehaviour
                     GameObject newButton = Instantiate(fileButtonPrefab, content);
                     //Transform newButton = painelNewButton.transform.GetChild(0);
 
+                    string name = piece.Name;
+
+                    if (translate)
+                    {
+                        name = UIHelperUtils.T(piece.Name);
+                        if (string.IsNullOrEmpty(name))
+                            name = piece.Name;
+                    }
+
                     TextMeshProUGUI textComp = newButton.GetComponentInChildren<TextMeshProUGUI>();
                     if (textComp != null)
-                        textComp.text = Path.GetFileNameWithoutExtension(piece.Name);
+                        textComp.text = name;
 
                     Sprite sprite = UIHelperUtils.GetSpriteFromPath(caminhoSprite);
 
@@ -482,9 +520,19 @@ public class FileNavigation : MonoBehaviour
                 img.sprite = spriteData.Sprite;
                 img.rectTransform.sizeDelta = new Vector2(90, 90);
 
+
+                string name = spriteData.Name;
+
+                if (translate)
+                {
+                    name = UIHelperUtils.T(spriteData.Name);
+                    if (string.IsNullOrEmpty(name))
+                        name = spriteData.Name;
+                }
+
                 TextMeshProUGUI textComp = newButton.GetComponentInChildren<TextMeshProUGUI>();
                 if (textComp != null)
-                    textComp.text = spriteData.Name;
+                    textComp.text = name;
 
                 string pathCopy = spriteData.PngPath;
                 newButton.GetComponent<Button>().onClick.AddListener(() =>
