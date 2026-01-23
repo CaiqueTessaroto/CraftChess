@@ -223,6 +223,14 @@
     { "key": "TutorialSeenSquad5", "value": "As mensagens exibidas abaixo do tabuleiro indicam o status do Modo Estratégico. Esse modo avalia se o seu esquadrão está balanceado em comparação com um conjunto clássico de xadrez. Embora seja possível salvar e jogar com esquadrões fora desse padrão, o Modo Estratégico é recomendado para garantir maior competitividade." },
 
 
+    { "key": "TutorialSeenLobby0", "value": "Durante o Multijogador Local, o tabuleiro pode girar automaticamente a cada turno.\nUse o ícone no canto superior direito para ativar ou desativar essa rotação." },
+    { "key": "TutorialSeenLobby1", "value": "As coroas representam os dois esquadrões: o esquadrão preto na parte superior e o branco na parte inferior. A coroa destacada mostra qual esquadrão você controlará na partida." },
+    { "key": "TutorialSeenLobby2", "value": "Lembre-se: você é um Humano, a coroa lá de cima é sua.\nEla representa você e o esquadrão que vai comandar na partida." },
+    { "key": "TutorialSeenLobby3", "value": "As peças exibidas ao lado podem ser selecionadas para visualizar seus movimentos, habilidades e a peça definida como rei." },
+    { "key": "TutorialSeenLobby4", "value": "No modo Sem Regras, você não é obrigado a proteger o rei em caso de xeque.\nA responsabilidade é sua se não perceber, fim de jogo." },
+    { "key": "TutorialSeenLobby5", "value": "No modo Sem Turnos, a partida é em tempo real.\nMovimente suas peças livremente, sem esperar a vez do oponente." },
+
+
     { "key": "GOTIT", "value": "Entendi!" },
 
     { "key": "RESTART_TUTORIAL", "value": "Reiniciar Tutorial" },

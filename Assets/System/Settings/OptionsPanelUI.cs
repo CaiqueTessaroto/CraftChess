@@ -32,6 +32,7 @@ public class OptionsPanelUI : MonoBehaviour
         PlayerPrefs.DeleteKey("TutorialSeenPainting");
         PlayerPrefs.DeleteKey("TutorialSeenPiece");
         PlayerPrefs.DeleteKey("TutorialSeenSquad");
+        PlayerPrefs.DeleteKey("TutorialSeenLobby");
         PlayerPrefs.Save();
 
         ShowTutorialBody();

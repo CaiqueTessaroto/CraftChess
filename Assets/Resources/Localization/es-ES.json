@@ -288,6 +288,13 @@
   "value": "Los mensajes que se muestran debajo del tablero indican el estado del Modo Estratégico. Este modo evalúa si tu escuadrón está equilibrado en comparación con un conjunto clásico de ajedrez. Aunque es posible guardar y jugar con escuadrones fuera de este estándar, se recomienda el Modo Estratégico para garantizar una mayor competitividad."
   },
 
+  { "key": "TutorialSeenLobby0", "value": "Durante el Multijugador Local, el tablero puede rotar automáticamente en cada turno.\nUsa el icono en la esquina superior derecha para activar o desactivar esta rotación." },
+  { "key": "TutorialSeenLobby1", "value": "Las coronas representan a los dos escuadrones: el escuadrón negro en la parte superior y el blanco en la parte inferior. La corona resaltada muestra qué escuadrón controlarás en la partida." },
+  { "key": "TutorialSeenLobby2", "value": "Recuerda: eres un Humano, la corona de arriba es tuya.\nRepresenta a ti y al escuadrón que comandarás en la partida." },
+  { "key": "TutorialSeenLobby3", "value": "Las piezas que se muestran a un lado pueden seleccionarse para ver sus movimientos, habilidades y cuál pieza está definida como el rey." },
+  { "key": "TutorialSeenLobby4", "value": "En el modo Sin Reglas, no estás obligado a proteger al rey en caso de jaque.\nSi no lo notas, la responsabilidad es tuya: fin de la partida." },
+  { "key": "TutorialSeenLobby5", "value": "En el modo Sin Turnos, la partida se juega en tiempo real.\nMueve tus piezas libremente, sin esperar el turno del oponente." },
+
 
   { "key": "GOTIT", "value": "Entiendo" },
 

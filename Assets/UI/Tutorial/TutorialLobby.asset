@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16356fe3b9ef6fc4cb033cf0da1bdbec, type: 3}
+  m_Name: TutorialLobby
+  m_EditorClassIdentifier: 
+  pages:
+  - image: {fileID: 21300000, guid: 6370c3ae2c8dff94e850e3dfcd0ce81d, type: 3}
+    description: 'During Local Multiplayer, the board can automatically rotate each
+      turn.
+
+      Use the icon in the top-right corner to enable or disable this
+      rotation.'
+  - image: {fileID: 21300000, guid: 25230df6fee00c04dbe1aca21f8a2c8c, type: 3}
+    description: 'The crowns represent the two squads: the black squad at the top
+      and the white squad at the bottom. The highlighted crown shows which squad
+      you will control in the match.'
+  - image: {fileID: 21300000, guid: 545717c8d5022954ab7cfabba790a8ef, type: 3}
+    description: 'Remember: you are a Human, the top crown is yours.
+
+      It represents
+      you and the squad you will command in the match.'
+  - image: {fileID: 21300000, guid: a7b44c81dbb958d4798b14521a83a57f, type: 3}
+    description: The pieces displayed on the side can be selected to view their moves,
+      abilities, and which piece is defined as the king.
+  - image: {fileID: 21300000, guid: 37a87cccb92785a4b94cb5e80f8c88a2, type: 3}
+    description: 'In No Rules mode, you are not required to protect the king when
+      in check.
+
+      If you fail to notice it, the responsibility is yours, game
+      over.'
+  - image: {fileID: 21300000, guid: 2332c1cae0024d540b818fb9fa9c0834, type: 3}
+    description: "In No Turns mode, the match is played in real time.\nMove your
+      pieces freely without waiting for your opponent\u2019s turn."

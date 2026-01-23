@@ -295,6 +295,15 @@
   "key": "TutorialSeenSquad5",
   "value": "The messages displayed below the board indicate the status of Strategic Mode. This mode evaluates whether your squad is balanced compared to a classic chess set. Although it is possible to save and play with squads outside this standard, Strategic Mode is recommended to ensure greater competitiveness."
   },
+
+
+  { "key": "TutorialSeenLobby0", "value": "During Local Multiplayer, the board can automatically rotate each turn.\nUse the icon in the top-right corner to enable or disable this rotation." },
+  { "key": "TutorialSeenLobby1", "value": "The crowns represent the two squads: the black squad at the top and the white squad at the bottom. The highlighted crown shows which squad you will control in the match." },
+  { "key": "TutorialSeenLobby2", "value": "Remember: you are a Human, the top crown is yours.\nIt represents you and the squad you will command in the match." },
+  { "key": "TutorialSeenLobby3", "value": "The pieces displayed on the side can be selected to view their moves, abilities, and which piece is defined as the king." },
+  { "key": "TutorialSeenLobby4", "value": "In No Rules mode, you are not required to protect the king when in check.\nIf you fail to notice it, the responsibility is yours, game over." },
+  { "key": "TutorialSeenLobby5", "value": "In No Turns mode, the match is played in real time.\nMove your pieces freely without waiting for your opponent’s turn." },
+
   
   { "key": "GOTIT", "value": "Got It" },
 
