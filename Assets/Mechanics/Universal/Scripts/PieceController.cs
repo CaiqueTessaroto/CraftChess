@@ -264,12 +264,12 @@ public class PieceController : MonoBehaviour
             gameInterfaceManager.EndGame("Draw");
         else if (black)
         {
-            Sprite sprite = managerPieceInfo.pieceSprites[KingBlack.Name + KingBlack.Squad];
+            Sprite sprite = managerPieceInfo.pieceSpritesBlack[KingBlack.Name + KingBlack.Squad];
             gameInterfaceManager.EndGameLocal(MatchData.Instance.blackSquadName, sprite);
         }
         else if (white)
         {
-            Sprite sprite = managerPieceInfo.pieceSprites[KingWhite.Name + KingWhite.Squad];
+            Sprite sprite = managerPieceInfo.pieceSpritesWhite[KingWhite.Name + KingWhite.Squad];
             gameInterfaceManager.EndGameLocal(MatchData.Instance.whiteSquadName, sprite);
         }
 

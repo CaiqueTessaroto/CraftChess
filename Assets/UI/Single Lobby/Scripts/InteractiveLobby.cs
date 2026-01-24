@@ -425,10 +425,12 @@ public class InteractiveLobby : MonoBehaviour
 
     public void SelectSquad(string rootPath, string folderName, string jsonFile)
     {
-        managerPieceInfo.pieceSprites.Clear();
+
 
         if (OnWhite)
         {
+            managerPieceInfo.pieceSpritesWhite.Clear();
+
             currentWhiteRootPath = rootPath;
 
             WhiteSquad.Clear();
@@ -449,6 +451,8 @@ public class InteractiveLobby : MonoBehaviour
         }
         else
         {
+            managerPieceInfo.pieceSpritesBlack.Clear();
+
             currentBlackRootPath = rootPath;
             BlackSquad.Clear();
 
@@ -564,6 +568,12 @@ public class InteractiveLobby : MonoBehaviour
 
                 if (!WhiteSquad.Pieces.ContainsKey(piece.NameInSquad))
                     WhiteSquad.Pieces[piece.NameInSquad] = wrapper;
+
+                if (!managerPieceInfo.pieceSpritesWhite.ContainsKey(piece.NameInSquad + piece.Squad))
+                {
+                    managerPieceInfo.pieceSpritesWhite[$"{piece.NameInSquad}{piece.Squad}"] = sprite;
+                }
+
             }
             else
             {
@@ -572,15 +582,16 @@ public class InteractiveLobby : MonoBehaviour
 
                 if (!BlackSquad.Pieces.ContainsKey(piece.NameInSquad))
                     BlackSquad.Pieces[piece.NameInSquad] = wrapper;
+
+                if (!managerPieceInfo.pieceSpritesBlack.ContainsKey(piece.NameInSquad + piece.Squad))
+                {
+                    managerPieceInfo.pieceSpritesBlack[$"{piece.NameInSquad}{piece.Squad}"] = sprite;
+                }
             }
 
             elementCount += 1;
 
 
-            if (!managerPieceInfo.pieceSprites.ContainsKey(piece.NameInSquad + piece.Squad))
-            {
-                managerPieceInfo.pieceSprites[$"{piece.NameInSquad}{piece.Squad}"] = sprite;
-            }
 
         }
 

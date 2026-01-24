@@ -24,7 +24,8 @@ public class ManagerPieceInfo : MonoBehaviour
 
     public BoardChessManager boardChessManager;
 
-    public Dictionary<string, Sprite> pieceSprites = new Dictionary<string, Sprite>();
+    public Dictionary<string, Sprite> pieceSpritesWhite = new Dictionary<string, Sprite>();
+    public Dictionary<string, Sprite> pieceSpritesBlack = new Dictionary<string, Sprite>();
 
     // Start is called before the first frame update
     void Start()
@@ -156,8 +157,11 @@ public class ManagerPieceInfo : MonoBehaviour
 
         Sprite sprite = null;
 
-        if (pieceSprites.ContainsKey(fileName + squad))
-            sprite = pieceSprites[fileName + squad];
+        if (pieceSpritesWhite.ContainsKey(fileName + squad))
+            sprite = pieceSpritesWhite[fileName + squad];
+        else if (pieceSpritesBlack.ContainsKey(fileName + squad))
+            sprite = pieceSpritesBlack[fileName + squad];
+
 
         if (img != null)
         {

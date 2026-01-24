@@ -610,10 +610,15 @@ public class BoardChessManager : MonoBehaviour
         {
             if (sprites.TryGetValue(piece.Name, out Sprite sprite))
             {
-                if (!managerPieceInfo.pieceSprites.ContainsKey(piece.Name + piece.Squad))
+                if (!managerPieceInfo.pieceSpritesWhite.ContainsKey(piece.Name + piece.Squad))
                 {
-                    managerPieceInfo.pieceSprites[piece.NameInSquad + piece.Squad] = sprite;
+                    managerPieceInfo.pieceSpritesWhite[piece.NameInSquad + piece.Squad] = sprite;
                 }
+                else if (!managerPieceInfo.pieceSpritesBlack.ContainsKey(piece.Name + piece.Squad))
+                {
+                    managerPieceInfo.pieceSpritesBlack[piece.NameInSquad + piece.Squad] = sprite;
+                }
+                
             }
 
         }
