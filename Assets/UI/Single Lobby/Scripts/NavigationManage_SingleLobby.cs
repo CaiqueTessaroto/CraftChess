@@ -155,9 +155,21 @@ public class NavigationManage_SingleLobby : MonoBehaviour
             GameObject newButton = Instantiate(squad_BtnPrefab, content);
 
             // Nome no botão
+
+            bool translate = UIHelperUtils.CheckTranslationFile(rootPath, fileManager.basePath_SquadData, squadFolder);
+
+            string name = squadName;
+
+            if (translate)
+            {
+                name = UIHelperUtils.T(squadName);
+                if (string.IsNullOrEmpty(name))
+                    name = squadName;
+            }
+
             TMP_Text textComponent = newButton.GetComponentInChildren<TMP_Text>();
             if (textComponent != null)
-                textComponent.text = squadName;
+                textComponent.text = name;
 
             // Imagem
             Image imageComponent = newButton.GetComponentInChildren<Image>();

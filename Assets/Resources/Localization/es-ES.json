@@ -305,16 +305,49 @@
   { "key": "simulation", "value": "Simulación de IA" },
 
 
-  { "key": "Black", "value": "Negras" },
-  { "key": "White", "value": "Blancas" },
+  { "key": "squad_piece", "value": "{0} {1}" },
 
+  { "key": "Black", "value": "Negro" },
+  { "key": "White", "value": "Blanco" },
+  { "key": "Red", "value": "Rojo" },
+
+  { "key": "Horde", "value": "Horda" },
+
+  { "key": "Pirate", "value": "Pirata" },
+  { "key": "Fantasy", "value": "Fantasía" },
+  { "key": "Vikings", "value": "Vikingos" },
+  { "key": "Brainrot", "value": "Brainrot" },
 
   { "key": "Bishop", "value": "Alfil" },
   { "key": "King", "value": "Rey" },
   { "key": "Knight", "value": "Caballo" },
   { "key": "Pawn", "value": "Peón" },
   { "key": "Queen", "value": "Reina" },
-  { "key": "Rook", "value": "Torre" }
+  { "key": "Rook", "value": "Torre" },
+
+  { "key": "Ballerina", "value": "Bailarina" },
+  { "key": "Brrpatabim", "value": "Brrpatabim" },
+  { "key": "Capuccinoassassino", "value": "Capuccino Asesino" },
+  { "key": "Frigocamello", "value": "Frigocamello" },
+  { "key": "Ketupat", "value": "Ketupat" },
+  { "key": "Tungtung", "value": "Tungtung" },
+
+  { "key": "Dragon", "value": "Dragón" },
+  { "key": "Elf", "value": "Elfa" },
+  { "key": "Orc", "value": "Orco" },
+  { "key": "Tower", "value": "Torre" },
+  { "key": "Wizard", "value": "Mago" },
+
+  { "key": "Lighthouse", "value": "Faro" },
+  { "key": "Mermaid", "value": "Sirena" },
+  { "key": "Pirate King", "value": "Rey Pirata" },
+  { "key": "Shaman", "value": "Chamán" },
+  { "key": "Ship", "value": "Barco" },
+  { "key": "Skeleton", "value": "Esqueleto" },
+
+  { "key": "Soldier", "value": "Soldado" },
+  { "key": "Valkyrie", "value": "Valquiria" },
+  { "key": "Viking Ship", "value": "Barco Vikingo" }
 
   ]
 }

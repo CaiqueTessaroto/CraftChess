@@ -318,14 +318,45 @@
 
   { "key": "Black", "value": "Black" },
   { "key": "White", "value": "White" },
+  { "key": "Red", "value": "Red" },
 
+  { "key": "Horde", "value": "Horde" },
+
+  { "key": "Pirate", "value": "Pirate" },
+  { "key": "Fantasy", "value": "Fantasy" },
+  { "key": "Vikings", "value": "Vikings" },
+  { "key": "Brainrot", "value": "Brainrot" },
 
   { "key": "Bishop", "value": "Bishop" },
   { "key": "King", "value": "King" },
   { "key": "Knight", "value": "Knight" },
   { "key": "Pawn", "value": "Pawn" },
   { "key": "Queen", "value": "Queen" },
-  { "key": "Rook", "value": "Rook" }
+  { "key": "Rook", "value": "Rook" },
+
+  { "key": "Ballerina", "value": "Ballerina" },
+  { "key": "Brrpatabim", "value": "Brrpatabim" },
+  { "key": "Capuccinoassassino", "value": "Capuccinoassassino" },
+  { "key": "Frigocamello", "value": "Frigocamello" },
+  { "key": "Ketupat", "value": "Ketupat" },
+  { "key": "Tungtung", "value": "Tungtung" },
+
+  { "key": "Dragon", "value": "Dragon" },
+  { "key": "Elf", "value": "Elf" },
+  { "key": "Orc", "value": "Orc" },
+  { "key": "Tower", "value": "Tower" },
+  { "key": "Wizard", "value": "Wizard" },
+
+  { "key": "Lighthouse", "value": "Lighthouse" },
+  { "key": "Mermaid", "value": "Mermaid" },
+  { "key": "Pirate King", "value": "Pirate King" },
+  { "key": "Shaman", "value": "Shaman" },
+  { "key": "Ship", "value": "Ship" },
+  { "key": "Skeleton", "value": "Skeleton" },
+
+  { "key": "Soldier", "value": "Soldier" },
+  { "key": "Valkyrie", "value": "Valkyrie" },
+  { "key": "Viking Ship", "value": "Viking Ship" }
 
   ]
 }

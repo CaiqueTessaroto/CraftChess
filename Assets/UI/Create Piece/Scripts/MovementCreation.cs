@@ -964,6 +964,10 @@ public class MovementCreation : MonoBehaviour
             int rangePorDirecao = GetAccumulatedPowerByDirection(straight);
             poder = CalcularPoder(straight.Move, straight.Capture, straight.Jump, rangePorDirecao);
             poderTotal = poderTotal + poder;
+
+            if (straight.Range >= 7)
+                poderTotal = poderTotal + 20;
+
         }
 
         // Movimento diagonal
@@ -973,6 +977,9 @@ public class MovementCreation : MonoBehaviour
             poder = CalcularPoder(diagonal.Move, diagonal.Capture, diagonal.Jump, rangePorDirecao);
             poder = Mathf.CeilToInt(poder * 0.5f);
             poderTotal = poderTotal + poder;
+
+            if (diagonal.All && diagonal.Range >= 7)
+                poderTotal = poderTotal + 10;
         }
 
         if (straight.Active && diagonal.Active)
@@ -1011,12 +1018,12 @@ public class MovementCreation : MonoBehaviour
             if (special.Active)
             {
                 poder = CalcularPoder(special.Move, special.Capture, special.Jump, special.Moves.Count);
-                poderTotal = poderTotal + poder;
+                poderTotal = poderTotal + Mathf.CeilToInt(poder * 0.7f); ;
 
-                if (special.Moves.Count > 8)
-                {
-                    poderTotal = poderTotal + poder;
-                }
+                //if (special.Moves.Count > 8)
+                //{
+                //    poderTotal = poderTotal + poder;
+                //}
 
             }
         }
