@@ -15,6 +15,7 @@ public class RewardManager : MonoBehaviour
     public RewardFeed rewardFeed;
 
     [Header("Unlock Pack Panel")]
+    public AudioClip unlock;
     public GameObject unlockPanel;
     public Button okBtn;
     public Image image;
@@ -50,6 +51,8 @@ public class RewardManager : MonoBehaviour
             if (rewardFeed != null)
                 rewardFeed.rewardBtn.interactable = false;
         }
+
+        AudioManager.Instance.PlaySFX(unlock);
 
         string name = UIHelperUtils.T(reward.id);
 

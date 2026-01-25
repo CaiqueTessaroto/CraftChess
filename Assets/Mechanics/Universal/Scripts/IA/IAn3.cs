@@ -197,7 +197,7 @@ public class IAn3 : MonoBehaviour
                 }
 
                 if (enemy.IsKing)
-                    score += 100;
+                    score += 1000;
 
             }
         }

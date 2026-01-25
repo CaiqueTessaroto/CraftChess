@@ -10445,6 +10445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6835d4d2987c1224aa8eb7bb95390592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musics: []
   checkInterval: 2
 --- !u!4 &1425975909
 Transform:
@@ -12926,8 +12927,9 @@ MonoBehaviour:
   createPromotionUI: {fileID: 1726832952}
   gameInterfaceManager: {fileID: 688637390}
   managerPieceInfo: {fileID: 317782785}
-  moveSound: {fileID: 8300000, guid: 9f5f1a057b0dcf743a4feb12e3e89347, type: 3}
-  captureSound: {fileID: 8300000, guid: 9f5f1a057b0dcf743a4feb12e3e89347, type: 3}
+  moveSound: {fileID: 8300000, guid: 45fe6539db8785c4eafd4b4680315d15, type: 3}
+  captureSound: {fileID: 8300000, guid: fca7a1ebd24807e489a887ba021fed5b, type: 3}
+  checkSound: {fileID: 8300000, guid: 27bd6e5e2bbce8a4d96d1c1a49cb8ffb, type: 3}
   selectedPiece: {fileID: 0}
   kingWhiteIsInCheck: 0
   kingBlackIsInCheck: 0

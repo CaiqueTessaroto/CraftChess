@@ -19,6 +19,7 @@ public class PieceController : MonoBehaviour
     [Header("AudioClip:")]
     public AudioClip moveSound;
     public AudioClip captureSound;
+    public AudioClip checkSound;
 
     [Header("Control:")]
     public GameObject selectedPiece;
@@ -292,6 +293,8 @@ public class PieceController : MonoBehaviour
             endGame = true;
     }
 
+    private Coroutine whiteCheckBlink;
+    private Coroutine blackCheckBlink;
     public void GetCheck()
     {
 
@@ -309,6 +312,17 @@ public class PieceController : MonoBehaviour
                 .GetComponent<Cell>();
 
             kingWhiteIsInCheck = cellWhite.house.isControlledByBlack;
+
+            if (kingWhiteIsInCheck)
+            {
+                AudioManager.Instance.PlaySFX(checkSound);
+                boardManager.StartCheckBlink(cellWhite, ref whiteCheckBlink);
+            }
+            else
+            {
+                boardManager.StopCheckBlink(cellWhite, ref whiteCheckBlink);
+            }
+
         }
 
         if (haskingBlack)
@@ -325,6 +339,17 @@ public class PieceController : MonoBehaviour
                 .GetComponent<Cell>();
 
             kingBlackIsInCheck = cellBlack.house.isControlledByWhite;
+
+            if (kingBlackIsInCheck)
+            {
+                AudioManager.Instance.PlaySFX(checkSound);
+                boardManager.StartCheckBlink(cellBlack, ref blackCheckBlink);
+            }
+            else
+            {
+                boardManager.StopCheckBlink(cellBlack, ref blackCheckBlink);
+            }
+
         }
 
     }

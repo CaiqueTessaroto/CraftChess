@@ -118,7 +118,7 @@ public class IAn2 : MonoBehaviour
                 score += enemy.Power * 1.2f;
 
                 if (enemy.IsKing)
-                    score += 100;
+                    score += 1000;
             }
         }
 

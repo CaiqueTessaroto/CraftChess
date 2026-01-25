@@ -1,5 +1,6 @@
 using UnityEngine;
-using System.Collections; // Necessário para Corrotinas
+using System.Collections;
+using UnityEngine.UI; // Necessário para Corrotinas
 
 public class AudioManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class AudioManager : MonoBehaviour
     [Header("Sources")]
     public AudioSource musicSource;
     public AudioSource[] sfxSources;
+    public AudioClip clickSound;
+    public AudioClip intro;
 
     [Header("Playlist Settings")]
     private AudioClip[] currentPlaylist;
@@ -15,6 +18,31 @@ public class AudioManager : MonoBehaviour
     private bool isPlaylistActive = false;
     private bool isWaitingNextTrack = false; // Nova flag para o intervalo
     public float delayBetweenTracks = 180f; // 120 segundos = 2 minutos
+
+
+    void Start()
+    {
+        //ApplySoundToAllButtons();
+
+    }
+
+    public void ApplySoundToAllButtons()
+    {
+        Button[] buttons = FindObjectsOfType<Button>(true);
+
+        foreach (Button btn in buttons)
+        {
+            btn.onClick.RemoveListener(PlaySound);
+            btn.onClick.AddListener(PlaySound);
+        }
+    }
+
+    void PlaySound()
+    {
+        AudioSource src = GetFreeSFXSource();
+        src.PlayOneShot(clickSound);
+    }
+
 
     void Awake()
     {

@@ -481,7 +481,7 @@ public class BoardChessManager : MonoBehaviour
         currentTarget = CreateOverlay(targetCell, selectedColor);
     }
 
-    private GameObject CreateOverlay(GameObject parent, Color color)
+    private GameObject CreateOverlay(GameObject parent, Color color, string name = "Overlay")
     {
         if (selectionPrefab == null)
         {
@@ -490,7 +490,7 @@ public class BoardChessManager : MonoBehaviour
         }
 
         GameObject overlay = Instantiate(selectionPrefab, parent.transform);
-        overlay.name = "Overlay";
+        overlay.name = name;
         overlay.transform.localPosition = Vector3.zero;
         overlay.transform.localScale = Vector3.one;
 
@@ -502,6 +502,56 @@ public class BoardChessManager : MonoBehaviour
         }
 
         return overlay;
+    }
+
+    Cell cellCheck;
+
+    public void StartCheckBlink(Cell cell, ref Coroutine blinkRoutine)
+    {
+        // evita duplicar overlay
+        Transform existing = cell.transform.Find("CheckOverlay");
+        GameObject overlay;
+
+        cellCheck = cell;
+
+        if (existing == null)
+            overlay = CreateOverlay(cell.gameObject, Color.red, "CheckOverlay");
+        else
+            overlay = existing.gameObject;
+
+        if (blinkRoutine != null)
+            StopCoroutine(blinkRoutine);
+
+        blinkRoutine = StartCoroutine(BlinkOverlay(overlay));
+    }
+
+    IEnumerator BlinkOverlay(GameObject overlay)
+    {
+        SpriteRenderer sr = overlay.GetComponent<SpriteRenderer>();
+
+        while (true)
+        {
+            sr.enabled = true;
+            yield return new WaitForSeconds(0.4f);
+
+            sr.enabled = false;
+            yield return new WaitForSeconds(0.4f);
+        }
+    }
+
+    public void StopCheckBlink(Cell cell, ref Coroutine blinkRoutine)
+    {
+        if (blinkRoutine != null)
+        {
+            StopCoroutine(blinkRoutine);
+            blinkRoutine = null;
+        }
+        if (cellCheck != null)
+        {
+            Transform overlay = cellCheck.transform.Find("CheckOverlay");
+            if (overlay != null)
+                Destroy(overlay.gameObject);
+        }
     }
 
     private void DestroyIfExists(GameObject obj)

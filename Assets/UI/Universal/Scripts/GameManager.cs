@@ -34,6 +34,10 @@ public class GameManager : MonoBehaviour
             if (musics.Length > 0)
                 AudioManager.Instance.PlayMusicPlaylist(musics);
 
+         AudioManager.Instance.PlaySFX(AudioManager.Instance.intro);
+
+         AudioManager.Instance.ApplySoundToAllButtons();
+
     }
 
     // Update is called once per frame
