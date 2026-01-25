@@ -350,7 +350,11 @@
   { "key": "Viking Ship", "value": "Barco Vikingo" },
 
   { "key": "unlock.pack", "value": "El {0} ha sido desbloqueado y ahora está disponible en tu biblioteca." },
-  { "key": "pack", "value": "Paquete {0}" }
+  { "key": "pack", "value": "Paquete {0}" },
+
+  { "key": "Unlock_Reward", "value": "Desbloquear Recompensa" },
+  { "key": "reward.explanation", "value": "Mira un anuncio para desbloquear un conjunto aleatorio de piezas." }
+
 
 
   ]

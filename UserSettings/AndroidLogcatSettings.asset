@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "0080009286",
     "m_SelectedProcess": {
-        "deviceId": "0080009286",
-        "name": "com.DefaultCompany.com.unity.template.mobile2D",
-        "processId": 7175,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -11,61 +11,31 @@
         {
             "deviceId": "0080009286",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 6547,
-            "exited": true
-        },
-        {
-            "deviceId": "0080009286",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 32514,
-            "exited": true
-        },
-        {
-            "deviceId": "0080009286",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 28760,
-            "exited": true
-        },
-        {
-            "deviceId": "0080009286",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 32284,
-            "exited": true
-        },
-        {
-            "deviceId": "0080009286",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 13385,
-            "exited": false
-        },
-        {
-            "deviceId": "0080009286",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 24910,
-            "exited": false
-        },
-        {
-            "deviceId": "0080009286",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 4344,
-            "exited": false
-        },
-        {
-            "deviceId": "0080009286",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 19776,
-            "exited": false
-        },
-        {
-            "deviceId": "0080009286",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
             "processId": 20078,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "0080009286",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
             "processId": 7175,
+            "exited": true
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 27707,
+            "exited": true
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 30818,
+            "exited": true
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 8350,
             "exited": false
         }
     ],

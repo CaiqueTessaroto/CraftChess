@@ -359,7 +359,11 @@
   { "key": "Viking Ship", "value": "Viking Ship" },
 
   { "key": "unlock.pack", "value": "The {0} has been unlocked and is now available in your library." },
-  { "key": "pack", "value": "{0} Pack"}
+  { "key": "pack", "value": "{0} Pack"},
+
+  { "key": "Unlock_Reward", "value": "Unlock Reward" },
+
+  { "key": "reward.explanation", "value": "Watch an advertisement to unlock a random set of pieces." }
 
   ]
 }

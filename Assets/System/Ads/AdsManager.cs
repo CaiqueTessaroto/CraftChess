@@ -39,6 +39,9 @@ public class AdsManager : MonoBehaviour,
     string bannerAdUnit;
     bool bannerLoaded = false;
 
+    bool rewardedLoaded = false;
+    bool interstitialLoaded = false;
+
     // =========================
     // LIFECYCLE
     // =========================
@@ -140,6 +143,12 @@ public class AdsManager : MonoBehaviour,
     {
         if (Instance == null) return;
 
+        if (!Instance.rewardedLoaded)
+        {
+            Debug.Log("⏳ Rewarded ainda não carregado");
+            return;
+        }
+
         Advertisement.Show(Instance.rewardedAdUnit, Instance);
     }
 
@@ -152,15 +161,28 @@ public class AdsManager : MonoBehaviour,
 
     // =========================
     // LOAD CALLBACKS
-    // =========================
+    // ========================
+
     public void OnUnityAdsAdLoaded(string adUnitId)
     {
         Debug.Log($"Ad carregado: {adUnitId}");
+
+        if (adUnitId == rewardedAdUnit)
+            rewardedLoaded = true;
+
+        if (adUnitId == interstitialAdUnit)
+            interstitialLoaded = true;
     }
 
     public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message)
     {
         Debug.LogWarning($"Falha load {adUnitId}: {error} - {message}");
+
+        if (adUnitId == rewardedAdUnit)
+            rewardedLoaded = false;
+
+        if (adUnitId == interstitialAdUnit)
+            interstitialLoaded = false;
     }
 
     // =========================
@@ -170,6 +192,8 @@ public class AdsManager : MonoBehaviour,
     {
         if (adUnitId == rewardedAdUnit)
         {
+            rewardedLoaded = false;
+
             if (state == UnityAdsShowCompletionState.COMPLETED)
             {
                 Instance.rewardPending = true;
@@ -202,6 +226,7 @@ public class AdsManager : MonoBehaviour,
 
         if (adUnitId == interstitialAdUnit)
         {
+            interstitialLoaded = false;
             LoadInterstitial();
         }
     }
