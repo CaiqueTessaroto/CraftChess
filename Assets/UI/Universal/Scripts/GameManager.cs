@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Profiling;
 using System.Linq;
+using TMPro;
 
 public static class GameModeManager
 {
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float checkInterval = 2f;
 
     private float timer;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +36,21 @@ public class GameManager : MonoBehaviour
 
          AudioManager.Instance.ApplySoundToAllButtons();
 
+         SetupAllInputFields();
+
     }
+
+        public void SetupAllInputFields()
+    {
+        TMP_InputField[] inputFields = FindObjectsOfType<TMP_InputField>(true);
+
+        foreach (TMP_InputField tmp in inputFields)
+        {
+            tmp.characterLimit = 50;
+            tmp.lineType = TMP_InputField.LineType.SingleLine;
+        }
+    }
+
 
     // Update is called once per frame
     void Update()

@@ -101,8 +101,13 @@ public class NavigationManage_Painting : MonoBehaviour
             }
             else if (string.IsNullOrEmpty(namePiece.text))
             {
-                //    fileManager.CreateAdvice("Precisa ter um nome para salvar.");
-                //    return;
+                string text = UIHelperUtils.T("none.name.txt");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "You need to have a name to save.";
+
+                fileManager.CreateAdvice(text);
+                return;
             }
 
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);

@@ -184,7 +184,7 @@
 
 
     { "key": "none.art.txt", "value": "Precisa ter uma arte para salvar." },
-    { "key": "none.name.txt", "value": "Precisa ter uma arte para salvar." },
+    { "key": "none.name.txt", "value": "Precisa ter um nome para salvar." },
 
     { "key": "none.file.txt", "value": "Nenhum arquivo selecionado." },
     { "key": "none.folder.txt", "value": "Nenhuma pasta selecionada." },

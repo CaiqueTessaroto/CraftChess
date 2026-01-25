@@ -56,6 +56,10 @@ public class FileManager : MonoBehaviour
                 if (placeholderText != null)
                     placeholderText.text = placeholder;
             }
+
+            inputField.characterLimit = 50;
+            inputField.lineType = TMP_InputField.LineType.SingleLine;
+
         }
 
         Button buttonCancel = newInput.transform
@@ -78,8 +82,11 @@ public class FileManager : MonoBehaviour
         {
             buttonContinue.onClick.AddListener(() =>
             {
-                onContinue?.Invoke(inputField.text); // retorna o texto digitado
-                Destroy(newInput);
+                if (!string.IsNullOrEmpty(inputField.text))
+                {
+                    onContinue?.Invoke(inputField.text); // retorna o texto digitado
+                    Destroy(newInput);
+                }
             });
         }
     }
