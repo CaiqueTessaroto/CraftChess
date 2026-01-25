@@ -356,7 +356,10 @@
 
   { "key": "Soldier", "value": "Soldier" },
   { "key": "Valkyrie", "value": "Valkyrie" },
-  { "key": "Viking Ship", "value": "Viking Ship" }
+  { "key": "Viking Ship", "value": "Viking Ship" },
+
+  { "key": "unlock.pack", "value": "The {0} has been unlocked and is now available in your library." },
+  { "key": "pack", "value": "{0} Pack"}
 
   ]
 }

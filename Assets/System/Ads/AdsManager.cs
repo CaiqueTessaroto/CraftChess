@@ -32,6 +32,13 @@ public class AdsManager : MonoBehaviour,
     string interstitialAdUnit;
     bool rewardPending = false;
 
+    [Header("Native / Banner")]
+    [SerializeField] string bannerAdUnitAndroid = "Banner_Android";
+    [SerializeField] string bannerAdUnitIOS = "Banner_iOS";
+
+    string bannerAdUnit;
+    bool bannerLoaded = false;
+
     // =========================
     // LIFECYCLE
     // =========================
@@ -61,6 +68,10 @@ public class AdsManager : MonoBehaviour,
 
         rewardedAdUnit = rewardedAdUnitAndroid;
         interstitialAdUnit = interstitialAdUnitAndroid;
+
+        bannerAdUnit = Application.platform == RuntimePlatform.IPhonePlayer
+        ? bannerAdUnitIOS
+        : bannerAdUnitAndroid;
 
         Advertisement.Initialize(gameId, testMode, this);
     }
@@ -101,6 +112,7 @@ public class AdsManager : MonoBehaviour,
 
         LoadRewarded();
         LoadInterstitial();
+        LoadNative();
     }
 
     public void OnInitializationFailed(UnityAdsInitializationError error, string message)
@@ -162,6 +174,25 @@ public class AdsManager : MonoBehaviour,
             {
                 Instance.rewardPending = true;
                 Debug.Log("Recompensa concedida");
+
+                RewardData reward = null;
+                int safety = 50;
+
+                while (safety-- > 0)
+                {
+                    reward = RewardManager.Instance.GetRandomReward();
+
+                    if (PlayerPrefs.GetInt("Reward_" + reward.id, 0) == 0)
+                        break; // reward válido encontrado
+                }
+
+                if (reward == null || PlayerPrefs.GetInt("Reward_" + reward.id, 0) == 1)
+                {
+                    Debug.Log("⚠️ Nenhuma recompensa válida disponível");
+                    return;
+                }
+
+                RewardManager.Instance.GrantReward(reward);
                 // 👉 APLIQUE A RECOMPENSA AQUI
                 // Ex: moedas++, reviver peça, etc
             }
@@ -182,4 +213,53 @@ public class AdsManager : MonoBehaviour,
 
     public void OnUnityAdsShowStart(string adUnitId) { }
     public void OnUnityAdsShowClick(string adUnitId) { }
+
+
+
+
+
+    // =========================
+    // NATIVE / BANNER
+    // =========================
+
+    public void LoadNative()
+    {
+        if (!Advertisement.isInitialized)
+            return;
+
+        Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
+
+        BannerLoadOptions options = new BannerLoadOptions
+        {
+            loadCallback = () =>
+            {
+                bannerLoaded = true;
+                Debug.Log("Native Banner carregado");
+            },
+            errorCallback = (error) =>
+            {
+                bannerLoaded = false;
+                Debug.LogWarning("Erro ao carregar Native Banner: " + error);
+            }
+        };
+
+        Advertisement.Banner.Load(bannerAdUnit, options);
+    }
+
+    public void ShowNative()
+    {
+        if (!bannerLoaded)
+        {
+            LoadNative();
+            return;
+        }
+
+        Advertisement.Banner.Show(bannerAdUnit);
+    }
+
+    public void HideNative()
+    {
+        Advertisement.Banner.Hide();
+    }
+
 }

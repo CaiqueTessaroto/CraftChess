@@ -347,7 +347,11 @@
 
   { "key": "Soldier", "value": "Soldado" },
   { "key": "Valkyrie", "value": "Valquiria" },
-  { "key": "Viking Ship", "value": "Barco Vikingo" }
+  { "key": "Viking Ship", "value": "Barco Vikingo" },
+
+  { "key": "unlock.pack", "value": "El {0} ha sido desbloqueado y ahora está disponible en tu biblioteca." },
+  { "key": "pack", "value": "Paquete {0}" }
+
 
   ]
 }

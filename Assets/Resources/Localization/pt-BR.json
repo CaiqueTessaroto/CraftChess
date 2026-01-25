@@ -283,7 +283,12 @@
 
   { "key": "Soldier", "value": "Soldado" },
   { "key": "Valkyrie", "value": "Valquíria" },
-  { "key": "Viking Ship", "value": "Navio Viking" }
+  { "key": "Viking Ship", "value": "Navio Viking" },
+
+  { "key": "unlock.pack", "value": "O {0} foi desbloqueado e agora está disponível na sua biblioteca." },
+  { "key": "pack", "value": "Pacote {0}" }
+
+
 
   ]
 }

@@ -4,6 +4,10 @@ using UnityEngine.UI;
 public class MenuButtonsManager : MonoBehaviour
 {
     public GameManager gameManager;
+    public RewardManager rewardManager;
+
+    public Button ButtonRewards;
+    public GameObject RewardsPanel;
 
     [Header("Main:")]
     public Button playBtn;
@@ -32,12 +36,25 @@ public class MenuButtonsManager : MonoBehaviour
         //testBtn.onClick.AddListener(() => AdsManager.ShowRewarded());
         //testBtn2.onClick.AddListener(() => AdsManager.ShowInterstitial());
 
-
-
         if (gameManager == null)
         {
             gameManager = FindObjectOfType<GameManager>();
         }
+
+        if (rewardManager == null)
+        {
+            rewardManager = FindObjectOfType<RewardManager>();
+        }
+
+        bool allunlock = rewardManager.AllRewardsUnlocked();
+
+        if (allunlock)
+            RewardsPanel.SetActive(false);
+
+        ButtonRewards.onClick.AddListener(() =>
+        {
+            RewardsPanel.SetActive(!RewardsPanel.activeSelf);
+        });
 
         //playBtn.onClick.AddListener(() => gameManager.ChangeScene("Single Lobby"));
 
