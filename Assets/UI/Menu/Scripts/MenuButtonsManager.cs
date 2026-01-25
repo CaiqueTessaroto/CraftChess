@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class MenuButtonsManager : MonoBehaviour
 {
     public GameManager gameManager;
-    public RewardManager rewardManager;
+    public RewardFeed rewardFeed;
 
     public Button ButtonRewards;
     public GameObject RewardsPanel;
@@ -41,15 +41,17 @@ public class MenuButtonsManager : MonoBehaviour
             gameManager = FindObjectOfType<GameManager>();
         }
 
-        if (rewardManager == null)
+        if (rewardFeed == null)
         {
-            rewardManager = FindObjectOfType<RewardManager>();
+            rewardFeed = FindObjectOfType<RewardFeed>();
         }
 
-        bool allunlock = rewardManager.AllRewardsUnlocked();
+        bool allunlock = RewardManager.Instance.AllRewardsUnlocked();
 
-        if (allunlock)
+        if (allunlock){
             RewardsPanel.SetActive(false);
+            rewardFeed.rewardBtn.interactable = false;
+        }
 
         ButtonRewards.onClick.AddListener(() =>
         {

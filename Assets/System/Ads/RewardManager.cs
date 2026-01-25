@@ -12,6 +12,7 @@ public class RewardManager : MonoBehaviour
 {
     [Header("Data")]
     public RewardData[] rewards;
+    public RewardFeed rewardFeed;
 
     [Header("Unlock Pack Panel")]
     public GameObject unlockPanel;
@@ -22,6 +23,13 @@ public class RewardManager : MonoBehaviour
     public static RewardManager Instance;
 
 
+    void Start()
+    {
+        if (rewardFeed == null)
+        {
+            rewardFeed = FindObjectOfType<RewardFeed>();
+        }
+    }
     void Awake()
     {
         Instance = this;
@@ -37,7 +45,11 @@ public class RewardManager : MonoBehaviour
         bool allunlock = AllRewardsUnlocked();
 
         if (allunlock)
+        {
             gameObject.SetActive(false);
+            if (rewardFeed != null)
+                rewardFeed.rewardBtn.interactable = false;
+        }
 
         string name = UIHelperUtils.T(reward.id);
 

@@ -335,7 +335,7 @@ public class BoardChessManager : MonoBehaviour
                                          -gridHeight * cellSize / 2f + cellSize / 2f,
                                          0f);
 
-        capturedManager.CreateReferenceAreas(gridWidth, gridHeight, cellSize, false);
+        //capturedManager.CreateReferenceAreas(gridWidth, gridHeight, cellSize, false);
     }
 
     private void GenerateGrid_reverse()
@@ -404,12 +404,12 @@ public class BoardChessManager : MonoBehaviour
             0f
         );
 
-        capturedManager.CreateReferenceAreas(gridWidth, gridHeight, cellSize, true);
+        //capturedManager.CreateReferenceAreas(gridWidth, gridHeight, cellSize, true);
     }
 
     public void AddCapturedPiece(GameObject capturedPieceObject, int capturedBy)
     {
-        capturedManager.AddCapturedPiece(capturedPieceObject, capturedBy);
+        //capturedManager.AddCapturedPiece(capturedPieceObject, capturedBy);
     }
 
     public void CreateIdentification(GameObject newCell, Vector2Int posCell, Color color, bool isReverse = false)

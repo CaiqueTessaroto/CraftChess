@@ -150,17 +150,16 @@ public class GraphicsOptionsUI : MonoBehaviour
             resolutions.Count - 1
         );
 
-        // 🖥️ Fullscreen / Janela
-        Screen.fullScreenMode = s.fullscreen
+        Resolution res = resolutions[index];
+
+        FullScreenMode mode = s.fullscreen
             ? FullScreenMode.FullScreenWindow
             : FullScreenMode.Windowed;
 
-        // 📺 Resolução
-        Resolution res = resolutions[index];
         Screen.SetResolution(
             res.width,
             res.height,
-            s.fullscreen
+            mode
         );
 
         SettingsManager.Instance.Save();
