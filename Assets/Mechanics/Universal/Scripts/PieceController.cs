@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class PieceController : MonoBehaviour
 {
@@ -295,6 +296,8 @@ public class PieceController : MonoBehaviour
 
     private Coroutine whiteCheckBlink;
     private Coroutine blackCheckBlink;
+    Cell whiteCellCheck;
+    Cell blackCellCheck;
     public void GetCheck()
     {
 
@@ -313,15 +316,17 @@ public class PieceController : MonoBehaviour
 
             kingWhiteIsInCheck = cellWhite.house.isControlledByBlack;
 
-            if (kingWhiteIsInCheck)
-            {
-                AudioManager.Instance.PlaySFX(checkSound);
-                boardManager.StartCheckBlink(cellWhite, ref whiteCheckBlink);
-            }
-            else
-            {
-                boardManager.StopCheckBlink(cellWhite, ref whiteCheckBlink);
-            }
+            if (boardManager.localGame || (KingWhite.Player.id != botPlayerId && !boardManager.IAvsIA))
+                if (kingWhiteIsInCheck)
+                {
+                    AudioManager.Instance.PlaySFX(checkSound);
+                    whiteCellCheck = cellWhite;
+                    boardManager.StartCheckBlink(cellWhite, ref whiteCheckBlink);
+                }
+                else
+                {
+                    boardManager.StopCheckBlink(whiteCellCheck, ref whiteCheckBlink);
+                }
 
         }
 
@@ -340,15 +345,17 @@ public class PieceController : MonoBehaviour
 
             kingBlackIsInCheck = cellBlack.house.isControlledByWhite;
 
-            if (kingBlackIsInCheck)
-            {
-                AudioManager.Instance.PlaySFX(checkSound);
-                boardManager.StartCheckBlink(cellBlack, ref blackCheckBlink);
-            }
-            else
-            {
-                boardManager.StopCheckBlink(cellBlack, ref blackCheckBlink);
-            }
+            if (boardManager.localGame || (KingBlack.Player.id != botPlayerId && !boardManager.IAvsIA))
+                if (kingBlackIsInCheck)
+                {
+                    AudioManager.Instance.PlaySFX(checkSound);
+                    blackCellCheck = cellBlack;
+                    boardManager.StartCheckBlink(cellBlack, ref blackCheckBlink);
+                }
+                else
+                {
+                    boardManager.StopCheckBlink(blackCellCheck, ref blackCheckBlink);
+                }
 
         }
 

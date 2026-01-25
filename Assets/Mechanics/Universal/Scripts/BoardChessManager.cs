@@ -504,15 +504,12 @@ public class BoardChessManager : MonoBehaviour
         return overlay;
     }
 
-    Cell cellCheck;
 
     public void StartCheckBlink(Cell cell, ref Coroutine blinkRoutine)
     {
         // evita duplicar overlay
         Transform existing = cell.transform.Find("CheckOverlay");
         GameObject overlay;
-
-        cellCheck = cell;
 
         if (existing == null)
             overlay = CreateOverlay(cell.gameObject, Color.red, "CheckOverlay");
@@ -531,10 +528,12 @@ public class BoardChessManager : MonoBehaviour
 
         while (true)
         {
-            sr.enabled = true;
+            if (sr != null)
+                sr.enabled = true;
             yield return new WaitForSeconds(0.4f);
 
-            sr.enabled = false;
+            if (sr != null)
+                sr.enabled = false;
             yield return new WaitForSeconds(0.4f);
         }
     }
@@ -546,9 +545,9 @@ public class BoardChessManager : MonoBehaviour
             StopCoroutine(blinkRoutine);
             blinkRoutine = null;
         }
-        if (cellCheck != null)
+        if (cell != null)
         {
-            Transform overlay = cellCheck.transform.Find("CheckOverlay");
+            Transform overlay = cell.transform.Find("CheckOverlay");
             if (overlay != null)
                 Destroy(overlay.gameObject);
         }

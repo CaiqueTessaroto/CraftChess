@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
 
     [Header("Sources")]
+    public AudioClip[] musics;
     public AudioSource musicSource;
     public AudioSource[] sfxSources;
     public AudioClip clickSound;
@@ -22,8 +23,22 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
+        if (musics != null && musics.Length > 0)
+        {
+            Shuffle(musics);
+            PlayMusicPlaylist(musics);
+        }
         //ApplySoundToAllButtons();
 
+    }
+
+    void Shuffle<T>(T[] array)
+    {
+        for (int i = array.Length - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            (array[i], array[randomIndex]) = (array[randomIndex], array[i]);
+        }
     }
 
     public void ApplySoundToAllButtons()
