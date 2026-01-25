@@ -162,10 +162,10 @@ public class SettingsManager : MonoBehaviour
         yield return StartCoroutine(CopyStreamingAssetsFolder("Sprites"));
         yield return StartCoroutine(CopyStreamingAssetsFolder("Squads"));
 
-        PlayerPrefs.SetInt("StreamingAssetsCopied", 1);
-        PlayerPrefs.Save();
+        //PlayerPrefs.SetInt("StreamingAssetsCopied", 1);
+        //PlayerPrefs.Save();
 
-        Debug.Log("✔ StreamingAssets copiado para persistentDataPath");
+        //Debug.Log("✔ StreamingAssets copiado para persistentDataPath");
     }
 
 
@@ -179,6 +179,11 @@ public class SettingsManager : MonoBehaviour
             Debug.Log("Exists: " + extractPath);
             yield break;
         }
+
+        if (RewardManager.Instance != null)
+            RewardManager.Instance.ResetRewards();
+
+        Debug.Log("✔ StreamingAssets copiado para persistentDataPath");
 
         string zipPath = Path.Combine(Application.streamingAssetsPath, folderName + ".zip");
         string targetZip = Path.Combine(Application.persistentDataPath, folderName + ".zip");

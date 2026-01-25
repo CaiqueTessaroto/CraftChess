@@ -48,9 +48,11 @@ public class MenuButtonsManager : MonoBehaviour
 
         bool allunlock = RewardManager.Instance.AllRewardsUnlocked();
 
-        if (allunlock){
+        if (allunlock)
+        {
             RewardsPanel.SetActive(false);
             rewardFeed.rewardBtn.interactable = false;
+            Debug.Log("allunlock: " + allunlock);
         }
 
         ButtonRewards.onClick.AddListener(() =>

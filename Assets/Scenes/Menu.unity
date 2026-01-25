@@ -4697,7 +4697,7 @@ MonoBehaviour:
   rewardBtn: {fileID: 1011211645}
   next: {fileID: 1476951114}
   previous: {fileID: 1253366841}
-  autoSlideTime: 3
+  autoSlideTime: 20
   swipeThreshold: 50
 --- !u!1 &957110016
 GameObject:

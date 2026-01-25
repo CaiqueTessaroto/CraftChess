@@ -34,7 +34,7 @@ public class RewardFeed : MonoBehaviour
 
             if (RewardManager.Instance.rewards[currentIndex] != null)
             {
-                RewardManager.Instance.rewards[currentIndex].weight = 4f; // ou qualquer valor temporário
+                RewardManager.Instance.rewards[currentIndex].weight = 0.5f;
             }
 
             AdsManager.ShowRewarded();

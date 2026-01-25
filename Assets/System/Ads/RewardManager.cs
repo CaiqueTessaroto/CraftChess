@@ -42,16 +42,6 @@ public class RewardManager : MonoBehaviour
 
     public void GrantReward(RewardData reward)
     {
-
-        bool allunlock = AllRewardsUnlocked();
-
-        if (allunlock)
-        {
-            gameObject.SetActive(false);
-            if (rewardFeed != null)
-                rewardFeed.rewardBtn.interactable = false;
-        }
-
         AudioManager.Instance.PlaySFX(unlock);
 
         string name = UIHelperUtils.T(reward.id);
@@ -92,6 +82,24 @@ public class RewardManager : MonoBehaviour
 
         PlayerPrefs.SetInt("Reward_" + reward.id, 1);
         PlayerPrefs.Save();
+
+        bool allunlock = AllRewardsUnlocked();
+
+        if (allunlock)
+        {
+            gameObject.SetActive(false);
+            if (rewardFeed != null)
+                rewardFeed.rewardBtn.interactable = false;
+        }
+
+    }
+
+    public void ResetRewards()
+    {
+        for (int i = 0; i < rewards.Length; i++)
+        {
+            PlayerPrefs.SetInt("Reward_" + rewards[i].id, 0);
+        }
     }
 
     public bool AllRewardsUnlocked()
