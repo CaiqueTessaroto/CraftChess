@@ -891,7 +891,12 @@ public class PaintingGridManager : MonoBehaviour
         fileName
     );
 
-    //SpawnMessage("Imagem salva na galeria 📸");
+    string text = UIHelperUtils.T("saved.to.gallery");
+
+    if (string.IsNullOrEmpty(text))
+        text = "Saved to gallery";
+
+    fileManager.SpawnMessage(text);
 
 #else
         // PC / Editor
@@ -906,10 +911,13 @@ public class PaintingGridManager : MonoBehaviour
         string filePath = Path.Combine(path, filePng);
         File.WriteAllBytes(filePath, texture.EncodeToPNG());
 
-        //SpawnMessage("Imagem salva em Imagens 🖥️");
-#endif
+        string text = UIHelperUtils.T("saved.to.images");
 
-        //SpawnMessage("Imagem salva na galeria 📸");
+        if (string.IsNullOrEmpty(text))
+            text = "Saved to images";
+
+        fileManager.SpawnMessage(text);
+#endif
 
     }
 

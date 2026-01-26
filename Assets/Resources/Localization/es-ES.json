@@ -360,7 +360,14 @@
   { "key": "import.explanation", "value": "Imágenes en relación de aspecto 34x34, por ejemplo, 340x340, 680x680 y 1020." },
 
   { "key": "save.to.gallery", "value": "Guardar en la Galería" },
-  { "key": "save.to.images", "value": "Guardar en Imágenes" }
+  { "key": "save.to.images", "value": "Guardar en Imágenes" },
+
+  { "key": "saved.to.gallery", "value": "Guardado en la galería" },
+  { "key": "saved.to.images", "value": "Guardado en la Imágenes" },
+
+  { "key": "Credits", "value": "Créditos" },
+
+  { "key": "credits.explanation", "value": "Haga clic aquí para ver los créditos del juego y conocer a las personas que ayudaron a hacer realidad este proyecto." }
 
   ]
 }

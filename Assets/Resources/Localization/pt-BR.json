@@ -295,10 +295,15 @@
 
   { "key": "import.explanation", "value": "Imagens na proporção de 34x34 exp: 340x340, 680x680 e 1020." },
 
-  { "key": "save.to.gallery", "value": "Salve na Gallery" },
-  { "key": "save.to.images", "value": "Salve em Imagens" }
+  { "key": "save.to.gallery", "value": "Salve na Galeria" },
+  { "key": "save.to.images", "value": "Salve em Imagens" },
 
+  { "key": "saved.to.gallery", "value": "Salvo na galeria" },
+  { "key": "saved.to.images", "value": "Salvo em imagens" },
 
+  { "key": "Credits", "value": "Créditos" },
+
+  { "key": "credits.explanation", "value": "Clique aqui para ver os créditos do jogo e conhecer as pessoas que ajudaram a tornar este projeto realidade." }
 
   ]
 }

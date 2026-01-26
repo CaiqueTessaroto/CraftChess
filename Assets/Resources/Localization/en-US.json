@@ -370,7 +370,15 @@
   { "key": "import.explanation", "value": "Images in 34x34 aspect ratio, e.g., 340x340, 680x680, and 1020." },
 
   { "key": "save.to.gallery", "value": "Save to Gallery" },
-  { "key": "save.to.images", "value": "Save to Images" }
+  { "key": "save.to.images", "value": "Save to Images" },
+
+  { "key": "saved.to.gallery", "value": "Saved to gallery" },
+  { "key": "saved.to.images", "value": "Saved to images" },
+
+
+  { "key": "Credits", "value": "Credits" },
+
+  { "key": "credits.explanation", "value": "Click here to see the game credits and meet the people who helped make this project a reality." }
 
 
 

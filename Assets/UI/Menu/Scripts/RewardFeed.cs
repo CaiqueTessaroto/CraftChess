@@ -6,7 +6,11 @@ using TMPro;
 
 public class RewardFeed : MonoBehaviour
 {
+    public CreditsManager creditsManager;
+
     [Header("UI")]
+    public TMP_Text textTmp;
+    public TMP_Text buttonTextTmp;
     public Image displayImage;
 
     [Header("Buttons")]
@@ -18,7 +22,7 @@ public class RewardFeed : MonoBehaviour
     public float autoSlideTime = 3f;
     public float swipeThreshold = 50f;
 
-    int currentIndex = 0;
+    public int currentIndex = 0;
     Coroutine autoSlideRoutine;
 
 
@@ -27,17 +31,31 @@ public class RewardFeed : MonoBehaviour
 
     void Start()
     {
+        if (creditsManager == null)
+        {
+            creditsManager = FindObjectOfType<CreditsManager>();
+        }
+
         if (RewardManager.Instance.rewards.Length == 0) return;
 
         rewardBtn.onClick.AddListener(() =>
         {
+            RewardManager rewardManager = RewardManager.Instance;
 
-            if (RewardManager.Instance.rewards[currentIndex] != null)
+            if (rewardManager.rewards[currentIndex].typeFeed == TypeFeed.Reward)
             {
-                RewardManager.Instance.rewards[currentIndex].weight = 0.5f;
-            }
 
-            AdsManager.ShowRewarded();
+                if (rewardManager.rewards[currentIndex] != null)
+                {
+                    rewardManager.rewards[currentIndex].weight = 0.5f;
+                }
+
+                AdsManager.ShowRewarded();
+            }
+            else //if (rewardManager.rewards[currentIndex].typeFeed == TypeFeed.Credits)
+                creditsManager.ShowCredits();
+
+
         });
 
         next.onClick.AddListener(() =>
@@ -94,9 +112,57 @@ public class RewardFeed : MonoBehaviour
         ResetAutoSlide();
     }
 
-    void ShowReward(int index)
+    public void ShowReward(int index)
     {
+        if (RewardManager.Instance == null)
+            return;
+
         displayImage.sprite = RewardManager.Instance.rewards[index].image;
+
+
+        if (RewardManager.Instance.rewards[currentIndex].typeFeed == TypeFeed.Reward)
+        {
+            string text = UIHelperUtils.T("reward.explanation");
+
+            if (string.IsNullOrEmpty(text))
+                text = "Watch an advertisement to unlock a random set of pieces.";
+
+            string textBtn = UIHelperUtils.T("Unlock_Reward");
+
+            if (string.IsNullOrEmpty(textBtn))
+                textBtn = "Unlock Reward";
+
+
+            buttonTextTmp.text = textBtn;
+            textTmp.text = text;
+
+            bool allunlock = RewardManager.Instance.AllRewardsUnlocked();
+
+            if (allunlock)
+                rewardBtn.interactable = false;
+
+        }
+        else //if (RewardManager.Instance.rewards[currentIndex].typeFeed == TypeFeed.Credits)
+        {
+            string text = UIHelperUtils.T("credits.explanation");
+
+            if (string.IsNullOrEmpty(text))
+                text = "Click here to see the game credits and learn about the people and resources that helped make this project a reality.";
+
+
+            string textBtn = UIHelperUtils.T("Credits");
+
+            if (string.IsNullOrEmpty(textBtn))
+                textBtn = "Credits";
+
+
+            buttonTextTmp.text = textBtn;
+            textTmp.text = text;
+
+            rewardBtn.interactable = true;
+        }
+
+
     }
 
     void ResetAutoSlide()

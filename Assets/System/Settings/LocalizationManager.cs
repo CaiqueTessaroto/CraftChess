@@ -91,6 +91,10 @@ public class LocalizationManager : MonoBehaviour
         if (tutorial != null)
             tutorial.ShowPage(0);
 
+        RewardFeed rewardFeed = FindObjectOfType<RewardFeed>();
+        if (rewardFeed != null)
+            rewardFeed.ShowReward(rewardFeed.currentIndex);
+
         SettingsManager.Instance.Save();
     }
 

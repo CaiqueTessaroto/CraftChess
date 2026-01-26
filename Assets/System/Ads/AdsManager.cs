@@ -197,7 +197,7 @@ public class AdsManager : MonoBehaviour,
             if (state == UnityAdsShowCompletionState.COMPLETED)
             {
                 Instance.rewardPending = true;
-                Debug.Log("Recompensa concedida");
+                //Debug.Log("Recompensa concedida");
 
                 RewardData reward = null;
                 int safety = 50;
@@ -206,7 +206,7 @@ public class AdsManager : MonoBehaviour,
                 {
                     reward = RewardManager.Instance.GetRandomReward();
 
-                    if (PlayerPrefs.GetInt("Reward_" + reward.id, 0) == 0)
+                    if (PlayerPrefs.GetInt("Reward_" + reward.id, 0) == 0 && reward.typeFeed == TypeFeed.Reward)
                         break; // reward válido encontrado
                 }
 
