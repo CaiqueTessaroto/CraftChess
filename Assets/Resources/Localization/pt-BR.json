@@ -243,9 +243,9 @@
 
   { "key": "squad_piece", "value": "{0} {1}" },
 
-  { "key": "Black", "value": "Preto" },
-  { "key": "White", "value": "Branco" },
-  { "key": "Red", "value": "Vermelho" },
+  { "key": "Black", "value": "Pretas" },
+  { "key": "White", "value": "Brancas" },
+  { "key": "Red", "value": "Vermelhas" },
 
   { "key": "Horde", "value": "Horda" },
 
@@ -289,10 +289,14 @@
   { "key": "pack", "value": "Pacote {0}" },
 
   { "key": "Unlock_Reward", "value": "Desbloquear Recompensa" },
-  { "key": "reward.explanation", "value": "Assista a um anúncio para desbloquear um conjunto aleatório de peças." }
+  { "key": "reward.explanation", "value": "Assista a um anúncio para desbloquear um conjunto aleatório de peças." },
 
+  { "key": "saved.in", "value": "Salvo em {0}" },
 
-  
+  { "key": "import.explanation", "value": "Imagens na proporção de 34x34 exp: 340x340, 680x680 e 1020." },
+
+  { "key": "save.to.gallery", "value": "Salve na Gallery" },
+  { "key": "save.to.images", "value": "Salve em Imagens" }
 
 
 

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.IO;
+using System;
 
 
 public class PaintingGridManager : MonoBehaviour
@@ -78,7 +79,7 @@ public class PaintingGridManager : MonoBehaviour
         UndoButton.onClick.AddListener(() =>
         {
 
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            DisableTools();
             gridStateManager.Undo();
 
         });
@@ -865,7 +866,51 @@ public class PaintingGridManager : MonoBehaviour
         if (Ads)
             AdsManager.TryShowInterstitial();
 
-        ExportGridAsTextureFromJson(filePng, Application.persistentDataPath, 440, subfolderName);
+        Texture2D texture = ExportGridAsTextureFromJson(440);
+
+        fileManager.SavePng(subfolderName, filePng, texture, fileManager.basePath_Sprite);
+    }
+
+    public void SaveToGallery(string filePng)
+    {
+        bool hasData = SavePaintedCells("fileJson");
+
+        if (!hasData)
+            return;
+
+        AdsManager.TryShowInterstitial();
+
+        Texture2D texture = ExportGridAsTextureFromJson(440);
+
+        NativeGallery.SaveImageToGallery(texture, Application.productName, filePng);
+
+#if UNITY_ANDROID || UNITY_IOS
+    NativeGallery.SaveImageToGallery(
+        texture,
+        Application.productName,
+        fileName
+    );
+
+    //SpawnMessage("Imagem salva na galeria 📸");
+
+#else
+        // PC / Editor
+        string path = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+            Application.productName
+        );
+
+        if (!Directory.Exists(path))
+            Directory.CreateDirectory(path);
+
+        string filePath = Path.Combine(path, filePng);
+        File.WriteAllBytes(filePath, texture.EncodeToPNG());
+
+        //SpawnMessage("Imagem salva em Imagens 🖥️");
+#endif
+
+        //SpawnMessage("Imagem salva na galeria 📸");
+
     }
 
 
@@ -918,7 +963,7 @@ public class PaintingGridManager : MonoBehaviour
 
     private Drawing wrapper = new Drawing();
 
-    public void ExportGridAsTextureFromJson(string fileName, string selectRootPath, int textureSize = 440, string folderName = "Default")
+    public Texture2D ExportGridAsTextureFromJson(int textureSize = 440)
     {
         //string json = fileManager.LoadJson(selectRootPath, fileManager.basePath_PaintingData, folderName, fileName.Replace(".png", ".json"));
 
@@ -995,8 +1040,11 @@ public class PaintingGridManager : MonoBehaviour
 
         texture.Apply();
 
+        //fileManager.SavePng(folderName, fileName, texture, fileManager.basePath_Sprite);
+
+        return texture;
+
         // Salva a imagem
-        fileManager.SavePng(folderName, fileName, texture, fileManager.basePath_Sprite);
 
         // Atualiza preview se tiver
         //if (resultPreview != null)

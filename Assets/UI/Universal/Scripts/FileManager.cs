@@ -24,13 +24,80 @@ public class FileManager : MonoBehaviour
     public GameObject warningPrefab;
     public GameObject advicePrefab;
     public GameObject inputPrefab;
+    public GameObject messagePrefab;
     public Transform panel;
     public bool warning = false;
+    [SerializeField] private float fadeDuration = 3f;
+    [SerializeField] private float lifetime = 1f;
 
     void Start()
     {
 
     }
+
+
+
+    public void SpawnTMP(string text)
+    {
+        GameObject instance = Instantiate(messagePrefab, panel);
+
+        TextMeshProUGUI tmp = instance.GetComponentInChildren<TextMeshProUGUI>();
+        if (tmp != null)
+            tmp.text = text;
+
+        Destroy(instance, 10f);
+    }
+    public void SpawnMessage(string text)
+    {
+        GameObject instance = Instantiate(messagePrefab, panel);
+
+        TextMeshProUGUI tmp = instance.GetComponentInChildren<TextMeshProUGUI>();
+        if (tmp == null)
+        {
+            Destroy(instance);
+            return;
+        }
+
+        tmp.text = text;
+
+        StartCoroutine(FadeRoutine(tmp, instance));
+    }
+
+
+    private IEnumerator FadeRoutine(TextMeshProUGUI tmp, GameObject instance)
+    {
+        Color color = tmp.color;
+
+        // Começa invisível
+        //color.a = 0f;
+        //tmp.color = color;
+
+        // Fade In
+        float t = 0f;
+        //while (t < fadeDuration)
+        //{
+        //    t += Time.deltaTime;
+        //    color.a = Mathf.Lerp(0f, 1f, t / fadeDuration);
+        //    tmp.color = color;
+        //    yield return null;
+        //}
+
+        // Tempo visível
+        yield return new WaitForSeconds(lifetime);
+
+        // Fade Out
+        t = 0f;
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            color.a = Mathf.Lerp(1f, 0f, t / fadeDuration);
+            tmp.color = color;
+            yield return null;
+        }
+
+        Destroy(instance);
+    }
+
 
     public void CreateInput(string title, string placeholder, System.Action<string> onContinue, string defaultValue = null)
     {
@@ -411,7 +478,29 @@ public class FileManager : MonoBehaviour
         // Salva o JSON
         File.WriteAllText(filePath, json);
 
-        Debug.Log($"Arquivo salvo em: {filePath}");
+        //Debug.Log($"Arquivo salvo em: {filePath}");
+
+        string pasta = Path.GetFileName(Path.GetDirectoryName(filePath));
+
+        if (pasta == "Pallets") //|| pasta == Path.GetFileNameWithoutExtension(fileName)
+            return;
+
+        bool translate = UIHelperUtils.CheckTranslationFile(Application.persistentDataPath, basePath, pasta);
+
+        string name = pasta;
+
+        if (translate)
+        {
+            name = UIHelperUtils.T(name);
+            if (string.IsNullOrEmpty(name))
+                name = pasta;
+        }
+
+        string textMessage = UIHelperUtils.T("saved.in", name);
+        if (string.IsNullOrEmpty(textMessage))
+            textMessage = $"Saved in " + name;
+
+        SpawnMessage(textMessage);
     }
 
     public void SavePng(string folderName, string fileName, Texture2D texture, string basePath)
@@ -444,7 +533,26 @@ public class FileManager : MonoBehaviour
         byte[] pngBytes = texture.EncodeToPNG();
         File.WriteAllBytes(filePath, pngBytes);
 
-        Debug.Log($"PNG salvo em: {filePath}");
+        //Debug.Log($"PNG salvo em: {filePath}");
+
+        string pasta = Path.GetFileName(Path.GetDirectoryName(filePath));
+
+        bool translate = UIHelperUtils.CheckTranslationFile(Application.persistentDataPath, basePath, pasta);
+
+        string name = pasta;
+
+        if (translate)
+        {
+            name = UIHelperUtils.T(name);
+            if (string.IsNullOrEmpty(name))
+                name = pasta;
+        }
+
+        string textMessage = UIHelperUtils.T("saved.in", name);
+        if (string.IsNullOrEmpty(textMessage))
+            textMessage = $"Saved in " + name;
+
+        SpawnMessage(textMessage);
     }
 
     public bool FileExists(string folderName, string fileName, string basePath)

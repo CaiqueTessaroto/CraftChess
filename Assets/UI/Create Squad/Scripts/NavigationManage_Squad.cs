@@ -329,7 +329,19 @@ public class NavigationManage_Squad : MonoBehaviour
 
 
         squadManager.squad = name;
-        squadManager.squadnameTmp.text = name;
+
+        bool translate = UIHelperUtils.CheckTranslationFile(Application.persistentDataPath, fileManager.basePath_PieceData, name);
+
+        string nameSquad = name;
+
+        if (translate)
+        {
+            nameSquad = UIHelperUtils.T(name);
+            if (string.IsNullOrEmpty(nameSquad))
+                nameSquad = name;
+        }
+
+        squadManager.squadnameTmp.text = nameSquad;
         folderNavigation.selectRootPath = Application.persistentDataPath;
 
         string fileName = name + ".json";

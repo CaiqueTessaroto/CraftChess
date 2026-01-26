@@ -363,7 +363,17 @@
 
   { "key": "Unlock_Reward", "value": "Unlock Reward" },
 
-  { "key": "reward.explanation", "value": "Watch an advertisement to unlock a random set of pieces." }
+  { "key": "reward.explanation", "value": "Watch an advertisement to unlock a random set of pieces." },
+
+  { "key": "saved.in", "value": "Saved in {0}" },
+
+  { "key": "import.explanation", "value": "Images in 34x34 aspect ratio, e.g., 340x340, 680x680, and 1020." },
+
+  { "key": "save.to.gallery", "value": "Save to Gallery" },
+  { "key": "save.to.images", "value": "Save to Images" }
+
+
+
 
   ]
 }

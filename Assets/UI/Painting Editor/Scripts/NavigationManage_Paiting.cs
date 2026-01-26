@@ -28,7 +28,8 @@ public class NavigationManage_Painting : MonoBehaviour
     [Header("Buttons:")]
     public Button saveBtn;
     public Button loadBtn;
-    public Button QuickSave;
+    public Button quickSave;
+    public Button saveGallery;
 
     void Start()
     {
@@ -87,7 +88,7 @@ public class NavigationManage_Painting : MonoBehaviour
             folderNavigation.StartCreatingFolderButtons(fileManager.basePath_Sprite, folderNavigation.panelFolders);
         });
 
-        QuickSave.onClick.AddListener(() =>
+        quickSave.onClick.AddListener(() =>
         {
             if (string.IsNullOrEmpty(folderName) && string.IsNullOrEmpty(fileName))
             {
@@ -113,6 +114,42 @@ public class NavigationManage_Painting : MonoBehaviour
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             QuickSaveArt();
         });
+
+
+
+        TMP_Text tMP_Text = saveGallery.gameObject.GetComponentInChildren<TMP_Text>();
+
+        string text = tMP_Text.text;
+
+#if UNITY_ANDROID || UNITY_IOS
+
+            text = UIHelperUtils.T("save.to.gallery");
+
+            if (string.IsNullOrEmpty(text))
+                text = "Save to Gallery";
+
+#else
+
+        text = UIHelperUtils.T("save.to.images");
+
+        if (string.IsNullOrEmpty(text))
+            text = "Save to Images";
+
+#endif
+
+        tMP_Text.text = text;
+
+        saveGallery.onClick.AddListener(() =>
+        {
+            string filePng = fileName + ".png";
+
+            gridManager.SaveToGallery(filePng);
+
+
+
+        });
+
+
 
         panelFolder = folderNavigation.panelFolders;
         panelFile = fileNavigation.panelFile;
@@ -253,8 +290,6 @@ public class NavigationManage_Painting : MonoBehaviour
     }
 
     public ImageImporter imageImporter;
-
-
 
 
 

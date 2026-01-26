@@ -353,9 +353,14 @@
   { "key": "pack", "value": "Paquete {0}" },
 
   { "key": "Unlock_Reward", "value": "Desbloquear Recompensa" },
-  { "key": "reward.explanation", "value": "Mira un anuncio para desbloquear un conjunto aleatorio de piezas." }
+  { "key": "reward.explanation", "value": "Mira un anuncio para desbloquear un conjunto aleatorio de piezas." },
 
+  { "key": "saved.in", "value": "Guardado en {0}" },
 
+  { "key": "import.explanation", "value": "Imágenes en relación de aspecto 34x34, por ejemplo, 340x340, 680x680 y 1020." },
+
+  { "key": "save.to.gallery", "value": "Guardar en la Galería" },
+  { "key": "save.to.images", "value": "Guardar en Imágenes" }
 
   ]
 }

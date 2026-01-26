@@ -32,15 +32,17 @@ public class GameManager : MonoBehaviour
     void Start()
     {
 
-         AudioManager.Instance.PlaySFX(AudioManager.Instance.intro);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.intro);
+            AudioManager.Instance.ApplySoundToAllButtons();
+        }
 
-         AudioManager.Instance.ApplySoundToAllButtons();
-
-         SetupAllInputFields();
+        SetupAllInputFields();
 
     }
 
-        public void SetupAllInputFields()
+    public void SetupAllInputFields()
     {
         TMP_InputField[] inputFields = FindObjectsOfType<TMP_InputField>(true);
 
