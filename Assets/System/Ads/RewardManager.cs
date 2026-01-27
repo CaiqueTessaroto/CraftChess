@@ -34,7 +34,7 @@ public class RewardManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
 
         okBtn.onClick.AddListener(() => unlockPanel.SetActive(false));
@@ -132,12 +132,6 @@ public class RewardManager : MonoBehaviour
             path,
             zipName
         );
-
-        if (!File.Exists(zipPath))
-        {
-            Debug.LogWarning($"[CopyRewardPack] ZIP não encontrado: {zipPath}");
-            yield break; // encerra a coroutine
-        }
 
         string targetDir = Path.Combine(
             Application.persistentDataPath,

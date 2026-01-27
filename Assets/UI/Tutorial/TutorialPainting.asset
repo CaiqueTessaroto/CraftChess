@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: TutorialPainting
   m_EditorClassIdentifier: 
   pages:
+  - image: {fileID: 21300000, guid: 6cba9523b34159d4ca6ed74dd89f0fa4, type: 3}
+    description: This eraser allows you to quickly erase large areas of pixels of
+      the same color.
   - image: {fileID: 21300000, guid: c9f68e6b2a1e5ab4b94e1962285423ab, type: 3}
     description: 'To use the circle, rectangle, line, or selection tools, click on
       two points on the grid.

@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f5380f14dda12a40b25652351e70b3f, type: 3}
-  m_Name: Viking
+  m_Name: Vikings
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 667c2d235ee9a1543a2060c425b05c96, type: 3}
-  id: Viking
-  displayName: Viking Pack
+  id: Vikings
+  Content: 
   weight: 1
+  typeFeed: 0

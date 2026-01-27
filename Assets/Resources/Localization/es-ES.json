@@ -315,13 +315,13 @@
 
   { "key": "squad_piece", "value": "{0} {1}" },
 
-  { "key": "Black", "value": "Negro" },
-  { "key": "White", "value": "Blanco" },
+  { "key": "Black", "value": "Negras" },
+  { "key": "White", "value": "Blancas" },
   { "key": "Red", "value": "Rojo" },
 
   { "key": "Horde", "value": "Horda" },
 
-  { "key": "Pirate", "value": "Pirata" },
+  { "key": "Pirate", "value": "Piratas" },
   { "key": "Fantasy", "value": "Fantasía" },
   { "key": "Vikings", "value": "Vikingos" },
   { "key": "Brainrot", "value": "Brainrot" },
