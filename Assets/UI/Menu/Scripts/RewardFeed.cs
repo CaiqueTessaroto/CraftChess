@@ -47,7 +47,7 @@ public class RewardFeed : MonoBehaviour
             if (rewardManager.rewards[currentIndex].typeFeed == TypeFeed.Reward)
             {
 
-#if UNITY_ANDROID || UNITY_IOS
+#if UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR
 
                 if (rewardManager.rewards[currentIndex] != null)
                 {

@@ -43,6 +43,12 @@ public class RewardManager : MonoBehaviour
     public void GrantReward(RewardData reward)
     {
 
+        if (this == null || !gameObject)
+            return;
+
+        if (reward.typeFeed != TypeFeed.Reward)
+            return;
+
         if (PlayerPrefs.GetInt("Reward_" + reward.id, 0) == 1)
         {
             Debug.Log("Reward já desbloqueado: " + reward.id);
@@ -107,7 +113,7 @@ public class RewardManager : MonoBehaviour
     {
         for (int i = 0; i < rewards.Length; i++)
         {
-            if (PlayerPrefs.GetInt("Reward_" + rewards[i].id, 0) != 1)
+            if (PlayerPrefs.GetInt("Reward_" + rewards[i].id, 0) != 1 && rewards[i].typeFeed == TypeFeed.Reward)
             {
                 return false; // achou um que ainda não foi salvo
             }
