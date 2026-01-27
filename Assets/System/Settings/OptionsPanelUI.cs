@@ -7,6 +7,8 @@ public class OptionsPanelUI : MonoBehaviour
     public Button close;
     public Button restart;
 
+    public Button discord;
+
 
     void Start()
     {
@@ -19,6 +21,17 @@ public class OptionsPanelUI : MonoBehaviour
         restart.onClick.AddListener(() =>
         {
             ResetTutorial();
+        });
+
+        discord.onClick.AddListener(() =>
+        {
+            string url = "https://discord.gg/MBSXMyCuRG";
+
+            if (!string.IsNullOrEmpty(url))
+            {
+                Application.OpenURL(url);
+            }
+
         });
 
 

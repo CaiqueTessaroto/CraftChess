@@ -243,8 +243,34 @@ public class FileManager : MonoBehaviour
 
     public void HandleDeleteFile(string fileName, string path, GameObject buttonObj)
     {
-        string title = "File will be deleted";
-        string text = "Do you really want to delete the file " + fileName + " ?";
+
+        string relativePath = path
+    .Replace(Application.persistentDataPath, "")
+    .TrimStart('/', '\\');
+
+        string rootFolder = relativePath.Split('/', '\\')[0];
+
+        string directoryPath = Path.GetDirectoryName(path);
+        string fileFolder = Path.GetFileName(directoryPath);
+
+        bool translate = UIHelperUtils.CheckTranslationFile(Application.persistentDataPath, rootFolder, fileFolder);
+
+        string name = fileName;
+
+        if (translate)
+        {
+            name = UIHelperUtils.T(fileName);
+            if (string.IsNullOrEmpty(name))
+                name = fileName;
+        }
+
+        string title = UIHelperUtils.T("file.delete.title");
+        string text = UIHelperUtils.T("file.delete.txt", name);
+
+        if (string.IsNullOrEmpty(title))
+            title = "The file will be deleted";
+        if (string.IsNullOrEmpty(text))
+            text = "Are you sure you want to delete " + name + "? This action is permanent and cannot be undone.";
 
         if (buttonObj)
         {
@@ -256,7 +282,7 @@ public class FileManager : MonoBehaviour
                 {
                     File.Delete(path);
                     Destroy(buttonObj);
-                    Debug.Log("Arquivo excluído: " + path);
+                    //    Debug.Log("Arquivo excluído: " + path);
                 }
                 else
                 {
@@ -283,8 +309,33 @@ public class FileManager : MonoBehaviour
     {
         if (warning) return;
 
-        string title = "Files will be deleted";
-        string text = "Do you really want to delete the file " + fileName + " ?";
+        string relativePath = path1
+        .Replace(Application.persistentDataPath, "")
+        .TrimStart('/', '\\');
+
+        string rootFolder = relativePath.Split('/', '\\')[0];
+
+        string directoryPath = Path.GetDirectoryName(path1);
+        string fileFolder = Path.GetFileName(directoryPath);
+
+        bool translate = UIHelperUtils.CheckTranslationFile(Application.persistentDataPath, rootFolder, fileFolder);
+
+        string name = fileName;
+
+        if (translate)
+        {
+            name = UIHelperUtils.T(fileName);
+            if (string.IsNullOrEmpty(name))
+                name = fileName;
+        }
+
+        string title = UIHelperUtils.T("file.delete.title");
+        string text = UIHelperUtils.T("file.delete.txt", name);
+
+        if (string.IsNullOrEmpty(title))
+            title = "The file will be deleted";
+        if (string.IsNullOrEmpty(text))
+            text = "Are you sure you want to delete " + name + "? This action is permanent and cannot be undone.";
 
         void DeleteFiles()
         {
@@ -292,7 +343,6 @@ public class FileManager : MonoBehaviour
             if (File.Exists(path1))
             {
                 File.Delete(path1);
-                Debug.Log("Arquivo excluído: " + path1);
             }
             else
             {
@@ -303,7 +353,6 @@ public class FileManager : MonoBehaviour
             if (File.Exists(path2))
             {
                 File.Delete(path2);
-                Debug.Log("Arquivo excluído: " + path2);
             }
             else
             {
@@ -321,8 +370,13 @@ public class FileManager : MonoBehaviour
     {
         if (warning) return;
 
-        string title = "Folder will be deleted";
-        string text = "Do you really want to delete the folder " + folderName + " ?";
+        string title = UIHelperUtils.T("folder.delete.title");
+        string text = UIHelperUtils.T("folder.delete.txt", folderName);
+
+        if (string.IsNullOrEmpty(title))
+            title = "The folder will be deleted";
+        if (string.IsNullOrEmpty(text))
+            text = "Are you sure you want to delete " + folderName + " and all its contents? This action is permanent and cannot be undone.";
 
         void DeleteFiles()
         {
@@ -355,47 +409,53 @@ public class FileManager : MonoBehaviour
         CreateWarning(title, text, DeleteFiles);
     }
 
-    public void HandleDeleteFolder(string pasta, string caminhoPasta, GameObject newButton)
+    public void HandleDeleteFolder(string folderName, string path, GameObject buttonObj)
     {
-        if (!Directory.Exists(caminhoPasta))
+        if (warning) return;
+
+        string relativePath = path
+        .Replace(Application.persistentDataPath, "")
+        .TrimStart('/', '\\');
+
+        string rootFolder = relativePath.Split('/', '\\')[0];
+
+        bool translate = UIHelperUtils.CheckTranslationFile(Application.persistentDataPath, rootFolder, folderName);
+
+        string name = folderName;
+
+        if (translate)
         {
-            Debug.LogWarning("A pasta não existe: " + caminhoPasta);
-            return;
+            name = UIHelperUtils.T(folderName);
+            if (string.IsNullOrEmpty(name))
+                name = folderName;
         }
 
-        if (Directory.GetFiles(caminhoPasta).Length > 0)
+        string title = UIHelperUtils.T("folder.delete.title");
+        string text = UIHelperUtils.T("folder.delete.txt", name);
+
+        if (string.IsNullOrEmpty(title))
+            title = "The folder will be deleted";
+        if (string.IsNullOrEmpty(text))
+            text = "Are you sure you want to delete " + name + " and all its contents? This action is permanent and cannot be undone.";
+
+        void DeleteFiles()
         {
-            //CreateAdvice("The folder is not empty: " + pasta);
-            //return;
-        }
-
-        if (newButton)
-        {
-            if (warning) return;
-
-            string title = "Folder will be deleted";
-            string text = "Do you really want to delete the folder " + pasta + " ?";
-
-            //Debug.Log("Pasta: " + caminhoPasta);
-
-            CreateWarning(title, text, () =>
+            if (Directory.Exists(path))
             {
-                Directory.Delete(caminhoPasta, true);
-                Destroy(newButton);
-                Debug.Log("Pasta excluída: " + caminhoPasta);
-                warning = false;
-            });
-        }
-        else
-        {
-            Directory.Delete(caminhoPasta, true);
-            Debug.Log("Pasta excluída: " + caminhoPasta);
-            warning = false;
+                Directory.Delete(path, true); ;
+                Debug.Log("Pasta excluída: " + path);
+            }
+            else
+            {
+                Debug.LogWarning("Pasta não encontrado: " + path);
+            }
+
+            if (buttonObj)
+                Destroy(buttonObj);
         }
 
-
+        CreateWarning(title, text, DeleteFiles);
     }
-
 
 
 

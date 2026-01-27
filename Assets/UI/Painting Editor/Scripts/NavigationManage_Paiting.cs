@@ -185,7 +185,7 @@ public class NavigationManage_Painting : MonoBehaviour
             string caminhoPasta = Path.Combine(rootPath, fileManager.basePath_Sprite, pasta);
             string caminhoPastaJson = Path.Combine(rootPath, fileManager.basePath_PaintingData, pasta);
 
-            fileManager.HandleDeleteFolders(pasta, caminhoPasta, caminhoPastaJson, buttonObj);
+            fileManager.HandleDeleteFolder(pasta, caminhoPasta, buttonObj);
 
             uIHelperUtils.delete = false;
         }

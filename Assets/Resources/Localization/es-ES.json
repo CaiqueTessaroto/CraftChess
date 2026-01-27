@@ -148,10 +148,16 @@
 
     { "key": "file.save", "value": "Guardar" },
 
+    { "key": "file.delete.title", "value": "El archivo será eliminado" },
+    {
+      "key": "file.delete.txt",
+      "value": "Are you sure you want to delete {0}? This action is permanent and cannot be undone."
+    },
+
     { "key": "folder.delete.title", "value": "La carpeta será eliminada" },
     {
       "key": "folder.delete.txt",
-      "value": "¿Estás seguro de que deseas eliminar {0} y todo su contenido? Esta acción es permanente y no se puede deshacer."
+      "value": "¿Seguro que quieres eliminar {0}? Esta acción es permanente y no se puede deshacer."
     },
 
     { "key": "folder.exist", "value": "¡Ya existe un conjunto con este nombre!" },
@@ -224,20 +230,22 @@
     "value": "Ahora solo queda jugar la partida.\nEn la esquina superior izquierda, puedes rendirte si la situación se vuelve difícil.\nEn la esquina superior derecha se encuentran las opciones de visualización.En el lado derecho de la pantalla, puedes seguir el historial de la partida."
   },
 
+
+  { "key": "TutorialSeenPainting0", "value": "Este borrador le permite borrar rápidamente grandes áreas de píxeles del mismo color." },
   {
-    "key": "TutorialSeenPainting0",
+    "key": "TutorialSeenPainting1",
     "value": "Para usar las herramientas de círculo, rectángulo, línea o selección, haz clic en dos puntos de la cuadrícula.\nEn PC, el punto pequeño en la esquina superior izquierda indica la posición del ratón."
   },
   {
-    "key": "TutorialSeenPainting1",
+    "key": "TutorialSeenPainting2",
     "value": "Después de seleccionar un área, usa las flechas en la esquina inferior izquierda para moverla.\nPulsa el botón central para confirmar el movimiento y finalizar la herramienta."
   },
   {
-    "key": "TutorialSeenPainting2",
+    "key": "TutorialSeenPainting3",
     "value": "El botón de guardado rápido se utiliza para artes que ya han sido guardadas o cargadas.\nEl conjunto al que pertenecen se mostrará justo debajo del botón."
   },
   {
-    "key": "TutorialSeenPainting3",
+    "key": "TutorialSeenPainting4",
     "value": "Al hacer clic en Guardar, se mostrarán los conjuntos disponibles. Vuelve a hacer clic en el conjunto deseado para confirmar el guardado.\nEn la esquina superior derecha, puedes crear un nuevo conjunto.\nPara eliminar, haz clic en Eliminar, selecciona el conjunto deseado y confirma la acción."
   },
 

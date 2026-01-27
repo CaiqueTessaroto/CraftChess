@@ -148,6 +148,12 @@
 
     { "key": "file.save", "value": "Save" },
 
+    { "key": "file.delete.title", "value": "The file will be deleted" },
+    {
+      "key": "file.delete.txt",
+      "value": "Are you sure you want to delete {0}? This action is permanent and cannot be undone."
+    },
+
     { "key": "folder.delete.title", "value": "The folder will be deleted" },
     {
       "key": "folder.delete.txt",
@@ -229,20 +235,22 @@
 
 
 
+  { "key": "TutorialSeenPainting0", "value": "This eraser allows you to quickly erase large areas of pixels of the same color." },
+
   {
-    "key": "TutorialSeenPainting0",
+    "key": "TutorialSeenPainting1",
     "value": "To use the circle, rectangle, line, or selection tools, click on two points on the grid.\nOn PC, the small dot in the top-left corner indicates the mouse position."
   },
   {
-    "key": "TutorialSeenPainting1",
+    "key": "TutorialSeenPainting2",
     "value": "After selecting an area, use the arrows in the bottom-left corner to move it.\nPress the center button to confirm the movement and finish the tool."
   },
   {
-    "key": "TutorialSeenPainting2",
+    "key": "TutorialSeenPainting3",
     "value": "The quick save button is used for artwork that has already been saved or loaded.\nThe set it belongs to will be displayed just below the button."
   },
   {
-    "key": "TutorialSeenPainting3",
+    "key": "TutorialSeenPainting4",
     "value": "When clicking Save, the available sets will be shown next. Click the desired set again to confirm saving.\nIn the top-right corner, you can create a new set.\nTo delete, click Delete, select the desired set, and confirm the action."
   },
 
