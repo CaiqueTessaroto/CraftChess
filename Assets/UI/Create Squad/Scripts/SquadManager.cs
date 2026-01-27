@@ -8,8 +8,6 @@ using System.Collections;
 
 using System.Linq;
 using System.Text;
-using UnityEngine.AdaptivePerformance;
-using UnityEngine.Experimental.GlobalIllumination;
 
 
 

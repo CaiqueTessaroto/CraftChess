@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "0080009286",
         "name": "com.DefaultCompany.com.unity.template.mobile2D",
-        "processId": 1028,
+        "processId": 28105,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -42,6 +42,12 @@
             "deviceId": "0080009286",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
             "processId": 1028,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 28105,
             "exited": false
         }
     ],

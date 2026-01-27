@@ -456,7 +456,7 @@ public class FileManager : MonoBehaviour
 
 
 
-    public void SaveJson(string folderName, string fileName, string json, string basePath)
+    public void SaveJson(string folderName, string fileName, string json, string basePath, bool message = true)
     {
         // Caminho base -> persistentDataPath/Art
         string pieceFolderPath = Path.Combine(Application.persistentDataPath, basePath);
@@ -482,7 +482,7 @@ public class FileManager : MonoBehaviour
 
         string pasta = Path.GetFileName(Path.GetDirectoryName(filePath));
 
-        if (pasta == "Pallets") //|| pasta == Path.GetFileNameWithoutExtension(fileName)
+        if (pasta == "Pallets" || message == false) //|| pasta == Path.GetFileNameWithoutExtension(fileName)
             return;
 
         bool translate = UIHelperUtils.CheckTranslationFile(Application.persistentDataPath, basePath, pasta);

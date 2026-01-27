@@ -888,7 +888,7 @@ public class PaintingGridManager : MonoBehaviour
     NativeGallery.SaveImageToGallery(
         texture,
         Application.productName,
-        fileName
+        filePng
     );
 
     string text = UIHelperUtils.T("saved.to.gallery");

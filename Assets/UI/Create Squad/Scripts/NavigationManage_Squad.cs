@@ -411,7 +411,8 @@ public class NavigationManage_Squad : MonoBehaviour
             name,       // subpasta dentro de basePath_SquadData
             fileName,   // nome do arquivo
             json,
-            fileManager.basePath_SquadData
+            fileManager.basePath_SquadData,
+            false
         );
 
         // Captura imagem do painel
@@ -437,6 +438,8 @@ public class NavigationManage_Squad : MonoBehaviour
         cropped.SetPixels(screenTex.GetPixels(x, y, width, height));
         cropped.Apply();
 
+        Texture2D cropBottomHalf = CropBottomHalf(cropped);
+
         // caminho para salvar dentro da pasta do squad
         string folder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, name);
 
@@ -445,7 +448,7 @@ public class NavigationManage_Squad : MonoBehaviour
 
 
         string filePath = Path.Combine(folder, name + ".png");
-        File.WriteAllBytes(filePath, cropped.EncodeToPNG());
+        File.WriteAllBytes(filePath, cropBottomHalf.EncodeToPNG());
 
         //Debug.Log("Print do painel salvo em: " + filePath);
 
@@ -457,6 +460,18 @@ public class NavigationManage_Squad : MonoBehaviour
             AdsManager.TryShowInterstitial();
 
         yield break;
+    }
+
+    public Texture2D CropBottomHalf(Texture2D source)
+    {
+        int width = source.width;
+        int height = source.height / 2;
+
+        Texture2D cropped = new Texture2D(width, height, TextureFormat.RGBA32, false);
+        cropped.SetPixels(source.GetPixels(0, 0, width, height));
+        cropped.Apply();
+
+        return cropped;
     }
 
 
