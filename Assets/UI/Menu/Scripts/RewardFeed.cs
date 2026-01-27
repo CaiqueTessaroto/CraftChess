@@ -40,10 +40,14 @@ public class RewardFeed : MonoBehaviour
 
         rewardBtn.onClick.AddListener(() =>
         {
+
+
             RewardManager rewardManager = RewardManager.Instance;
 
             if (rewardManager.rewards[currentIndex].typeFeed == TypeFeed.Reward)
             {
+
+#if UNITY_ANDROID || UNITY_IOS
 
                 if (rewardManager.rewards[currentIndex] != null)
                 {
@@ -51,9 +55,26 @@ public class RewardFeed : MonoBehaviour
                 }
 
                 AdsManager.ShowRewarded();
+
+#else
+                RewardManager.Instance.GrantReward(rewardManager.rewards[currentIndex]);
+
+#endif
+
+
             }
-            else //if (rewardManager.rewards[currentIndex].typeFeed == TypeFeed.Credits)
+            else if (rewardManager.rewards[currentIndex].typeFeed == TypeFeed.Credits)
                 creditsManager.ShowCredits();
+            else
+            {
+                string url = rewardManager.rewards[currentIndex].Content;
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    Application.OpenURL(url);
+                }
+
+            }
 
 
         });
@@ -119,9 +140,10 @@ public class RewardFeed : MonoBehaviour
 
         displayImage.sprite = RewardManager.Instance.rewards[index].image;
 
-
         if (RewardManager.Instance.rewards[currentIndex].typeFeed == TypeFeed.Reward)
         {
+            //displayImage.sprite = RewardManager.Instance.rewards[index].image;
+
             string text = UIHelperUtils.T("reward.explanation");
 
             if (string.IsNullOrEmpty(text))
@@ -142,18 +164,40 @@ public class RewardFeed : MonoBehaviour
                 rewardBtn.interactable = false;
 
         }
-        else //if (RewardManager.Instance.rewards[currentIndex].typeFeed == TypeFeed.Credits)
+        else if (RewardManager.Instance.rewards[currentIndex].typeFeed == TypeFeed.Credits)
         {
+            //displayImage.sprite = RewardManager.Instance.rewards[index].image;
+
             string text = UIHelperUtils.T("credits.explanation");
 
             if (string.IsNullOrEmpty(text))
-                text = "Click here to see the game credits and learn about the people and resources that helped make this project a reality.";
+                text = "Click here to see the game credits and learn about the people that helped make this project a reality.";
 
 
             string textBtn = UIHelperUtils.T("Credits");
 
             if (string.IsNullOrEmpty(textBtn))
                 textBtn = "Credits";
+
+
+            buttonTextTmp.text = textBtn;
+            textTmp.text = text;
+
+            rewardBtn.interactable = true;
+        }
+        else
+        {
+
+            string text = UIHelperUtils.T("cartase.explanation");
+
+            if (string.IsNullOrEmpty(text))
+                text = "Contribute to the project on Catarse, our crowdfunding platform, and help make new modes, mechanics, and online multiplayer possible, with exclusive rewards for supporters.";
+
+
+            string textBtn = UIHelperUtils.T("cartase.enter");
+
+            if (string.IsNullOrEmpty(textBtn))
+                textBtn = "Support the Project";
 
 
             buttonTextTmp.text = textBtn;

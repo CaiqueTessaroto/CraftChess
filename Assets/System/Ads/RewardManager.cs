@@ -42,6 +42,13 @@ public class RewardManager : MonoBehaviour
 
     public void GrantReward(RewardData reward)
     {
+
+        if (PlayerPrefs.GetInt("Reward_" + reward.id, 0) == 1)
+        {
+            Debug.Log("Reward já desbloqueado: " + reward.id);
+            return;
+        }
+
         AudioManager.Instance.PlaySFX(unlock);
 
         string name = UIHelperUtils.T(reward.id);
@@ -57,7 +64,7 @@ public class RewardManager : MonoBehaviour
         string text = UIHelperUtils.T("unlock.pack", pack);
 
         if (string.IsNullOrEmpty(text))
-            text = "The " + reward.displayName + "The has been unlocked and is now available in your library.";
+            text = "The " + reward.Content + "The has been unlocked and is now available in your library.";
 
         textTmp.text = text;
 
@@ -69,12 +76,6 @@ public class RewardManager : MonoBehaviour
         {
             re.weight = 1f;
         }
-
-        //if (PlayerPrefs.GetInt("Reward_" + rewardId, 0) == 1)
-        //{
-        //    Debug.Log("Reward já desbloqueado: " + rewardId);
-        //    return;
-        //}
 
         StartCoroutine(CopyRewardPack(reward.id, "Sprites"));
         StartCoroutine(CopyRewardPack(reward.id, "Pieces"));

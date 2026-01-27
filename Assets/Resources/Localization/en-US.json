@@ -378,7 +378,10 @@
 
   { "key": "Credits", "value": "Credits" },
 
-  { "key": "credits.explanation", "value": "Click here to see the game credits and meet the people who helped make this project a reality." }
+  { "key": "credits.explanation", "value": "Click here to see the game credits and meet the people who helped make this project a reality." },
+
+  { "key": "cartase.explanation", "value": "Contribute to the project on Catarse, our crowdfunding platform, and help make new modes, mechanics, and online multiplayer possible, with exclusive rewards for supporters." },
+  { "key": "cartase.enter", "value": "Support the Project" }
 
 
 

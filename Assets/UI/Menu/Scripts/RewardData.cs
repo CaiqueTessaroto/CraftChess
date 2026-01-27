@@ -13,7 +13,7 @@ public class RewardData : ScriptableObject
 {
     public Sprite image;
     public string id;
-    public string displayName;
+    public string Content;
     public float weight = 1f;
     public TypeFeed typeFeed = TypeFeed.Reward;
     

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class AutoScrollUntilEnd : MonoBehaviour
 {
     [SerializeField] private ScrollRect scrollRect;
-    [SerializeField] private float scrollSpeed = 0.1f;
+    [SerializeField] private float scrollSpeed = 0.075f;
 
     private bool isScrolling = true;
 

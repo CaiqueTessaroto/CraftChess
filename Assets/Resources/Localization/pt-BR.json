@@ -303,7 +303,10 @@
 
   { "key": "Credits", "value": "Créditos" },
 
-  { "key": "credits.explanation", "value": "Clique aqui para ver os créditos do jogo e conhecer as pessoas que ajudaram a tornar este projeto realidade." }
+  { "key": "credits.explanation", "value": "Clique aqui para ver os créditos do jogo e conhecer as pessoas que ajudaram a tornar este projeto realidade." },
+
+  { "key": "cartase.explanation", "value": "Contribua com o projeto no Catarse, nosso financiamento coletivo, e ajude a viabilizar novos modos, mecânicas e multiplayer online, com recompensas exclusivas para apoiadores." },
+  { "key": "cartase.enter", "value": "Apoiar o Projeto" }
 
   ]
 }
