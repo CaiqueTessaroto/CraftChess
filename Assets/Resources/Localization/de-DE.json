@@ -1,0 +1,816 @@
+{
+  "entries": [
+    {
+      "key": "PLAY",
+      "value": "Spielen"
+    },
+    {
+      "key": "CREATE",
+      "value": "Erstellen"
+    },
+    {
+      "key": "SETTINGS",
+      "value": "Einstellungen"
+    },
+    {
+      "key": "EXIT",
+      "value": "Beenden"
+    },
+    {
+      "key": "MENU_SQUAD",
+      "value": "Team Erstellen"
+    },
+    {
+      "key": "MENU_PIECE",
+      "value": "Figur Erstellen"
+    },
+    {
+      "key": "MENU_PAINTING",
+      "value": "Grafikeditor"
+    },
+    {
+      "key": "MASTER",
+      "value": "Master:"
+    },
+    {
+      "key": "MUSIC",
+      "value": "Musik: "
+    },
+    {
+      "key": "SFX",
+      "value": "Effekte: "
+    },
+    {
+      "key": "FULLSCREEN",
+      "value": "Vollbild: "
+    },
+    {
+      "key": "RESOLUTION",
+      "value": "Auflösung: "
+    },
+    {
+      "key": "LANGUAGES",
+      "value": "Sprache: "
+    },
+    {
+      "key": "art.set",
+      "value": "| Set |"
+    },
+    {
+      "key": "ENTERNAME",
+      "value": "Name"
+    },
+    {
+      "key": "IMPORT",
+      "value": "Importieren"
+    },
+    {
+      "key": "PREVIEW",
+      "value": "Vorschau"
+    },
+    {
+      "key": "X",
+      "value": "X"
+    },
+    {
+      "key": "QUICKSAVE",
+      "value": "Schnellspeicherung"
+    },
+    {
+      "key": "LOAD",
+      "value": "Laden"
+    },
+    {
+      "key": "SAVE",
+      "value": "Speichern"
+    },
+    {
+      "key": "RGB",
+      "value": "RGB"
+    },
+    {
+      "key": "HEX",
+      "value": "HEX"
+    },
+    {
+      "key": "HSL",
+      "value": "HSL"
+    },
+    {
+      "key": "R",
+      "value": "R"
+    },
+    {
+      "key": "G",
+      "value": "G"
+    },
+    {
+      "key": "B",
+      "value": "B"
+    },
+    {
+      "key": "HEXADECIMAL",
+      "value": "Hexadezimal"
+    },
+    {
+      "key": "CANCEL",
+      "value": "Abbrechen"
+    },
+    {
+      "key": "OK",
+      "value": "Ok"
+    },
+    {
+      "key": "NEW",
+      "value": "Neu"
+    },
+    {
+      "key": "DELETE",
+      "value": "Löschen"
+    },
+    {
+      "key": "ALL",
+      "value": "Alle"
+    },
+    {
+      "key": "MY",
+      "value": "Meine"
+    },
+    {
+      "key": "LIBRARY",
+      "value": "Standard"
+    },
+    {
+      "key": "SETS",
+      "value": "Sets"
+    },
+    {
+      "key": "ARTS",
+      "value": "Grafiken"
+    },
+    {
+      "key": "PIECES",
+      "value": "Figuren"
+    },
+    {
+      "key": "CLEAR",
+      "value": "Leeren"
+    },
+    {
+      "key": "squad.pieces",
+      "value": "Figuren:"
+    },
+    {
+      "key": "ADD",
+      "value": "Hinzufügen"
+    },
+    {
+      "key": "REMOVE",
+      "value": "Entfernen"
+    },
+    {
+      "key": "DESELECT",
+      "value": "Auswahl aufheben"
+    },
+    {
+      "key": "rules.power_limit",
+      "value": "Die Teamstärke muss unter 1500 liegen"
+    },
+    {
+      "key": "rules.has_king",
+      "value": "Ein König ist erforderlich"
+    },
+    {
+      "key": "rules.unique_king",
+      "value": "Die König-Figur muss einzigartig sein"
+    },
+    {
+      "key": "rules.same_art",
+      "value": "Unterschiedliche Figuren dürfen nicht dieselbe Grafik haben."
+    },
+    {
+      "key": "rules.jump_king",
+      "value": "Der König darf keine Figuren überspringen."
+    },
+    {
+      "key": "rules.power_king",
+      "value": "Der König darf keine übermäßige Stärke haben."
+    },
+    {
+      "key": "rules.instant_check",
+      "value": "Springende Figuren dürfen die letzte Reihe nicht erreichen."
+    },
+    {
+      "key": "rules.enabled",
+      "value": "Strategiemodus aktiviert"
+    },
+    {
+      "key": "power",
+      "value": "Stärke: {0}"
+    },
+    {
+      "key": "squad.selectking",
+      "value": "Wähle den König"
+    },
+    {
+      "key": "squad.remove",
+      "value": "Figuren entfernen"
+    },
+    {
+      "key": "SELECTART",
+      "value": "Grafik auswählen"
+    },
+    {
+      "key": "CHANGESQUAD",
+      "value": "Team ändern"
+    },
+    {
+      "key": "RESET",
+      "value": "Zurücksetzen"
+    },
+    {
+      "key": "piece.squad",
+      "value": "| Team |"
+    },
+    {
+      "key": "PRESETS",
+      "value": "Vorlagen"
+    },
+    {
+      "key": "MOVES",
+      "value": "Züge"
+    },
+    {
+      "key": "SPECIAL",
+      "value": "Spezial"
+    },
+    {
+      "key": "KING",
+      "value": "König"
+    },
+    {
+      "key": "QUEEN",
+      "value": "Dame"
+    },
+    {
+      "key": "BISHOP",
+      "value": "Läufer"
+    },
+    {
+      "key": "KNIGHT",
+      "value": "Springer"
+    },
+    {
+      "key": "ROOK",
+      "value": "Turm"
+    },
+    {
+      "key": "PAWN",
+      "value": "Bauer"
+    },
+    {
+      "key": "ACTIVE",
+      "value": "Aktiv"
+    },
+    {
+      "key": "piece.active",
+      "value": "Zug aktivieren"
+    },
+    {
+      "key": "STRAIGHT",
+      "value": "Gerade"
+    },
+    {
+      "key": "DIAGONAL",
+      "value": "Diagonal"
+    },
+    {
+      "key": "CUSTOM",
+      "value": "Benutzerdefiniert"
+    },
+    {
+      "key": "MOVE",
+      "value": "Bewegen"
+    },
+    {
+      "key": "CAPTURE",
+      "value": "Schlagen"
+    },
+    {
+      "key": "JUMP",
+      "value": "Springen"
+    },
+    {
+      "key": "FRONT",
+      "value": "Vorwärts"
+    },
+    {
+      "key": "BACK",
+      "value": "Rückwärts"
+    },
+    {
+      "key": "RIGHT",
+      "value": "Rechts"
+    },
+    {
+      "key": "LEFT",
+      "value": "Links"
+    },
+    {
+      "key": "piece.selecthouses",
+      "value": "Felder auswählen: "
+    },
+    {
+      "key": "NORULES",
+      "value": "Ohne Regeln"
+    },
+    {
+      "key": "NOTURNS",
+      "value": "Ohne Züge"
+    },
+    {
+      "key": "LOCALGAME",
+      "value": "Lokales Spiel"
+    },
+    {
+      "key": "IAVSIA",
+      "value": "KI vs KI"
+    },
+    {
+      "key": "EASY",
+      "value": "Leicht"
+    },
+    {
+      "key": "MEDIUM",
+      "value": "Mittel"
+    },
+    {
+      "key": "HARD",
+      "value": "Schwer"
+    },
+    {
+      "key": "Victory",
+      "value": "Sieg"
+    },
+    {
+      "key": "Draw",
+      "value": "Unentschieden"
+    },
+    {
+      "key": "Defeat",
+      "value": "Niederlage"
+    },
+    {
+      "key": "match.return",
+      "value": "Zurück zum Brett"
+    },
+    {
+      "key": "CONTINUE",
+      "value": "Weiter"
+    },
+    {
+      "key": "file.create.title",
+      "value": "Set erstellen"
+    },
+    {
+      "key": "file.create.txt",
+      "value": "Namen eingeben..."
+    },
+    {
+      "key": "file.save",
+      "value": "Speichern"
+    },
+    {
+      "key": "file.delete.title",
+      "value": "Datei wird gelöscht."
+    },
+    {
+      "key": "file.delete.txt",
+      "value": "Sicher, dass du {0} löschen möchtest? Diese Aktion ist dauerhaft und kann nicht rückgängig gemacht werden."
+    },
+    {
+      "key": "folder.delete.title",
+      "value": "Ordner wird gelöscht"
+    },
+    {
+      "key": "folder.delete.txt",
+      "value": "Sicher, dass du {0} und seinen gesamten Inhalt löschen möchtest? Diese Aktion ist dauerhaft und kann nicht rückgängig gemacht werden."
+    },
+    {
+      "key": "folder.exist",
+      "value": "Ein Set mit diesem Namen existiert bereits!"
+    },
+    {
+      "key": "file.save.title",
+      "value": "Datei ersetzen?"
+    },
+    {
+      "key": "file.save.txt",
+      "value": "Es gibt bereits eine Datei mit demselben Namen im Ordner. Möchtest du sie ersetzen?"
+    },
+    {
+      "key": "file.replace.title",
+      "value": "Datei ersetzen?"
+    },
+    {
+      "key": "file.replace.txt",
+      "value": "Es gibt bereits eine Datei mit demselben Namen im Ordner. Möchtest du sie ersetzen?"
+    },
+    {
+      "key": "file.overwrite.title",
+      "value": "Datei speichern?"
+    },
+    {
+      "key": "file.overwrite.txt",
+      "value": "Du bist dabei, eine bestehende Datei zu überschreiben. Beachte, dass der Originalinhalt dauerhaft gelöscht und nicht wiederhergestellt werden kann."
+    },
+    {
+      "key": "file.native.save.txt",
+      "value": "Speichern in der Standardbibliothek ist nicht erlaubt."
+    },
+    {
+      "key": "file.native.delete.txt",
+      "value": "Löschen aus der Standardbibliothek ist nicht erlaubt."
+    },
+    {
+      "key": "file.none.art.txt",
+      "value": "Keine Grafik ausgewählt."
+    },
+    {
+      "key": "file.fulls_squad.txt",
+      "value": "Das Team ist voll."
+    },
+    {
+      "key": "file.empty_squad.txt",
+      "value": "Das Team ist leer."
+    },
+    {
+      "key": "file.no_king.txt",
+      "value": "Es gibt keinen König."
+    },
+    {
+      "key": "mode.alert.title",
+      "value": "Strategiemodus."
+    },
+    {
+      "key": "mode.alert.txt",
+      "value": "Dieses Team kann im Strategiemodus nicht verwendet werden."
+    },
+    {
+      "key": "none.art.txt",
+      "value": "Zum Speichern wird eine Grafik benötigt."
+    },
+    {
+      "key": "none.name.txt",
+      "value": "Zum Speichern wird ein Name benötigt."
+    },
+    {
+      "key": "none.file.txt",
+      "value": "Keine Datei ausgewählt."
+    },
+    {
+      "key": "none.folder.txt",
+      "value": "Kein Ordner ausgewählt."
+    },
+    {
+      "key": "none.cell.txt",
+      "value": "Keine gefärbten Zellen zum Speichern."
+    },
+    {
+      "key": "file.limit.txt",
+      "value": "Limit von 16 Dateien in diesem Ordner erreicht."
+    },
+    {
+      "key": "select_white",
+      "value": "Wähle die weißen Figuren."
+    },
+    {
+      "key": "select_black",
+      "value": "Wähle die schwarzen Figuren"
+    },
+    {
+      "key": "TutorialSeenMenu0",
+      "value": "Erstelle Grafiken für deine Figuren in den Proportionen 17x17 und 34x34. Es ist auch möglich, Bilder zu importieren, die automatisch in das Raster konvertiert werden."
+    },
+    {
+      "key": "TutorialSeenMenu1",
+      "value": "Nach dem Erstellen deiner Grafik verwandle sie in eine Spielfigur.\nDiese Figur stellt die von dir erstellte Zugbewegung dar."
+    },
+    {
+      "key": "TutorialSeenMenu2",
+      "value": "Mit deinen fertigen Figuren ist es Zeit, dein Team zusammenzustellen.\nOrdne die Figuren auf dem Brett an, wie du möchtest, und lege fest, welches der König sein wird."
+    },
+    {
+      "key": "TutorialSeenMenu3",
+      "value": "Wähle im Lobby, welche Teams mit den schwarzen und weißen Figuren spielen, indem du auf das Brett klickst.\nDann wähle, mit welchem du spielen wirst, angezeigt durch die Farbe der Krone.\nZusätzliche Spieloptionen sind in der oberen rechten Ecke verfügbar."
+    },
+    {
+      "key": "TutorialSeenMenu4",
+      "value": "Jetzt kannst du das Spiel spielen.\nIn der oberen linken Ecke kannst du aufgeben, wenn die Situation schwierig wird.\nIn der oberen rechten Ecke sind die Anzeigeoptionen.\nAuf der rechten Seite kannst du den Zugverlauf verfolgen."
+    },
+    {
+      "key": "TutorialSeenPainting0",
+      "value": "Dieser Radierer ermöglicht es, große Bereiche von Pixeln derselben Farbe schnell zu löschen."
+    },
+    {
+      "key": "TutorialSeenPainting1",
+      "value": "Um die Werkzeuge zum Erstellen von Kreis, Rechteck, Linie oder Auswahl zu verwenden, klicke auf zwei Punkte im Raster.\nAm PC zeigt der Punkt in der oberen linken Ecke die Mausposition an."
+    },
+    {
+      "key": "TutorialSeenPainting2",
+      "value": "Nach dem Auswählen eines Bereichs verwende die Pfeile in der unteren linken Ecke, um ihn zu verschieben.\nDrücke die mittlere Taste, um die Bewegung zu bestätigen und das Werkzeug zu beenden."
+    },
+    {
+      "key": "TutorialSeenPainting3",
+      "value": "Die Schnellspeichern-Taste wird für Grafiken verwendet, die bereits gespeichert oder geladen wurden.\nDas Set, zu dem sie gehören, wird direkt unter der Taste angezeigt."
+    },
+    {
+      "key": "TutorialSeenPainting4",
+      "value": "Beim Klick auf 'Speichern' werden die verfügbaren Sets angezeigt. Klicke erneut auf das gewünschte Set, um das Speichern zu bestätigen. In der oberen rechten Ecke kann ein neues Set erstellt werden. Zum Löschen klicke auf 'Löschen', wähle das gewünschte Set und bestätige die Aktion."
+    },
+    {
+      "key": "TutorialSeenPiece0",
+      "value": "Jede Farbe zeigt, was die Figur auf diesem Feld tun kann.\nGrün: nur Bewegung.\nRot: nur Schlagen.\nGelb: Bewegung + Schlagen.\nBlau: Sprungbewegung.\nLila: Sprung + Schlagen"
+    },
+    {
+      "key": "TutorialSeenPiece1",
+      "value": "In 'Züge' gestaltest du das Verhalten der Figur auf dem Brett.\nLege fest, wie weit sie gehen kann, in welche Richtungen sie sich bewegen darf und welche Art von Aktion diese Bewegung erlaubt.\nJede Einstellung verändert die Strategie und schafft neue Spielmöglichkeiten."
+    },
+    {
+      "key": "TutorialSeenPiece2",
+      "value": "Der Spezialzug ist eine einzigartige Fähigkeit des Bauern, die nur einmal verwendet werden kann.\nWie beim benutzerdefinierten Zug des Springers, wähle einfach die gewünschten Felder und aktiviere den Zug."
+    },
+    {
+      "key": "TutorialSeenPiece3",
+      "value": "Nach dem Fertigstellen einer Figur, verwende die 'Zurücksetzen'-Taste, um die Daten zu löschen und eine neue Figur von Grund auf zu erstellen.\nAchtung: Eine neue Figur ohne Zurücksetzen zu erstellen und 'Schnellspeicherung' zu verwenden, überschreibt die vorherige Figur."
+    },
+    {
+      "key": "TutorialSeenPiece4",
+      "value": "Beim Klick auf 'Speichern' werden die verfügbaren Sets angezeigt. Klicke erneut auf das gewünschte Set, um das Speichern zu bestätigen. In der oberen rechten Ecke kann ein neues Set erstellt werden. Zum Löschen klicke auf 'Löschen', wähle das gewünschte Set und bestätige die Aktion."
+    },
+    {
+      "key": "TutorialSeenSquad0",
+      "value": "Beim Drücken von 'Hinzufügen' werden die verfügbaren Sets angezeigt.\nWähle ein Set, um alle seine Figuren auf einmal hinzuzufügen.\nUm Figuren einzeln hinzuzufügen, verwende die 'Figuren'-Taste in der oberen rechten Ecke."
+    },
+    {
+      "key": "TutorialSeenSquad1",
+      "value": "Wenn keine Figur oder Taste ausgewählt ist, werden die Informationen deines Teams in der Bildschirmmitte angezeigt.\nDort kannst du die Gesamtzahl der Figuren, die Teamstärke und den König des Teams sehen."
+    },
+    {
+      "key": "TutorialSeenSquad2",
+      "value": "Verwende die Kronen-Taste, um auszuwählen, welche Figur der König deines Teams sein wird.\nVerwende die X-Taste, um eine Figur vom Brett zu entfernen."
+    },
+    {
+      "key": "TutorialSeenSquad3",
+      "value": "Wähle eine Figur rechts, um ihre Informationen in der Bildschirmmitte zu sehen.\nKlicke dann einfach auf die Brettposition, an der du sie platzieren möchtest."
+    },
+    {
+      "key": "TutorialSeenSquad4",
+      "value": "Verwende die +-Taste, um die Umwandlungen und die Rochade für die ausgewählte Figur einzurichten.\nZiehe einfach die gewünschten Figuren.\nZu starke Figuren haben Einschränkungen: Bei über 25 Stärke können sie sich nicht umwandeln, bei über 80 Stärke können sie nicht rochieren."
+    },
+    {
+      "key": "TutorialSeenSquad5",
+      "value": "Die Nachrichten unter dem Brett zeigen den Status des Strategiemodus. Dieser Modus bewertet, ob dein Team im Vergleich zu einem klassischen Schachset ausgewogen ist. Obwohl es möglich ist, Teams außerhalb dieses Standards zu speichern und zu spielen, wird der Strategiemodus empfohlen, um mehr Wettbewerbsfähigkeit zu gewährleisten."
+    },
+    {
+      "key": "TutorialSeenLobby0",
+      "value": "Während des lokalen Mehrspielers kann sich das Brett automatisch mit jedem Zug drehen.\nVerwende das Symbol in der oberen rechten Ecke, um diese Drehung ein- oder auszuschalten."
+    },
+    {
+      "key": "TutorialSeenLobby1",
+      "value": "Die Kronen repräsentieren die beiden Teams: das schwarze Team oben und das weiße unten. Die hervorgehobene Krone zeigt, welches Team du im Spiel steuern wirst."
+    },
+    {
+      "key": "TutorialSeenLobby2",
+      "value": "Denk daran: Du bist ein Mensch, die Krone dort oben gehört dir.\nSie repräsentiert dich und das Team, das du im Spiel befehligen wirst."
+    },
+    {
+      "key": "TutorialSeenLobby3",
+      "value": "Die auf der Seite angezeigten Figuren können ausgewählt werden, um ihre Züge, Fähigkeiten und die als König definierte Figur zu sehen."
+    },
+    {
+      "key": "TutorialSeenLobby4",
+      "value": "Im Modus 'Ohne Regeln' musst du den König im Falle eines Schachs nicht schützen.\nWenn du es nicht bemerkst, ist es deine Verantwortung, Spielende."
+    },
+    {
+      "key": "TutorialSeenLobby5",
+      "value": "Im Modus 'Ohne Züge' läuft das Spiel in Echtzeit.\nBewege deine Figuren frei, ohne auf den Gegner zu warten."
+    },
+    {
+      "key": "GOTIT",
+      "value": "Verstanden!"
+    },
+    {
+      "key": "RESTART_TUTORIAL",
+      "value": "Tutorial neu starten"
+    },
+    {
+      "key": "PLAY_VS_IA",
+      "value": "Spieler vs KI"
+    },
+    {
+      "key": "local",
+      "value": "Lokaler Mehrspieler"
+    },
+    {
+      "key": "simulation",
+      "value": "KI-Simulation"
+    },
+    {
+      "key": "squad_piece",
+      "value": "{0} {1}"
+    },
+    {
+      "key": "Black",
+      "value": "Schwarz"
+    },
+    {
+      "key": "White",
+      "value": "Weiß"
+    },
+    {
+      "key": "Red",
+      "value": "Rot"
+    },
+    {
+      "key": "Horde",
+      "value": "Horde"
+    },
+    {
+      "key": "Pirate",
+      "value": "Piraten"
+    },
+    {
+      "key": "Fantasy",
+      "value": "Fantasy"
+    },
+    {
+      "key": "Vikings",
+      "value": "Wikinger"
+    },
+    {
+      "key": "Brainrot",
+      "value": "Brainrot"
+    },
+    {
+      "key": "Bishop",
+      "value": "Läufer"
+    },
+    {
+      "key": "King",
+      "value": "König"
+    },
+    {
+      "key": "Knight",
+      "value": "Springer"
+    },
+    {
+      "key": "Pawn",
+      "value": "Bauer"
+    },
+    {
+      "key": "Queen",
+      "value": "Dame"
+    },
+    {
+      "key": "Rook",
+      "value": "Turm"
+    },
+    {
+      "key": "Ballerina",
+      "value": "Ballerina"
+    },
+    {
+      "key": "Brrpatabim",
+      "value": "Brrpatabim"
+    },
+    {
+      "key": "Capuccinoassassino",
+      "value": "Capuccino Assassino"
+    },
+    {
+      "key": "Frigocamello",
+      "value": "Frigocamelo"
+    },
+    {
+      "key": "Ketupat",
+      "value": "Ketupat"
+    },
+    {
+      "key": "Tungtung",
+      "value": "Tungtung"
+    },
+    {
+      "key": "Dragon",
+      "value": "Drache"
+    },
+    {
+      "key": "Elf",
+      "value": "Elf"
+    },
+    {
+      "key": "Orc",
+      "value": "Ork"
+    },
+    {
+      "key": "Tower",
+      "value": "Turm"
+    },
+    {
+      "key": "Wizard",
+      "value": "Zauberer"
+    },
+    {
+      "key": "Lighthouse",
+      "value": "Leuchtturm"
+    },
+    {
+      "key": "Mermaid",
+      "value": "Meerjungfrau"
+    },
+    {
+      "key": "Pirate King",
+      "value": "Piratenkönig"
+    },
+    {
+      "key": "Shaman",
+      "value": "Schamane"
+    },
+    {
+      "key": "Ship",
+      "value": "Schiff"
+    },
+    {
+      "key": "Skeleton",
+      "value": "Skelett"
+    },
+    {
+      "key": "Soldier",
+      "value": "Soldat"
+    },
+    {
+      "key": "Valkyrie",
+      "value": "Walküre"
+    },
+    {
+      "key": "Viking Ship",
+      "value": "Wikinger-Schiff"
+    },
+    {
+      "key": "unlock.pack",
+      "value": "Das {0}-Set wurde freigeschaltet und ist jetzt in deiner Bibliothek verfügbar."
+    },
+    {
+      "key": "pack",
+      "value": "Set {0}"
+    },
+    {
+      "key": "Unlock_Reward",
+      "value": "Belohnung freischalten"
+    },
+    {
+      "key": "reward.explanation",
+      "value": "Sieh dir eine Werbung an, um ein zufälliges Figuren-Set freizuschalten."
+    },
+    {
+      "key": "saved.in",
+      "value": "Gespeichert in {0}"
+    },
+    {
+      "key": "import.explanation",
+      "value": "Bilder im Verhältnis 34x34, z.B.: 340x340, 680x680 und 1020."
+    },
+    {
+      "key": "save.to.gallery",
+      "value": "In Galerie speichern"
+    },
+    {
+      "key": "save.to.images",
+      "value": "In Bilder speichern"
+    },
+    {
+      "key": "saved.to.gallery",
+      "value": "In Galerie gespeichert"
+    },
+    {
+      "key": "saved.to.images",
+      "value": "In Bilder gespeichert"
+    },
+    {
+      "key": "Credits",
+      "value": "Credits"
+    },
+    {
+      "key": "credits.explanation",
+      "value": "Klicke hier, um die Spiele-Credits zu sehen und die Menschen kennenzulernen, die dieses Projekt verwirklicht haben."
+    },
+    {
+      "key": "cartase.explanation",
+      "value": "Unterstütze das Projekt auf Catarse, unserem Crowdfunding, und hilf mit, neue Modi, Mechaniken und Online-Multiplayer zu ermöglichen, mit exklusiven Belohnungen für Unterstützer."
+    },
+    {
+      "key": "cartase.enter",
+      "value": "Projekt unterstützen"
+    }
+  ]
+}

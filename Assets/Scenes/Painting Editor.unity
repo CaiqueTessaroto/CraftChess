@@ -7765,7 +7765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32aee1b39ef411649bef5262669d8a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: IMPORT
+  key: save.to.gallery
 --- !u!114 &581849305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7849,7 +7849,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 104.55615, y: 0, z: 93.98337, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

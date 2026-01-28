@@ -1,0 +1,816 @@
+{
+  "entries": [
+    {
+      "key": "PLAY",
+      "value": "游玩"
+    },
+    {
+      "key": "CREATE",
+      "value": "创建"
+    },
+    {
+      "key": "SETTINGS",
+      "value": "设置"
+    },
+    {
+      "key": "EXIT",
+      "value": "退出"
+    },
+    {
+      "key": "MENU_SQUAD",
+      "value": "创建小队"
+    },
+    {
+      "key": "MENU_PIECE",
+      "value": "创建棋子"
+    },
+    {
+      "key": "MENU_PAINTING",
+      "value": "艺术编辑器"
+    },
+    {
+      "key": "MASTER",
+      "value": "主音量："
+    },
+    {
+      "key": "MUSIC",
+      "value": "音乐："
+    },
+    {
+      "key": "SFX",
+      "value": "音效："
+    },
+    {
+      "key": "FULLSCREEN",
+      "value": "全屏："
+    },
+    {
+      "key": "RESOLUTION",
+      "value": "分辨率："
+    },
+    {
+      "key": "LANGUAGES",
+      "value": "语言："
+    },
+    {
+      "key": "art.set",
+      "value": "| 套装 |"
+    },
+    {
+      "key": "ENTERNAME",
+      "value": "名称"
+    },
+    {
+      "key": "IMPORT",
+      "value": "导入"
+    },
+    {
+      "key": "PREVIEW",
+      "value": "预览"
+    },
+    {
+      "key": "X",
+      "value": "X"
+    },
+    {
+      "key": "QUICKSAVE",
+      "value": "快速保存"
+    },
+    {
+      "key": "LOAD",
+      "value": "加载"
+    },
+    {
+      "key": "SAVE",
+      "value": "保存"
+    },
+    {
+      "key": "RGB",
+      "value": "RGB"
+    },
+    {
+      "key": "HEX",
+      "value": "HEX"
+    },
+    {
+      "key": "HSL",
+      "value": "HSL"
+    },
+    {
+      "key": "R",
+      "value": "R"
+    },
+    {
+      "key": "G",
+      "value": "G"
+    },
+    {
+      "key": "B",
+      "value": "B"
+    },
+    {
+      "key": "HEXADECIMAL",
+      "value": "十六进制"
+    },
+    {
+      "key": "CANCEL",
+      "value": "取消"
+    },
+    {
+      "key": "OK",
+      "value": "确定"
+    },
+    {
+      "key": "NEW",
+      "value": "新建"
+    },
+    {
+      "key": "DELETE",
+      "value": "删除"
+    },
+    {
+      "key": "ALL",
+      "value": "全部"
+    },
+    {
+      "key": "MY",
+      "value": "我的"
+    },
+    {
+      "key": "LIBRARY",
+      "value": "标准"
+    },
+    {
+      "key": "SETS",
+      "value": "套装"
+    },
+    {
+      "key": "ARTS",
+      "value": "艺术"
+    },
+    {
+      "key": "PIECES",
+      "value": "棋子"
+    },
+    {
+      "key": "CLEAR",
+      "value": "清空"
+    },
+    {
+      "key": "squad.pieces",
+      "value": "棋子："
+    },
+    {
+      "key": "ADD",
+      "value": "添加"
+    },
+    {
+      "key": "REMOVE",
+      "value": "移除"
+    },
+    {
+      "key": "DESELECT",
+      "value": "取消选择"
+    },
+    {
+      "key": "rules.power_limit",
+      "value": "小队战力必须小于1500"
+    },
+    {
+      "key": "rules.has_king",
+      "value": "需要有一个王"
+    },
+    {
+      "key": "rules.unique_king",
+      "value": "王棋必须是唯一的"
+    },
+    {
+      "key": "rules.same_art",
+      "value": "不能有不同棋子使用相同的艺术。"
+    },
+    {
+      "key": "rules.jump_king",
+      "value": "王不能跳过棋子。"
+    },
+    {
+      "key": "rules.power_king",
+      "value": "王不能拥有过高战力。"
+    },
+    {
+      "key": "rules.instant_check",
+      "value": "跳跃棋子不能到达最后一行。"
+    },
+    {
+      "key": "rules.enabled",
+      "value": "战略模式已启用"
+    },
+    {
+      "key": "power",
+      "value": "战力：{0}"
+    },
+    {
+      "key": "squad.selectking",
+      "value": "选择王"
+    },
+    {
+      "key": "squad.remove",
+      "value": "移除棋子"
+    },
+    {
+      "key": "SELECTART",
+      "value": "选择艺术"
+    },
+    {
+      "key": "CHANGESQUAD",
+      "value": "更改小队"
+    },
+    {
+      "key": "RESET",
+      "value": "重置"
+    },
+    {
+      "key": "piece.squad",
+      "value": "| 小队 |"
+    },
+    {
+      "key": "PRESETS",
+      "value": "预设"
+    },
+    {
+      "key": "MOVES",
+      "value": "移动"
+    },
+    {
+      "key": "SPECIAL",
+      "value": "特殊"
+    },
+    {
+      "key": "KING",
+      "value": "王"
+    },
+    {
+      "key": "QUEEN",
+      "value": "后"
+    },
+    {
+      "key": "BISHOP",
+      "value": "象"
+    },
+    {
+      "key": "KNIGHT",
+      "value": "马"
+    },
+    {
+      "key": "ROOK",
+      "value": "车"
+    },
+    {
+      "key": "PAWN",
+      "value": "兵"
+    },
+    {
+      "key": "ACTIVE",
+      "value": "激活"
+    },
+    {
+      "key": "piece.active",
+      "value": "激活移动"
+    },
+    {
+      "key": "STRAIGHT",
+      "value": "直线"
+    },
+    {
+      "key": "DIAGONAL",
+      "value": "斜线"
+    },
+    {
+      "key": "CUSTOM",
+      "value": "自定义"
+    },
+    {
+      "key": "MOVE",
+      "value": "移动"
+    },
+    {
+      "key": "CAPTURE",
+      "value": "吃子"
+    },
+    {
+      "key": "JUMP",
+      "value": "跳跃"
+    },
+    {
+      "key": "FRONT",
+      "value": "前方"
+    },
+    {
+      "key": "BACK",
+      "value": "后方"
+    },
+    {
+      "key": "RIGHT",
+      "value": "右方"
+    },
+    {
+      "key": "LEFT",
+      "value": "左方"
+    },
+    {
+      "key": "piece.selecthouses",
+      "value": "选择格子："
+    },
+    {
+      "key": "NORULES",
+      "value": "无规则"
+    },
+    {
+      "key": "NOTURNS",
+      "value": "无回合"
+    },
+    {
+      "key": "LOCALGAME",
+      "value": "本地游戏"
+    },
+    {
+      "key": "IAVSIA",
+      "value": "AI 对 AI"
+    },
+    {
+      "key": "EASY",
+      "value": "简单"
+    },
+    {
+      "key": "MEDIUM",
+      "value": "中等"
+    },
+    {
+      "key": "HARD",
+      "value": "困难"
+    },
+    {
+      "key": "Victory",
+      "value": "胜利"
+    },
+    {
+      "key": "Draw",
+      "value": "平局"
+    },
+    {
+      "key": "Defeat",
+      "value": "失败"
+    },
+    {
+      "key": "match.return",
+      "value": "返回棋盘"
+    },
+    {
+      "key": "CONTINUE",
+      "value": "继续"
+    },
+    {
+      "key": "file.create.title",
+      "value": "创建套装"
+    },
+    {
+      "key": "file.create.txt",
+      "value": "输入名称..."
+    },
+    {
+      "key": "file.save",
+      "value": "保存"
+    },
+    {
+      "key": "file.delete.title",
+      "value": "文件将被删除。"
+    },
+    {
+      "key": "file.delete.txt",
+      "value": "确定要删除 {0} 吗？此操作永久且无法撤销。"
+    },
+    {
+      "key": "folder.delete.title",
+      "value": "文件夹将被删除"
+    },
+    {
+      "key": "folder.delete.txt",
+      "value": "确定要删除 {0} 及其所有内容吗？此操作永久且无法撤销。"
+    },
+    {
+      "key": "folder.exist",
+      "value": "已存在同名套装！"
+    },
+    {
+      "key": "file.save.title",
+      "value": "要覆盖文件吗？"
+    },
+    {
+      "key": "file.save.txt",
+      "value": "文件夹中已存在同名文件。要覆盖它吗？"
+    },
+    {
+      "key": "file.replace.title",
+      "value": "要覆盖文件吗？"
+    },
+    {
+      "key": "file.replace.txt",
+      "value": "文件夹中已存在同名文件。要覆盖它吗？"
+    },
+    {
+      "key": "file.overwrite.title",
+      "value": "要保存文件吗？"
+    },
+    {
+      "key": "file.overwrite.txt",
+      "value": "即将覆盖现有文件。请注意，原始内容将被永久删除且无法恢复。"
+    },
+    {
+      "key": "file.native.save.txt",
+      "value": "不允许保存到标准库。"
+    },
+    {
+      "key": "file.native.delete.txt",
+      "value": "不允许从标准库删除。"
+    },
+    {
+      "key": "file.none.art.txt",
+      "value": "未选择艺术。"
+    },
+    {
+      "key": "file.fulls_squad.txt",
+      "value": "小队已满。"
+    },
+    {
+      "key": "file.empty_squad.txt",
+      "value": "小队为空。"
+    },
+    {
+      "key": "file.no_king.txt",
+      "value": "没有王。"
+    },
+    {
+      "key": "mode.alert.title",
+      "value": "战略模式。"
+    },
+    {
+      "key": "mode.alert.txt",
+      "value": "此小队不能在战略模式中使用。"
+    },
+    {
+      "key": "none.art.txt",
+      "value": "需要艺术才能保存。"
+    },
+    {
+      "key": "none.name.txt",
+      "value": "需要名称才能保存。"
+    },
+    {
+      "key": "none.file.txt",
+      "value": "未选择文件。"
+    },
+    {
+      "key": "none.folder.txt",
+      "value": "未选择文件夹。"
+    },
+    {
+      "key": "none.cell.txt",
+      "value": "没有已涂色的格子可保存。"
+    },
+    {
+      "key": "file.limit.txt",
+      "value": "此文件夹已达16个文件上限。"
+    },
+    {
+      "key": "select_white",
+      "value": "选择白方棋子。"
+    },
+    {
+      "key": "select_black",
+      "value": "选择黑方棋子"
+    },
+    {
+      "key": "TutorialSeenMenu0",
+      "value": "在17x17和34x34的比例下创建将用于棋子的艺术。也可以导入图片，它们会自动转换为网格。"
+    },
+    {
+      "key": "TutorialSeenMenu1",
+      "value": "创建艺术后，将其转换为棋盘棋子。\n这个棋子代表你刚创建的移动方式。"
+    },
+    {
+      "key": "TutorialSeenMenu2",
+      "value": "棋子准备就绪后，是时候组建你的小队了。\n按你希望的方式在棋盘上排列棋子，并确定哪一个是王。"
+    },
+    {
+      "key": "TutorialSeenMenu3",
+      "value": "在大厅中，通过点击棋盘选择哪个小队用黑子和白子进行游戏。\n然后，选择你将使用哪个小队进行游戏，由王冠颜色指示。\n额外的游戏选项在右上角可用。"
+    },
+    {
+      "key": "TutorialSeenMenu4",
+      "value": "现在只需玩游戏即可。\n在左上角，如果情况变得困难，你可以认输。\n在右上角，是显示选项。\n在屏幕右侧，你可以跟踪移动历史。"
+    },
+    {
+      "key": "TutorialSeenPainting0",
+      "value": "此橡皮擦可以快速擦除相同颜色的大片像素区域。"
+    },
+    {
+      "key": "TutorialSeenPainting1",
+      "value": "要使用创建圆形、矩形、线条或选择工具，请在网格上点击两个点。\n在PC上，左上角的小点表示鼠标位置。"
+    },
+    {
+      "key": "TutorialSeenPainting2",
+      "value": "选择区域后，使用左下角的箭头移动它。\n按下中间按钮确认移动并结束工具。"
+    },
+    {
+      "key": "TutorialSeenPainting3",
+      "value": "快速保存按钮用于已保存或加载的艺术。\n它们所属的套装将显示在按钮下方。"
+    },
+    {
+      "key": "TutorialSeenPainting4",
+      "value": "点击保存后，将显示可用套装，再次点击所需套装以确认保存。在右上角，可以创建新套装。要删除，请点击删除，选择所需套装并确认操作。"
+    },
+    {
+      "key": "TutorialSeenPiece0",
+      "value": "每种颜色显示棋子在该格可以做什么。\n绿色：仅移动。\n红色：仅吃子。\n黄色：移动+吃子。\n蓝色：跳跃移动。\n紫色：跳跃+吃子"
+    },
+    {
+      "key": "TutorialSeenPiece1",
+      "value": "在“移动”中，你塑造棋子在棋盘上的行为方式。\n定义它可以走多远，可以向哪些方向移动，以及该移动允许什么类型的行动。\n每次调整都会改变策略并创造新的游戏可能性。"
+    },
+    {
+      "key": "TutorialSeenPiece2",
+      "value": "特殊移动是兵的独特能力，只能使用一次。\n就像马的自定义移动一样，只需选择所需格子并激活移动。"
+    },
+    {
+      "key": "TutorialSeenPiece3",
+      "value": "完成棋子后，使用重置按钮清除数据并从头创建新棋子。\n注意：不重置就创建新棋子并使用快速保存将覆盖上一个棋子。"
+    },
+    {
+      "key": "TutorialSeenPiece4",
+      "value": "点击保存后，将显示可用套装，再次点击所需套装以确认保存。在右上角，可以创建新套装。要删除，请点击删除，选择所需套装并确认操作。"
+    },
+    {
+      "key": "TutorialSeenSquad0",
+      "value": "按下添加时，将显示可用套装。\n选择一个套装以一次性添加其所有棋子。\n要单独添加棋子，请使用右上角的棋子按钮。"
+    },
+    {
+      "key": "TutorialSeenSquad1",
+      "value": "当没有棋子或按钮被选中时，你的小队信息会显示在屏幕中央。\n在那里，你可以看到棋子总数、小队战力和小队王。"
+    },
+    {
+      "key": "TutorialSeenSquad2",
+      "value": "使用王冠按钮选择哪颗棋子将成为你小队的王。\n使用X按钮从棋盘上移除棋子。"
+    },
+    {
+      "key": "TutorialSeenSquad3",
+      "value": "选择右侧的棋子以在屏幕中央查看其信息。\n然后只需点击你想放置它的棋盘位置。"
+    },
+    {
+      "key": "TutorialSeenSquad4",
+      "value": "使用+按钮配置所选棋子的升变和王车易位。\n只需拖动所需棋子。\n过于强大的棋子有限制：战力超过25不能升变，超过80不能王车易位。"
+    },
+    {
+      "key": "TutorialSeenSquad5",
+      "value": "棋盘下方显示的消息指示战略模式的状态。此模式评估你的小队与经典国际象棋套装相比是否平衡。虽然可以保存和玩不符合此标准的小队，但建议使用战略模式以确保更高的竞争力。"
+    },
+    {
+      "key": "TutorialSeenLobby0",
+      "value": "在本地多人游戏期间，棋盘可以在每回合自动旋转。\n使用右上角的图标打开或关闭此旋转。"
+    },
+    {
+      "key": "TutorialSeenLobby1",
+      "value": "王冠代表两个小队：上方是黑队，下方是白队。高亮显示的王冠显示你在游戏中将控制哪个小队。"
+    },
+    {
+      "key": "TutorialSeenLobby2",
+      "value": "记住：你是人类，上面的王冠是你的。\n它代表你和将在游戏中指挥的小队。"
+    },
+    {
+      "key": "TutorialSeenLobby3",
+      "value": "侧面显示的棋子可以被选择以查看其移动、能力和被定义为王的棋子。"
+    },
+    {
+      "key": "TutorialSeenLobby4",
+      "value": "在无规则模式下，你无需在将军时保护王。\n如果没注意到，责任自负，游戏结束。"
+    },
+    {
+      "key": "TutorialSeenLobby5",
+      "value": "在无回合模式下，游戏为实时进行。\n自由移动你的棋子，无需等待对手回合。"
+    },
+    {
+      "key": "GOTIT",
+      "value": "知道了！"
+    },
+    {
+      "key": "RESTART_TUTORIAL",
+      "value": "重新开始教程"
+    },
+    {
+      "key": "PLAY_VS_IA",
+      "value": "玩家对AI"
+    },
+    {
+      "key": "local",
+      "value": "本地多人游戏"
+    },
+    {
+      "key": "simulation",
+      "value": "AI 模拟"
+    },
+    {
+      "key": "squad_piece",
+      "value": "{0} {1}"
+    },
+    {
+      "key": "Black",
+      "value": "黑方"
+    },
+    {
+      "key": "White",
+      "value": "白方"
+    },
+    {
+      "key": "Red",
+      "value": "红方"
+    },
+    {
+      "key": "Horde",
+      "value": "部落"
+    },
+    {
+      "key": "Pirate",
+      "value": "海盗"
+    },
+    {
+      "key": "Fantasy",
+      "value": "奇幻"
+    },
+    {
+      "key": "Vikings",
+      "value": "维京人"
+    },
+    {
+      "key": "Brainrot",
+      "value": "Brainrot"
+    },
+    {
+      "key": "Bishop",
+      "value": "象"
+    },
+    {
+      "key": "King",
+      "value": "王"
+    },
+    {
+      "key": "Knight",
+      "value": "马"
+    },
+    {
+      "key": "Pawn",
+      "value": "兵"
+    },
+    {
+      "key": "Queen",
+      "value": "后"
+    },
+    {
+      "key": "Rook",
+      "value": "车"
+    },
+    {
+      "key": "Ballerina",
+      "value": "Ballerina"
+    },
+    {
+      "key": "Brrpatabim",
+      "value": "Brrpatabim"
+    },
+    {
+      "key": "Capuccinoassassino",
+      "value": "Capuccino Assassino"
+    },
+    {
+      "key": "Frigocamello",
+      "value": "Frigocamelo"
+    },
+    {
+      "key": "Ketupat",
+      "value": "Ketupat"
+    },
+    {
+      "key": "Tungtung",
+      "value": "Tungtung"
+    },
+    {
+      "key": "Dragon",
+      "value": "龙"
+    },
+    {
+      "key": "Elf",
+      "value": "精灵"
+    },
+    {
+      "key": "Orc",
+      "value": "兽人"
+    },
+    {
+      "key": "Tower",
+      "value": "塔"
+    },
+    {
+      "key": "Wizard",
+      "value": "巫师"
+    },
+    {
+      "key": "Lighthouse",
+      "value": "灯塔"
+    },
+    {
+      "key": "Mermaid",
+      "value": "美人鱼"
+    },
+    {
+      "key": "Pirate King",
+      "value": "海盗王"
+    },
+    {
+      "key": "Shaman",
+      "value": "萨满"
+    },
+    {
+      "key": "Ship",
+      "value": "船"
+    },
+    {
+      "key": "Skeleton",
+      "value": "骷髅"
+    },
+    {
+      "key": "Soldier",
+      "value": "士兵"
+    },
+    {
+      "key": "Valkyrie",
+      "value": "瓦尔基里"
+    },
+    {
+      "key": "Viking Ship",
+      "value": "维京船"
+    },
+    {
+      "key": "unlock.pack",
+      "value": "{0} 包已解锁，现在可在你的库中使用。"
+    },
+    {
+      "key": "pack",
+      "value": "包 {0}"
+    },
+    {
+      "key": "Unlock_Reward",
+      "value": "解锁奖励"
+    },
+    {
+      "key": "reward.explanation",
+      "value": "观看广告以解锁随机棋子套装。"
+    },
+    {
+      "key": "saved.in",
+      "value": "保存于 {0}"
+    },
+    {
+      "key": "import.explanation",
+      "value": "34x34比例的图像 例如：340x340, 680x680, 1020。"
+    },
+    {
+      "key": "save.to.gallery",
+      "value": "保存到相册"
+    },
+    {
+      "key": "save.to.images",
+      "value": "保存到图片"
+    },
+    {
+      "key": "saved.to.gallery",
+      "value": "已保存到相册"
+    },
+    {
+      "key": "saved.to.images",
+      "value": "已保存到图片"
+    },
+    {
+      "key": "Credits",
+      "value": "制作人员"
+    },
+    {
+      "key": "credits.explanation",
+      "value": "点击此处查看游戏制作人员，并了解帮助实现此项目的人们。"
+    },
+    {
+      "key": "cartase.explanation",
+      "value": "在 Catarse（我们的众筹平台）上为项目做贡献，帮助实现新模式、新机制和在线多人游戏，支持者将获得独家奖励。"
+    },
+    {
+      "key": "cartase.enter",
+      "value": "支持项目"
+    }
+  ]
+}

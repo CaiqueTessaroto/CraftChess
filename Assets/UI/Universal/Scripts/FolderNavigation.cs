@@ -358,7 +358,11 @@ public class FolderNavigation : MonoBehaviour
 
         TextMeshProUGUI nomeTexto = newButton.GetComponentInChildren<TextMeshProUGUI>();
         if (nomeTexto != null)
+        {
+            if (LocalizationManager.Instance)
+                nomeTexto.font = LocalizationManager.Instance.currentFont;
             nomeTexto.text = name;
+        }
 
         // Click
         Button button = newButton.GetComponent<Button>();

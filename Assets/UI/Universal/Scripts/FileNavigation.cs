@@ -314,7 +314,11 @@ public class FileNavigation : MonoBehaviour
 
                 TextMeshProUGUI textComp = newButton.GetComponentInChildren<TextMeshProUGUI>();
                 if (textComp != null)
+                {
+                    if (LocalizationManager.Instance)
+                        textComp.font = LocalizationManager.Instance.currentFont;
                     textComp.text = name;
+                }
 
                 string jsonPathCopy = arquivo; // evita closure
                 string pastaCopy = pasta;
@@ -381,7 +385,11 @@ public class FileNavigation : MonoBehaviour
 
                 TextMeshProUGUI textComp = newButton.GetComponentInChildren<TextMeshProUGUI>();
                 if (textComp != null)
+                {
+                    if (LocalizationManager.Instance)
+                        textComp.font = LocalizationManager.Instance.currentFont;
                     textComp.text = name;
+                }
 
                 string fileCopy = file; // evita closure
                 newButton.GetComponent<Button>().onClick.AddListener(() =>
@@ -472,7 +480,11 @@ public class FileNavigation : MonoBehaviour
 
                     TextMeshProUGUI textComp = newButton.GetComponentInChildren<TextMeshProUGUI>();
                     if (textComp != null)
+                    {
+                        if (LocalizationManager.Instance)
+                            textComp.font = LocalizationManager.Instance.currentFont;
                         textComp.text = name;
+                    }
 
                     Sprite sprite = UIHelperUtils.GetSpriteFromPath(caminhoSprite);
 
@@ -532,7 +544,11 @@ public class FileNavigation : MonoBehaviour
 
                 TextMeshProUGUI textComp = newButton.GetComponentInChildren<TextMeshProUGUI>();
                 if (textComp != null)
+                {
+                    if (LocalizationManager.Instance)
+                        textComp.font = LocalizationManager.Instance.currentFont;
                     textComp.text = name;
+                }
 
                 string pathCopy = spriteData.PngPath;
                 newButton.GetComponent<Button>().onClick.AddListener(() =>

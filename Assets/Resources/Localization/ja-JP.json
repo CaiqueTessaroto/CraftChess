@@ -1,0 +1,816 @@
+{
+  "entries": [
+    {
+      "key": "PLAY",
+      "value": "プレイ"
+    },
+    {
+      "key": "CREATE",
+      "value": "作成"
+    },
+    {
+      "key": "SETTINGS",
+      "value": "設定"
+    },
+    {
+      "key": "EXIT",
+      "value": "終了"
+    },
+    {
+      "key": "MENU_SQUAD",
+      "value": "部隊作成"
+    },
+    {
+      "key": "MENU_PIECE",
+      "value": "駒作成"
+    },
+    {
+      "key": "MENU_PAINTING",
+      "value": "アートエディタ"
+    },
+    {
+      "key": "MASTER",
+      "value": "マスター:"
+    },
+    {
+      "key": "MUSIC",
+      "value": "音楽: "
+    },
+    {
+      "key": "SFX",
+      "value": "効果音: "
+    },
+    {
+      "key": "FULLSCREEN",
+      "value": "全画面: "
+    },
+    {
+      "key": "RESOLUTION",
+      "value": "解像度: "
+    },
+    {
+      "key": "LANGUAGES",
+      "value": "言語: "
+    },
+    {
+      "key": "art.set",
+      "value": "| セット |"
+    },
+    {
+      "key": "ENTERNAME",
+      "value": "名前"
+    },
+    {
+      "key": "IMPORT",
+      "value": "インポート"
+    },
+    {
+      "key": "PREVIEW",
+      "value": "プレビュー"
+    },
+    {
+      "key": "X",
+      "value": "X"
+    },
+    {
+      "key": "QUICKSAVE",
+      "value": "クイックセーブ"
+    },
+    {
+      "key": "LOAD",
+      "value": "ロード"
+    },
+    {
+      "key": "SAVE",
+      "value": "セーブ"
+    },
+    {
+      "key": "RGB",
+      "value": "RGB"
+    },
+    {
+      "key": "HEX",
+      "value": "HEX"
+    },
+    {
+      "key": "HSL",
+      "value": "HSL"
+    },
+    {
+      "key": "R",
+      "value": "R"
+    },
+    {
+      "key": "G",
+      "value": "G"
+    },
+    {
+      "key": "B",
+      "value": "B"
+    },
+    {
+      "key": "HEXADECIMAL",
+      "value": "16進数"
+    },
+    {
+      "key": "CANCEL",
+      "value": "キャンセル"
+    },
+    {
+      "key": "OK",
+      "value": "OK"
+    },
+    {
+      "key": "NEW",
+      "value": "新規"
+    },
+    {
+      "key": "DELETE",
+      "value": "削除"
+    },
+    {
+      "key": "ALL",
+      "value": "すべて"
+    },
+    {
+      "key": "MY",
+      "value": "マイ"
+    },
+    {
+      "key": "LIBRARY",
+      "value": "標準"
+    },
+    {
+      "key": "SETS",
+      "value": "セット"
+    },
+    {
+      "key": "ARTS",
+      "value": "アート"
+    },
+    {
+      "key": "PIECES",
+      "value": "駒"
+    },
+    {
+      "key": "CLEAR",
+      "value": "クリア"
+    },
+    {
+      "key": "squad.pieces",
+      "value": "駒:"
+    },
+    {
+      "key": "ADD",
+      "value": "追加"
+    },
+    {
+      "key": "REMOVE",
+      "value": "除去"
+    },
+    {
+      "key": "DESELECT",
+      "value": "選択解除"
+    },
+    {
+      "key": "rules.power_limit",
+      "value": "部隊の戦力は1500未満でなければなりません"
+    },
+    {
+      "key": "rules.has_king",
+      "value": "キングが必要です"
+    },
+    {
+      "key": "rules.unique_king",
+      "value": "キングの駒はユニークでなければなりません"
+    },
+    {
+      "key": "rules.same_art",
+      "value": "異なる駒に同じアートを使用できません。"
+    },
+    {
+      "key": "rules.jump_king",
+      "value": "キングは駒を飛び越えられません。"
+    },
+    {
+      "key": "rules.power_king",
+      "value": "キングは過度な戦力を持つことはできません。"
+    },
+    {
+      "key": "rules.instant_check",
+      "value": "ジャンプする駒は最終ランクに到達できません。"
+    },
+    {
+      "key": "rules.enabled",
+      "value": "戦略モード有効"
+    },
+    {
+      "key": "power",
+      "value": "戦力: {0}"
+    },
+    {
+      "key": "squad.selectking",
+      "value": "キングを選択"
+    },
+    {
+      "key": "squad.remove",
+      "value": "駒を除去"
+    },
+    {
+      "key": "SELECTART",
+      "value": "アートを選択"
+    },
+    {
+      "key": "CHANGESQUAD",
+      "value": "部隊を変更"
+    },
+    {
+      "key": "RESET",
+      "value": "リセット"
+    },
+    {
+      "key": "piece.squad",
+      "value": "| 部隊 |"
+    },
+    {
+      "key": "PRESETS",
+      "value": "プリセット"
+    },
+    {
+      "key": "MOVES",
+      "value": "動き"
+    },
+    {
+      "key": "SPECIAL",
+      "value": "特殊"
+    },
+    {
+      "key": "KING",
+      "value": "キング"
+    },
+    {
+      "key": "QUEEN",
+      "value": "クイーン"
+    },
+    {
+      "key": "BISHOP",
+      "value": "ビショップ"
+    },
+    {
+      "key": "KNIGHT",
+      "value": "ナイト"
+    },
+    {
+      "key": "ROOK",
+      "value": "ルーク"
+    },
+    {
+      "key": "PAWN",
+      "value": "ポーン"
+    },
+    {
+      "key": "ACTIVE",
+      "value": "有効"
+    },
+    {
+      "key": "piece.active",
+      "value": "動きを有効化"
+    },
+    {
+      "key": "STRAIGHT",
+      "value": "直進"
+    },
+    {
+      "key": "DIAGONAL",
+      "value": "斜め"
+    },
+    {
+      "key": "CUSTOM",
+      "value": "カスタム"
+    },
+    {
+      "key": "MOVE",
+      "value": "移動"
+    },
+    {
+      "key": "CAPTURE",
+      "value": "取得"
+    },
+    {
+      "key": "JUMP",
+      "value": "ジャンプ"
+    },
+    {
+      "key": "FRONT",
+      "value": "前"
+    },
+    {
+      "key": "BACK",
+      "value": "後"
+    },
+    {
+      "key": "RIGHT",
+      "value": "右"
+    },
+    {
+      "key": "LEFT",
+      "value": "左"
+    },
+    {
+      "key": "piece.selecthouses",
+      "value": "マスを選択: "
+    },
+    {
+      "key": "NORULES",
+      "value": "ルールなし"
+    },
+    {
+      "key": "NOTURNS",
+      "value": "ターンなし"
+    },
+    {
+      "key": "LOCALGAME",
+      "value": "ローカル対戦"
+    },
+    {
+      "key": "IAVSIA",
+      "value": "AI対AI"
+    },
+    {
+      "key": "EASY",
+      "value": "簡単"
+    },
+    {
+      "key": "MEDIUM",
+      "value": "普通"
+    },
+    {
+      "key": "HARD",
+      "value": "難しい"
+    },
+    {
+      "key": "Victory",
+      "value": "勝利"
+    },
+    {
+      "key": "Draw",
+      "value": "引き分け"
+    },
+    {
+      "key": "Defeat",
+      "value": "敗北"
+    },
+    {
+      "key": "match.return",
+      "value": "ボードに戻る"
+    },
+    {
+      "key": "CONTINUE",
+      "value": "続ける"
+    },
+    {
+      "key": "file.create.title",
+      "value": "セット作成"
+    },
+    {
+      "key": "file.create.txt",
+      "value": "名前を入力..."
+    },
+    {
+      "key": "file.save",
+      "value": "セーブ"
+    },
+    {
+      "key": "file.delete.title",
+      "value": "ファイルを削除します。"
+    },
+    {
+      "key": "file.delete.txt",
+      "value": "{0}を削除してもよろしいですか？この操作は永続的で元に戻せません。"
+    },
+    {
+      "key": "folder.delete.title",
+      "value": "フォルダを削除します"
+    },
+    {
+      "key": "folder.delete.txt",
+      "value": "{0}とその全ての内容を削除してもよろしいですか？この操作は永続的で元に戻せません。"
+    },
+    {
+      "key": "folder.exist",
+      "value": "その名前のセットは既に存在します！"
+    },
+    {
+      "key": "file.save.title",
+      "value": "ファイルを上書きしますか？"
+    },
+    {
+      "key": "file.save.txt",
+      "value": "フォルダ内に同じ名前のファイルが既に存在します。上書きしますか？"
+    },
+    {
+      "key": "file.replace.title",
+      "value": "ファイルを上書きしますか？"
+    },
+    {
+      "key": "file.replace.txt",
+      "value": "フォルダ内に同じ名前のファイルが既に存在します。上書きしますか？"
+    },
+    {
+      "key": "file.overwrite.title",
+      "value": "ファイルを保存しますか？"
+    },
+    {
+      "key": "file.overwrite.txt",
+      "value": "既存のファイルを上書きしようとしています。元の内容は永久に削除され、復元できないことに注意してください。"
+    },
+    {
+      "key": "file.native.save.txt",
+      "value": "標準ライブラリへの保存は許可されていません。"
+    },
+    {
+      "key": "file.native.delete.txt",
+      "value": "標準ライブラリからの削除は許可されていません。"
+    },
+    {
+      "key": "file.none.art.txt",
+      "value": "アートが選択されていません。"
+    },
+    {
+      "key": "file.fulls_squad.txt",
+      "value": "部隊が満員です。"
+    },
+    {
+      "key": "file.empty_squad.txt",
+      "value": "部隊が空です。"
+    },
+    {
+      "key": "file.no_king.txt",
+      "value": "キングが存在しません。"
+    },
+    {
+      "key": "mode.alert.title",
+      "value": "戦略モード。"
+    },
+    {
+      "key": "mode.alert.txt",
+      "value": "この部隊は戦略モードで使用できません。"
+    },
+    {
+      "key": "none.art.txt",
+      "value": "保存にはアートが必要です。"
+    },
+    {
+      "key": "none.name.txt",
+      "value": "保存には名前が必要です。"
+    },
+    {
+      "key": "none.file.txt",
+      "value": "ファイルが選択されていません。"
+    },
+    {
+      "key": "none.folder.txt",
+      "value": "フォルダが選択されていません。"
+    },
+    {
+      "key": "none.cell.txt",
+      "value": "保存する塗られたセルがありません。"
+    },
+    {
+      "key": "file.limit.txt",
+      "value": "このフォルダの16ファイル制限に達しました。"
+    },
+    {
+      "key": "select_white",
+      "value": "白の駒を選択してください。"
+    },
+    {
+      "key": "select_black",
+      "value": "黒の駒を選択してください"
+    },
+    {
+      "key": "TutorialSeenMenu0",
+      "value": "17x17と34x34の比率で駒に使用するアートを作成します。画像をインポートすることも可能で、自動的にグリッドに変換されます。"
+    },
+    {
+      "key": "TutorialSeenMenu1",
+      "value": "アートを作成した後、それをチェスの駒に変換します。\nこの駒は、あなたが作成した動きを表します。"
+    },
+    {
+      "key": "TutorialSeenMenu2",
+      "value": "駒が準備できたら、部隊を編成します。\nボード上で駒を好きなように配置し、どの駒がキングになるかを決定します。"
+    },
+    {
+      "key": "TutorialSeenMenu3",
+      "value": "ロビーでは、ボードをクリックして黒と白の駒でプレイする部隊を選択します。\n次に、王冠の色で示されている、自分がプレイする部隊を選択します。\n追加のゲームオプションは右上隅にあります。"
+    },
+    {
+      "key": "TutorialSeenMenu4",
+      "value": "あとはゲームをプレイするだけです。\n左上隅では、状況が困難になった場合に降参することができます。\n右上隅には表示オプションがあります。\n画面右側では、手の履歴を追跡できます。"
+    },
+    {
+      "key": "TutorialSeenPainting0",
+      "value": "この消しゴムは、同じ色のピクセルの広い領域をすばやく消去できます。"
+    },
+    {
+      "key": "TutorialSeenPainting1",
+      "value": "円、長方形、線、または選択ツールを使用するには、グリッド上の2点をクリックします。\nPCでは、左上隅の小さな丸がマウスの位置を示します。"
+    },
+    {
+      "key": "TutorialSeenPainting2",
+      "value": "領域を選択した後、左下隅の矢印を使用して移動します。\n中央のボタンを押して移動を確認し、ツールを終了します。"
+    },
+    {
+      "key": "TutorialSeenPainting3",
+      "value": "クイックセーブボタンは、既に保存またはロードされたアートに使用されます。\nそれらが属するセットはボタンのすぐ下に表示されます。"
+    },
+    {
+      "key": "TutorialSeenPainting4",
+      "value": "「セーブ」をクリックすると、利用可能なセットが表示されます。保存を確認するには、目的のセットをもう一度クリックします。右上隅で新しいセットを作成できます。削除するには「削除」をクリックし、目的のセットを選択して操作を確認します。"
+    },
+    {
+      "key": "TutorialSeenPiece0",
+      "value": "各色は、駒がそのマスでできることを示します。\n緑: 移動のみ。\n赤: 取得のみ。\n黄: 移動+取得。\n青: ジャンプ移動。\n紫: ジャンプ+取得"
+    },
+    {
+      "key": "TutorialSeenPiece1",
+      "value": "「動き」では、駒がボード上でどのように振る舞うかを形作ります。\nどこまで移動できるか、どの方向に移動できるか、その動きがどのようなアクションを許可するかを定義します。\n各調整は戦略を変え、新しいゲームの可能性を作り出します。"
+    },
+    {
+      "key": "TutorialSeenPiece2",
+      "value": "特殊移動はポーンのユニークな能力で、一度だけ使用できます。\nナイトのカスタム移動と同様に、目的のマスを選択して移動を有効にするだけです。"
+    },
+    {
+      "key": "TutorialSeenPiece3",
+      "value": "駒を完成させたら、「リセット」ボタンを使用してデータをクリアし、新しく駒をゼロから作成します。\n注意: リセットせずに新しい駒を作成し「クイックセーブ」を使用すると、前の駒が上書きされます。"
+    },
+    {
+      "key": "TutorialSeenPiece4",
+      "value": "「セーブ」をクリックすると、利用可能なセットが表示されます。保存を確認するには、目的のセットをもう一度クリックします。右上隅で新しいセットを作成できます。削除するには「削除」をクリックし、目的のセットを選択して操作を確認します。"
+    },
+    {
+      "key": "TutorialSeenSquad0",
+      "value": "「追加」を押すと、利用可能なセットが表示されます。\nセットを選択して、そのすべての駒を一度に追加します。\n個別に駒を追加するには、右上隅の「駒」ボタンを使用します。"
+    },
+    {
+      "key": "TutorialSeenSquad1",
+      "value": "駒やボタンが選択されていない場合、部隊の情報が画面中央に表示されます。\nそこでは、駒の総数、部隊の戦力、部隊のキングを確認できます。"
+    },
+    {
+      "key": "TutorialSeenSquad2",
+      "value": "王冠ボタンを使用して、どの駒が部隊のキングになるかを選択します。\nXボタンを使用して、ボードから駒を削除します。"
+    },
+    {
+      "key": "TutorialSeenSquad3",
+      "value": "右隅の駒を選択すると、その情報が画面中央に表示されます。\n次に、配置したいボードの位置をクリックするだけです。"
+    },
+    {
+      "key": "TutorialSeenSquad4",
+      "value": "+ボタンを使用して、選択した駒のプロモーションとキャスリングを設定します。\n目的の駒をドラッグするだけです。\n強力すぎる駒には制限があります：戦力25以上ではプロモーションできず、戦力80以上ではキャスリングできません。"
+    },
+    {
+      "key": "TutorialSeenSquad5",
+      "value": "ボードの下に表示されるメッセージは、戦略モードのステータスを示します。このモードは、あなたの部隊が従来のチェスセットと比べてバランスが取れているかどうかを評価します。この標準に沿わない部隊を保存してプレイすることは可能ですが、より高い競争力を確保するために戦略モードが推奨されます。"
+    },
+    {
+      "key": "TutorialSeenLobby0",
+      "value": "ローカルマルチプレイ中、ボードは各ターンで自動的に回転することがあります。\n右上隅のアイコンを使用してこの回転をオン/オフします。"
+    },
+    {
+      "key": "TutorialSeenLobby1",
+      "value": "王冠は2つの部隊を表します：上部の黒の部隊と下部の白の部隊。ハイライトされた王冠は、ゲームで制御する部隊を示します。"
+    },
+    {
+      "key": "TutorialSeenLobby2",
+      "value": "覚えておいてください：あなたは人間で、上部の王冠はあなたのものです。\nそれはあなたと、ゲームで指揮する部隊を表しています。"
+    },
+    {
+      "key": "TutorialSeenLobby3",
+      "value": "側面に表示された駒は、その動き、能力、およびキングとして定義された駒を表示するために選択できます。"
+    },
+    {
+      "key": "TutorialSeenLobby4",
+      "value": "「ルールなし」モードでは、チェックの場合にキングを守る義務はありません。\n気づかない場合は自己責任、ゲーム終了です。"
+    },
+    {
+      "key": "TutorialSeenLobby5",
+      "value": "「ターンなし」モードでは、ゲームはリアルタイムで進行します。\n相手のターンを待たずに自由に駒を移動させます。"
+    },
+    {
+      "key": "GOTIT",
+      "value": "了解！"
+    },
+    {
+      "key": "RESTART_TUTORIAL",
+      "value": "チュートリアルを再開"
+    },
+    {
+      "key": "PLAY_VS_IA",
+      "value": "プレイヤー対AI"
+    },
+    {
+      "key": "local",
+      "value": "ローカルマルチプレイヤー"
+    },
+    {
+      "key": "simulation",
+      "value": "AIシミュレーション"
+    },
+    {
+      "key": "squad_piece",
+      "value": "{0} {1}"
+    },
+    {
+      "key": "Black",
+      "value": "黒"
+    },
+    {
+      "key": "White",
+      "value": "白"
+    },
+    {
+      "key": "Red",
+      "value": "赤"
+    },
+    {
+      "key": "Horde",
+      "value": "ホード"
+    },
+    {
+      "key": "Pirate",
+      "value": "海賊"
+    },
+    {
+      "key": "Fantasy",
+      "value": "ファンタジー"
+    },
+    {
+      "key": "Vikings",
+      "value": "バイキング"
+    },
+    {
+      "key": "Brainrot",
+      "value": "Brainrot"
+    },
+    {
+      "key": "Bishop",
+      "value": "ビショップ"
+    },
+    {
+      "key": "King",
+      "value": "キング"
+    },
+    {
+      "key": "Knight",
+      "value": "ナイト"
+    },
+    {
+      "key": "Pawn",
+      "value": "ポーン"
+    },
+    {
+      "key": "Queen",
+      "value": "クイーン"
+    },
+    {
+      "key": "Rook",
+      "value": "ルーク"
+    },
+    {
+      "key": "Ballerina",
+      "value": "Ballerina"
+    },
+    {
+      "key": "Brrpatabim",
+      "value": "Brrpatabim"
+    },
+    {
+      "key": "Capuccinoassassino",
+      "value": "Capuccino Assassino"
+    },
+    {
+      "key": "Frigocamello",
+      "value": "Frigocamelo"
+    },
+    {
+      "key": "Ketupat",
+      "value": "Ketupat"
+    },
+    {
+      "key": "Tungtung",
+      "value": "Tungtung"
+    },
+    {
+      "key": "Dragon",
+      "value": "ドラゴン"
+    },
+    {
+      "key": "Elf",
+      "value": "エルフ"
+    },
+    {
+      "key": "Orc",
+      "value": "オーク"
+    },
+    {
+      "key": "Tower",
+      "value": "タワー"
+    },
+    {
+      "key": "Wizard",
+      "value": "ウィザード"
+    },
+    {
+      "key": "Lighthouse",
+      "value": "灯台"
+    },
+    {
+      "key": "Mermaid",
+      "value": "人魚"
+    },
+    {
+      "key": "Pirate King",
+      "value": "海賊王"
+    },
+    {
+      "key": "Shaman",
+      "value": "シャーマン"
+    },
+    {
+      "key": "Ship",
+      "value": "船"
+    },
+    {
+      "key": "Skeleton",
+      "value": "スケルトン"
+    },
+    {
+      "key": "Soldier",
+      "value": "兵士"
+    },
+    {
+      "key": "Valkyrie",
+      "value": "ワルキューレ"
+    },
+    {
+      "key": "Viking Ship",
+      "value": "バイキング船"
+    },
+    {
+      "key": "unlock.pack",
+      "value": "{0}パックがアンロックされ、ライブラリで利用可能になりました。"
+    },
+    {
+      "key": "pack",
+      "value": "パック {0}"
+    },
+    {
+      "key": "Unlock_Reward",
+      "value": "報酬をアンロック"
+    },
+    {
+      "key": "reward.explanation",
+      "value": "広告を見てランダムな駒セットをアンロックします。"
+    },
+    {
+      "key": "saved.in",
+      "value": "{0}に保存されました"
+    },
+    {
+      "key": "import.explanation",
+      "value": "34x34比率の画像 例: 340x340, 680x680, 1020。"
+    },
+    {
+      "key": "save.to.gallery",
+      "value": "ギャラリーに保存"
+    },
+    {
+      "key": "save.to.images",
+      "value": "画像に保存"
+    },
+    {
+      "key": "saved.to.gallery",
+      "value": "ギャラリーに保存されました"
+    },
+    {
+      "key": "saved.to.images",
+      "value": "画像に保存されました"
+    },
+    {
+      "key": "Credits",
+      "value": "クレジット"
+    },
+    {
+      "key": "credits.explanation",
+      "value": "ここをクリックしてゲームのクレジットを見て、このプロジェクトを実現するのを助けた人々を知ることができます。"
+    },
+    {
+      "key": "cartase.explanation",
+      "value": "クラウドファンディングのCatarseでプロジェクトに貢献し、新しいモード、メカニクス、オンラインマルチプレイヤーを実現するのを助け、サポーターへの限定報酬を受け取ります。"
+    },
+    {
+      "key": "cartase.enter",
+      "value": "プロジェクトを支援"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -7,9 +8,17 @@ using UnityEngine.UI; // Importante: Use UnityEngine.UI para Buttons no Unity
 
 public enum Language
 {
-    PortugueseBR = 0,
-    EnglishUS = 1,
-    SpanishES = 2
+    EnglishUS = 0,
+    ChineseSP = 1,
+    HindiIN = 2,
+    SpanishES = 3,
+    ArabicAR = 4,
+    PortugueseBR = 5,
+    FrenchFR = 6,
+    RussoRU = 7,
+    JapaneseJP = 8,
+    GermanDE = 9,
+    KoreanKR = 10
 }
 
 public class LanguageUI : MonoBehaviour
@@ -39,16 +48,20 @@ public class LanguageUI : MonoBehaviour
 
         dropdown.ClearOptions();
 
-        var options = Enum.GetNames(typeof(Language)).ToList();
-        // Se tiver o Helper, use: Enum.GetValues(typeof(Language)).Cast<Language>().Select(LanguageHelper.ToDisplayName).ToList();
+        var options = Enum.GetValues(typeof(Language))
+            .Cast<Language>()
+            .Select(LanguageHelper.ToDisplayName)
+            .ToList();
 
         dropdown.AddOptions(options);
+
+        dropdown.onValueChanged.RemoveAllListeners();
         dropdown.onValueChanged.AddListener(OnValueChanged);
 
-        // Define o valor inicial baseado nas configurações salvas
         dropdown.value = (int)SettingsManager.Instance.Settings.language;
         dropdown.RefreshShownValue();
     }
+
 
     void SetupButtons()
     {
@@ -65,12 +78,16 @@ public class LanguageUI : MonoBehaviour
     // Centraliza a lógica de troca de idioma
     void OnValueChanged(int index)
     {
+        //SettingsManager.Instance.Settings.language = (Language)index;
+
         Language selectedLanguage = (Language)index;
         LocalizationManager.Instance.ApplyLanguage(selectedLanguage);
 
         // Opcional: Sincroniza o dropdown se o clique veio de um botão
         if (dropdown != null) dropdown.SetValueWithoutNotify(index);
 
-        Debug.Log($"Idioma alterado para: {selectedLanguage}");
+        //ApplyFontForCurrentLanguage();
+
+        //Debug.Log($"Idioma alterado para: {selectedLanguage}");
     }
 }

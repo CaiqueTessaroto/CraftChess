@@ -57,6 +57,7 @@ public class MenuButtonsManager : MonoBehaviour
         ButtonRewards.onClick.AddListener(() =>
         {
             RewardsPanel.SetActive(!RewardsPanel.activeSelf);
+            rewardFeed.ShowReward(rewardFeed.currentIndex);
         });
 
         //playBtn.onClick.AddListener(() => gameManager.ChangeScene("Single Lobby"));

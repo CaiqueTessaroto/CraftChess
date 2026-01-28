@@ -18,7 +18,11 @@ public class ThemeText : MonoBehaviour
     void Awake()
     {
         text = GetComponent<TMP_Text>();
-        UpdateText();
+        if (LocalizationManager.Instance != null && SettingsManager.Instance != null)
+        {
+            LocalizationManager.Instance.ApplyFontToAllTMP(SettingsManager.Instance.Settings.language);
+            UpdateText();
+        }
     }
 
 
@@ -46,6 +50,9 @@ public class ThemeText : MonoBehaviour
 
         string txt = LocalizationManager.Instance.Get(key);
         if (!string.IsNullOrEmpty(txt))
+        {
+            //text.font = font;
             text.text = txt;
+        }
     }
 }

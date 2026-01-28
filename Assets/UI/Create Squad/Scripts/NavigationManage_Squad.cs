@@ -709,7 +709,11 @@ public class NavigationManage_Squad : MonoBehaviour
             // Nome no botão
             TMP_Text textComponent = newButton.GetComponentInChildren<TMP_Text>();
             if (textComponent != null)
+            {
+                if (LocalizationManager.Instance)
+                    textComponent.font = LocalizationManager.Instance.currentFont;
                 textComponent.text = name;
+            }
 
             // Imagem
             Image imageComponent = newButton.GetComponentInChildren<Image>();

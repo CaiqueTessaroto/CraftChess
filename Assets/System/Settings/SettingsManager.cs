@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class GameSettings
@@ -29,6 +31,14 @@ public static class LanguageHelper
             Language.PortugueseBR => "pt-BR",
             Language.EnglishUS => "en-US",
             Language.SpanishES => "es-ES",
+            Language.RussoRU => "ru-RU",
+            Language.GermanDE => "de-De",
+            Language.FrenchFR => "fr-FR",
+            Language.JapaneseJP => "ja-JP",
+            Language.KoreanKR => "ko-KR",
+            Language.ChineseSP => "zh-CH",
+            Language.HindiIN => "hi-IN",
+            Language.ArabicAR => "ar-AR",
             _ => "pt-BR"
         };
     }
@@ -37,9 +47,17 @@ public static class LanguageHelper
     {
         return lang switch
         {
-            Language.PortugueseBR => "Português (Brasil)",
-            Language.EnglishUS => "English (US)",
+            Language.PortugueseBR => "Português",
+            Language.EnglishUS => "English",
             Language.SpanishES => "Español",
+            Language.RussoRU => "Русский",
+            Language.GermanDE => "Deutsch",
+            Language.FrenchFR => "Français",
+            Language.JapaneseJP => "日本語",
+            Language.KoreanKR => "한국인",
+            Language.ChineseSP => "中文",
+            Language.HindiIN => "हिंदी",
+            Language.ArabicAR => "عربي",
             _ => lang.ToString()
         };
     }
@@ -128,6 +146,15 @@ public class SettingsManager : MonoBehaviour
         // ✅ Toggle SOMENTE do painel interno
         bool newState = !settingsContent.activeSelf;
         settingsContent?.SetActive(newState);
+
+        LanguageUI languageUI = settingsContent.GetComponent<LanguageUI>();
+
+        if (SceneManager.GetActiveScene().name != "Menu")
+        {
+            languageUI.panelButtons.SetActive(false);
+            languageUI.dropdown.gameObject.SetActive(false);
+        }
+
 
         Time.timeScale = newState ? 0f : 1f; // opcional
     }
