@@ -155,7 +155,6 @@ public class NavigationManage_SingleLobby : MonoBehaviour
             GameObject newButton = Instantiate(squad_BtnPrefab, content);
 
             // Nome no botão
-
             bool translate = UIHelperUtils.CheckTranslationFile(rootPath, fileManager.basePath_SquadData, squadFolder);
 
             string name = squadName;

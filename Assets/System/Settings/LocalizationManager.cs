@@ -18,6 +18,8 @@ public class LocalizationEntry
 public class LocalizationManager : MonoBehaviour
 {
 
+    private TextAsset loadedLanguageFile;
+    
     [Header("Fontes por Idioma")]
     public TMP_FontAsset defaultFont; // LiberationSans ou similar
 
@@ -61,20 +63,21 @@ public class LocalizationManager : MonoBehaviour
         currentLanguageCode = languageCode;
         localizedTexts.Clear();
 
-        TextAsset jsonFile = Resources.Load<TextAsset>($"Localization/{languageCode}");
+        if (loadedLanguageFile != null)
+            Resources.UnloadAsset(loadedLanguageFile);
 
-        if (jsonFile == null)
+        loadedLanguageFile = Resources.Load<TextAsset>($"Localization/{languageCode}");
+
+        if (loadedLanguageFile == null)
         {
             Debug.LogError($"Arquivo de idioma não encontrado: {languageCode}");
             return;
         }
 
-        LocalizationFile data = JsonUtility.FromJson<LocalizationFile>(jsonFile.text);
+        LocalizationFile data = JsonUtility.FromJson<LocalizationFile>(loadedLanguageFile.text);
 
         foreach (var entry in data.entries)
-        {
             localizedTexts[entry.key] = entry.value;
-        }
 
         Debug.Log($"Idioma carregado: {languageCode} ({localizedTexts.Count} textos)");
     }

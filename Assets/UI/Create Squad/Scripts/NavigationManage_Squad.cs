@@ -113,7 +113,7 @@ public class NavigationManage_Squad : MonoBehaviour
 
         backBtw.onClick.AddListener(() =>
         {
-            uIHelperUtils.ResetAllControlBooleans();
+            //uIHelperUtils.ResetAllControlBooleans();
 
             panelSquad.SetActive(false);
         });
@@ -635,6 +635,8 @@ public class NavigationManage_Squad : MonoBehaviour
             Destroy(child.gameObject);
         }
 
+        count = 0;
+
         if (uIHelperUtils.onMy)
         {
             // Espera terminar a criação antes de continuar
@@ -643,7 +645,7 @@ public class NavigationManage_Squad : MonoBehaviour
 
         if (uIHelperUtils.onLibrary)
         {
-            CreateFormationsButtons(Application.streamingAssetsPath, content);
+            //    CreateFormationsButtons(Application.streamingAssetsPath, content);
         }
 
         // Ajusta tamanho do ScrollView
@@ -672,16 +674,28 @@ public class NavigationManage_Squad : MonoBehaviour
             return;
         }
 
+        var squadFolders = new DirectoryInfo(squadsRoot)
+            .GetDirectories()
+            .OrderByDescending(d => d.LastWriteTime);
+
         // 🔹 Itera todas as pastas dentro de SquadData
-        foreach (string squadFolder in Directory.GetDirectories(squadsRoot))
+        foreach (DirectoryInfo squadFolderInfo in squadFolders)
         {
+            string squadFolder = squadFolderInfo.FullName;
+
             if (count >= fileLimit) break;
             count++;
 
             string folderName = Path.GetFileName(squadFolder);
 
-            string pngFile = Path.Combine(squadFolder, folderName + ".png");
-            string jsonFile = Path.Combine(squadFolder, folderName + ".json");
+            //string pngFile = Path.Combine(squadFolder, folderName + ".png");
+            //string jsonFile = Path.Combine(squadFolder, folderName + ".json");
+
+            string[] jsonFiles = Directory.GetFiles(squadFolder, "*.json");
+            string[] pngFiles = Directory.GetFiles(squadFolder, "*.png");
+
+            string jsonFile = jsonFiles[0];
+            string pngFile = pngFiles[0];
 
             if (!File.Exists(pngFile) && !File.Exists(jsonFile))
             {
@@ -700,7 +714,6 @@ public class NavigationManage_Squad : MonoBehaviour
 
             if (translate)
             {
-                Debug.Log("translate: " + translate);
                 name = UIHelperUtils.T(squadName);
                 if (string.IsNullOrEmpty(name))
                     name = squadName;

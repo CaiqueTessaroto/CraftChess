@@ -316,7 +316,7 @@ public class PieceController : MonoBehaviour
 
             kingWhiteIsInCheck = cellWhite.house.isControlledByBlack;
 
-            if (boardManager.localGame || (KingWhite.Player.id != botPlayerId && !boardManager.IAvsIA))
+            if (boardManager.localGame || (KingWhite.Player.id != botPlayerId && !boardManager.IAvsIA && !boardManager.noRules))
                 if (kingWhiteIsInCheck)
                 {
                     AudioManager.Instance.PlaySFX(checkSound);
@@ -345,7 +345,7 @@ public class PieceController : MonoBehaviour
 
             kingBlackIsInCheck = cellBlack.house.isControlledByWhite;
 
-            if (boardManager.localGame || (KingBlack.Player.id != botPlayerId && !boardManager.IAvsIA))
+            if (boardManager.localGame || (KingBlack.Player.id != botPlayerId && !boardManager.IAvsIA && !boardManager.noRules))
                 if (kingBlackIsInCheck)
                 {
                     AudioManager.Instance.PlaySFX(checkSound);
