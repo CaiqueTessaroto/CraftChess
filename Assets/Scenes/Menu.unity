@@ -1983,7 +1983,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1570567335}
-  - {fileID: 779460033}
   m_Father: {fileID: 1680361634}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3027,8 +3026,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1247532246}
   m_HandleRect: {fileID: 1247532245}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4534,11 +4533,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1308166993}
-  m_Father: {fileID: 278641589}
+  m_Father: {fileID: 1570567335}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -117.83667, y: -65}
+  m_AnchoredPosition: {x: -70, y: -70}
   m_SizeDelta: {x: 110, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &779460034
@@ -7852,6 +7851,7 @@ RectTransform:
   - {fileID: 954669440}
   - {fileID: 520059954}
   - {fileID: 478286161}
+  - {fileID: 779460033}
   m_Father: {fileID: 278641589}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -8167,8 +8167,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creditsImage: {fileID: 1650416354}
-  ptCredits: {fileID: 21300000, guid: fff162e94ae5ac6408d8dea0ab0360f1, type: 3}
-  egCredits: {fileID: 21300000, guid: 2a535e7b762cad3419bc655cfe16fa81, type: 3}
+  ptCredits: {fileID: 21300000, guid: 2a535e7b762cad3419bc655cfe16fa81, type: 3}
+  egCredits: {fileID: 21300000, guid: 5460084056776b943bcc151231a0a3e8, type: 3}
   returnMenu: {fileID: 779460034}
   creditsPanel: {fileID: 278641588}
 --- !u!1 &1649503280
@@ -8339,7 +8339,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 951.5, y: -1700}
+  m_AnchoredPosition: {x: 951.5, y: -1800}
   m_SizeDelta: {x: 1080, y: 3600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1650416354

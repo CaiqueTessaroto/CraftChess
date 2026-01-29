@@ -27,7 +27,7 @@ public class FileManager : MonoBehaviour
     public GameObject messagePrefab;
     public Transform panel;
     public bool warning = false;
-    [SerializeField] private float fadeDuration = 2f;
+    [SerializeField] private float fadeDuration = 1f;
     [SerializeField] private float lifetime = 1f;
 
     void Start()

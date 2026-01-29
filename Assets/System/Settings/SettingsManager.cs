@@ -75,6 +75,14 @@ public class SettingsManager : MonoBehaviour
 
     const string FIRST_RUN_KEY = "StreamingAssetsCopied";
 
+    List<string> orderedFolders = new List<string>
+    {
+        "White",
+        "Black",
+        "Red",
+        "Credits"
+    };
+
 
     void Awake()
     {
@@ -201,6 +209,8 @@ public class SettingsManager : MonoBehaviour
 
         string extractPath = Path.Combine(Application.persistentDataPath, folderName);
 
+        yield return null;
+
         if (Directory.Exists(extractPath))
         {
             Debug.Log("Exists: " + extractPath);
@@ -210,7 +220,7 @@ public class SettingsManager : MonoBehaviour
         if (RewardManager.Instance != null)
             RewardManager.Instance.ResetRewards();
 
-        Debug.Log("✔ StreamingAssets copiado para persistentDataPath");
+        //Debug.Log("✔ StreamingAssets copiado para persistentDataPath");
 
         string zipPath = Path.Combine(Application.streamingAssetsPath, folderName + ".zip");
         string targetZip = Path.Combine(Application.persistentDataPath, folderName + ".zip");
@@ -230,6 +240,45 @@ public class SettingsManager : MonoBehaviour
 
         System.IO.Compression.ZipFile.ExtractToDirectory(targetZip, extractPath);
         File.Delete(targetZip);
+
+         yield return null;
+
+        OrderFoldersByDate(folderName, orderedFolders);
+    }
+
+
+    public static void OrderFoldersByDate(
+        string basePath,
+        List<string> orderedFolderNames
+    )
+    {
+        string rootPath = Path.Combine(Application.persistentDataPath, basePath);
+
+        if (!Directory.Exists(rootPath))
+        {
+            Debug.LogWarning("Pasta não existe: " + rootPath);
+            return;
+        }
+
+        // Data base: agora
+        DateTime baseDate = DateTime.Now;
+
+        for (int i = 0; i < orderedFolderNames.Count; i++)
+        {
+            string folderName = orderedFolderNames[i];
+            string folderPath = Path.Combine(rootPath, folderName);
+
+            if (!Directory.Exists(folderPath))
+            {
+                Debug.LogWarning("Subpasta não encontrada: " + folderPath);
+                continue;
+            }
+
+            // Quanto mais cedo na lista, mais recente a data
+            DateTime folderDate = baseDate.AddSeconds(-i);
+
+            Directory.SetLastWriteTime(folderPath, folderDate);
+        }
     }
 
 

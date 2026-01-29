@@ -114,7 +114,7 @@ public class FileNavigation : MonoBehaviour
                     //    folderNavigation.StartCreatingFolderButtons(selectBasePath, folderNavigation.panelFolders);
                 }
 
-                folderNavigation.RefreshFolderButton(folderNavigation.currentButtonFolder.name);
+                //folderNavigation.RefreshFolderButton(folderNavigation.currentButtonFolder.name);
 
                 folderNavigation.panelFolders.SetActive(true);
                 uIHelperUtils.back = false;

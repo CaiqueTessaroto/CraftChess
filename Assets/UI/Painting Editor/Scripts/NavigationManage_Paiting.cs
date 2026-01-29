@@ -66,8 +66,8 @@ public class NavigationManage_Painting : MonoBehaviour
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             uIHelperUtils.save = true;
 
-            if (!string.IsNullOrEmpty(folderName))
-                folderNavigation.RefreshFolderButton(folderName);
+            //if (!string.IsNullOrEmpty(folderName))
+            //    folderNavigation.RefreshFolderButton(folderName);
 
             folderNavigation.panelFolders.SetActive(true);
 
@@ -80,8 +80,8 @@ public class NavigationManage_Painting : MonoBehaviour
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             uIHelperUtils.save = false;
 
-            if (!string.IsNullOrEmpty(folderName))
-                folderNavigation.RefreshFolderButton(folderName);
+            //if (!string.IsNullOrEmpty(folderName))
+            //    folderNavigation.RefreshFolderButton(folderName);
 
             folderNavigation.panelFolders.SetActive(true);
 

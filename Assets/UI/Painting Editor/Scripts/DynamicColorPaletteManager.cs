@@ -186,7 +186,7 @@ public class DynamicColorPaletteManager : MonoBehaviour
         string data = JsonUtility.ToJson(wrapper, true);
         fileManager.SaveJson(subfolderName, fileName, data, fileManager.basePath_UserData);
 
-        Debug.Log("Paleta salva em " + fileName);
+        //Debug.Log("Paleta salva em " + fileName);
     }
 
 
@@ -225,7 +225,7 @@ public class DynamicColorPaletteManager : MonoBehaviour
             }
         }
 
-        Debug.Log("Paletas carregadas de " + fileName);
+        //Debug.Log("Paletas carregadas de " + fileName);
     }
 
 }

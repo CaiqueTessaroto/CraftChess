@@ -79,7 +79,7 @@ public class LocalizationManager : MonoBehaviour
         foreach (var entry in data.entries)
             localizedTexts[entry.key] = entry.value;
 
-        Debug.Log($"Idioma carregado: {languageCode} ({localizedTexts.Count} textos)");
+        //Debug.Log($"Idioma carregado: {languageCode} ({localizedTexts.Count} textos)");
     }
 
     // ===============================
@@ -97,7 +97,7 @@ public class LocalizationManager : MonoBehaviour
     public void ApplyLanguage(Language lang)
     {
 
-        Debug.Log("ApplyLanguage");
+        //Debug.Log("ApplyLanguage");
         SettingsManager.Instance.Settings.language = lang;
 
         string code = LanguageHelper.ToCode(lang);
