@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using System.Linq;
+using System;
 
 public class OptionsPanelUI : MonoBehaviour
 {
@@ -9,6 +12,9 @@ public class OptionsPanelUI : MonoBehaviour
 
     public Button discord;
 
+
+    DateTime dataLimite = new DateTime(2026, 2, 28);
+    DateTime dataAtual = DateTime.Now;
 
     void Start()
     {
@@ -20,7 +26,19 @@ public class OptionsPanelUI : MonoBehaviour
 
         restart.onClick.AddListener(() =>
         {
+
+            if (dataAtual <= dataLimite)
+                if (Existskey())
+                {
+                    PlayerPrefs.SetInt("noAd", 1);
+                    PlayerPrefs.Save();
+                }
+
+            //Debug.Log("Existskey: " + Existskey());
+            //Debug.Log("noAd: " + AdsManager.Instance.NoAdsEnabled);
+
             ResetTutorial();
+
         });
 
         discord.onClick.AddListener(() =>
@@ -36,6 +54,25 @@ public class OptionsPanelUI : MonoBehaviour
 
 
 
+    }
+
+    string[] folderskeys = { "noAdkey",
+    "gabriellinhasapequinha",
+    "tikudopautorto",
+    "jonatassafadinho",
+    "teteudelas",
+    "renanmagicplays",
+    "davidsanjidelas",
+    "paranhaeszinhosapeca",
+    "hamaueotaka",
+    "jeanhunter"
+      };
+
+    bool Existskey()
+    {
+        return folderskeys.Any(folder =>
+            Directory.Exists(Path.Combine(Application.persistentDataPath, "Sprites"))
+        );
     }
 
     public void ResetTutorial()

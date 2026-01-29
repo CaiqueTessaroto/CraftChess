@@ -1,3 +1,5 @@
+using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Advertisements;
 
@@ -26,6 +28,9 @@ public class AdsManager : MonoBehaviour,
     float gameStartTime;
 
     bool firstAd = false;
+
+    public bool NoAdsEnabled =>
+    PlayerPrefs.GetInt("noAd", 0) == 1;
 
 
     string rewardedAdUnit;
@@ -57,8 +62,13 @@ public class AdsManager : MonoBehaviour,
         DontDestroyOnLoad(gameObject);
     }
 
+
     void Start()
     {
+
+        //PlayerPrefs.DeleteKey("noAd");
+
+        Debug.Log("noAd: " + NoAdsEnabled);
 
         gameStartTime = Time.time;
 
@@ -81,6 +91,9 @@ public class AdsManager : MonoBehaviour,
 
     public static void TryShowInterstitial()
     {
+        if (Instance.NoAdsEnabled)
+            return;
+
         if (Instance == null)
             return;
 

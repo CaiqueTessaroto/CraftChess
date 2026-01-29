@@ -49,12 +49,17 @@ public class RewardFeed : MonoBehaviour
 
 #if UNITY_ANDROID || UNITY_IOS || UNITY_EDITOR
 
-                if (rewardManager.rewards[currentIndex] != null)
+                if (!AdsManager.Instance.NoAdsEnabled)
                 {
-                    rewardManager.rewards[currentIndex].weight = 0.5f;
-                }
+                    if (rewardManager.rewards[currentIndex] != null)
+                    {
+                        rewardManager.rewards[currentIndex].weight = 0.5f;
+                    }
 
-                AdsManager.ShowRewarded();
+                    AdsManager.ShowRewarded();
+                }
+                else
+                    RewardManager.Instance.GrantReward(rewardManager.rewards[currentIndex]);
 
 #else
                 RewardManager.Instance.GrantReward(rewardManager.rewards[currentIndex]);
