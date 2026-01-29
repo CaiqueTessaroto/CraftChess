@@ -16599,8 +16599,8 @@ MonoBehaviour:
   messagePrefab: {fileID: 3987015553489549906, guid: 4cb543b959557e442a5a3567c0193e08, type: 3}
   panel: {fileID: 2013082118}
   warning: 0
-  fadeDuration: 0.5
-  lifetime: 10
+  fadeDuration: 1
+  lifetime: 1
 --- !u!114 &1202885061
 MonoBehaviour:
   m_ObjectHideFlags: 0

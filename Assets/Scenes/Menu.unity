@@ -8089,6 +8089,7 @@ GameObject:
   - component: {fileID: 1644238715}
   - component: {fileID: 1644238714}
   - component: {fileID: 1644238716}
+  - component: {fileID: 1644238717}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -8171,6 +8172,31 @@ MonoBehaviour:
   egCredits: {fileID: 21300000, guid: 5460084056776b943bcc151231a0a3e8, type: 3}
   returnMenu: {fileID: 779460034}
   creditsPanel: {fileID: 278641588}
+--- !u!114 &1644238717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644238712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d79bc320bd695743aafe591301f5a3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basePath_Sprite: Sprites
+  basePath_PaintingData: PaintingEditor
+  basePath_UserData: User
+  basePath_PieceData: Pieces
+  basePath_SquadData: Squads
+  warningPrefab: {fileID: 1170677462298655775, guid: bb0e6a0bda49e77478d9d9eb1c3b2ed7, type: 3}
+  advicePrefab: {fileID: 8681817349286575285, guid: 69c790aebce36024bbac98470c0fdc3c, type: 3}
+  inputPrefab: {fileID: 4861523131148347322, guid: ddb14cc30c79bff459925aaab5afc042, type: 3}
+  messagePrefab: {fileID: 3987015553489549906, guid: 4cb543b959557e442a5a3567c0193e08, type: 3}
+  panel: {fileID: 1680361634}
+  warning: 0
+  fadeDuration: 1
+  lifetime: 1
 --- !u!1 &1649503280
 GameObject:
   m_ObjectHideFlags: 0

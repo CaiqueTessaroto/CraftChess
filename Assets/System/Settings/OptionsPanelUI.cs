@@ -6,6 +6,8 @@ using System;
 
 public class OptionsPanelUI : MonoBehaviour
 {
+
+    public FileManager fileManager;
     [Header("Painel")]
     public Button close;
     public Button restart;
@@ -19,6 +21,10 @@ public class OptionsPanelUI : MonoBehaviour
     void Start()
     {
 
+        if (fileManager == null)
+            fileManager = FindObjectOfType<FileManager>();
+
+
         close.onClick.AddListener(() =>
         {
             CloseSettings();
@@ -27,15 +33,18 @@ public class OptionsPanelUI : MonoBehaviour
         restart.onClick.AddListener(() =>
         {
 
+            bool exists = Existskey();
+
             if (dataAtual <= dataLimite)
-                if (Existskey())
+                if (exists)
                 {
                     PlayerPrefs.SetInt("noAd", 1);
                     PlayerPrefs.Save();
+                    fileManager.SpawnMessage("noAd");
                 }
 
-            //Debug.Log("Existskey: " + Existskey());
-            //Debug.Log("noAd: " + AdsManager.Instance.NoAdsEnabled);
+            Debug.Log("Existskey: " + exists);
+            Debug.Log("noAd: " + AdsManager.Instance.NoAdsEnabled);
 
             ResetTutorial();
 
@@ -71,7 +80,7 @@ public class OptionsPanelUI : MonoBehaviour
     bool Existskey()
     {
         return folderskeys.Any(folder =>
-            Directory.Exists(Path.Combine(Application.persistentDataPath, "Sprites"))
+            Directory.Exists(Path.Combine(Application.persistentDataPath, "Sprites", folder))
         );
     }
 

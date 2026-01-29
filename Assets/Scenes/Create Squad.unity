@@ -12011,7 +12011,7 @@ MonoBehaviour:
   panel: {fileID: 696257746}
   warning: 0
   fadeDuration: 1
-  lifetime: 5
+  lifetime: 1
 --- !u!114 &1676805147
 MonoBehaviour:
   m_ObjectHideFlags: 0
