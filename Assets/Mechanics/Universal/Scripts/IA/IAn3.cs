@@ -12,14 +12,15 @@ public class IAn3 : MonoBehaviour
     public int botPlayerId = 1;
     public bool selectId = true;
     public float thinkDelay = 0.6f;
-
+    private BotMove lastBestMove;
+    private int sameMoveCount = 0;
     private bool isThinking;
 
     void Start()
     {
-        boardManager = FindObjectOfType<BoardChessManager>();
-        pieceController = FindObjectOfType<PieceController>();
-        moveTracker = FindObjectOfType<MoveTracker>();
+        boardManager = FindFirstObjectByType<BoardChessManager>();
+        pieceController = FindFirstObjectByType<PieceController>();
+        moveTracker = FindFirstObjectByType<MoveTracker>();
 
         if (!pieceControllerIA)
             pieceControllerIA = GetComponent<PieceControllerIA>();
@@ -54,8 +55,21 @@ public class IAn3 : MonoBehaviour
 
         if (bestMove.isValid)
         {
+
+            if (bestMove.Equals(lastBestMove))
+            {
+                sameMoveCount++;
+            }
+            else
+            {
+                sameMoveCount = 0;
+            }
+
+            lastBestMove = bestMove;
+
+
             pieceControllerIA.OnCellClicked(bestMove.from, true);
-            yield return new WaitForSecondsRealtime(0.1f);
+            yield return new WaitForSecondsRealtime(0.2f);
             pieceControllerIA.OnCellClicked(bestMove.to, true);
         }
 
@@ -256,7 +270,7 @@ public class IAn3 : MonoBehaviour
         }
 
         // 📌 Movimento neutro recebe pequeno bônus
-        score += Random.Range(0f, 0.5f);
+        score += Random.Range(0f, 0.5f + (sameMoveCount / 10f));
 
         return score;
     }
@@ -345,6 +359,20 @@ public class IAn3 : MonoBehaviour
             to = t;
             isValid = true;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is BotMove)) return false;
+
+            BotMove other = (BotMove)obj;
+            return from == other.from && to == other.to;
+        }
+
+        public override int GetHashCode()
+        {
+            return from.GetHashCode() ^ to.GetHashCode();
+        }
+
     }
 
 }

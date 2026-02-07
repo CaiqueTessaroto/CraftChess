@@ -12,19 +12,20 @@ public class IAn2 : MonoBehaviour
     public int botPlayerId = 0;
     public bool selectId = true;
     public float thinkDelay = 0.6f;
-
+    private BotMove lastBestMove;
+    private int sameMoveCount = 0;
     private bool isThinking;
 
     void Start()
     {
-        boardManager = FindObjectOfType<BoardChessManager>();
+        boardManager = FindFirstObjectByType<BoardChessManager>();
 
-        pieceController = FindObjectOfType<PieceController>();
+        pieceController = FindFirstObjectByType<PieceController>();
 
         if (!pieceControllerIA)
             pieceControllerIA = GetComponent<PieceControllerIA>();
 
-        moveTracker = FindObjectOfType<MoveTracker>();
+        moveTracker = FindFirstObjectByType<MoveTracker>();
 
         if (!selectId)
             botPlayerId = boardManager.GetBotId();
@@ -57,8 +58,20 @@ public class IAn2 : MonoBehaviour
 
         if (bestMove.isValid)
         {
+
+            if (bestMove.Equals(lastBestMove))
+            {
+                sameMoveCount++;
+            }
+            else
+            {
+                sameMoveCount = 0;
+            }
+
+            lastBestMove = bestMove;
+
             pieceControllerIA.OnCellClicked(bestMove.from, true);
-            yield return new WaitForSecondsRealtime(0.1f);
+            yield return new WaitForSecondsRealtime(0.2f);
             pieceControllerIA.OnCellClicked(bestMove.to, true);
         }
 
@@ -148,7 +161,7 @@ public class IAn2 : MonoBehaviour
         }
 
         // 📌 Movimento neutro recebe pequeno bônus
-        score += Random.Range(0f, 0.5f);
+        score += Random.Range(0f, 0.5f + (sameMoveCount / 10f));
 
         return score;
     }

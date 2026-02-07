@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "0080009286",
         "name": "com.GarageIndieStudio.CraftChess",
-        "processId": 31770,
+        "processId": 7070,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -90,6 +90,18 @@
             "deviceId": "0080009286",
             "name": "com.GarageIndieStudio.CraftChess",
             "processId": 31770,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 30082,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 7070,
             "exited": false
         }
     ],

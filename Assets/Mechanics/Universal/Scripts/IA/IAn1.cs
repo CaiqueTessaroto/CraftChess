@@ -12,21 +12,20 @@ public class IAn1 : MonoBehaviour
     public float thinkDelay = 0.6f;
     public int botPlayerId = 0;
     public bool selectId = false;
-
     private bool isThinking = false;
 
     void Start()
     {
         if (!boardManager)
-            boardManager = FindObjectOfType<BoardChessManager>();
+            boardManager = FindFirstObjectByType<BoardChessManager>();
 
         if (!pieceControllerIA)
             pieceControllerIA = GetComponent<PieceControllerIA>();
 
-        pieceController = FindObjectOfType<PieceController>();
+        pieceController = FindFirstObjectByType<PieceController>();
 
         if (!moveTracker)
-            moveTracker = FindObjectOfType<MoveTracker>();
+            moveTracker = FindFirstObjectByType<MoveTracker>();
 
         if (!selectId)
             botPlayerId = boardManager.GetBotId();
@@ -46,13 +45,13 @@ public class IAn1 : MonoBehaviour
 
         if (moveTracker.GetTurnPlayer() == botPlayerId || boardManager.noTurns)
         {
+            isThinking = true;
             StartCoroutine(ThinkAndPlay());
         }
     }
 
     IEnumerator ThinkAndPlay()
     {
-        isThinking = true;
         yield return new WaitForSecondsRealtime(thinkDelay);
 
         List<BotMove> possibleMoves = GetAllPossibleMoves();
@@ -76,7 +75,7 @@ public class IAn1 : MonoBehaviour
         // Simula clique na peça
         pieceControllerIA.OnCellClicked(chosenMove.from, true);
 
-        yield return new WaitForSecondsRealtime(0.1f);
+        yield return new WaitForSecondsRealtime(0.2f);
 
         // Simula clique na casa de destino
         pieceControllerIA.OnCellClicked(chosenMove.to, true);
