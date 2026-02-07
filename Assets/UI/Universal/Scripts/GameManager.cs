@@ -92,7 +92,12 @@ public class GameManager : MonoBehaviour
                 $"RAM excedida: {usedRam / (1024 * 1024)} MB. Resetando cena..."
             );
 
-            ReloadCurrentScene();
+        #if !UNITY_EDITOR
+
+        ReloadCurrentScene();
+
+        #endif
+        
         }
     }
 

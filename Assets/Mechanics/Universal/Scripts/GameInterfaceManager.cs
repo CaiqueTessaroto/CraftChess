@@ -39,16 +39,16 @@ public class GameInterfaceManager : MonoBehaviour
         buttonImage = ViewInfoBtn.GetComponent<Image>();
 
         if (boardChessManager == null)
-            boardChessManager = FindObjectOfType<BoardChessManager>();
+            boardChessManager = FindFirstObjectByType<BoardChessManager>();
 
         if (pieceController == null)
-            pieceController = FindObjectOfType<PieceController>();
+            pieceController = FindFirstObjectByType<PieceController>();
 
         if (gameManager == null)
-            gameManager = FindObjectOfType<GameManager>();
+            gameManager = FindFirstObjectByType<GameManager>();
 
         if (moveTracker == null)
-            moveTracker = FindObjectOfType<MoveTracker>();
+            moveTracker = FindFirstObjectByType<MoveTracker>();
 
         switchSide.onClick.AddListener(() =>
         {
@@ -133,7 +133,7 @@ public class GameInterfaceManager : MonoBehaviour
             boardChessManager.setCursor = true;
 
             //buttonImage.color = new Color32(118, 130, 162, 255);
-            buttonImage.color = new Color32(240, 75, 79,255);
+            buttonImage.color = new Color32(240, 75, 79, 255);
 
             UIHelperUtils.SetCursor(lupaIcon, CursorHotspot.TopLeft);
 

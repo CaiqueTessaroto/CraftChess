@@ -42,17 +42,17 @@ public class NavigationManage_Create : MonoBehaviour
     {
         if (fileNavigation == null)
         {
-            fileNavigation = FindObjectOfType<FileNavigation>();
+            fileNavigation = FindFirstObjectByType<FileNavigation>();
         }
 
         if (gridViewManager == null)
         {
-            gridViewManager = FindObjectOfType<GridViewManager>();
+            gridViewManager = FindFirstObjectByType<GridViewManager>();
         }
 
         if (folderNavigation == null)
         {
-            folderNavigation = FindObjectOfType<FolderNavigation>();
+            folderNavigation = FindFirstObjectByType<FolderNavigation>();
         }
 
 
@@ -61,11 +61,11 @@ public class NavigationManage_Create : MonoBehaviour
 
         if (movementCreation == null)
         {
-            movementCreation = FindObjectOfType<MovementCreation>();
+            movementCreation = FindFirstObjectByType<MovementCreation>();
         }
         if (uIHelperUtils == null)
         {
-            uIHelperUtils = FindObjectOfType<UIHelperUtils>();
+            uIHelperUtils = FindFirstObjectByType<UIHelperUtils>();
         }
 
         quickSaveBtw.onClick.AddListener(() =>

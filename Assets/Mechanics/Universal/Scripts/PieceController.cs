@@ -40,25 +40,25 @@ public class PieceController : MonoBehaviour
     void Start()
     {
         if (managerPieceInfo == null)
-            managerPieceInfo = FindObjectOfType<ManagerPieceInfo>();
+            managerPieceInfo = FindFirstObjectByType<ManagerPieceInfo>();
 
         if (chessMovesPanel == null)
-            chessMovesPanel = FindObjectOfType<ChessMovesPanel>();
+            chessMovesPanel = FindFirstObjectByType<ChessMovesPanel>();
 
         if (motionVisualization == null)
-            motionVisualization = FindObjectOfType<MotionVisualization>();
+            motionVisualization = FindFirstObjectByType<MotionVisualization>();
 
         if (moveTracker == null)
-            moveTracker = FindObjectOfType<MoveTracker>();
+            moveTracker = FindFirstObjectByType<MoveTracker>();
 
         if (boardManager == null)
-            boardManager = FindObjectOfType<BoardChessManager>();
+            boardManager = FindFirstObjectByType<BoardChessManager>();
 
         if (createPromotionUI == null)
-            createPromotionUI = FindObjectOfType<CreatePromotionUI>();
+            createPromotionUI = FindFirstObjectByType<CreatePromotionUI>();
 
         if (gameInterfaceManager == null)
-            gameInterfaceManager = FindObjectOfType<GameInterfaceManager>();
+            gameInterfaceManager = FindFirstObjectByType<GameInterfaceManager>();
 
 
         botPlayerId = boardManager.GetBotId();
