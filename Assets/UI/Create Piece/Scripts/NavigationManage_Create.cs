@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.IO;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 
 public class NavigationManage_Create : MonoBehaviour
@@ -36,6 +37,7 @@ public class NavigationManage_Create : MonoBehaviour
     [Header("Control Actions:")]
     public string fileName = "";
     public bool OnSquad = false;
+    bool isResetting = true;
 
     // Start is called before the first frame update
     void Start()
@@ -116,6 +118,8 @@ public class NavigationManage_Create : MonoBehaviour
 
         newBtw.onClick.AddListener(() =>
         {
+            if (isResetting) return;
+
             fileNavigation.selectBasePath = fileManager.basePath_PieceData;
             Scene currentScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(currentScene.name);
@@ -142,8 +146,15 @@ public class NavigationManage_Create : MonoBehaviour
         });
 
 
+        StartCoroutine(ResetSceneWithDelay());
 
+    }
 
+    IEnumerator ResetSceneWithDelay()
+    {
+        yield return new WaitForSeconds(1);
+
+        isResetting = false;
     }
 
 

@@ -12,6 +12,7 @@ public class SquadButtonsManager : MonoBehaviour
     public Button menuBtn;
 
     public Button resetBtn;
+    bool isResetting = true;
 
     // Start is called before the first frame update
     void Start()
@@ -26,12 +27,25 @@ public class SquadButtonsManager : MonoBehaviour
 
         resetBtn.onClick.AddListener(() =>
         {
+            if (isResetting) return;
+
             Scene currentScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(currentScene.name);
+            
         });
 
 
+        StartCoroutine(ResetSceneWithDelay());
 
+
+
+    }
+
+    IEnumerator ResetSceneWithDelay()
+    {
+        yield return new WaitForSeconds(1);
+
+        isResetting = false;
     }
 
     // Update is called once per frame
