@@ -35,12 +35,18 @@ public class PaintingGridManager : MonoBehaviour
     [Header("Buttons:")]
     public Button UndoButton;
 
-    [Header("Position Button:")]
+    [Header("Position Buttons:")]
     public Button upBtw;
     public Button downBtw;
     public Button rigthBtw;
     public Button leftBtw;
     public Button middleBtw;
+
+    [Header("Zoom Buttons:")]
+    public Button leftUpBtw;
+    public Button leftDownBtw;
+    public Button rigthUpBtw;
+    public Button rigthDownBtw;
 
     [Header("Tool Control:")]
     public bool eyedropperMode = false;
@@ -52,6 +58,7 @@ public class PaintingGridManager : MonoBehaviour
     public bool shadowMode = false;
     public bool eraseAll = false;
     public bool isPainting = false;
+    public bool OnZoom = false;
 
     [Header("Selection Control:")]
     public bool OnSelecting = false;
@@ -85,23 +92,79 @@ public class PaintingGridManager : MonoBehaviour
         });
 
         if (fileManager == null)
-            fileManager = FindObjectOfType<FileManager>();
+            fileManager = FindFirstObjectByType<FileManager>();
 
 
         if (gridPreview == null)
-            gridPreview = FindObjectOfType<GridPreview>();
+            gridPreview = FindFirstObjectByType<GridPreview>();
 
         if (colorPickerManager == null)
-            colorPickerManager = FindObjectOfType<ColorPickerManager>();
+            colorPickerManager = FindFirstObjectByType<ColorPickerManager>();
 
 
         if (gridStateManager == null)
-            gridStateManager = FindObjectOfType<GridStateManager>();
+            gridStateManager = FindFirstObjectByType<GridStateManager>();
 
 
         if (paitingToolsManager == null)
-            paitingToolsManager = FindObjectOfType<PaitingToolsManager>();
+            paitingToolsManager = FindFirstObjectByType<PaitingToolsManager>();
 
+
+        leftUpBtw.onClick.AddListener(() =>
+        {
+            if (currentScale == 1)
+                return;
+
+            GridLayoutGroup layout = parentContainer.GetComponent<GridLayoutGroup>();
+            layout.cellSize = originalCellSize;
+            layout.spacing = originalSpacing;
+            layout.childAlignment = TextAnchor.UpperLeft;
+
+            OnZoom = true;
+            //layout.constraintCount *= 2;
+            //layout.padding.left = 4;
+            //layout.padding.top = 1;
+
+        });
+
+        leftDownBtw.onClick.AddListener(() =>
+        {
+            if (currentScale == 1)
+                return;
+
+            GridLayoutGroup layout = parentContainer.GetComponent<GridLayoutGroup>();
+            layout.cellSize = originalCellSize;
+            layout.spacing = originalSpacing;
+            layout.childAlignment = TextAnchor.LowerLeft;
+
+            OnZoom = true;
+        });
+
+        rigthUpBtw.onClick.AddListener(() =>
+        {
+            if (currentScale == 1)
+                return;
+
+            GridLayoutGroup layout = parentContainer.GetComponent<GridLayoutGroup>();
+            layout.cellSize = originalCellSize;
+            layout.spacing = originalSpacing;
+            layout.childAlignment = TextAnchor.UpperRight;
+
+            OnZoom = true;
+        });
+
+        rigthDownBtw.onClick.AddListener(() =>
+        {
+            if (currentScale == 1)
+                return;
+
+            GridLayoutGroup layout = parentContainer.GetComponent<GridLayoutGroup>();
+            layout.cellSize = originalCellSize;
+            layout.spacing = originalSpacing;
+            layout.childAlignment = TextAnchor.LowerRight;
+
+            OnZoom = true;
+        });
 
         upBtw.onClick.AddListener(() =>
         {
@@ -156,7 +219,24 @@ public class PaintingGridManager : MonoBehaviour
         });
         middleBtw.onClick.AddListener(() =>
         {
-            DisableTools();
+
+            if (isMoveSelection)
+            {
+                DisableTools();
+                UpdatePreview();
+                return;
+            }
+
+            if (OnZoom)
+            {
+                GridLayoutGroup layout = parentContainer.GetComponent<GridLayoutGroup>();
+                layout.cellSize = originalCellSize / 2f;
+                layout.spacing = originalSpacing * 0.45f;
+                layout.childAlignment = TextAnchor.UpperLeft;
+                //layout.constraintCount *= 2;
+
+                OnZoom = false;
+            }
         });
 
         GridLayoutGroup layout = parentContainer.GetComponent<GridLayoutGroup>();
@@ -452,7 +532,8 @@ public class PaintingGridManager : MonoBehaviour
         }
 
         //    Debug.Log("Selecionadas " + selectedCells.Count + " células.");
-        UIHelperUtils.SetCursor(paitingToolsManager.setaSprite, CursorHotspot.TopRight);
+        //UIHelperUtils.SetCursor(paitingToolsManager.setaSprite, CursorHotspot.TopRight);
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
         isMoveSelection = true;
         isSelecting = true;
@@ -760,7 +841,7 @@ public class PaintingGridManager : MonoBehaviour
         layout.cellSize /= 2f;
         layout.spacing *= 0.45f;
         layout.constraintCount *= 2;
-        layout.padding.left = 4;
+        layout.padding.left = 2;
         layout.padding.top = 1;
 
         // Gera o novo grid
@@ -885,18 +966,18 @@ public class PaintingGridManager : MonoBehaviour
         NativeGallery.SaveImageToGallery(texture, Application.productName, filePng);
 
 #if UNITY_ANDROID || UNITY_IOS
-    NativeGallery.SaveImageToGallery(
-        texture,
-        Application.productName,
-        filePng
-    );
+        NativeGallery.SaveImageToGallery(
+            texture,
+            Application.productName,
+            filePng
+        );
 
-    string text = UIHelperUtils.T("saved.to.gallery");
+        string text = UIHelperUtils.T("saved.to.gallery");
 
-    if (string.IsNullOrEmpty(text))
-        text = "Saved to gallery";
+        if (string.IsNullOrEmpty(text))
+            text = "Saved to gallery";
 
-    fileManager.SpawnMessage(text);
+        fileManager.SpawnMessage(text);
 
 #else
         // PC / Editor

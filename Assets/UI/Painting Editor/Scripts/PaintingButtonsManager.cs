@@ -19,11 +19,11 @@ public class PaintingButtonsManager : MonoBehaviour
 
         if (gameManager == null)
         {
-            gameManager = FindObjectOfType<GameManager>();
+            gameManager = FindFirstObjectByType<GameManager>();
         }
         if (manager == null)
         {
-            manager = FindObjectOfType<PaintingGridManager>();
+            manager = FindFirstObjectByType<PaintingGridManager>();
         }
 
         menu.onClick.AddListener(() =>

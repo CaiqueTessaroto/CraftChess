@@ -42,7 +42,7 @@ public class PaitingToolsManager : MonoBehaviour
 
         if (manager == null)
         {
-            manager = FindObjectOfType<PaintingGridManager>();
+            manager = FindFirstObjectByType<PaintingGridManager>();
         }
 
         if (shadowButton != null)

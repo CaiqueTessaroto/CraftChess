@@ -91,10 +91,10 @@ public class AdsManager : MonoBehaviour,
 
     public static void TryShowInterstitial()
     {
-        if (Instance.NoAdsEnabled)
+        if (Instance == null)
             return;
 
-        if (Instance == null)
+        if (Instance.NoAdsEnabled)
             return;
 
         float elapsed = Time.time - Instance.gameStartTime;

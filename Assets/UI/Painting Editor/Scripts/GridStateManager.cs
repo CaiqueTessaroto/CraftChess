@@ -17,7 +17,7 @@ public class GridStateManager : MonoBehaviour
     {
         if (gridManager == null)
         {
-            gridManager = FindObjectOfType<PaintingGridManager>();
+            gridManager = FindFirstObjectByType<PaintingGridManager>();
         }
     }
     public void SaveStateForUndo()

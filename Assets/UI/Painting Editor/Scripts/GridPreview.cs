@@ -24,7 +24,7 @@ public class GridPreview : MonoBehaviour
     {
         if (manager == null)
         {
-            manager = FindObjectOfType<PaintingGridManager>();
+            manager = FindFirstObjectByType<PaintingGridManager>();
         }
 
         GridLayoutGroup layout = parentContainer.GetComponent<GridLayoutGroup>();
