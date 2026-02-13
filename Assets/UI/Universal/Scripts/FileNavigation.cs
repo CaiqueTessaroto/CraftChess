@@ -58,11 +58,11 @@ public class FileNavigation : MonoBehaviour
 
         if (manageCreate == null)
         {
-            manageCreate = FindObjectOfType<NavigationManage_Create>();
+            manageCreate = FindFirstObjectByType<NavigationManage_Create>();
         }
         if (managePainting == null)
         {
-            managePainting = FindObjectOfType<NavigationManage_Painting>();
+            managePainting = FindFirstObjectByType<NavigationManage_Painting>();
         }
 
 

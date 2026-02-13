@@ -48,7 +48,7 @@ public class FileManager : MonoBehaviour
         }
 
         tmp.text = text;
-        tmp.font = LocalizationManager.Instance.currentFont;
+        tmp.font = LocalizationManager.Instance?.currentFont;
 
         StartCoroutine(FadeRoutine(tmp, instance));
     }
@@ -103,11 +103,14 @@ public class FileManager : MonoBehaviour
         TMP_InputField inputField = newInput.GetComponentInChildren<TMP_InputField>();
         if (inputField != null)
         {
-            if (inputField.textComponent != null)
-                inputField.textComponent.font = LocalizationManager.Instance.currentFont;
+            if (LocalizationManager.Instance)
+            {
+                if (inputField.textComponent != null)
+                    inputField.textComponent.font = LocalizationManager.Instance.currentFont;
 
-            if (inputField.placeholder is TextMeshProUGUI placeholderTMP)
-                placeholderTMP.font = LocalizationManager.Instance.currentFont;
+                if (inputField.placeholder is TextMeshProUGUI placeholderTMP)
+                    placeholderTMP.font = LocalizationManager.Instance.currentFont;
+            }
 
             // Preenche com valor padrão se houver
             if (!string.IsNullOrEmpty(defaultValue))
@@ -199,8 +202,11 @@ public class FileManager : MonoBehaviour
         // Alterando os textos
         headText.text = title;
         bodyText.text = text;
-        bodyText.font = LocalizationManager.Instance.currentFont;
-        headText.font = LocalizationManager.Instance.currentFont;
+        if (LocalizationManager.Instance)
+        {
+            bodyText.font = LocalizationManager.Instance.currentFont;
+            headText.font = LocalizationManager.Instance.currentFont;
+        }
     }
 
     public void CreateAdvice(string text)
@@ -213,7 +219,7 @@ public class FileManager : MonoBehaviour
         Button button = newAdvice.transform.Find("Button").GetComponent<Button>();
 
         tmpText.text = text;
-        tmpText.font = LocalizationManager.Instance.currentFont;
+        tmpText.font = LocalizationManager.Instance?.currentFont;
 
         button.onClick.AddListener(() =>
         {

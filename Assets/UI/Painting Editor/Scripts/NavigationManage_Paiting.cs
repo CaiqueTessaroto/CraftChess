@@ -13,11 +13,14 @@ public class NavigationManage_Painting : MonoBehaviour
     public FolderNavigation folderNavigation;
     public UIHelperUtils uIHelperUtils;
     public PaintingGridManager gridManager;
+    public ImageImporter imageImporter;
     private GameObject panelFolder;
     private GameObject panelFile;
     private string fileName = "";
     private string folderName = "";
     private string selectRootPath = "";
+
+    private string currentfolderName = "";
 
 
     [Header("TMP_Text")]
@@ -30,28 +33,53 @@ public class NavigationManage_Painting : MonoBehaviour
     public Button loadBtn;
     public Button quickSave;
     public Button saveGallery;
+    public Button importImageBtn;
+
+    public Texture2D finalTexture;
 
     void Start()
     {
 
         if (gridManager == null)
-        {
-            gridManager = FindObjectOfType<PaintingGridManager>();
-        }
+            gridManager = FindFirstObjectByType<PaintingGridManager>();
 
         if (fileManager == null)
-        {
-            fileManager = FindObjectOfType<FileManager>();
-        }
+            fileManager = FindFirstObjectByType<FileManager>();
+
         if (fileNavigation == null)
-        {
-            fileNavigation = FindObjectOfType<FileNavigation>();
-        }
+            fileNavigation = FindFirstObjectByType<FileNavigation>();
 
         if (folderNavigation == null)
+            folderNavigation = FindFirstObjectByType<FolderNavigation>();
+
+        if (imageImporter == null)
+            imageImporter = FindFirstObjectByType<ImageImporter>();
+
+
+        importImageBtn.onClick.AddListener(() =>
         {
-            folderNavigation = FindObjectOfType<FolderNavigation>();
-        }
+
+            imageImporter.ImportImageButton(true);
+
+            string name = null;
+
+            string title = "";  //UIHelperUtils.T("file.save");
+            string inputText = UIHelperUtils.T("file.create.txt");
+
+            if (string.IsNullOrEmpty(title))
+                title = ""; //"Create Set";
+
+            if (string.IsNullOrEmpty(inputText))
+                inputText = "Enter the name...";
+
+            fileManager.CreateInput(title, inputText, (text) =>
+            {
+                //fileManager.SavePng(currentfolderName, text.Trim() + ".png", finalTexture, fileManager.basePath_Sprite);
+                ImportAndSave(text,currentfolderName);
+                //SaveArt(text, pasta);
+            }, name);
+
+        });
 
         saveBtn.onClick.AddListener(() =>
         {
@@ -123,10 +151,10 @@ public class NavigationManage_Painting : MonoBehaviour
 
 #if UNITY_ANDROID || UNITY_IOS
 
-            text = UIHelperUtils.T("save.to.gallery");
+        text = UIHelperUtils.T("save.to.gallery");
 
-            if (string.IsNullOrEmpty(text))
-                text = "Save to Gallery";
+        if (string.IsNullOrEmpty(text))
+            text = "Save to Gallery";
 
 #else
 
@@ -167,6 +195,8 @@ public class NavigationManage_Painting : MonoBehaviour
 
     public void OnClickFolder(string pasta, GameObject buttonObj, string rootPath)
     {
+
+        currentfolderName = pasta;
 
         if (uIHelperUtils.delete)
         {
@@ -279,7 +309,7 @@ public class NavigationManage_Painting : MonoBehaviour
 
 
             if (imageImporter == null)
-                imageImporter = FindObjectOfType<ImageImporter>();
+                imageImporter = FindFirstObjectByType<ImageImporter>();
 
 
             imageImporter.ImportImage(caminhoPng, 34, 34);
@@ -289,12 +319,44 @@ public class NavigationManage_Painting : MonoBehaviour
 
     }
 
-    public ImageImporter imageImporter;
 
 
 
+    private void ImportAndSave(string fileName, string subfolderName)
+    {
+        //string fileJson = fileName.Trim() + ".json";
+        string filePng = fileName.Trim() + ".png";
+
+        if (fileManager.FileExists(subfolderName, filePng, fileManager.basePath_Sprite))
+        {
+
+            string title = UIHelperUtils.T("file.replace.title");
+            string text = UIHelperUtils.T("file.replace.txt");
+
+            if (string.IsNullOrEmpty(title))
+                title = "Do you want to replace the file?";
+            if (string.IsNullOrEmpty(text))
+                text = "There is already a file with the same name in the folder, do you want to replace it?";
 
 
+            fileManager.CreateWarning(title, text, () =>
+            {
+                fileManager.SavePng(currentfolderName, filePng, finalTexture, fileManager.basePath_Sprite);
+                //uIHelperUtils.change = true;
+                panelFile.SetActive(false);
+            });
+
+            return; // sai daqui e espera o clique do usuário
+        }
+
+        // Se não existir, salva direto
+        fileManager.SavePng(currentfolderName, filePng, finalTexture, fileManager.basePath_Sprite);
+        //uIHelperUtils.change = true;
+        panelFile.SetActive(false);
+
+
+        //folderNavigation.RefreshFolderButton(folderName);
+    }
 
 
 

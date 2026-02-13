@@ -88,9 +88,8 @@ public class GameManager : MonoBehaviour
 
         if (usedRam >= RAM_LIMIT)
         {
-            Debug.LogWarning(
-                $"RAM excedida: {usedRam / (1024 * 1024)} MB. Resetando cena..."
-            );
+        
+        //Debug.LogWarning($"RAM excedida: {usedRam / (1024 * 1024)} MB. Resetando cena...");
 
         #if !UNITY_EDITOR
 

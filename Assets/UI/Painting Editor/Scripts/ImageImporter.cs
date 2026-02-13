@@ -22,14 +22,14 @@ public class ImageImporter : MonoBehaviour
     {
 
         if (fileManager == null)
-            fileManager = FindObjectOfType<FileManager>();
+            fileManager = FindFirstObjectByType<FileManager>();
 
 
         if (gridManager == null)
-            gridManager = FindObjectOfType<PaintingGridManager>();
+            gridManager = FindFirstObjectByType<PaintingGridManager>();
 
         if (painting == null)
-            painting = FindObjectOfType<NavigationManage_Painting>();
+            painting = FindFirstObjectByType<NavigationManage_Painting>();
 
         import.onClick.AddListener(() =>
         {
@@ -40,7 +40,7 @@ public class ImageImporter : MonoBehaviour
     }
 
 
-    public void ImportImageButton()
+    public void ImportImageButton(bool direct = false)
     {
 #if UNITY_STANDALONE || UNITY_EDITOR
         // PC/Mac/Linux
@@ -50,7 +50,14 @@ public class ImageImporter : MonoBehaviour
         string[] paths = StandaloneFileBrowser.OpenFilePanel("Selecione uma imagem", "", extensions, false);
 
         if (paths.Length > 0 && !string.IsNullOrEmpty(paths[0]))
-            ImportImage(paths[0], 34, 34);
+        {
+            if (direct)
+                DirectImportImage(paths[0], 408, 408);
+            else
+                ImportImage(paths[0], 34, 34);
+
+        }
+
 
 #elif UNITY_ANDROID || UNITY_IOS
         // Mobile
@@ -75,7 +82,10 @@ public class ImageImporter : MonoBehaviour
         {
             if (path != null)
             {
-                ImportImage(path, 34, 34);
+                if(direct)
+                    DirectImportImage(path,408,408);
+                else
+                    ImportImage(path, 34, 34);
             }
             else
             {
@@ -83,6 +93,46 @@ public class ImageImporter : MonoBehaviour
             }
         }, mimeTypes);
 #endif
+    }
+
+
+    public void DirectImportImage(string filePath, int targetWidth, int targetHeight)
+    {
+        // 1. Carrega os dados brutos
+        byte[] fileData = System.IO.File.ReadAllBytes(filePath);
+        Texture2D originalTexture = new Texture2D(2, 2);
+
+        if (!originalTexture.LoadImage(fileData)) return;
+
+        // 2. Calcula as proporções para evitar distorção (Aspect Fill/Crop)
+        float scale = Mathf.Max((float)targetWidth / originalTexture.width, (float)targetHeight / originalTexture.height);
+        int widthAfterScale = Mathf.RoundToInt(originalTexture.width * scale);
+        int heightAfterScale = Mathf.RoundToInt(originalTexture.height * scale);
+
+        // 3. Redimensiona temporariamente (ainda pode estar retangular)
+        RenderTexture rt = RenderTexture.GetTemporary(widthAfterScale, heightAfterScale);
+        RenderTexture.active = rt;
+        Graphics.Blit(originalTexture, rt);
+
+        // 4. Cria a textura final 408x408 e faz o Crop centralizado
+        Texture2D finalTexture = new Texture2D(targetWidth, targetHeight);
+
+        // Calcula o offset para centralizar o corte
+        int offsetX = (widthAfterScale - targetWidth) / 2;
+        int offsetY = (heightAfterScale - targetHeight) / 2;
+
+        finalTexture.ReadPixels(new Rect(offsetX, offsetY, targetWidth, targetHeight), 0, 0);
+        finalTexture.Apply();
+
+        // 5. Limpeza de memória
+        RenderTexture.active = null;
+        RenderTexture.ReleaseTemporary(rt);
+        Destroy(originalTexture);
+
+        // Use a finalTexture aqui (ex: atribuir a uma Image de UI)
+        painting.finalTexture = finalTexture;
+
+        Debug.Log($"Imagem importada e cortada para: {finalTexture.width}x{finalTexture.height}");
     }
 
     public void ImportImage(string filePath, int targetWidth, int targetHeight)

@@ -50,25 +50,25 @@ public class FolderNavigation : MonoBehaviour
 
         if (fileManager == null)
         {
-            fileManager = FindObjectOfType<FileManager>();
+            fileManager = FindFirstObjectByType<FileManager>();
         }
         if (fileNavigation == null)
         {
-            fileNavigation = FindObjectOfType<FileNavigation>();
+            fileNavigation = FindFirstObjectByType<FileNavigation>();
         }
 
 
         if (manageCreate == null)
         {
-            manageCreate = FindObjectOfType<NavigationManage_Create>();
+            manageCreate = FindFirstObjectByType<NavigationManage_Create>();
         }
         if (managePainting == null)
         {
-            managePainting = FindObjectOfType<NavigationManage_Painting>();
+            managePainting = FindFirstObjectByType<NavigationManage_Painting>();
         }
         if (manageSquad == null)
         {
-            manageSquad = FindObjectOfType<NavigationManage_Squad>();
+            manageSquad = FindFirstObjectByType<NavigationManage_Squad>();
 
             if (manageSquad)
                 piecesBtw.gameObject.SetActive(false);
