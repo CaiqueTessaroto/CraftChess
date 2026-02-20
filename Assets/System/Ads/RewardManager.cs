@@ -28,7 +28,7 @@ public class RewardManager : MonoBehaviour
     {
         if (rewardFeed == null)
         {
-            rewardFeed = FindObjectOfType<RewardFeed>();
+            rewardFeed = FindFirstObjectByType<RewardFeed>();
         }
     }
     void Awake()
@@ -87,8 +87,18 @@ public class RewardManager : MonoBehaviour
         StartCoroutine(CopyRewardPack(reward.id, "Pieces"));
         StartCoroutine(CopyRewardPack(reward.id, "Squads"));
 
-        PlayerPrefs.SetInt("Reward_" + reward.id, 1);
-        PlayerPrefs.Save();
+        bool exists = FolderExists("Sprites", reward.id);
+
+        if (exists)
+        {
+            PlayerPrefs.SetInt("Reward_" + reward.id, 1);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            Debug.LogWarning("A pasta não existe.");
+        }
+
 
         bool allunlock = AllRewardsUnlocked();
 
@@ -99,6 +109,17 @@ public class RewardManager : MonoBehaviour
                 rewardFeed.rewardBtn.interactable = false;
         }
 
+    }
+
+    public bool FolderExists(string basePath, string folderName)
+    {
+        string targetDir = Path.Combine(
+            Application.persistentDataPath,
+            basePath,
+            folderName
+        );
+
+        return Directory.Exists(targetDir);
     }
 
     public void ResetRewards()
@@ -124,6 +145,7 @@ public class RewardManager : MonoBehaviour
 
     IEnumerator CopyRewardPack(string rewardId, string path)
     {
+
         string zipName = rewardId + ".zip";
 
         string zipPath = Path.Combine(
@@ -174,6 +196,9 @@ public class RewardManager : MonoBehaviour
         File.Delete(targetZip);
 
         Debug.Log($"✔ {path}/{rewardId} aplicado");
+
+        yield return new WaitForEndOfFrame();
+
     }
 
     public RewardData GetRandomReward()
@@ -193,6 +218,8 @@ public class RewardManager : MonoBehaviour
         }
 
         return rewards[0]; // fallback seguro
+
     }
+
 
 }
