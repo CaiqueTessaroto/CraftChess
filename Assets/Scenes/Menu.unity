@@ -9166,7 +9166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   androidGameId: 6029556
   iosGameId: 6029557
-  testMode: 1
+  testMode: 0
   rewardedAdUnitAndroid: Rewarded_Android
   interstitialAdUnitAndroid: Interstitial_Android
   firstAdDelay: 60

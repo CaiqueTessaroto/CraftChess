@@ -32,7 +32,7 @@ public class ManagerPieceInfo : MonoBehaviour
     {
 
         if (boardChessManager == null)
-            boardChessManager = FindObjectOfType<BoardChessManager>();
+            boardChessManager = FindFirstObjectByType<BoardChessManager>();
 
         closePiecebtn.onClick.AddListener(() =>
         {
@@ -90,9 +90,15 @@ public class ManagerPieceInfo : MonoBehaviour
         //spritePiece = sprite;
         previewImage.sprite = sprite;
 
+        if (LocalizationManager.Instance)
+            nameTmp.font = LocalizationManager.Instance.currentFont;
+
         nameTmp.text = currentTname;
 
         crowView.SetActive(IsKing);
+
+        if (LocalizationManager.Instance)
+            powerTmp.font = LocalizationManager.Instance.currentFont;
 
         powerTmp.text = UIHelperUtils.SetPowerText(pieceData.Power);
 

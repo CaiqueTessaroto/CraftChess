@@ -168,7 +168,12 @@ public class NavigationManage_SingleLobby : MonoBehaviour
 
             TMP_Text textComponent = newButton.GetComponentInChildren<TMP_Text>();
             if (textComponent != null)
+            {
+                if (LocalizationManager.Instance)
+                    textComponent.font = LocalizationManager.Instance.currentFont;
+
                 textComponent.text = name;
+            }
 
             // Imagem
             Image imageComponent = newButton.GetComponentInChildren<Image>();
@@ -192,7 +197,7 @@ public class NavigationManage_SingleLobby : MonoBehaviour
                 buttonComponent.onClick.AddListener(() =>
                 {
                     //OnButtonClicked(folderName, newButton, piecesPanel, squadName, rootPath, jsonFile);
-                    interactiveLobby.SelectSquad(rootPath, folderName, jsonFile);
+                    interactiveLobby.SelectSquad(rootPath, folderName,name, jsonFile);
                 });
             }
         }

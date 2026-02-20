@@ -100,6 +100,8 @@ public class InteractiveLobby : MonoBehaviour
     public bool OnWhite = false;
     public string currentWhiteRootPath;
     public string currentBlackRootPath;
+    string currentWhiteTname;
+    string currentBlackTname;
 
     public List<MatchSquadData> Squads = new List<MatchSquadData>();
 
@@ -113,10 +115,10 @@ public class InteractiveLobby : MonoBehaviour
     {
 
         if (managerPieceInfo == null)
-            managerPieceInfo = FindObjectOfType<ManagerPieceInfo>();
+            managerPieceInfo = FindFirstObjectByType<ManagerPieceInfo>();
 
         if (gridLobby == null)
-            gridLobby = FindObjectOfType<GridLobby>();
+            gridLobby = FindFirstObjectByType<GridLobby>();
 
         //userTMP.text = "Player20";
 
@@ -423,7 +425,7 @@ public class InteractiveLobby : MonoBehaviour
         }
     }
 
-    public void SelectSquad(string rootPath, string folderName, string jsonFile)
+    public void SelectSquad(string rootPath, string folderName, string tName, string jsonFile)
     {
 
 
@@ -439,8 +441,10 @@ public class InteractiveLobby : MonoBehaviour
 
             CreatePiecesVisualization(jsonFile, WhitePiecesGrid);
 
-            whiteSquadTMP.text = $"{folderName}\n{WhiteSquad.Data.Power}";
-            whiteSquadTMP2.text = folderName;
+            whiteSquadTMP.text = $"{tName}\n{WhiteSquad.Data.Power}";
+            whiteSquadTMP2.text = tName;
+
+            currentWhiteTname = tName;
 
             string squadFolder = Path.Combine(currentWhiteRootPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
             //string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
@@ -460,8 +464,10 @@ public class InteractiveLobby : MonoBehaviour
 
             CreatePiecesVisualization(jsonFile, BlackPiecesGrid);
 
-            blackSquadTMP.text = $"{folderName}\n{BlackSquad.Data.Power}";
-            blackSquadTMP2.text = folderName;
+            blackSquadTMP.text = $"{tName}\n{BlackSquad.Data.Power}";
+            blackSquadTMP2.text = tName;
+
+            currentBlackTname = tName;
 
             string squadFolder = Path.Combine(currentBlackRootPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
             //string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
@@ -677,8 +683,19 @@ public class InteractiveLobby : MonoBehaviour
 
         //Sprite sprite = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
 
+        bool translate = UIHelperUtils.CheckTranslationFile(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
+
+        string name = currentMatch.BlackSquadName;
+
+        if (translate)
+        {
+            name = UIHelperUtils.T(currentMatch.BlackSquadName);
+            if (string.IsNullOrEmpty(name))
+                name = currentMatch.BlackSquadName;
+        }
+
         if (File.Exists(jsonFile))
-            SelectSquad(currentRootPath, currentMatch.BlackSquadName, jsonFile);
+            SelectSquad(currentRootPath, currentMatch.BlackSquadName, name, jsonFile);
 
 
         currentRootPath = Application.persistentDataPath;
@@ -696,8 +713,19 @@ public class InteractiveLobby : MonoBehaviour
         }
         //sprite = UIHelperUtils.GetSpriteFromPathForLobby(pngFile);
 
+        translate = UIHelperUtils.CheckTranslationFile(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
+
+        name = currentMatch.WhiteSquadName;
+
+        if (translate)
+        {
+            name = UIHelperUtils.T(currentMatch.WhiteSquadName);
+            if (string.IsNullOrEmpty(name))
+                name = currentMatch.WhiteSquadName;
+        }
+
         if (File.Exists(jsonFile))
-            SelectSquad(currentRootPath, currentMatch.WhiteSquadName, jsonFile);
+            SelectSquad(currentRootPath, currentMatch.WhiteSquadName, name, jsonFile);
 
         foreach (Toggle toggle in difficulty_toggles)
         {

@@ -64,12 +64,12 @@ public class NavigationManage_Squad : MonoBehaviour
 
         if (fileNavigation == null)
         {
-            fileNavigation = FindObjectOfType<FileNavigation>();
+            fileNavigation = FindFirstObjectByType<FileNavigation>();
         }
 
         if (folderNavigation == null)
         {
-            folderNavigation = FindObjectOfType<FolderNavigation>();
+            folderNavigation = FindFirstObjectByType<FolderNavigation>();
         }
 
         panelFolder = folderNavigation.panelFolders;
@@ -77,12 +77,12 @@ public class NavigationManage_Squad : MonoBehaviour
 
         if (fileManager == null)
         {
-            fileManager = FindObjectOfType<FileManager>();
+            fileManager = FindFirstObjectByType<FileManager>();
         }
 
         if (squadManager == null)
         {
-            squadManager = FindObjectOfType<SquadManager>();
+            squadManager = FindFirstObjectByType<SquadManager>();
         }
 
 

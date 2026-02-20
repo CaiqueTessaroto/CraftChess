@@ -13,7 +13,7 @@ public class AdsManager : MonoBehaviour,
     //4673340916623
     [SerializeField] string androidGameId = "6029556";
     [SerializeField] string iosGameId = "6029557";
-    [SerializeField] bool testMode = true;
+    [SerializeField] bool testMode = false;
 
 
     [Header("Ad Units")]
@@ -128,7 +128,7 @@ public class AdsManager : MonoBehaviour,
 
         LoadRewarded();
         LoadInterstitial();
-        LoadNative();
+        //LoadNative();
     }
 
     public void OnInitializationFailed(UnityAdsInitializationError error, string message)
@@ -210,6 +210,7 @@ public class AdsManager : MonoBehaviour,
             if (state == UnityAdsShowCompletionState.COMPLETED)
             {
                 Instance.rewardPending = true;
+                Instance.firstAd = true;
                 //Debug.Log("Recompensa concedida");
 
                 RewardData reward = null;
@@ -284,11 +285,11 @@ public class AdsManager : MonoBehaviour,
         Advertisement.Banner.Load(bannerAdUnit, options);
     }
 
-    public void ShowNative()
+    public void ShowBanner()
     {
         if (!bannerLoaded)
         {
-            LoadNative();
+        //    LoadNative();
             return;
         }
 
