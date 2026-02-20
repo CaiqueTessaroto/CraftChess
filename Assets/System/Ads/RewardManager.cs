@@ -40,22 +40,20 @@ public class RewardManager : MonoBehaviour
         okBtn.onClick.AddListener(() => unlockPanel.SetActive(false));
     }
 
-    public void GrantReward(RewardData reward)
+    public IEnumerator GrantReward(RewardData reward)
     {
 
         if (this == null || !gameObject)
-            return;
+            yield break;;
 
         if (reward.typeFeed != TypeFeed.Reward)
-            return;
+            yield break;;
 
         if (PlayerPrefs.GetInt("Reward_" + reward.id, 0) == 1)
         {
             Debug.Log("Reward já desbloqueado: " + reward.id);
-            return;
+            yield break;;
         }
-
-        AudioManager.Instance.PlaySFX(unlock);
 
         string name = UIHelperUtils.T(reward.id);
 
@@ -77,15 +75,16 @@ public class RewardManager : MonoBehaviour
         image.sprite = reward.image;
 
         unlockPanel.SetActive(true);
+        AudioManager.Instance.PlaySFX(unlock);
 
         foreach (RewardData re in rewards)
         {
             re.weight = 1f;
         }
 
-        StartCoroutine(CopyRewardPack(reward.id, "Sprites"));
-        StartCoroutine(CopyRewardPack(reward.id, "Pieces"));
-        StartCoroutine(CopyRewardPack(reward.id, "Squads"));
+        yield return StartCoroutine(CopyRewardPack(reward.id, "Sprites"));
+        yield return StartCoroutine(CopyRewardPack(reward.id, "Pieces"));
+        yield return StartCoroutine(CopyRewardPack(reward.id, "Squads"));
 
         bool exists = FolderExists("Sprites", reward.id);
 

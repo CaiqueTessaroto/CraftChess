@@ -230,7 +230,7 @@ public class AdsManager : MonoBehaviour,
                     return;
                 }
 
-                RewardManager.Instance.GrantReward(reward);
+                StartCoroutine(RewardManager.Instance.GrantReward(reward));
                 // 👉 APLIQUE A RECOMPENSA AQUI
                 // Ex: moedas++, reviver peça, etc
             }

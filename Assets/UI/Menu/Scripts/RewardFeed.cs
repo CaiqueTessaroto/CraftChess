@@ -33,7 +33,7 @@ public class RewardFeed : MonoBehaviour
     {
         if (creditsManager == null)
         {
-            creditsManager = FindObjectOfType<CreditsManager>();
+            creditsManager = FindFirstObjectByType<CreditsManager>();
         }
 
         if (RewardManager.Instance.rewards.Length == 0) return;
@@ -59,7 +59,7 @@ public class RewardFeed : MonoBehaviour
                     AdsManager.ShowRewarded();
                 }
                 else
-                    RewardManager.Instance.GrantReward(rewardManager.rewards[currentIndex]);
+                    StartCoroutine(RewardManager.Instance.GrantReward(rewardManager.rewards[currentIndex]));
 
 #else
                 RewardManager.Instance.GrantReward(rewardManager.rewards[currentIndex]);
