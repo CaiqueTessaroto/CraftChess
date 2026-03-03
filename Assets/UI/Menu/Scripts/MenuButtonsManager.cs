@@ -38,12 +38,12 @@ public class MenuButtonsManager : MonoBehaviour
 
         if (gameManager == null)
         {
-            gameManager = FindObjectOfType<GameManager>();
+            gameManager = FindFirstObjectByType<GameManager>();
         }
 
         if (rewardFeed == null)
         {
-            rewardFeed = FindObjectOfType<RewardFeed>();
+            rewardFeed = FindFirstObjectByType<RewardFeed>();
         }
 
         bool allunlock = RewardManager.Instance.AllRewardsUnlocked();

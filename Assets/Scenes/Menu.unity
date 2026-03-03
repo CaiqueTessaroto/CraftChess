@@ -4814,6 +4814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd92d3561011024dac1e9a65fa8fbf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  appCacheCleaner: {fileID: 0}
   rewards:
   - {fileID: 11400000, guid: 28ea6f2601fb93045859a806e282f436, type: 2}
   - {fileID: 11400000, guid: 7669d355b27ae8f4cad4f7e4c4743451, type: 2}
@@ -8834,6 +8835,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1700296091}
   m_CullTransparentMesh: 1
+--- !u!1 &1733793182
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1733793184}
+  - component: {fileID: 1733793183}
+  m_Layer: 0
+  m_Name: AppCacheCleaner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1733793183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733793182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8612b58436492ad45a3808fdaabca1f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AppCacheCleaner
+  maxCacheSizeMB: 20
+  foldersToClear:
+  - Sprites
+  - Pieces
+  - Squads
+--- !u!4 &1733793184
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733793182}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 595.508, y: 355.85248, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1751940113
 GameObject:
   m_ObjectHideFlags: 0
@@ -9642,3 +9692,4 @@ SceneRoots:
   - {fileID: 1845194615}
   - {fileID: 266389285}
   - {fileID: 1952963225}
+  - {fileID: 1733793184}

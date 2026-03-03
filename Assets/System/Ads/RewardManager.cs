@@ -3,13 +3,14 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.IO.Compression;
-using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 
 
 public class RewardManager : MonoBehaviour
 {
+    public AppCacheCleaner appCacheCleaner;
+
     [Header("Data")]
     public RewardData[] rewards;
     public RewardFeed rewardFeed;
@@ -27,9 +28,11 @@ public class RewardManager : MonoBehaviour
     void Start()
     {
         if (rewardFeed == null)
-        {
             rewardFeed = FindFirstObjectByType<RewardFeed>();
-        }
+
+        if (appCacheCleaner == null)
+            appCacheCleaner = FindFirstObjectByType<AppCacheCleaner>();
+
     }
     void Awake()
     {
@@ -44,15 +47,15 @@ public class RewardManager : MonoBehaviour
     {
 
         if (this == null || !gameObject)
-            yield break;;
+            yield break; ;
 
         if (reward.typeFeed != TypeFeed.Reward)
-            yield break;;
+            yield break; ;
 
         if (PlayerPrefs.GetInt("Reward_" + reward.id, 0) == 1)
         {
             Debug.Log("Reward já desbloqueado: " + reward.id);
-            yield break;;
+            yield break; ;
         }
 
         string name = UIHelperUtils.T(reward.id);
@@ -85,19 +88,6 @@ public class RewardManager : MonoBehaviour
         yield return StartCoroutine(CopyRewardPack(reward.id, "Sprites"));
         yield return StartCoroutine(CopyRewardPack(reward.id, "Pieces"));
         yield return StartCoroutine(CopyRewardPack(reward.id, "Squads"));
-
-        bool exists = FolderExists("Sprites", reward.id);
-
-        if (exists)
-        {
-            PlayerPrefs.SetInt("Reward_" + reward.id, 1);
-            PlayerPrefs.Save();
-        }
-        else
-        {
-            Debug.LogWarning("A pasta não existe.");
-        }
-
 
         bool allunlock = AllRewardsUnlocked();
 
@@ -133,6 +123,19 @@ public class RewardManager : MonoBehaviour
     {
         for (int i = 0; i < rewards.Length; i++)
         {
+            bool exists = FolderExists("Sprites", rewards[i].id);
+
+            if (exists)
+            {
+                PlayerPrefs.SetInt("Reward_" + rewards[i].id, 1);
+                PlayerPrefs.Save();
+            }
+            else
+            {
+                PlayerPrefs.SetInt("Reward_" + rewards[i].id, 0);
+                PlayerPrefs.Save();
+            }
+
             if (PlayerPrefs.GetInt("Reward_" + rewards[i].id, 0) != 1 && rewards[i].typeFeed == TypeFeed.Reward)
             {
                 return false; // achou um que ainda não foi salvo
@@ -194,7 +197,11 @@ public class RewardManager : MonoBehaviour
 
         File.Delete(targetZip);
 
-        Debug.Log($"✔ {path}/{rewardId} aplicado");
+        //Debug.Log($"✔ {path}/{rewardId} aplicado");
+
+        yield return new WaitForEndOfFrame();
+
+        appCacheCleaner.ClearTemporaryCache();
 
         yield return new WaitForEndOfFrame();
 

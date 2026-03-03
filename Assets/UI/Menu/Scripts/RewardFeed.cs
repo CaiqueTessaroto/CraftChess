@@ -62,7 +62,7 @@ public class RewardFeed : MonoBehaviour
                     StartCoroutine(RewardManager.Instance.GrantReward(rewardManager.rewards[currentIndex]));
 
 #else
-                RewardManager.Instance.GrantReward(rewardManager.rewards[currentIndex]);
+                StartCoroutine(RewardManager.Instance.GrantReward(rewardManager.rewards[currentIndex]));
 
 #endif
 
