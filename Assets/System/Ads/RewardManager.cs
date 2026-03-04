@@ -33,6 +33,9 @@ public class RewardManager : MonoBehaviour
         if (appCacheCleaner == null)
             appCacheCleaner = FindFirstObjectByType<AppCacheCleaner>();
 
+
+        AllRewardsCheck();
+
     }
     void Awake()
     {
@@ -89,6 +92,19 @@ public class RewardManager : MonoBehaviour
         yield return StartCoroutine(CopyRewardPack(reward.id, "Pieces"));
         yield return StartCoroutine(CopyRewardPack(reward.id, "Squads"));
 
+        bool exists = FolderExists("Sprites", reward.id);
+
+        if (exists)
+        {
+            PlayerPrefs.SetInt("Reward_" + reward.id, 1);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Reward_" + reward.id, 0);
+            PlayerPrefs.Save();
+        }
+
         bool allunlock = AllRewardsUnlocked();
 
         if (allunlock)
@@ -119,7 +135,7 @@ public class RewardManager : MonoBehaviour
         }
     }
 
-    public bool AllRewardsUnlocked()
+    public void AllRewardsCheck()
     {
         for (int i = 0; i < rewards.Length; i++)
         {
@@ -128,14 +144,21 @@ public class RewardManager : MonoBehaviour
             if (exists)
             {
                 PlayerPrefs.SetInt("Reward_" + rewards[i].id, 1);
-                PlayerPrefs.Save();
             }
             else
             {
                 PlayerPrefs.SetInt("Reward_" + rewards[i].id, 0);
-                PlayerPrefs.Save();
             }
+        }
 
+        PlayerPrefs.Save();
+    }
+
+
+    public bool AllRewardsUnlocked()
+    {
+        for (int i = 0; i < rewards.Length; i++)
+        {
             if (PlayerPrefs.GetInt("Reward_" + rewards[i].id, 0) != 1 && rewards[i].typeFeed == TypeFeed.Reward)
             {
                 return false; // achou um que ainda não foi salvo
