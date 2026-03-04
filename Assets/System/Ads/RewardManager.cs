@@ -141,11 +141,7 @@ public class RewardManager : MonoBehaviour
         {
             bool exists = FolderExists("Sprites", rewards[i].id);
 
-            if (exists)
-            {
-                PlayerPrefs.SetInt("Reward_" + rewards[i].id, 1);
-            }
-            else
+            if (!exists)
             {
                 PlayerPrefs.SetInt("Reward_" + rewards[i].id, 0);
             }
