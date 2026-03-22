@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
 using System.Timers;
+using System;
 
 
 public class PromotionUI : MonoBehaviour
@@ -24,7 +25,7 @@ public class PromotionUI : MonoBehaviour
 
     [Header("Posição:")]
     public GameObject currentPromotionCanvas;
-    public Vector3 offset; // ajuste de posição
+    public Vector3 offset = new Vector3(0, -0.6f, 0); // ajuste de posição
     private Transform piecetransform;
 
     [Header("Data")]
@@ -41,16 +42,16 @@ public class PromotionUI : MonoBehaviour
         this.squad = squadData;
 
         if (moveTracker == null)
-            moveTracker = FindObjectOfType<MoveTracker>();
+            moveTracker = FindFirstObjectByType<MoveTracker>();
 
         if (chessMovesPanel == null)
-            chessMovesPanel = FindObjectOfType<ChessMovesPanel>();
+            chessMovesPanel = FindFirstObjectByType<ChessMovesPanel>();
 
         if (boardManager == null)
-            boardManager = FindObjectOfType<BoardChessManager>();
+            boardManager = FindFirstObjectByType<BoardChessManager>();
 
         if (pieceController == null)
-            pieceController = FindObjectOfType<PieceController>();
+            pieceController = FindFirstObjectByType<PieceController>();
 
         if (!IA) // piecePromotion.Player.id != pieceController.botPlayerId || boardManager.localGame
             CreateCanvas(currentPiece);
@@ -87,10 +88,10 @@ public class PromotionUI : MonoBehaviour
     {
 
         if (chessMovesPanel == null)
-            chessMovesPanel = FindObjectOfType<ChessMovesPanel>();
+            chessMovesPanel = FindFirstObjectByType<ChessMovesPanel>();
 
         if (boardManager == null)
-            boardManager = FindObjectOfType<BoardChessManager>();
+            boardManager = FindFirstObjectByType<BoardChessManager>();
 
     }
 
@@ -118,7 +119,7 @@ public class PromotionUI : MonoBehaviour
         }
 
         if (boardManager == null)
-            boardManager = FindObjectOfType<BoardChessManager>();
+            boardManager = FindFirstObjectByType<BoardChessManager>();
 
         foreach (var squad in boardManager.Squads)
         {
@@ -154,16 +155,28 @@ public class PromotionUI : MonoBehaviour
         float height = GetObjectHeight(piecetransform);
         Vector3 heightOffset = new Vector3(0, -height, 0);
 
-        Vector3 desiredWorldPos = piecetransform.position + heightOffset + offset;
+        Vector3 desiredWorldPos = new Vector3(0, 0, 0); ;
+
+        if (boardManager.inBlackView)
+            desiredWorldPos = piecetransform.position + heightOffset + (offset * -1f);
+        else
+            desiredWorldPos = piecetransform.position + heightOffset + offset;
+
         Vector3 screenPos = Camera.main.WorldToScreenPoint(desiredWorldPos);
 
         if (screenPos.y >= Screen.height * 0.8f)
         {
-            currentPromotionCanvas.transform.position = piecetransform.position - heightOffset + offset;
+            if (boardManager.inBlackView)
+                currentPromotionCanvas.transform.position = piecetransform.position + heightOffset + offset;
+            else
+                currentPromotionCanvas.transform.position = piecetransform.position - heightOffset - (offset * -1f);
         }
         else
         {
-            currentPromotionCanvas.transform.position = desiredWorldPos;
+            if (boardManager.inBlackView)
+                currentPromotionCanvas.transform.position = piecetransform.position + heightOffset + (offset * -1f);
+            else
+                currentPromotionCanvas.transform.position = piecetransform.position - heightOffset - offset;
         }
 
         CreateSpriteButtons(squad);

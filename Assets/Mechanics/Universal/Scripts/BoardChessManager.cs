@@ -68,16 +68,16 @@ public class BoardChessManager : MonoBehaviour
         //infoPiece = false;
 
         if (managerPieceInfo == null)
-            managerPieceInfo = FindObjectOfType<ManagerPieceInfo>();
+            managerPieceInfo = FindFirstObjectByType<ManagerPieceInfo>();
 
         if (capturedManager == null)
-            capturedManager = FindObjectOfType<CapturedPiecesManager>();
+            capturedManager = FindFirstObjectByType<CapturedPiecesManager>();
 
         if (gameInterfaceManager == null)
-            gameInterfaceManager = FindObjectOfType<GameInterfaceManager>();
+            gameInterfaceManager = FindFirstObjectByType<GameInterfaceManager>();
 
         if (pieceController == null)
-            pieceController = FindObjectOfType<PieceController>();
+            pieceController = FindFirstObjectByType<PieceController>();
 
         //Debug.Log("Mapa: " + MatchData.Instance.mapName);
         //Debug.Log("Esquadrão do Jogador: " + MatchData.Instance.userSquadName);
