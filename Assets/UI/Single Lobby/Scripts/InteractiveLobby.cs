@@ -34,7 +34,7 @@ public class InteractiveLobby : MonoBehaviour
 
     [Header("Scripts")]
     public ManagerPieceInfo managerPieceInfo;
-    public NavigationManage_SingleLobby navigationManage;
+    public NavigationManage_Lobby navigationManage;
 
     [Header("Options")]
     public GameObject optionsPanel;
@@ -49,9 +49,6 @@ public class InteractiveLobby : MonoBehaviour
 
     [Header("Buttons")]
     public Button play;
-
-    [Header("Map")]
-    public Image map;
 
     [Header("BotView")]
     public Image ImageHuman;
@@ -76,7 +73,6 @@ public class InteractiveLobby : MonoBehaviour
 
     [Header("BlackSquad")]
     //public GameObject userSelect;
-    public Button userSquadView;
     public TMP_Text blackSquadTMP;
     public TMP_Text blackSquadTMP2;
     public Button blackBtn;
@@ -84,7 +80,6 @@ public class InteractiveLobby : MonoBehaviour
 
     [Header("WhiteSquad")]
     //public GameObject enemySelect;
-    public Button enemySquadView;
     public TMP_Text whiteSquadTMP;
     public TMP_Text whiteSquadTMP2;
     public Button whiteBtn;
@@ -102,6 +97,7 @@ public class InteractiveLobby : MonoBehaviour
     public string currentBlackRootPath;
     string currentWhiteTname;
     string currentBlackTname;
+    int MaxVisiblePieces = 16;
 
     public List<MatchSquadData> Squads = new List<MatchSquadData>();
 
@@ -227,23 +223,7 @@ public class InteractiveLobby : MonoBehaviour
 
         });
 
-        userSquadView.onClick.AddListener(() =>
-        {
-            OnWhite = false;
-
-            navigationManage.StartFormationsButtons();
-
-        });
-
         whiteBtn.onClick.AddListener(() =>
-        {
-            OnWhite = true;
-
-            navigationManage.StartFormationsButtons();
-        });
-
-
-        enemySquadView.onClick.AddListener(() =>
         {
             OnWhite = true;
 
@@ -425,7 +405,7 @@ public class InteractiveLobby : MonoBehaviour
         }
     }
 
-    public void SelectSquad(string rootPath, string folderName, string tName, string jsonFile)
+    public void SelectSquad(string rootPath, string folderName, string squadName, string jsonFile)
     {
 
 
@@ -441,10 +421,10 @@ public class InteractiveLobby : MonoBehaviour
 
             CreatePiecesVisualization(jsonFile, WhitePiecesGrid);
 
-            whiteSquadTMP.text = $"{tName}\n{WhiteSquad.Data.Power}";
-            whiteSquadTMP2.text = tName;
+            whiteSquadTMP.text = $"{squadName}\n{WhiteSquad.Data.Power}";
+            whiteSquadTMP2.text = squadName;
 
-            currentWhiteTname = tName;
+            currentWhiteTname = squadName;
 
             string squadFolder = Path.Combine(currentWhiteRootPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
             //string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
@@ -464,10 +444,10 @@ public class InteractiveLobby : MonoBehaviour
 
             CreatePiecesVisualization(jsonFile, BlackPiecesGrid);
 
-            blackSquadTMP.text = $"{tName}\n{BlackSquad.Data.Power}";
-            blackSquadTMP2.text = tName;
+            blackSquadTMP.text = $"{squadName}\n{BlackSquad.Data.Power}";
+            blackSquadTMP2.text = squadName;
 
-            currentBlackTname = tName;
+            currentBlackTname = squadName;
 
             string squadFolder = Path.Combine(currentBlackRootPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
             //string squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.BlackSquadName);
@@ -538,7 +518,7 @@ public class InteractiveLobby : MonoBehaviour
 
             Sprite sprite = UIHelperUtils.GetSpriteFromPath(caminhoSprite);
 
-            if (elementCount < 16)
+            if (elementCount < MaxVisiblePieces)
             {
                 // Instancia o botão/imagem da peça no painel
                 GameObject newImage = Instantiate(piece_ImgPrefab, content);
@@ -575,7 +555,7 @@ public class InteractiveLobby : MonoBehaviour
                 if (!WhiteSquad.Pieces.ContainsKey(piece.NameInSquad))
                     WhiteSquad.Pieces[piece.NameInSquad] = wrapper;
 
-                if (!managerPieceInfo.pieceSpritesWhite.ContainsKey(piece.NameInSquad + piece.Squad))
+                if (!managerPieceInfo.pieceSpritesWhite.ContainsKey($"{piece.NameInSquad}{piece.Squad}"))
                 {
                     managerPieceInfo.pieceSpritesWhite[$"{piece.NameInSquad}{piece.Squad}"] = sprite;
                 }
@@ -589,7 +569,7 @@ public class InteractiveLobby : MonoBehaviour
                 if (!BlackSquad.Pieces.ContainsKey(piece.NameInSquad))
                     BlackSquad.Pieces[piece.NameInSquad] = wrapper;
 
-                if (!managerPieceInfo.pieceSpritesBlack.ContainsKey(piece.NameInSquad + piece.Squad))
+                if (!managerPieceInfo.pieceSpritesBlack.ContainsKey($"{piece.NameInSquad}{piece.Squad}"))
                 {
                     managerPieceInfo.pieceSpritesBlack[$"{piece.NameInSquad}{piece.Squad}"] = sprite;
                 }

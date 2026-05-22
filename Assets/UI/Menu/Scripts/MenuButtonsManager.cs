@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MenuButtonsManager : MonoBehaviour
 {
@@ -21,7 +22,14 @@ public class MenuButtonsManager : MonoBehaviour
     public Button playIA;
     public Button local;
     public Button simulation;
+    public Button multiplayer;
     public GameObject playPanel;
+    public GameObject multiplayerPanel;
+
+    [Header("Multiplay:")]
+    public Button createLobby;
+    public Button enterLobby;
+    public TMP_InputField codeLobby;
 
     [Header("Create:")]
     public Button createSquadBtn;
@@ -87,6 +95,25 @@ public class MenuButtonsManager : MonoBehaviour
             gameManager.ChangeScene("Single Lobby");
 
         });
+        multiplayer.onClick.AddListener(() =>
+        {
+            SwitchPainelTo(multiplayerPanel);
+
+        });
+
+        createLobby.onClick.AddListener(() =>
+        {
+            NetworkLobbyManager.Instance.CreateLobby("Multiplayer Lobby");
+            //gameManager.ChangeScene("Multiplayer Lobby");
+
+        });
+
+        enterLobby.onClick.AddListener(() =>
+        {
+            NetworkLobbyManager.Instance.JoinLobby(codeLobby.text, "Multiplayer Lobby");
+            //gameManager.ChangeScene("Multiplayer Lobby");
+
+        });
 
 
         createBtn.onClick.AddListener(() =>
@@ -120,6 +147,7 @@ public class MenuButtonsManager : MonoBehaviour
         CreationPanel.SetActive(false);
         playPanel.SetActive(false);
         settingsPanel.SetActive(false);
+        multiplayerPanel.SetActive(false);
 
 
         painel.SetActive(true);

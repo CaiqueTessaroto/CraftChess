@@ -57,7 +57,6 @@ public class GridLobby : MonoBehaviour
 
     void ToggleCellSelection(Vector2Int cellPos)
     {
-
         Debug.Log("cellPos: " + cellPos);
 
     }
@@ -118,6 +117,88 @@ public class GridLobby : MonoBehaviour
 
 
 
+    public List<Vector2Int> posInGrid = new List<Vector2Int>();
+
+
+    public void LoadPiecesInGrid(Squad squadData, Dictionary<string, Sprite> pieceSprites, bool IsBlack = false)
+    {
+
+        foreach (var piece in squadData.Units)
+        {
+            Vector2Int finalPosition = piece.Position;
+
+            if (IsBlack)
+            {
+                finalPosition = MirrorPosition(piece.Position);
+            }
+
+            posInGrid.Add(finalPosition);
+
+            GameObject cell = GetCellAtPosition(finalPosition);
+
+            SetPieceToCellFromJson(cell, piece, pieceSprites);
+        }
+
+    }
+
+    private Vector2Int MirrorPosition(Vector2Int original)
+    {
+        int boardSize = 8; // padrão do xadrez
+        return new Vector2Int( //boardSize - 1 - 
+            original.x,
+            boardSize - 1 - original.y
+        );
+    }
+
+    public void SetPieceToCellFromJson(GameObject cell, UnitPieceData piece, Dictionary<string, Sprite> pieceSprites)
+    {
+        // coloca o sprite na célula
+        if (!pieceSprites.ContainsKey(piece.Name))
+        {
+            return;
+        }
+
+        SetSpriteFromJson(cell, piece, pieceSprites);
+    }
+
+
+    public void SetSpriteFromJson(GameObject cell, UnitPieceData piece, Dictionary<string, Sprite> pieceSprites)
+    {
+        // procura se já existe um filho chamado "Piece"
+        Transform pieceTransform = cell.transform.Find("Piece");
+        Image pieceImage;
+
+        if (pieceTransform == null)
+        {
+            // cria um novo GameObject dentro da célula
+            GameObject pieceGO = new GameObject("Piece", typeof(RectTransform), typeof(Image));
+
+            // define como filho da célula
+            pieceGO.transform.SetParent(cell.transform, false);
+
+            float margin = 0f; // margem em pixels
+
+            // ajusta o RectTransform para ocupar toda a célula
+            RectTransform rt = pieceGO.GetComponent<RectTransform>();
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.offsetMin = new Vector2(margin, margin);       // distância da borda inferior/esquerda
+            rt.offsetMax = new Vector2(-margin, -margin);     // distância da borda superior/direita
+
+            // pega o componente Image recém-criado
+            pieceImage = pieceGO.GetComponent<Image>();
+        }
+        else
+        {
+            // se já existe, só pega o Image
+            pieceImage = pieceTransform.GetComponent<Image>();
+        }
+        if (pieceSprites.ContainsKey(piece.Name))
+            pieceImage.sprite = pieceSprites[piece.Name];
+
+
+        pieceImage.preserveAspect = true;
+    }
 
 
 }

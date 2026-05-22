@@ -7,13 +7,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NavigationManage_SingleLobby : MonoBehaviour
+public class NavigationManage_Lobby : MonoBehaviour
 {
     public UIHelperUtils uIHelperUtils;
     public FileManager fileManager;
 
     [Header("Scripts")]
     public InteractiveLobby interactiveLobby;
+    public InteractiveMultiplayerLobby interactiveMultiplayerLobby;
 
     [Header("Options")]
     public Button allBtw;
@@ -30,6 +31,12 @@ public class NavigationManage_SingleLobby : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        if (interactiveLobby == null)
+            interactiveLobby = FindFirstObjectByType<InteractiveLobby>();
+
+        if (interactiveMultiplayerLobby == null)
+            interactiveMultiplayerLobby = FindFirstObjectByType<InteractiveMultiplayerLobby>();
 
         allBtw.onClick.AddListener(() =>
         {
@@ -197,7 +204,14 @@ public class NavigationManage_SingleLobby : MonoBehaviour
                 buttonComponent.onClick.AddListener(() =>
                 {
                     //OnButtonClicked(folderName, newButton, piecesPanel, squadName, rootPath, jsonFile);
-                    interactiveLobby.SelectSquad(rootPath, folderName,name, jsonFile);
+                    interactiveLobby?.SelectSquad(rootPath, folderName, name, jsonFile);
+
+                    //interactiveMultiplayerLobby?.SelectSquad(rootPath, folderName, name, jsonFile);
+
+                    SquadSyncManager.Instance?.SetLocalSquadAndSync(rootPath, folderName, name, jsonFile,interactiveMultiplayerLobby.OnWhite);
+
+                    panelSquad.SetActive(false);
+
                 });
             }
         }

@@ -163,10 +163,10 @@ public class ManagerPieceInfo : MonoBehaviour
 
         Sprite sprite = null;
 
-        if (pieceSpritesWhite.ContainsKey(fileName + squad))
-            sprite = pieceSpritesWhite[fileName + squad];
-        else if (pieceSpritesBlack.ContainsKey(fileName + squad))
-            sprite = pieceSpritesBlack[fileName + squad];
+        if (pieceSpritesWhite.ContainsKey($"{fileName}{squad}"))
+            sprite = pieceSpritesWhite[$"{fileName}{squad}"];
+        else if (pieceSpritesBlack.ContainsKey($"{fileName}{squad}"))
+            sprite = pieceSpritesBlack[$"{fileName}{squad}"];
 
 
         if (img != null)

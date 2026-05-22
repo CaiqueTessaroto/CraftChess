@@ -915,7 +915,7 @@ GameObject:
   - component: {fileID: 26274851}
   - component: {fileID: 26274850}
   m_Layer: 5
-  m_Name: "InputField (TMP)\xB4"
+  m_Name: InputField (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

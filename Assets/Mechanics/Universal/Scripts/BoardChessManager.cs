@@ -662,12 +662,12 @@ public class BoardChessManager : MonoBehaviour
 
                 if (matchSquad.Player.id == 0)
                 {
-                    if (!managerPieceInfo.pieceSpritesWhite.ContainsKey(piece.Name + piece.Squad))
-                        managerPieceInfo.pieceSpritesWhite[piece.NameInSquad + piece.Squad] = sprite;
+                    if (!managerPieceInfo.pieceSpritesWhite.ContainsKey($"{piece.NameInSquad}{piece.Squad}"))
+                        managerPieceInfo.pieceSpritesWhite[$"{piece.NameInSquad}{piece.Squad}"] = sprite;
                 }
                 else
-                    if (!managerPieceInfo.pieceSpritesBlack.ContainsKey(piece.Name + piece.Squad))
-                        managerPieceInfo.pieceSpritesBlack[piece.NameInSquad + piece.Squad] = sprite;
+                    if (!managerPieceInfo.pieceSpritesBlack.ContainsKey($"{piece.NameInSquad}{piece.Squad}"))
+                        managerPieceInfo.pieceSpritesBlack[$"{piece.NameInSquad}{piece.Squad}"] = sprite;
 
 
             }
