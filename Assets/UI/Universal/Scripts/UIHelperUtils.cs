@@ -52,6 +52,23 @@ public class UIHelperUtils : MonoBehaviour
 
     }
 
+    public static string Translate(string key, params object[] args)
+    {
+        if (LocalizationManager.Instance != null)
+        {
+            try
+            {
+                return string.Format(LocalizationManager.Instance.Get(key), args);
+            }
+            catch
+            {
+                return key;
+            }
+        }
+
+        return key;
+    }
+
 
     public static string T(string key, params object[] args)
     {

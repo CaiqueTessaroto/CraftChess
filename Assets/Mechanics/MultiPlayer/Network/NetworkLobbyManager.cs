@@ -15,7 +15,6 @@ using Unity.Collections;
 
 public class NetworkLobbyManager : MonoBehaviour
 {
-    public MultiplayerLobbyUI multiplayerLobbyUI;
     public static NetworkLobbyManager Instance;
 
     public Lobby currentLobby;
@@ -30,35 +29,27 @@ public class NetworkLobbyManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        if (multiplayerLobbyUI == null)
-            multiplayerLobbyUI = FindFirstObjectByType<MultiplayerLobbyUI>();
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+    }
 
-        // Spawna objetos de cena que têm NetworkObject
-        //var networkObj = FindObjectOfType<MatchStartOption>()
-        //    ?.GetComponent<NetworkObject>();
+    private void OnDisable()
+    {
 
-        //if (networkObj != null && !networkObj.IsSpawned)
-        //    networkObj.Spawn();
-
-        /*
-        if (startedHost)
+        if (NetworkManager.Singleton != null)
         {
-            foreach (var netObj in FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))
-            {
-                if (!netObj.IsSpawned)
-                {
-                    Debug.Log($"Spawnando: {netObj.gameObject.name}");
-                    netObj.Spawn();
-                }
-            }
+            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
         }
-        else
+    }
+
+    private void OnClientDisconnect(ulong clientId)
+    {
+
+        if (!NetworkManager.Singleton.IsHost) // Dispara no cliente quando o host cai
         {
-            Debug.LogError("Falha ao iniciar o host.");
+            HandleDisconnect();
         }
-        */
 
     }
 
@@ -71,7 +62,7 @@ public class NetworkLobbyManager : MonoBehaviour
 
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
-            Debug.Log(NetworkManager.Singleton);
+            //Debug.Log(NetworkManager.Singleton);
 
             // Configura Unity Transport
             UnityTransport transport = NetworkManager.Singleton
@@ -106,8 +97,8 @@ public class NetworkLobbyManager : MonoBehaviour
                 options
             );
 
-            Debug.Log("Lobby criado");
-            Debug.Log("Código: " + currentLobby.LobbyCode);
+            //Debug.Log("Lobby criado");
+            //Debug.Log("Código: " + currentLobby.LobbyCode);
 
             startedHost = NetworkManager.Singleton.StartHost();
 
@@ -154,7 +145,7 @@ public class NetworkLobbyManager : MonoBehaviour
 
             StartCoroutine(LeaveRoutine(scene));
 
-            Debug.Log("Entrou no lobby");
+            //Debug.Log("Entrou no lobby");
         }
         catch (System.Exception ex)
         {
@@ -177,9 +168,7 @@ public class NetworkLobbyManager : MonoBehaviour
                         .Instance.PlayerId
                 );
 
-                NetworkManager.Singleton.Shutdown();
-
-                StartCoroutine(LeaveRoutine(scene));
+                StartCoroutine(ShutdownAndLeave(scene));
 
                 //CancelInvoke();
                 //StopAllCoroutines();
@@ -190,13 +179,11 @@ public class NetworkLobbyManager : MonoBehaviour
             // HOST
             else if (NetworkManager.Singleton.IsHost)
             {
-                await LobbyService.Instance.DeleteLobbyAsync(
-                    currentLobby.Id
-                );
+                NotifyHostLeftClientRpc(); // Avisa clientes primeiro
 
-                NetworkManager.Singleton.Shutdown();
+                await LobbyService.Instance.DeleteLobbyAsync(currentLobby.Id);
 
-                StartCoroutine(LeaveRoutine(scene));
+                StartCoroutine(ShutdownAndLeave(scene));
 
                 Debug.Log("Host encerrou o lobby");
             }
@@ -213,8 +200,36 @@ public class NetworkLobbyManager : MonoBehaviour
     {
         yield return null;
 
-        //if(!string.IsNullOrEmpty(currentLobby.LobbyCode))
-        //    LobbyCode.Value = currentLobby.LobbyCode;
+        if (!string.IsNullOrEmpty(scene))
+            SceneManager.LoadScene(scene);
+    }
+    private IEnumerator ShutdownAndLeave(string scene)
+    {
+        yield return new WaitForSeconds(0.5f); // Aguarda clientes receberem o RPC
+
+        NetworkManager.Singleton.Shutdown();
+
+        yield return null;
+
+        if (!string.IsNullOrEmpty(scene))
+            SceneManager.LoadScene(scene);
+    }
+
+
+    [ClientRpc]
+    private void NotifyHostLeftClientRpc()
+    {
+        // Só executa nos clientes (não no host)
+        if (!NetworkManager.Singleton.IsHost)
+        {
+            Debug.Log("Host encerrou a partida.");
+            HandleDisconnect();
+        }
+    }
+    private void HandleDisconnect(string scene = "Menu")
+    {
+        currentLobby = null;
+        NetworkManager.Singleton.Shutdown();
 
         if (!string.IsNullOrEmpty(scene))
             SceneManager.LoadScene(scene);

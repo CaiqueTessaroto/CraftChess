@@ -893,7 +893,6 @@ public class NavigationManage_Squad : MonoBehaviour
     private bool AddPieceToSquad(string jsonPath, string rootPath, Transform content, string folder)
     {
         string nameInSquad = string.Empty;
-        bool nativePiece = rootPath == Application.streamingAssetsPath;
 
         try
         {
@@ -926,7 +925,6 @@ public class NavigationManage_Squad : MonoBehaviour
             }
 
             nameInSquad = name;
-            piece.NativeSprite = nativePiece;
 
             // Adiciona ao squad
             if (!squadManager.squadData.Pieces.Any(p => p.NameInSquad == nameInSquad))
@@ -939,7 +937,8 @@ public class NavigationManage_Squad : MonoBehaviour
                     Power = piece.Power,
                     Sprite = piece.Art,
                     SpriteSet = piece.FolderSprite,
-                    NativePiece = nativePiece
+                    Translate = piece.Translate
+
                 });
             }
             else
@@ -968,7 +967,7 @@ public class NavigationManage_Squad : MonoBehaviour
                         Power = piece.Power,
                         Sprite = piece.Art,
                         SpriteSet = piece.FolderSprite,
-                        NativePiece = nativePiece
+                        Translate = piece.Translate
                     });
                 }
                 else

@@ -30,6 +30,13 @@ public class FileManager : MonoBehaviour
     [SerializeField] private float fadeDuration = 1f;
     [SerializeField] private float lifetime = 1f;
 
+    public static FileManager Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
 

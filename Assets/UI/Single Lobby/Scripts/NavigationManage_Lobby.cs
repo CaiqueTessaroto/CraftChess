@@ -208,7 +208,7 @@ public class NavigationManage_Lobby : MonoBehaviour
 
                     //interactiveMultiplayerLobby?.SelectSquad(rootPath, folderName, name, jsonFile);
 
-                    SquadSyncManager.Instance?.SetLocalSquadAndSync(rootPath, folderName, name, jsonFile,interactiveMultiplayerLobby.OnWhite);
+                    SquadSyncManager.Instance?.SetLocalSquadAndSync(rootPath, folderName, name, jsonFile);
 
                     panelSquad.SetActive(false);
 

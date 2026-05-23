@@ -82,12 +82,14 @@ public class SquadManager : MonoBehaviour
     public GameObject prefabCounter;
 
     [Header("Control:")]
+    public int maximumPower = 1510;
     public bool selectedPiece = false;
     public bool removePiece = false;
     public bool setKing = false;
     public bool enabledMode = false;
     public bool editMode = false;
     private bool setCursor = false;
+
 
     [Header("Save:")]
     public RectTransform gridPanel;
@@ -357,7 +359,7 @@ public class SquadManager : MonoBehaviour
 
     public void CheckStrategicModeRules()
     {
-        bool powerLimit = squadData.Power > 1510;
+        bool powerLimit = squadData.Power > maximumPower;
         bool hasKing = string.IsNullOrEmpty(squadData.King?.Name);
 
         bool uniqueKing = placedPieces.Count(p => p.Name == squadData.King.Name) > 1;
@@ -441,6 +443,8 @@ public class SquadManager : MonoBehaviour
             rulesTmp.text = enabledTxt;
             rulesTmp.color = Color.green;
         }
+
+        squadData.Balanced = enabledMode;
 
     }
 
@@ -958,10 +962,7 @@ public class SquadManager : MonoBehaviour
                 string rootPath;
                 SquadPieceData pieceData = squadData.Pieces.Find(p => p.NameInSquad == unitPiece.Name);
 
-                if (pieceData.NativePiece)
-                    rootPath = Application.streamingAssetsPath;
-                else
-                    rootPath = Application.persistentDataPath;
+                rootPath = Application.persistentDataPath;
 
                 fullPath = Path.Combine(rootPath, fileManager.basePath_PieceData, pieceData.Squad, pieceData.Name + ".json");
 

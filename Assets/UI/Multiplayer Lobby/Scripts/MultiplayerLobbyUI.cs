@@ -1,25 +1,47 @@
 using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MultiplayerLobbyUI : MonoBehaviour
 {
+
+    [Header("Scripts")]
+    public GameManager gameManager;
+    public NavigationManage_Lobby navigationManage;
     public GridLobby gridLobby;
-    public InteractiveMultiplayerLobby interactiveMultiplayerLobby;
+
+    [Header("Buttons")]
+    public Button play;
+    public Button Back;
+    public Button blackBtn;
+    public Button whiteBtn;
+
+    [Header("Options")]
+    public GameObject optionsPanel;
+    public Button OpenOpt;
+    public Button CloseOpt;
+
+    [Header("Code")]
+    public TMP_Text codeText;
 
     [Header("Painel Local")]
     public TMP_Text blackSquadName;
+    public TMP_Text blackSquadName2;
     public Transform blackPiecesGrid;
 
     [Header("Painel Oponente")]
     public TMP_Text whiteSquadName;
+    public TMP_Text whiteSquadName2;
     public Transform whitePiecesGrid;
 
     [Header("Prefabs")]
     public GameObject piece_ImgPrefab;
 
+    [Header("Control")]
+    public bool isWhite = false;
     public static MultiplayerLobbyUI Instance { get; private set; }
 
     private void Awake()
@@ -30,11 +52,117 @@ public class MultiplayerLobbyUI : MonoBehaviour
     void Start()
     {
 
+        if (navigationManage == null)
+            navigationManage = FindFirstObjectByType<NavigationManage_Lobby>();
+
         if (gridLobby == null)
             gridLobby = FindFirstObjectByType<GridLobby>();
 
-        if (interactiveMultiplayerLobby == null)
-            interactiveMultiplayerLobby = FindFirstObjectByType<InteractiveMultiplayerLobby>();
+        if (gameManager == null)
+            gameManager = FindFirstObjectByType<GameManager>();
+
+        play.onClick.AddListener(() =>
+        {
+
+            if (MultiplayerLobbyState.WhiteSquad == null)
+            {
+                string text = UIHelperUtils.T("select_white");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "Select the white pieces.";
+
+                FileManager.Instance.CreateAdvice(text);
+
+                return;
+            }
+
+            if (MultiplayerLobbyState.BlackSquad == null)
+            {
+                string text = UIHelperUtils.T("select_black");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "Select the black pieces.";
+
+                FileManager.Instance.CreateAdvice(text);
+                return;
+            }
+
+            bool hasClient = NetworkLobbyManager.Instance.currentLobby.Players.Count > 1;
+
+            if (!hasClient)
+            {
+                string text = UIHelperUtils.T("lobby_no_player");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "There is no other player connected to the lobby.";
+
+                FileManager.Instance.CreateAdvice(text);
+                return;
+            }
+
+
+        });
+
+
+        blackBtn.onClick.AddListener(() =>
+        {
+            isWhite = false;
+
+            navigationManage.StartFormationsButtons();
+
+        });
+
+
+        whiteBtn.onClick.AddListener(() =>
+        {
+            isWhite = true;
+
+            navigationManage.StartFormationsButtons();
+        });
+
+        Back.onClick.AddListener(() =>
+        {
+            //sair do lobby
+            try
+            {
+                NetworkLobbyManager.Instance.LeaveLobby("Menu");
+            }
+            catch
+            {
+                gameManager.ChangeScene("Menu");
+            }
+
+        });
+
+        OpenOpt.onClick.AddListener(() =>
+        {
+            optionsPanel.SetActive(true);
+            //currentMatch.options = true;
+            OpenOpt.gameObject.SetActive(false);
+        });
+
+        CloseOpt.onClick.AddListener(() =>
+        {
+            optionsPanel.SetActive(false);
+            //currentMatch.options = false;
+            OpenOpt.gameObject.SetActive(true);
+        });
+
+        codeText.text = "";
+
+        var lobbyManager = NetworkLobbyManager.Instance;
+
+        if (lobbyManager == null)
+            return;
+
+        if (lobbyManager.currentLobby == null)
+            return;
+
+        if (string.IsNullOrEmpty(lobbyManager.currentLobby.LobbyCode))
+            return;
+
+        codeText.text = lobbyManager.currentLobby.LobbyCode;
+
     }
 
 
@@ -80,13 +208,42 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
         if (squadWhite != null)
         {
-            if (whiteSquadName != null) whiteSquadName.text = squadWhite.Data.Name;
+
+
+            if (squadBlack.Data.Translate)
+            {
+                string name = UIHelperUtils.T(squadWhite.Data.Name);
+
+                whiteSquadName.text = $"{name}\n{squadWhite.Data.Power}";
+                whiteSquadName2.text = name;
+            }
+            else
+            {
+                whiteSquadName.text = $"{squadWhite.Data.Name}\n{squadWhite.Data.Power}";
+                whiteSquadName2.text = squadWhite.Data.Name;
+            }
+
+
             RenderPiecesGrid(whitePiecesGrid, squadWhite.Sprites);
             gridLobby.LoadPiecesInGrid(squadWhite.Data, squadWhite.Sprites, false);
         }
         if (squadBlack != null)
         {
-            if (blackSquadName != null) blackSquadName.text = squadBlack.Data.Name;
+
+            if (squadBlack.Data.Translate)
+            {
+                string name = UIHelperUtils.T(squadBlack.Data.Name);
+
+                blackSquadName.text = $"{name}\n{squadBlack.Data.Power}";
+                blackSquadName2.text = name;
+            }
+            else
+            {
+                blackSquadName.text = $"{squadBlack.Data.Name}\n{squadBlack.Data.Power}";
+                blackSquadName2.text = squadBlack.Data.Name;
+            }
+
+            
             RenderPiecesGrid(blackPiecesGrid, squadBlack.Sprites);
             gridLobby.LoadPiecesInGrid(squadBlack.Data, squadBlack.Sprites, true);
         }

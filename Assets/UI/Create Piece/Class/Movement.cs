@@ -20,6 +20,7 @@ public class PieceInfo
     public int Power = 0;
     public string Art = "";
     public string FolderSprite = "";
+    public bool Translate = true;
     public bool NativeSprite = false;
 }
 

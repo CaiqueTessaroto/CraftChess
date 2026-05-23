@@ -105,9 +105,11 @@ public class SquadSyncManager : NetworkBehaviour
     // API PÚBLICA
     // ───────────────────────────────────────────────────────────────────────
 
-    public void SetLocalSquadAndSync(string rootPath, string folderName,
-                                     string squadName, string jsonFile, bool isWhite)
+    public void SetLocalSquadAndSync(string rootPath, string folderName, string squadName, string jsonFile)
     {
+ 
+        bool isWhite = MultiplayerLobbyUI.Instance.isWhite;
+
         ResetSync();
         SetLocalSquad(rootPath, folderName, squadName, jsonFile, isWhite);
 
@@ -131,6 +133,9 @@ public class SquadSyncManager : NetworkBehaviour
                 StartCoroutine(SendSpritesToClient(
                     NetworkManager.Singleton.ConnectedClientsIds, isWhite));
             }
+
+            MultiplayerLobbyUI.Instance?.RefreshLocalUI();
+
         }
         else
         {
@@ -170,7 +175,7 @@ public class SquadSyncManager : NetworkBehaviour
             squad.Pieces[piece.NameInSquad] =
                 JsonUtility.FromJson<MovementConfigData>(File.ReadAllText(movPath));
 
-            if (piece.NativePiece) piece.SpriteSet = piece.Squad;
+            //if (piece.NativePiece) piece.SpriteSet = piece.Squad;
 
             // ─── Sprite ────────────────────────────────────────────────────
             string spritePath = Path.Combine(rootPath,
@@ -202,6 +207,7 @@ public class SquadSyncManager : NetworkBehaviour
             NetworkManager.Singleton.CustomMessagingManager
                 .RegisterNamedMessageHandler(MSG_SPRITE_CLIENT_TO_HOST, OnReceiveSpriteFromClient);
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
         }
         else
         {
@@ -220,8 +226,10 @@ public class SquadSyncManager : NetworkBehaviour
                 .UnregisterNamedMessageHandler(MSG_SPRITE_CLIENT_TO_HOST);
         }
 
-        if (IsHost && NetworkManager.Singleton != null)
+        if (IsHost && NetworkManager.Singleton != null){
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
+        }
     }
 
     // ───────────────────────────────────────────────────────────────────────
@@ -230,7 +238,18 @@ public class SquadSyncManager : NetworkBehaviour
 
     private void OnClientConnected(ulong clientId)
     {
+
         if (clientId == NetworkManager.ServerClientId) return;
+        else
+        {
+            string text = UIHelperUtils.T("lobby_entered");
+
+            if (string.IsNullOrEmpty(text))
+                text = "A player has joined the lobby.";
+
+            FileManager.Instance.SpawnMessage(text);
+        }
+
         Debug.Log($"[SquadSync] Client {clientId} conectou.");
 
         // Envia squads já definidos pelo host
@@ -248,6 +267,21 @@ public class SquadSyncManager : NetworkBehaviour
 
         // Pede o squad do client
         RequestSquadFromClientRpc(clientId);
+    }
+
+    private void OnClientDisconnect(ulong clientId)
+    {
+
+        if (clientId != NetworkManager.ServerClientId)
+        {
+            string text = UIHelperUtils.T("lobby_exited");
+
+            if (string.IsNullOrEmpty(text))
+                text = "A player has left the lobby.";
+
+            FileManager.Instance.SpawnMessage(text);
+        }
+        
     }
 
     // ───────────────────────────────────────────────────────────────────────
@@ -277,7 +311,7 @@ public class SquadSyncManager : NetworkBehaviour
     // PASSO 3a — Client → Host (ServerRpc)
     // ───────────────────────────────────────────────────────────────────────
 
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void SendSquadJsonToHostServerRpc(SquadJsonPayload payload)
     {
         bool isWhite = payload.IsWhite;
@@ -351,7 +385,6 @@ public class SquadSyncManager : NetworkBehaviour
         }
 
         Debug.Log($"[SquadSync] Host terminou de enviar sprites ({(senderIsWhite ? "White" : "Black")}).");
-        MultiplayerLobbyUI.Instance?.RefreshLocalUI();
     }
 
     private IEnumerator SendSpritesToHost(bool senderIsWhite)

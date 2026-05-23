@@ -6340,7 +6340,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 904364698}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb453791ab48e114eac2a60e0ecd480f, type: 3}
   m_Name: 
@@ -6361,7 +6361,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 904364698}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 38114c6f0f125174abe79f3bb412e802, type: 3}
   m_Name: 
@@ -6408,13 +6408,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ab8dac85bb98f4385cb6c6d1978e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MultiplayerLobbyUI
+  gameManager: {fileID: 904364700}
+  navigationManage: {fileID: 2075470870}
   gridLobby: {fileID: 281858385}
-  interactiveMultiplayerLobby: {fileID: 904364703}
-  blackSquadName: {fileID: 54751231}
+  play: {fileID: 1247534831}
+  Back: {fileID: 555975681}
+  blackBtn: {fileID: 1609167946}
+  whiteBtn: {fileID: 124944897}
+  optionsPanel: {fileID: 1300127906}
+  OpenOpt: {fileID: 1148509874}
+  CloseOpt: {fileID: 1500218886}
+  codeText: {fileID: 1124046307}
+  blackSquadName: {fileID: 1573191324}
+  blackSquadName2: {fileID: 54751231}
   blackPiecesGrid: {fileID: 230138876}
-  whiteSquadName: {fileID: 1271882229}
+  whiteSquadName: {fileID: 1514950502}
+  whiteSquadName2: {fileID: 1271882229}
   whitePiecesGrid: {fileID: 1233290807}
   piece_ImgPrefab: {fileID: 5251047543970744015, guid: 70cd7860d851e4548bb42aa9f34c3be1, type: 3}
+  OnWhite: 0
 --- !u!1 &940105260
 GameObject:
   m_ObjectHideFlags: 0
