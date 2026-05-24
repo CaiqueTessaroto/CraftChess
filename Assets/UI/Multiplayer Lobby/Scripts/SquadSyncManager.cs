@@ -26,14 +26,11 @@ public static class MultiplayerLobbyState
     public static MatchSquadData WhiteSquad;
     public static MatchSquadData BlackSquad;
     public static bool LocalIsWhite;
-    public static string LocalSquadName;
+    public static string WhiteSquadOwnerId;  // clientId de quem enviou o White
+    public static string BlackSquadOwnerId;  // clientId de quem enviou o Black
 
-    public static MatchSquadData LocalSquad =>
-        LocalIsWhite ? WhiteSquad : BlackSquad;
-
-    public static MatchSquadData OpponentSquad =>
-        LocalIsWhite ? BlackSquad : WhiteSquad;
-
+    public static Dictionary<string, byte[]> WhiteSpritesRaw = new Dictionary<string, byte[]>();
+    public static Dictionary<string, byte[]> BlackSpritesRaw = new Dictionary<string, byte[]>();
     public static void Log(string context = "")
     {
         string white = WhiteSquad?.Data?.Name ?? "null";
@@ -43,9 +40,85 @@ public static class MultiplayerLobbyState
         Debug.Log($"[MultiplayerLobbyState] {context}\n" +
                 $"  LocalIsWhite : {LocalIsWhite} ({local})\n" +
                 $"  WhiteSquad   : {white}\n" +
-                $"  BlackSquad   : {black}\n" +
-                $"  LocalSquad   : {LocalSquad?.Data?.Name ?? "null"}\n" +
-                $"  OpponentSquad: {OpponentSquad?.Data?.Name ?? "null"}");
+                $"  BlackSquad   : {black}\n");
+    }
+
+    public static void DownloadSquad(bool isWhite)
+    {
+        MatchSquadData squad = isWhite ? WhiteSquad : BlackSquad;
+        Dictionary<string, byte[]> spritesRaw = isWhite ? WhiteSpritesRaw : BlackSpritesRaw;
+
+        if (squad?.Data == null)
+        {
+            Debug.LogWarning("[MultiplayerLobbyState] Squad nulo, download cancelado.");
+            return;
+        }
+
+        // ─── Nome da pasta (evita colisão) ────────────────────────────────
+        string baseName = squad.Data.Name;
+        string folderName = baseName;
+        int suffix = 1;
+
+        string squadsRoot = Path.Combine(Application.persistentDataPath, FileManager.Instance.basePath_SquadData);
+
+        while (Directory.Exists(Path.Combine(squadsRoot, folderName)))
+            folderName = baseName + suffix++;
+
+        // ─── Caminhos ─────────────────────────────────────────────────────
+        string squadFolder = Path.Combine(squadsRoot, folderName);
+        string piecesFolder = Path.Combine(Application.persistentDataPath, FileManager.Instance.basePath_PieceData);
+        string spritesFolder = Path.Combine(Application.persistentDataPath, FileManager.Instance.basePath_Sprite);
+
+        Directory.CreateDirectory(squadFolder);
+        Directory.CreateDirectory(piecesFolder);
+        Directory.CreateDirectory(spritesFolder);
+
+        // ─── JSON do squad ────────────────────────────────────────────────
+        string squadJson = JsonUtility.ToJson(squad.Data, true);
+        string squadJsonPath = Path.Combine(squadFolder, squad.Data.Name + ".json");
+        File.WriteAllText(squadJsonPath, squadJson);
+        Debug.Log($"[Download] Squad JSON salvo: {squadJsonPath}");
+
+        // ─── Imagem do squad ──────────────────────────────────────────────
+        if (squad.SquadImageRaw != null)
+        {
+            string imagePath = Path.Combine(squadFolder, squad.Data.Name + ".png");
+            File.WriteAllBytes(imagePath, squad.SquadImageRaw);
+            Debug.Log($"[Download] Squad image salva: {imagePath}");
+        }
+
+        // ─── MovementConfigData (peças) ───────────────────────────────────
+        foreach (var kv in squad.Pieces)
+        {
+            string pieceName = kv.Key;
+            string pieceJson = JsonUtility.ToJson(kv.Value, true);
+
+            // Pasta por squad dentro de Pieces  ex: Pieces/NomeDoSquad/
+            string pieceSquadFolder = Path.Combine(piecesFolder, folderName);
+            Directory.CreateDirectory(pieceSquadFolder);
+
+            string piecePath = Path.Combine(pieceSquadFolder, pieceName + ".json");
+            //squad.SquadImage
+            File.WriteAllText(piecePath, pieceJson);
+            Debug.Log($"[Download] Piece salva: {piecePath}");
+        }
+
+        // ─── Sprites ──────────────────────────────────────────────────────
+        foreach (var kv in spritesRaw)
+        {
+            string pieceName = kv.Key;
+            byte[] pngBytes = kv.Value;
+
+            // Pasta por squad dentro de Sprites  ex: Sprites/NomeDoSquad/
+            string spriteSquadFolder = Path.Combine(spritesFolder, folderName);
+            Directory.CreateDirectory(spriteSquadFolder);
+
+            string spritePath = Path.Combine(spriteSquadFolder, pieceName + ".png");
+            File.WriteAllBytes(spritePath, pngBytes);
+            Debug.Log($"[Download] Sprite salva: {spritePath}");
+        }
+
+        Debug.Log($"[MultiplayerLobbyState] Download completo → {squadFolder}");
     }
 
 }
@@ -64,9 +137,9 @@ public class SquadSyncManager : NetworkBehaviour
     private Dictionary<string, Sprite> pendingSpritesWhite = new Dictionary<string, Sprite>();
     private Dictionary<string, Sprite> pendingSpritesBlack = new Dictionary<string, Sprite>();
 
-    private int  expectedSpriteCountWhite = 0, expectedSpriteCountBlack = 0;
-    private int  receivedSpriteCountWhite = 0, receivedSpriteCountBlack = 0;
-    private bool jsonReceivedWhite = false,     jsonReceivedBlack = false;
+    private int expectedSpriteCountWhite = 0, expectedSpriteCountBlack = 0;
+    private int receivedSpriteCountWhite = 0, receivedSpriteCountBlack = 0;
+    private bool jsonReceivedWhite = false, jsonReceivedBlack = false;
 
     private const string MSG_SPRITE_HOST_TO_CLIENT = "SquadSprite_H2C";
     private const string MSG_SPRITE_CLIENT_TO_HOST = "SquadSprite_C2H";
@@ -90,7 +163,7 @@ public class SquadSyncManager : NetworkBehaviour
 
         expectedSpriteCountWhite = expectedSpriteCountBlack = 0;
         receivedSpriteCountWhite = receivedSpriteCountBlack = 0;
-        jsonReceivedWhite        = jsonReceivedBlack        = false;
+        jsonReceivedWhite = jsonReceivedBlack = false;
 
         //WhiteSquad = null;
         //BlackSquad = null;
@@ -107,7 +180,7 @@ public class SquadSyncManager : NetworkBehaviour
 
     public void SetLocalSquadAndSync(string rootPath, string folderName, string squadName, string jsonFile)
     {
- 
+
         bool isWhite = MultiplayerLobbyUI.Instance.isWhite;
 
         ResetSync();
@@ -125,6 +198,8 @@ public class SquadSyncManager : NetworkBehaviour
         {
             // Aplica localmente sem notificar UI
             AssignSquadByColor(squad, isWhite, isLocal: true);
+
+            SetIdByColor(NetworkManager.ServerClientId.ToString(), isWhite);
 
             foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
             {
@@ -153,7 +228,16 @@ public class SquadSyncManager : NetworkBehaviour
         }
 
         Squad data = JsonUtility.FromJson<Squad>(File.ReadAllText(jsonFile));
-        var squad  = new MatchSquadData { Data = data };
+        var squad = new MatchSquadData { Data = data };
+
+        string spriteSquadPath = Path.Combine(rootPath,
+            fileManager.basePath_SquadData, folderName, squadName + ".png");
+
+        if (File.Exists(spriteSquadPath))
+        {
+            squad.SquadImageRaw = File.ReadAllBytes(spriteSquadPath);
+            //squad.SquadImage    = UIHelperUtils.GetSpriteFromPath(spriteSquadPath);
+        }
 
         foreach (SquadPieceData piece in data.Pieces)
         {
@@ -190,9 +274,9 @@ public class SquadSyncManager : NetworkBehaviour
         }
 
         if (isWhite) MultiplayerLobbyState.WhiteSquad = squad;
-        else         MultiplayerLobbyState.BlackSquad  = squad;
+        else MultiplayerLobbyState.BlackSquad = squad;
 
-        Debug.Log($"[SquadSync] Squad {(isWhite ? "White" : "Black")} definido: {squadName}");
+        //Debug.Log($"[SquadSync] Squad {(isWhite ? "White" : "Black")} definido: {squadName}");
     }
 
     // ───────────────────────────────────────────────────────────────────────
@@ -225,7 +309,8 @@ public class SquadSyncManager : NetworkBehaviour
                 .UnregisterNamedMessageHandler(MSG_SPRITE_CLIENT_TO_HOST);
         }
 
-        if (IsHost && NetworkManager.Singleton != null){
+        if (IsHost && NetworkManager.Singleton != null)
+        {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
         }
@@ -255,7 +340,7 @@ public class SquadSyncManager : NetworkBehaviour
             // Cliente perdeu conexão com o host
             NetworkLobbyManager.Instance.HandleDisconnect();
         }
-        
+
     }
     private void OnClientConnected(ulong clientId)
     {
@@ -323,12 +408,13 @@ public class SquadSyncManager : NetworkBehaviour
         bool isWhite = payload.IsWhite;
 
         MatchSquadData rebuilt = RebuildSquadFromJson(payload);
+        SetIdByColor(payload.SenderId.ToString(), isWhite);
         AssignSquadByColor(rebuilt, isWhite, isLocal: false);
         SetExpectedByColor(payload.PieceCount, isWhite);
         SetJsonReceivedByColor(true, isWhite);
 
         // Sempre reenvia o squad recebido de volta para o client confirmar
-        ReceiveSquadJsonClientRpc(BuildJsonPayload(isWhite));
+        ReceiveSquadJsonClientRpc(BuildJsonPayload(isWhite, payload.SenderId.ToString()));
         StartCoroutine(SendSpritesToClient(NetworkManager.Singleton.ConnectedClientsIds, isWhite));
     }
 
@@ -342,9 +428,12 @@ public class SquadSyncManager : NetworkBehaviour
         if (IsHost) return;
 
         bool isWhite = payload.IsWhite;
+
         Debug.Log($"[SquadSync] Client recebeu JSON do host. Cor: {(isWhite ? "White" : "Black")} | {payload.PieceCount} peças.");
 
         MatchSquadData rebuilt = RebuildSquadFromJson(payload);
+
+        SetIdByColor(payload.SenderId.ToString(), isWhite);
         AssignSquadByColor(rebuilt, isWhite, isLocal: false);
         SetExpectedByColor(payload.PieceCount, isWhite);
         SetJsonReceivedByColor(true, isWhite);
@@ -367,7 +456,7 @@ public class SquadSyncManager : NetworkBehaviour
             byte[] pngBytes = LoadPngBytes(piece);
             if (pngBytes == null) { Debug.LogWarning($"[SquadSync] Sprite não encontrada: {piece.Name}"); continue; }
 
-            int nameLen    = System.Text.Encoding.UTF8.GetByteCount(piece.NameInSquad);
+            int nameLen = System.Text.Encoding.UTF8.GetByteCount(piece.NameInSquad);
             int bufferSize = 2 + nameLen + 4 + pngBytes.Length + 33;
 
             var writer = new FastBufferWriter(bufferSize, Allocator.Temp);
@@ -404,11 +493,12 @@ public class SquadSyncManager : NetworkBehaviour
         foreach (SquadPieceData piece in squad.Data.Pieces)
         {
             byte[] pngBytes = LoadPngBytes(piece);
-            if (pngBytes == null) { 
-                Debug.LogWarning($"[SquadSync] Sprite não encontrada: {piece.Name}"); continue; 
-                }
+            if (pngBytes == null)
+            {
+                Debug.LogWarning($"[SquadSync] Sprite não encontrada: {piece.Name}"); continue;
+            }
 
-            int nameLen    = System.Text.Encoding.UTF8.GetByteCount(piece.NameInSquad);
+            int nameLen = System.Text.Encoding.UTF8.GetByteCount(piece.NameInSquad);
             int bufferSize = 2 + nameLen + 4 + pngBytes.Length + 33;
 
             var writer = new FastBufferWriter(bufferSize, Allocator.Temp);
@@ -449,6 +539,10 @@ public class SquadSyncManager : NetworkBehaviour
         reader.ReadBytesSafe(ref pngBytes, length);
         reader.ReadValueSafe(out bool senderIsWhite);
 
+        // logo após reader.ReadValueSafe(out bool senderIsWhite);
+        if (senderIsWhite) MultiplayerLobbyState.WhiteSpritesRaw[pieceName] = pngBytes;
+        else MultiplayerLobbyState.BlackSpritesRaw[pieceName] = pngBytes;
+
         var tex = new Texture2D(408, 408, TextureFormat.RGBA32, false);
         tex.LoadImage(pngBytes);
 
@@ -467,7 +561,7 @@ public class SquadSyncManager : NetworkBehaviour
             pending[pieceName] = sprite;
 
         if (senderIsWhite) receivedSpriteCountWhite++;
-        else               receivedSpriteCountBlack++;
+        else receivedSpriteCountBlack++;
 
         //Debug.Log($"[SquadSync] Sprite recebida ({(senderIsWhite ? "White" : "Black")}): {pieceName}");
 
@@ -481,10 +575,10 @@ public class SquadSyncManager : NetworkBehaviour
 
     private void CheckIfComplete(bool isWhite)
     {
-        MatchSquadData targetSquad  = isWhite ? MultiplayerLobbyState.WhiteSquad : MultiplayerLobbyState.BlackSquad;
+        MatchSquadData targetSquad = isWhite ? MultiplayerLobbyState.WhiteSquad : MultiplayerLobbyState.BlackSquad;
         Dictionary<string, Sprite> pending = isWhite ? pendingSpritesWhite : pendingSpritesBlack;
-        int  expected  = isWhite ? expectedSpriteCountWhite : expectedSpriteCountBlack;
-        int  received  = isWhite ? receivedSpriteCountWhite  : receivedSpriteCountBlack;
+        int expected = isWhite ? expectedSpriteCountWhite : expectedSpriteCountBlack;
+        int received = isWhite ? receivedSpriteCountWhite : receivedSpriteCountBlack;
         bool jsonReady = isWhite ? jsonReceivedWhite : jsonReceivedBlack;
 
         if (targetSquad == null) return;
@@ -508,10 +602,15 @@ public class SquadSyncManager : NetworkBehaviour
     // HELPERS
     // ───────────────────────────────────────────────────────────────────────
 
+    private void SetIdByColor(string id, bool isWhite)
+    {
+        if (isWhite) MultiplayerLobbyState.WhiteSquadOwnerId = id;
+        else MultiplayerLobbyState.BlackSquadOwnerId = id;
+    }
     private void AssignSquadByColor(MatchSquadData squad, bool isWhite, bool isLocal = false)
     {
         if (isWhite) MultiplayerLobbyState.WhiteSquad = squad;
-        else         MultiplayerLobbyState.BlackSquad = squad;
+        else MultiplayerLobbyState.BlackSquad = squad;
 
         if (!isLocal)
             CheckIfComplete(isWhite);
@@ -520,16 +619,16 @@ public class SquadSyncManager : NetworkBehaviour
     private void SetExpectedByColor(int count, bool isWhite)
     {
         if (isWhite) expectedSpriteCountWhite = count;
-        else         expectedSpriteCountBlack = count;
+        else expectedSpriteCountBlack = count;
     }
 
     private void SetJsonReceivedByColor(bool value, bool isWhite)
     {
         if (isWhite) jsonReceivedWhite = value;
-        else         jsonReceivedBlack = value;
+        else jsonReceivedBlack = value;
     }
 
-    private SquadJsonPayload BuildJsonPayload(bool isWhite)
+    private SquadJsonPayload BuildJsonPayload(bool isWhite, string senderId = null)
     {
         MatchSquadData squad = isWhite
             ? MultiplayerLobbyState.WhiteSquad
@@ -550,17 +649,19 @@ public class SquadSyncManager : NetworkBehaviour
 
             pieceJsons.Add(new PieceJsonData
             {
-                Name         = piece.NameInSquad,
+                Name = piece.NameInSquad,
                 MovementJson = File.ReadAllText(movPath)
             });
         }
 
         return new SquadJsonPayload
         {
-            SquadJson  = JsonUtility.ToJson(squad.Data),
+            SquadJson = JsonUtility.ToJson(squad.Data),
             PieceCount = pieceJsons.Count,
-            Pieces     = pieceJsons.ToArray(),
-            IsWhite    = isWhite
+            Pieces = pieceJsons.ToArray(),
+            IsWhite = isWhite,
+            SenderId = senderId ?? NetworkManager.Singleton.LocalClientId.ToString(),
+            SquadImageRaw = squad.SquadImageRaw
         };
     }
 
@@ -574,6 +675,17 @@ public class SquadSyncManager : NetworkBehaviour
         foreach (PieceJsonData pieceJson in payload.Pieces)
             squadData.Pieces[pieceJson.Name.Value] =
                 JsonUtility.FromJson<MovementConfigData>(pieceJson.MovementJson.Value);
+
+        if (payload.SquadImageRaw != null && payload.SquadImageRaw.Length > 0)
+        {
+            squadData.SquadImageRaw = payload.SquadImageRaw;
+
+            Debug.Log($"[SquadSync] SquadImage recebida | {payload.SquadImageRaw.Length / 1024f:F1} kb | Cor: {(payload.IsWhite ? "White" : "Black")}");
+        }
+        else
+        {
+            Debug.LogWarning($"[SquadSync] SquadImage NÃO recebida | Cor: {(payload.IsWhite ? "White" : "Black")}");
+        }
 
         return squadData;
     }
@@ -596,7 +708,7 @@ public class SquadSyncManager : NetworkBehaviour
 [Serializable]
 public struct PieceJsonData : INetworkSerializable
 {
-    public FixedString128Bytes  Name;
+    public FixedString128Bytes Name;
     public FixedString4096Bytes MovementJson;
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
@@ -610,15 +722,29 @@ public struct PieceJsonData : INetworkSerializable
 public struct SquadJsonPayload : INetworkSerializable
 {
     public FixedString4096Bytes SquadJson;
-    public int                  PieceCount;
-    public PieceJsonData[]      Pieces;
-    public bool                 IsWhite;
+    public int PieceCount;
+    public PieceJsonData[] Pieces;
+    public bool IsWhite;
+    public FixedString64Bytes SenderId;
+    public byte[] SquadImageRaw;
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
         serializer.SerializeValue(ref SquadJson);
         serializer.SerializeValue(ref PieceCount);
         serializer.SerializeValue(ref IsWhite);
+        serializer.SerializeValue(ref SenderId);
+
+        // Serializa byte[] manualmente
+        int imageLen = SquadImageRaw?.Length ?? 0;
+        serializer.SerializeValue(ref imageLen);
+
+        if (serializer.IsReader)
+            SquadImageRaw = imageLen > 0 ? new byte[imageLen] : null;
+
+        for (int i = 0; i < imageLen; i++)
+            serializer.SerializeValue(ref SquadImageRaw[i]);
+        //
 
         if (serializer.IsReader)
             Pieces = new PieceJsonData[PieceCount];

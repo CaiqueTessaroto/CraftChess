@@ -22,7 +22,7 @@ public class OptionsPanelUI : MonoBehaviour
     {
 
         if (fileManager == null)
-            fileManager = FindObjectOfType<FileManager>();
+            fileManager = FindFirstObjectByType<FileManager>();
 
 
         close.onClick.AddListener(() =>

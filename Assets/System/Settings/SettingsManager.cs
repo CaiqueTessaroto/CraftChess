@@ -140,7 +140,7 @@ public class SettingsManager : MonoBehaviour
         // ❌ Não existe ainda → instancia
         if (settingsPanel == null)
         {
-            Canvas canvas = FindObjectOfType<Canvas>();
+            Canvas canvas = FindFirstObjectByType<Canvas>();
             settingsPanel = Instantiate(UIsettingsPrefab, canvas.transform);
             settingsPanel.name = "SettingsPanel";
 

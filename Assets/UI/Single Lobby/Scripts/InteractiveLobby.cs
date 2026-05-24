@@ -14,11 +14,16 @@ public class MatchSquadData
     public Dictionary<string, Sprite> Sprites = new Dictionary<string, Sprite>();
     public Dictionary<string, MovementConfigData> Pieces = new Dictionary<string, MovementConfigData>();
     public Player Player;
+    public byte[] SquadImageRaw;
+    //public Sprite SquadImage;
 
     public void Clear()
     {
         Sprites.Clear();
         Pieces.Clear();
+
+        //SquadImage = null;
+        SquadImageRaw = null;
         Data = null;
     }
 

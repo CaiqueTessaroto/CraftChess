@@ -45,6 +45,13 @@ public class NetworkLobbyManager : MonoBehaviour
 
     public async void CreateLobby(string scene = null)
     {
+
+        string text = UIHelperUtils.T("lobby_creating");
+        if (string.IsNullOrEmpty(text))
+            text = "Creating lobby...";
+
+        FileManager.Instance.SpawnMessage(text);
+
         try
         {
             // Cria Relay

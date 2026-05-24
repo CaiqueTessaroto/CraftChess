@@ -27,16 +27,21 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
     [Header("Code")]
     public TMP_Text codeText;
+    public Button copyCodeBtn;
 
     [Header("Painel Local")]
     public TMP_Text blackSquadName;
     public TMP_Text blackSquadName2;
     public Transform blackPiecesGrid;
+    public Button blackDowloadBtn;
+    public GameObject blackUnbalancedObj;
 
     [Header("Painel Oponente")]
     public TMP_Text whiteSquadName;
     public TMP_Text whiteSquadName2;
     public Transform whitePiecesGrid;
+    public Button whiteDowloadBtn;
+    public GameObject whiteUnbalancedObj;
 
     [Header("Prefabs")]
     public GameObject piece_ImgPrefab;
@@ -107,6 +112,30 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
         });
 
+        copyCodeBtn.onClick.AddListener(() =>
+        {
+            if (string.IsNullOrEmpty(codeText.text))
+                return;
+
+            GUIUtility.systemCopyBuffer = codeText.text;
+
+            string text = UIHelperUtils.T("lobby_code_copied");
+
+            if (string.IsNullOrEmpty(text))
+                text = "Lobby code copied to clipboard.";
+
+            FileManager.Instance.SpawnMessage(text);
+        });
+
+        blackDowloadBtn.onClick.AddListener(() =>
+        {
+            MultiplayerLobbyState.DownloadSquad(isWhite: false);
+        });
+
+        whiteDowloadBtn.onClick.AddListener(() =>
+        {
+            MultiplayerLobbyState.DownloadSquad(isWhite: true);
+        });
 
         blackBtn.onClick.AddListener(() =>
         {
@@ -201,7 +230,7 @@ public class MultiplayerLobbyUI : MonoBehaviour
         gridLobby.ClearGrid(gridLobby.posInGrid);
 
         //Debug.Log($"[MultiplayerLobbyUI] Painel {(isMySquad ? "local" : "oponente")} atualizado.");
-        Debug.Log($"[MultiplayerLobbyUI] Painel atualizado.");
+        //Debug.Log($"[MultiplayerLobbyUI] Painel atualizado.");
     }
 
     public void RefreshLocalUI()
@@ -236,7 +265,7 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
         gridLobby.ClearGrid(gridLobby.posInGrid);
 
-        Debug.Log($"[MultiplayerLobbyUI] Painel {(isWhite ? "White" : "Black")} atualizado localmente.");
+        //Debug.Log($"[MultiplayerLobbyUI] Painel {(isWhite ? "White" : "Black")} atualizado localmente.");
     }
 
     public void UpdateSquadInLobby(MatchSquadData squad, Transform gridPainel, TMP_Text squadName, TMP_Text squadName2, bool isBlack)
@@ -254,6 +283,36 @@ public class MultiplayerLobbyUI : MonoBehaviour
             {
                 squadName.text = $"{squad.Data.Name}\n{squad.Data.Power}";
                 squadName2.text = squad.Data.Name;
+            }
+
+            if (!squad.Data.Balanced)
+            {
+                if (isBlack)
+                    blackUnbalancedObj.SetActive(true);
+                else
+                    whiteUnbalancedObj.SetActive(true);
+            }
+            else
+            {
+                if (isBlack)
+                    blackUnbalancedObj.SetActive(false);
+                else
+                    whiteUnbalancedObj.SetActive(false);
+            }
+
+            if (isBlack)
+            {
+                if (MultiplayerLobbyState.BlackSquadOwnerId != NetworkManager.Singleton.LocalClientId.ToString())
+                {
+                    blackDowloadBtn.gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                if (MultiplayerLobbyState.WhiteSquadOwnerId != NetworkManager.Singleton.LocalClientId.ToString())
+                {
+                    whiteDowloadBtn.gameObject.SetActive(true);
+                }
             }
 
             RenderPiecesGrid(gridPainel, squad, isBlack);

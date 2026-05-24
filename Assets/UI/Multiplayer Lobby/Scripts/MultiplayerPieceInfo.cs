@@ -166,10 +166,10 @@ public class MultiplayerPieceInfo : MonoBehaviour
                 Debug.LogWarning($"Sprite not found for piece: {fileName} in squad: {squad}");
         }
 
-        foreach (var key in MultiplayerLobbyState.BlackSquad.Sprites.Keys)
-        {
-            Debug.Log(key);
-        }
+        //foreach (var key in MultiplayerLobbyState.BlackSquad.Sprites.Keys)
+        //{
+        //    Debug.Log(key);
+        //}
 
 
         if (img != null)
