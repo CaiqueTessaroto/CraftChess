@@ -12,6 +12,8 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 using Unity.Collections;
+using System;
+using System.Threading.Tasks;
 
 public class NetworkLobbyManager : MonoBehaviour
 {
@@ -232,5 +234,53 @@ public class NetworkLobbyManager : MonoBehaviour
             SceneManager.LoadScene(scene);
     }
 
+
+    
+    private Coroutine _pollCoroutine;
+
+    public void StartPollingLobby()
+    {
+        if (_pollCoroutine != null) StopCoroutine(_pollCoroutine);
+        _pollCoroutine = StartCoroutine(PollLobbyRoutine());
+    }
+
+    public void StopPollingLobby()
+    {
+        if (_pollCoroutine != null)
+        {
+            StopCoroutine(_pollCoroutine);
+            _pollCoroutine = null;
+        }
+    }
+
+    // Lobby Service permite ~1 req/segundo
+    private IEnumerator PollLobbyRoutine()
+    {
+        while (currentLobby != null)
+        {
+            yield return new WaitForSeconds(1.5f);
+
+            if (currentLobby == null) yield break;
+
+            Task<Lobby> task = LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+
+            yield return new WaitUntil(() => task.IsCompleted);
+
+            if (task.IsFaulted)
+            {
+                // Pega a mensagem interna sem acessar .Message direto no AggregateException
+                string error = task.Exception?.InnerException?.Message ?? "Unknown error";
+                Debug.LogWarning($"[Poll] {error}");
+                continue;
+            }
+
+            if (task.Result == null) continue;
+
+            currentLobby = task.Result;
+            OnLobbyPolled?.Invoke(currentLobby);
+        }
+    }
+
+    public event Action<Lobby> OnLobbyPolled;
 
 }

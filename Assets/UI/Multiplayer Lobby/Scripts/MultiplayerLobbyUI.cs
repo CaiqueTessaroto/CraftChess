@@ -1,9 +1,9 @@
-using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+
+using Unity.Services.Lobbies.Models;
 
 public class MultiplayerLobbyUI : MonoBehaviour
 {
@@ -16,6 +16,7 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
     [Header("Buttons")]
     public Button play;
+    public Button ready;
     public Button Back;
     public Button blackBtn;
     public Button whiteBtn;
@@ -70,6 +71,25 @@ public class MultiplayerLobbyUI : MonoBehaviour
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
 
+        ready.onClick.AddListener(() =>
+        {
+            bool next = !MultiplayerLobbyState.ClientIsReady;
+            MultiplayerLobbyState.SendReadyStateToHost(next);
+
+            string readyTxt = UIHelperUtils.T("READY");
+
+            if (string.IsNullOrEmpty(readyTxt))
+                readyTxt = "Ready";
+
+            string notReadyTxt = UIHelperUtils.T("Cancel_Ready");
+
+            if (string.IsNullOrEmpty(notReadyTxt))
+                notReadyTxt = "Cancel Ready";
+
+            ready.GetComponentInChildren<TMP_Text>().text = next ? notReadyTxt : readyTxt;
+        });
+
+
         play.onClick.AddListener(() =>
         {
 
@@ -105,6 +125,14 @@ public class MultiplayerLobbyUI : MonoBehaviour
                 if (string.IsNullOrEmpty(text))
                     text = "There is no other player connected to the lobby.";
 
+                FileManager.Instance.CreateAdvice(text);
+                return;
+            }
+
+            if (!MultiplayerLobbyState.ClientIsReady)
+            {
+                string text = UIHelperUtils.T("lobby_client_not_ready")
+                            ?? "The other player is not ready yet.";
                 FileManager.Instance.CreateAdvice(text);
                 return;
             }
@@ -196,6 +224,24 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
         codeText.text = lobbyManager.currentLobby.LobbyCode;
 
+        if (NetworkManager.Singleton.IsListening)
+            SetupButtons();
+    }
+
+    private void SetupButtons()
+    {
+        bool isHost = NetworkManager.Singleton.IsHost;
+
+        play.gameObject.SetActive(isHost);
+        ready.gameObject.SetActive(!isHost);
+    }
+
+    private void OnLobbyUpdated(Lobby lobby)
+    {
+        // Só o host precisa reagir ao ready do client
+        if (!NetworkManager.Singleton.IsHost) return;
+
+        play.interactable = MultiplayerLobbyState.ClientIsReady;
     }
 
     // ───────────────────────────────────────────────────────────────────────
@@ -203,11 +249,17 @@ public class MultiplayerLobbyUI : MonoBehaviour
     // ───────────────────────────────────────────────────────────────────────
     private void OnEnable()
     {
+        NetworkLobbyManager.Instance.OnLobbyPolled += OnLobbyUpdated;
+        NetworkLobbyManager.Instance.StartPollingLobby();
+
         SquadSyncManager.Instance.OnRemoteSquadReady += OnSquadReady;
     }
 
     private void OnDisable()
     {
+        NetworkLobbyManager.Instance.OnLobbyPolled -= OnLobbyUpdated;
+        NetworkLobbyManager.Instance.StopPollingLobby();
+
         SquadSyncManager.Instance.OnRemoteSquadReady -= OnSquadReady;
     }
 

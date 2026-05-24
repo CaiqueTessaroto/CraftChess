@@ -6,6 +6,10 @@ using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
+using Unity.Services.Lobbies;
+using Unity.Services.Lobbies.Models;
+using Unity.Services.Authentication;
+
 /// <summary>
 /// Gerencia a troca de esquadrões entre host e client via NGO.
 /// JSONs trafegam via ServerRpc/ClientRpc.
@@ -41,6 +45,66 @@ public static class MultiplayerLobbyState
                 $"  LocalIsWhite : {LocalIsWhite} ({local})\n" +
                 $"  WhiteSquad   : {white}\n" +
                 $"  BlackSquad   : {black}\n");
+    }
+
+
+    public static class LobbyConstants
+    {
+        public const string ClientReady = "clientReady";
+    }
+    public static bool ClientIsReady
+    {
+        get
+        {
+            Lobby lobby = NetworkLobbyManager.Instance?.currentLobby;
+            if (lobby == null) return false;
+
+            // Procura o player que NÃO é o host
+            foreach (var player in lobby.Players)
+            {
+                if (player.Id == lobby.HostId) continue;
+
+                if (player.Data != null &&
+                    player.Data.TryGetValue(LobbyConstants.ClientReady, out PlayerDataObject data))
+                {
+                    return data.Value == "true";
+                }
+            }
+
+            return false;
+        }
+    }
+
+    public static async void SendReadyStateToHost(bool isReady)
+    {
+        try
+        {
+            Lobby lobby = NetworkLobbyManager.Instance?.currentLobby;
+            if (lobby == null) return;
+
+            string playerId = AuthenticationService.Instance.PlayerId;
+
+            UpdatePlayerOptions options = new UpdatePlayerOptions
+            {
+                Data = new Dictionary<string, PlayerDataObject>
+                {
+                    {
+                        LobbyConstants.ClientReady,
+                        new PlayerDataObject(
+                            visibility: PlayerDataObject.VisibilityOptions.Member,
+                            value: isReady ? "true" : "false"
+                        )
+                    }
+                }
+            };
+
+            NetworkLobbyManager.Instance.currentLobby =
+                await LobbyService.Instance.UpdatePlayerAsync(lobby.Id, playerId, options);
+        }
+        catch (LobbyServiceException ex)
+        {
+            Debug.LogError($"[MultiplayerLobbyState] SendReadyStateToHost: {ex}");
+        }
     }
 
     public static void DownloadSquad(bool isWhite)
