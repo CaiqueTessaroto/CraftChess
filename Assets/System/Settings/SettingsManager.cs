@@ -94,7 +94,12 @@ public class SettingsManager : MonoBehaviour
             //#if UNITY_ANDROID && !UNITY_EDITOR
             //if (!PlayerPrefs.HasKey("StreamingAssetsCopied"))
             //{
-            StartCoroutine(CopyInitialNativeData());
+            bool alreadyCopied = PlayerPrefs.GetInt("StreamingAssetsCopied", 0) == 1;
+
+            if (!alreadyCopied)
+            {
+                StartCoroutine(CopyInitialNativeData());
+            }
             //}
             //#endif
 
@@ -197,8 +202,8 @@ public class SettingsManager : MonoBehaviour
         yield return StartCoroutine(CopyStreamingAssetsFolder("Sprites"));
         yield return StartCoroutine(CopyStreamingAssetsFolder("Squads"));
 
-        //PlayerPrefs.SetInt("StreamingAssetsCopied", 1);
-        //PlayerPrefs.Save();
+        PlayerPrefs.SetInt("StreamingAssetsCopied", 1);
+        PlayerPrefs.Save();
 
         //Debug.Log("✔ StreamingAssets copiado para persistentDataPath");
     }

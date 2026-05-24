@@ -46,7 +46,7 @@ public class OptionsPanelUI : MonoBehaviour
             Debug.Log("Existskey: " + exists);
             Debug.Log("noAd: " + AdsManager.Instance.NoAdsEnabled);
 
-            ResetTutorial();
+            ResetTutorialAndAssets();
 
         });
 
@@ -84,8 +84,16 @@ public class OptionsPanelUI : MonoBehaviour
         );
     }
 
-    public void ResetTutorial()
+    public void ResetTutorialAndAssets()
     {
+
+        foreach (RewardData reward in RewardManager.Instance.rewards) // Limpa os dados de desbloqueio dos rewards
+        {
+            PlayerPrefs.DeleteKey("Reward_" + reward.id);
+        }
+
+        PlayerPrefs.DeleteKey("StreamingAssetsCopied"); // Permite recopia dos arquivos para testar o processo de cópia
+
         PlayerPrefs.DeleteKey("TutorialSeen");
         PlayerPrefs.DeleteKey("TutorialSeenMenu");
         PlayerPrefs.DeleteKey("TutorialSeenPainting");
