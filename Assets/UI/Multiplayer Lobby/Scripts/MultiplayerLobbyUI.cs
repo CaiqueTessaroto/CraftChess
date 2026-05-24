@@ -203,50 +203,10 @@ public class MultiplayerLobbyUI : MonoBehaviour
             return;
         }
 
-
         gridLobby.posInGrid.Clear();
 
-        if (squadWhite != null)
-        {
-
-
-            if (squadBlack.Data.Translate)
-            {
-                string name = UIHelperUtils.T(squadWhite.Data.Name);
-
-                whiteSquadName.text = $"{name}\n{squadWhite.Data.Power}";
-                whiteSquadName2.text = name;
-            }
-            else
-            {
-                whiteSquadName.text = $"{squadWhite.Data.Name}\n{squadWhite.Data.Power}";
-                whiteSquadName2.text = squadWhite.Data.Name;
-            }
-
-
-            RenderPiecesGrid(whitePiecesGrid, squadWhite.Sprites);
-            gridLobby.LoadPiecesInGrid(squadWhite.Data, squadWhite.Sprites, false);
-        }
-        if (squadBlack != null)
-        {
-
-            if (squadBlack.Data.Translate)
-            {
-                string name = UIHelperUtils.T(squadBlack.Data.Name);
-
-                blackSquadName.text = $"{name}\n{squadBlack.Data.Power}";
-                blackSquadName2.text = name;
-            }
-            else
-            {
-                blackSquadName.text = $"{squadBlack.Data.Name}\n{squadBlack.Data.Power}";
-                blackSquadName2.text = squadBlack.Data.Name;
-            }
-
-            
-            RenderPiecesGrid(blackPiecesGrid, squadBlack.Sprites);
-            gridLobby.LoadPiecesInGrid(squadBlack.Data, squadBlack.Sprites, true);
-        }
+        UpdateSquadInLobby(squadWhite, whitePiecesGrid, whiteSquadName, whiteSquadName2, false);
+        UpdateSquadInLobby(squadBlack, blackPiecesGrid, blackSquadName, blackSquadName2, true);
 
         gridLobby.ClearGrid(gridLobby.posInGrid);
 
@@ -281,22 +241,34 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
         gridLobby.posInGrid.Clear();
 
-        if (squadWhite != null)
-        {
-            if (whiteSquadName != null) whiteSquadName.text = squadWhite.Data.Name;
-            RenderPiecesGrid(whitePiecesGrid, squadWhite.Sprites);
-            gridLobby.LoadPiecesInGrid(squadWhite.Data, squadWhite.Sprites, false);
-        }
-        if (squadBlack != null)
-        {
-            if (blackSquadName != null) blackSquadName.text = squadBlack.Data.Name;
-            RenderPiecesGrid(blackPiecesGrid, squadBlack.Sprites);
-            gridLobby.LoadPiecesInGrid(squadBlack.Data, squadBlack.Sprites, true);
-        }
+        UpdateSquadInLobby(squadWhite, whitePiecesGrid, whiteSquadName, whiteSquadName2, false);
+        UpdateSquadInLobby(squadBlack, blackPiecesGrid, blackSquadName, blackSquadName2, true);
 
         gridLobby.ClearGrid(gridLobby.posInGrid);
 
         Debug.Log($"[MultiplayerLobbyUI] Painel {(isWhite ? "White" : "Black")} atualizado localmente.");
+    }
+
+    public void UpdateSquadInLobby(MatchSquadData squad, Transform gridPainel,TMP_Text squadName, TMP_Text squadName2, bool isBlack)
+    {
+        if (squad != null)
+        {
+            if (squad.Data.Translate)
+            {
+                string name = UIHelperUtils.T(squad.Data.Name);
+
+                squadName.text = $"{name}\n{squad.Data.Power}";
+                squadName2.text = name;
+            }
+            else
+            {
+                squadName.text = $"{squad.Data.Name}\n{squad.Data.Power}";
+                squadName2.text = squad.Data.Name;
+            }
+
+            RenderPiecesGrid(gridPainel, squad.Sprites);
+            gridLobby.LoadPiecesInGrid(squad.Data, squad.Sprites, isBlack);
+        }
     }
 
     // ───────────────────────────────────────────────────────────────────────

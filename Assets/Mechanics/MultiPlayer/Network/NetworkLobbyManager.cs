@@ -31,7 +31,7 @@ public class NetworkLobbyManager : MonoBehaviour
 
     private void OnEnable()
     {
-        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+
     }
 
     private void OnDisable()
@@ -39,18 +39,8 @@ public class NetworkLobbyManager : MonoBehaviour
 
         if (NetworkManager.Singleton != null)
         {
-            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
+
         }
-    }
-
-    private void OnClientDisconnect(ulong clientId)
-    {
-
-        if (!NetworkManager.Singleton.IsHost) // Dispara no cliente quando o host cai
-        {
-            HandleDisconnect();
-        }
-
     }
 
     public async void CreateLobby(string scene = null)
@@ -226,7 +216,7 @@ public class NetworkLobbyManager : MonoBehaviour
             HandleDisconnect();
         }
     }
-    private void HandleDisconnect(string scene = "Menu")
+    public void HandleDisconnect(string scene = "Menu")
     {
         currentLobby = null;
         NetworkManager.Singleton.Shutdown();

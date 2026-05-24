@@ -14,6 +14,9 @@ public class LobbyDataSync : MonoBehaviour
     private float timer;
     private bool isRefreshing = false;
 
+    private int _failCount = 0;
+    private const int MAX_FAILS = 3;
+
     private void Awake()
     {
         Instance = this;
@@ -42,10 +45,24 @@ public class LobbyDataSync : MonoBehaviour
                     NetworkLobbyManager.Instance.currentLobby.Id);
 
             OnLobbyDataUpdated?.Invoke(NetworkLobbyManager.Instance.currentLobby.Data);
+
+            _failCount = 0;
         }
         catch (LobbyServiceException e)
         {
             Debug.LogWarning($"Falha ao atualizar lobby: {e.Message}");
+
+            if (e.Reason == LobbyExceptionReason.LobbyNotFound || 
+                e.Reason == LobbyExceptionReason.Forbidden)
+            {
+                NetworkLobbyManager.Instance.HandleDisconnect();
+                return;
+            }
+
+            // Erros temporários: só desconecta após N falhas seguidas
+            _failCount++;
+            if (_failCount >= MAX_FAILS)
+                NetworkLobbyManager.Instance.HandleDisconnect();
         }
         finally
         {

@@ -48,6 +48,8 @@ public class MatchStartOption : MonoBehaviour
                     if (Enum.TryParse(cleanName, true, out StartOption option))
                     {
                         _ = UpdateLobbyData(option);
+
+                        UpdateCrowns(option);
                     }
                 });
             }
@@ -104,7 +106,8 @@ public class MatchStartOption : MonoBehaviour
             return;
 
         if (Enum.TryParse(startOptionData.Value, true, out StartOption option))
-            UpdateCrowns(option);
+            if(!isHost)
+                UpdateCrowns(option);
         
     }
 

@@ -135,7 +135,6 @@ public class SquadSyncManager : NetworkBehaviour
             }
 
             MultiplayerLobbyUI.Instance?.RefreshLocalUI();
-
         }
         else
         {
@@ -236,6 +235,28 @@ public class SquadSyncManager : NetworkBehaviour
     // PASSO 1 — Host detecta client conectado
     // ───────────────────────────────────────────────────────────────────────
 
+    private void OnClientDisconnect(ulong clientId)
+    {
+
+        if (IsHost)
+        {
+            // Um cliente saiu
+            if (clientId != NetworkManager.ServerClientId)
+            {
+                string text = UIHelperUtils.T("lobby_exited");
+                if (string.IsNullOrEmpty(text))
+                    text = "A player has left the lobby.";
+
+                FileManager.Instance.SpawnMessage(text);
+            }
+        }
+        else
+        {
+            // Cliente perdeu conexão com o host
+            NetworkLobbyManager.Instance.HandleDisconnect();
+        }
+        
+    }
     private void OnClientConnected(ulong clientId)
     {
 
@@ -267,21 +288,6 @@ public class SquadSyncManager : NetworkBehaviour
 
         // Pede o squad do client
         RequestSquadFromClientRpc(clientId);
-    }
-
-    private void OnClientDisconnect(ulong clientId)
-    {
-
-        if (clientId != NetworkManager.ServerClientId)
-        {
-            string text = UIHelperUtils.T("lobby_exited");
-
-            if (string.IsNullOrEmpty(text))
-                text = "A player has left the lobby.";
-
-            FileManager.Instance.SpawnMessage(text);
-        }
-        
     }
 
     // ───────────────────────────────────────────────────────────────────────
