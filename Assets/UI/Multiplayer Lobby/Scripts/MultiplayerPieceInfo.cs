@@ -4,9 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ManagerPieceInfo : MonoBehaviour
+public class MultiplayerPieceInfo : MonoBehaviour
 {
-
     public InfoGridView infoGridView;
     public GameObject crowView;
     public string currentPieceName;
@@ -21,39 +20,24 @@ public class ManagerPieceInfo : MonoBehaviour
     public Transform castelingContent;
     public GameObject viewPiecePrefab;
     public Button closePiecebtn;
-
-    public BoardChessManager boardChessManager;
-
-    public Dictionary<string, Sprite> pieceSpritesWhite = new Dictionary<string, Sprite>();
-    public Dictionary<string, Sprite> pieceSpritesBlack = new Dictionary<string, Sprite>();
-
-    // Start is called before the first frame update
+    
+    private bool isWhite;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
-        if (boardChessManager == null)
-            boardChessManager = FindFirstObjectByType<BoardChessManager>();
 
         closePiecebtn.onClick.AddListener(() =>
         {
             Panel.SetActive(false);
-            
-            if (boardChessManager)
-                boardChessManager.infoPiece = false;
+
         });
 
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SelectPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite, bool isBlack, bool IsKing)
     {
 
-    }
-
-    public void SelectPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite, bool IsKing)
-    {
-
-        //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
+        isWhite = !isBlack;
 
         if (config.piece.Name != currentPieceName || config.piece.Squad != squadPiece || Panel.activeSelf == false)
         {
@@ -66,7 +50,6 @@ public class ManagerPieceInfo : MonoBehaviour
 
     public void SetInfoPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite, bool IsKing)
     {
-        //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
 
         PieceInfo piece = config.piece;
 
@@ -158,6 +141,7 @@ public class ManagerPieceInfo : MonoBehaviour
         // Define o nome do objeto (opcional)
         clone.name = "Preview_" + fileName;
 
+        //string name = fileName.Replace(squad, "").Trim();
         //string name = fileName.Trim();
         //string name = fileName.Replace(" ", "").Trim();
 
@@ -166,10 +150,26 @@ public class ManagerPieceInfo : MonoBehaviour
 
         Sprite sprite = null;
 
-        if (pieceSpritesWhite.ContainsKey($"{name}{squad}"))
-            sprite = pieceSpritesWhite[$"{name}{squad}"];
-        else if (pieceSpritesBlack.ContainsKey($"{name}{squad}"))
-            sprite = pieceSpritesBlack[$"{name}{squad}"];
+        if (isWhite)
+        {
+            if (MultiplayerLobbyState.WhiteSquad.Sprites.ContainsKey($"{fileName}"))
+                sprite = MultiplayerLobbyState.WhiteSquad.Sprites[$"{fileName}"];
+            else
+                Debug.LogWarning($"Sprite not found for piece: {fileName} in squad: {squad}");
+        }
+        else
+        {
+            
+            if (MultiplayerLobbyState.BlackSquad.Sprites.ContainsKey($"{fileName}"))
+                sprite = MultiplayerLobbyState.BlackSquad.Sprites[$"{fileName}"];
+            else
+                Debug.LogWarning($"Sprite not found for piece: {fileName} in squad: {squad}");
+        }
+
+        foreach (var key in MultiplayerLobbyState.BlackSquad.Sprites.Keys)
+        {
+            Debug.Log(key);
+        }
 
 
         if (img != null)
@@ -184,3 +184,4 @@ public class ManagerPieceInfo : MonoBehaviour
 
 
 }
+

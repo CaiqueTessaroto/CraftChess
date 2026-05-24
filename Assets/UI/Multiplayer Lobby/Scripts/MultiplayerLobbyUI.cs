@@ -11,6 +11,7 @@ public class MultiplayerLobbyUI : MonoBehaviour
     [Header("Scripts")]
     public GameManager gameManager;
     public NavigationManage_Lobby navigationManage;
+    public MultiplayerPieceInfo multiplayerPieceInfo;
     public GridLobby gridLobby;
 
     [Header("Buttons")]
@@ -51,6 +52,9 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
     void Start()
     {
+
+        if (multiplayerPieceInfo == null)
+            multiplayerPieceInfo = FindFirstObjectByType<MultiplayerPieceInfo>();
 
         if (navigationManage == null)
             navigationManage = FindFirstObjectByType<NavigationManage_Lobby>();
@@ -165,20 +169,6 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
     }
 
-
-    // ───────────────────────────────────────────────────────────────────────
-    // Chamado quando o jogador seleciona um squad localmente
-    // Chame isso no botão de seleção junto com SelectSquad e SetLocalSquadAndSync
-    // ───────────────────────────────────────────────────────────────────────
-
-    public void UpdateLocalPanel(string squadName, MatchSquadData squad)
-    {
-        if (blackSquadName != null)
-            blackSquadName.text = squadName;
-
-        RenderPiecesGrid(blackPiecesGrid, squad.Sprites);
-    }
-
     // ───────────────────────────────────────────────────────────────────────
     // Chamado automaticamente quando ambos os squads chegaram pela rede
     // ───────────────────────────────────────────────────────────────────────
@@ -249,7 +239,7 @@ public class MultiplayerLobbyUI : MonoBehaviour
         Debug.Log($"[MultiplayerLobbyUI] Painel {(isWhite ? "White" : "Black")} atualizado localmente.");
     }
 
-    public void UpdateSquadInLobby(MatchSquadData squad, Transform gridPainel,TMP_Text squadName, TMP_Text squadName2, bool isBlack)
+    public void UpdateSquadInLobby(MatchSquadData squad, Transform gridPainel, TMP_Text squadName, TMP_Text squadName2, bool isBlack)
     {
         if (squad != null)
         {
@@ -266,34 +256,55 @@ public class MultiplayerLobbyUI : MonoBehaviour
                 squadName2.text = squad.Data.Name;
             }
 
-            RenderPiecesGrid(gridPainel, squad.Sprites);
+            RenderPiecesGrid(gridPainel, squad, isBlack);
             gridLobby.LoadPiecesInGrid(squad.Data, squad.Sprites, isBlack);
         }
     }
 
     // ───────────────────────────────────────────────────────────────────────
 
-    private void RenderPiecesGrid(Transform grid, Dictionary<string, Sprite> sprites)
+    private void RenderPiecesGrid(Transform grid, MatchSquadData squad, bool isBlack)
     {
+
         if (grid == null) return;
 
         // Limpa grid anterior
         foreach (Transform child in grid)
             Destroy(child.gameObject);
 
-        foreach (var kv in sprites)
+        foreach (var piece in squad.Data.Pieces)
         {
+
+            //if (squad.Sprites.ContainsKey(piece.NameInSquad))
+
+            Sprite sprite = squad.Sprites[piece.NameInSquad];
+
+            MovementConfigData wrapper = squad.Pieces[piece.NameInSquad];
+
             GameObject img = Instantiate(piece_ImgPrefab, grid);
-            img.name = kv.Key;
+            img.name = piece.NameInSquad;
 
             Image imgComp = img.GetComponent<Image>();
             if (imgComp != null)
-                imgComp.sprite = kv.Value;
+                imgComp.sprite = sprite;
 
             TextMeshProUGUI text = img.GetComponentInChildren<TextMeshProUGUI>();
             if (text != null)
-                text.text = kv.Key;
+                text.text = piece.NameInSquad;
+
+            bool IsKing = false;
+            if (piece.NameInSquad == squad.Data.King.Name)
+                IsKing = true;
+
+            img.GetComponent<Button>().onClick.AddListener(() =>
+            {
+
+                multiplayerPieceInfo.SelectPiece(piece.NameInSquad, piece, wrapper, sprite, isBlack, IsKing);
+            });
+
         }
+
+
     }
 
 }
