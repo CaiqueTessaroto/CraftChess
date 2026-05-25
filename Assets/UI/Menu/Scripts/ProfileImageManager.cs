@@ -20,7 +20,7 @@ public class ProfileImageManager : MonoBehaviour
 
     [Header("Padrão")]
     [Tooltip("Sprite exibido quando nenhuma imagem foi salva ainda.")]
-    [SerializeField] public Sprite defaultSprite;
+    [SerializeField] private Sprite defaultSprite;
 
     // ── Constantes ─────────────────────────────────────────────────────────────
     private const string FILE_NAME = "profile_image.png";
@@ -45,7 +45,7 @@ public class ProfileImageManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -167,6 +167,7 @@ public class ProfileImageManager : MonoBehaviour
             Rect rect = new Rect(0, 0, texture.width, texture.height);
             Vector2 pivot = new Vector2(0.5f, 0.5f);
             profileImage.sprite = Sprite.Create(texture, rect, pivot);
+            NetworkLobbyManager.Instance.CurrentSprite = profileImage.sprite;
         }
     }
 

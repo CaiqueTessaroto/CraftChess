@@ -26,6 +26,9 @@ public class NetworkLobbyManager : MonoBehaviour
 
     public bool startedHost = false;
 
+    [Header("Player")]
+    public Sprite CurrentSprite;
+
     private void Awake()
     {
         Instance = this;

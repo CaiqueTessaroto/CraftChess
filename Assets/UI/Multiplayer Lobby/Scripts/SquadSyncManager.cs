@@ -403,6 +403,7 @@ public class SquadSyncManager : NetworkBehaviour
 
     private void SendProfileImage(ulong targetClientId, bool toHost)
     {
+        // Texture 'King' is not readabl
         byte[] raw = ProfileImageManager.Instance?.CurrentTexture != null
             ? ProfileImageManager.Instance.CurrentTexture.EncodeToPNG()
             : null;

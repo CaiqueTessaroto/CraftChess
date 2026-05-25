@@ -275,9 +275,9 @@ public class MultiplayerLobbyUI : MonoBehaviour
         bool isHost = NetworkManager.Singleton.IsHost;
 
         if (isHost)
-            play1ProfileImage.sprite = ProfileImageManager.Instance.defaultSprite;
+            play1ProfileImage.sprite = NetworkLobbyManager.Instance.CurrentSprite;
         else
-            play2ProfileImage.sprite = ProfileImageManager.Instance.defaultSprite;
+            play2ProfileImage.sprite = NetworkLobbyManager.Instance.CurrentSprite;
 
         play.gameObject.SetActive(isHost);
         ready.gameObject.SetActive(!isHost);

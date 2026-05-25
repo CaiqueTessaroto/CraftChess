@@ -132,6 +132,10 @@ public class MultiplayerPieceInfo : MonoBehaviour
 
     }
 
+        //string name = fileName.Replace(squad, "").Trim();
+        //string name = fileName.Trim();
+        //string name = fileName.Replace(" ", "").Trim();
+
     public IEnumerator LoadPiecesImage(string fileName, string squad, Transform content)
     {
         //Transform content = panel.transform;
@@ -140,10 +144,6 @@ public class MultiplayerPieceInfo : MonoBehaviour
 
         // Define o nome do objeto (opcional)
         clone.name = "Preview_" + fileName;
-
-        //string name = fileName.Replace(squad, "").Trim();
-        //string name = fileName.Trim();
-        //string name = fileName.Replace(" ", "").Trim();
 
         // Acha a imagem dentro do painel
         Image img = clone.GetComponentInChildren<Image>();
@@ -172,12 +172,6 @@ public class MultiplayerPieceInfo : MonoBehaviour
             else
                 Debug.LogWarning($"Sprite not found for piece: {fileName} in squad: {squad}");
         }
-
-        //foreach (var key in MultiplayerLobbyState.BlackSquad.Sprites.Keys)
-        //{
-        //    Debug.Log(key);
-        //}
-
 
         if (img != null)
         {
