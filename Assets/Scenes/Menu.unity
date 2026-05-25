@@ -16391,7 +16391,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1707997318}
   - component: {fileID: 1707997319}
-  - component: {fileID: 1707997320}
   m_Layer: 5
   m_Name: Manager
   m_TagString: Untagged
@@ -16440,24 +16439,6 @@ MonoBehaviour:
   avatarFolderPath: Sprites/Avatar
   selectedTint: {r: 1, g: 1, b: 1, a: 1}
   deselectedTint: {r: 1, g: 1, b: 1, a: 1}
---- !u!114 &1707997320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1707997317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9557e7b9d5a604147bb0ed09e08d691b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProfileImageManager
-  fileManager: {fileID: 1644238717}
-  folderNavigation: {fileID: 342750339}
-  profileRawImage: {fileID: 0}
-  profileImage: {fileID: 1290028345}
-  setAvatarButton: {fileID: 827599604}
-  defaultSprite: {fileID: 21300000, guid: b22367c0b0715fd4c9b4423c614eeba5, type: 3}
 --- !u!1 &1733793182
 GameObject:
   m_ObjectHideFlags: 0
@@ -18252,6 +18233,56 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2131095872
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2131095874}
+  - component: {fileID: 2131095873}
+  m_Layer: 0
+  m_Name: ProfileImageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2131095873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131095872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9557e7b9d5a604147bb0ed09e08d691b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProfileImageManager
+  fileManager: {fileID: 1644238717}
+  folderNavigation: {fileID: 342750339}
+  profileRawImage: {fileID: 0}
+  profileImage: {fileID: 1290028345}
+  setAvatarButton: {fileID: 827599604}
+  defaultSprite: {fileID: 21300000, guid: b22367c0b0715fd4c9b4423c614eeba5, type: 3}
+--- !u!4 &2131095874
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131095872}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 223.4494, y: 518.8411, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2138550293
 GameObject:
   m_ObjectHideFlags: 0
@@ -18800,3 +18831,4 @@ SceneRoots:
   - {fileID: 1733793184}
   - {fileID: 201686082}
   - {fileID: 877656735}
+  - {fileID: 2131095874}

@@ -32,9 +32,10 @@ public static class MultiplayerLobbyState
     public static bool LocalIsWhite;
     public static string WhiteSquadOwnerId;  // clientId de quem enviou o White
     public static string BlackSquadOwnerId;  // clientId de quem enviou o Black
-
     public static Dictionary<string, byte[]> WhiteSpritesRaw = new Dictionary<string, byte[]>();
     public static Dictionary<string, byte[]> BlackSpritesRaw = new Dictionary<string, byte[]>();
+    public static byte[] HostProfileImageRaw; 
+    public static byte[] ClientProfileImageRaw;
     public static void Log(string context = "")
     {
         string white = WhiteSquad?.Data?.Name ?? "null";
@@ -192,6 +193,8 @@ public class SquadSyncManager : NetworkBehaviour
 {
     public static SquadSyncManager Instance { get; private set; }
 
+    private const string MSG_PROFILE_HOST_TO_CLIENT = "ProfileImage_H2C";
+    private const string MSG_PROFILE_CLIENT_TO_HOST = "ProfileImage_C2H";
     // ─── Eventos ───────────────────────────────────────────────────────────
     public event Action<bool> OnRemoteSquadReady; // true = White, false = Black
 
@@ -353,6 +356,8 @@ public class SquadSyncManager : NetworkBehaviour
         {
             NetworkManager.Singleton.CustomMessagingManager
                 .RegisterNamedMessageHandler(MSG_SPRITE_CLIENT_TO_HOST, OnReceiveSpriteFromClient);
+            NetworkManager.Singleton.CustomMessagingManager
+                .RegisterNamedMessageHandler(MSG_PROFILE_CLIENT_TO_HOST, OnReceiveProfileFromClient); 
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
         }
@@ -360,6 +365,8 @@ public class SquadSyncManager : NetworkBehaviour
         {
             NetworkManager.Singleton.CustomMessagingManager
                 .RegisterNamedMessageHandler(MSG_SPRITE_HOST_TO_CLIENT, OnReceiveSpriteFromHost);
+            NetworkManager.Singleton.CustomMessagingManager
+                .RegisterNamedMessageHandler(MSG_PROFILE_HOST_TO_CLIENT, OnReceiveProfileFromHost);
         }
     }
 
@@ -371,6 +378,10 @@ public class SquadSyncManager : NetworkBehaviour
                 .UnregisterNamedMessageHandler(MSG_SPRITE_HOST_TO_CLIENT);
             NetworkManager.Singleton.CustomMessagingManager
                 .UnregisterNamedMessageHandler(MSG_SPRITE_CLIENT_TO_HOST);
+            NetworkManager.Singleton.CustomMessagingManager
+                .UnregisterNamedMessageHandler(MSG_PROFILE_HOST_TO_CLIENT);
+            NetworkManager.Singleton.CustomMessagingManager
+                .UnregisterNamedMessageHandler(MSG_PROFILE_CLIENT_TO_HOST);
         }
 
         if (IsHost && NetworkManager.Singleton != null)
@@ -383,6 +394,61 @@ public class SquadSyncManager : NetworkBehaviour
     // ───────────────────────────────────────────────────────────────────────
     // PASSO 1 — Host detecta client conectado
     // ───────────────────────────────────────────────────────────────────────
+
+    private void SendProfileImage(ulong targetClientId, bool toHost)
+    {
+        byte[] raw = ProfileImageManager.Instance?.CurrentTexture != null
+            ? ProfileImageManager.Instance.CurrentTexture.EncodeToPNG()
+            : null;
+
+        if (raw == null || raw.Length == 0)
+        {
+            Debug.Log("[SquadSync] Sem foto de perfil para enviar.");
+            return;
+        }
+
+        var writer = new FastBufferWriter(4 + raw.Length + 8, Allocator.Temp);
+        using (writer)
+        {
+            writer.WriteValueSafe(raw.Length);
+            writer.WriteBytesSafe(raw);
+
+            if (toHost)
+            {
+                NetworkManager.Singleton.CustomMessagingManager.SendNamedMessage(
+                    MSG_PROFILE_CLIENT_TO_HOST, NetworkManager.ServerClientId, writer,
+                    NetworkDelivery.ReliableFragmentedSequenced);
+            }
+            else
+            {
+                NetworkManager.Singleton.CustomMessagingManager.SendNamedMessage(
+                    MSG_PROFILE_HOST_TO_CLIENT, targetClientId, writer,
+                    NetworkDelivery.ReliableFragmentedSequenced);
+            }
+        }
+
+        Debug.Log($"[SquadSync] ProfileImage enviada | {raw.Length / 1024f:F1} kb | para: {(toHost ? "Host" : "Client")}");
+    }
+
+    private void OnReceiveProfileFromClient(ulong senderId, FastBufferReader reader)
+        => ProcessReceivedProfile(reader);
+
+    private void OnReceiveProfileFromHost(ulong senderId, FastBufferReader reader)
+        => ProcessReceivedProfile(reader);
+
+    private void ProcessReceivedProfile(FastBufferReader reader)
+    {
+        reader.ReadValueSafe(out int length);
+        byte[] raw = new byte[length];
+        reader.ReadBytesSafe(ref raw, length);
+
+        if (IsHost) MultiplayerLobbyState.ClientProfileImageRaw = raw;
+        else         MultiplayerLobbyState.HostProfileImageRaw = raw;
+
+        Debug.Log($"[SquadSync] ProfileImage recebida | {length / 1024f:F1} kb");
+
+        MultiplayerLobbyUI.Instance?.ApplyProfileImages();
+    }
 
     private void OnClientDisconnect(ulong clientId)
     {
@@ -398,14 +464,21 @@ public class SquadSyncManager : NetworkBehaviour
 
                 FileManager.Instance.SpawnMessage(text);
             }
+
+            NetworkManager.Singleton.CustomMessagingManager
+                .UnregisterNamedMessageHandler(MSG_PROFILE_CLIENT_TO_HOST);
         }
         else
         {
+            NetworkManager.Singleton.CustomMessagingManager
+                .UnregisterNamedMessageHandler(MSG_PROFILE_HOST_TO_CLIENT);
+
             // Cliente perdeu conexão com o host
             NetworkLobbyManager.Instance.HandleDisconnect();
         }
 
     }
+    
     private void OnClientConnected(ulong clientId)
     {
 
@@ -435,8 +508,16 @@ public class SquadSyncManager : NetworkBehaviour
             StartCoroutine(SendSpritesToClient(NetworkManager.Singleton.ConnectedClientsIds, false));
         }
 
+        //host envia a dele pro client
+        StartCoroutine(SendProfileImageDelayed(clientId));
         // Pede o squad do client
         RequestSquadFromClientRpc(clientId);
+    }
+
+    private IEnumerator SendProfileImageDelayed(ulong clientId)
+    {
+        yield return new WaitForSeconds(1f); // aguarda o client registrar o handler
+        SendProfileImage(clientId, toHost: false);
     }
 
     // ───────────────────────────────────────────────────────────────────────
@@ -447,6 +528,9 @@ public class SquadSyncManager : NetworkBehaviour
     private void RequestSquadFromClientRpc(ulong targetClientId)
     {
         if (NetworkManager.Singleton.LocalClientId != targetClientId) return;
+
+        //client envia a dele pro host
+        StartCoroutine(SendProfileImageDelayed_Client());
 
         bool isWhite = MultiplayerLobbyState.LocalIsWhite;
 
@@ -459,7 +543,14 @@ public class SquadSyncManager : NetworkBehaviour
         Debug.Log("[SquadSync] Recebi pedido do host. Enviando meu squad...");
 
         SendSquadJsonToHostServerRpc(BuildJsonPayload(isWhite));
+
         StartCoroutine(SendSpritesToHost(isWhite));
+    }
+
+    private IEnumerator SendProfileImageDelayed_Client()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SendProfileImage(NetworkManager.ServerClientId, toHost: true);
     }
 
     // ───────────────────────────────────────────────────────────────────────
@@ -720,11 +811,11 @@ public class SquadSyncManager : NetworkBehaviour
 
         return new SquadJsonPayload
         {
-            SquadJson = JsonUtility.ToJson(squad.Data),
-            PieceCount = pieceJsons.Count,
-            Pieces = pieceJsons.ToArray(),
-            IsWhite = isWhite,
-            SenderId = senderId ?? NetworkManager.Singleton.LocalClientId.ToString(),
+            SquadJson     = JsonUtility.ToJson(squad.Data),
+            PieceCount    = pieceJsons.Count,
+            Pieces        = pieceJsons.ToArray(),
+            IsWhite       = isWhite,
+            SenderId      = senderId ?? NetworkManager.Singleton.LocalClientId.ToString(),
             SquadImageRaw = squad.SquadImageRaw
         };
     }
@@ -799,16 +890,12 @@ public struct SquadJsonPayload : INetworkSerializable
         serializer.SerializeValue(ref IsWhite);
         serializer.SerializeValue(ref SenderId);
 
-        // Serializa byte[] manualmente
+        // SquadImageRaw
         int imageLen = SquadImageRaw?.Length ?? 0;
         serializer.SerializeValue(ref imageLen);
-
-        if (serializer.IsReader)
-            SquadImageRaw = imageLen > 0 ? new byte[imageLen] : null;
-
+        if (serializer.IsReader) SquadImageRaw = imageLen > 0 ? new byte[imageLen] : null;
         for (int i = 0; i < imageLen; i++)
             serializer.SerializeValue(ref SquadImageRaw[i]);
-        //
 
         if (serializer.IsReader)
             Pieces = new PieceJsonData[PieceCount];

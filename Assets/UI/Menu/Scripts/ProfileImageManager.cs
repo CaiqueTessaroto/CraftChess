@@ -20,7 +20,7 @@ public class ProfileImageManager : MonoBehaviour
 
     [Header("Padrão")]
     [Tooltip("Sprite exibido quando nenhuma imagem foi salva ainda.")]
-    [SerializeField] private Sprite defaultSprite;
+    [SerializeField] public Sprite defaultSprite;
 
     // ── Constantes ─────────────────────────────────────────────────────────────
     private const string FILE_NAME = "profile_image.png";

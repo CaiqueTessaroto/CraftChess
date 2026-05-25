@@ -14,6 +14,10 @@ public class MultiplayerLobbyUI : MonoBehaviour
     public MultiplayerPieceInfo multiplayerPieceInfo;
     public GridLobby gridLobby;
 
+    [Header("Fotos de Perfil")]
+    public Image play1ProfileImage;
+    public Image play2ProfileImage;
+
     [Header("Buttons")]
     public Button play;
     public Button ready;
@@ -226,11 +230,17 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
         if (NetworkManager.Singleton.IsListening)
             SetupButtons();
+
     }
 
     private void SetupButtons()
     {
         bool isHost = NetworkManager.Singleton.IsHost;
+
+        if (isHost)
+            play1ProfileImage.sprite = ProfileImageManager.Instance.defaultSprite;
+        else
+            play2ProfileImage.sprite = ProfileImageManager.Instance.defaultSprite;
 
         play.gameObject.SetActive(isHost);
         ready.gameObject.SetActive(!isHost);
@@ -318,6 +328,24 @@ public class MultiplayerLobbyUI : MonoBehaviour
         gridLobby.ClearGrid(gridLobby.posInGrid);
 
         //Debug.Log($"[MultiplayerLobbyUI] Painel {(isWhite ? "White" : "Black")} atualizado localmente.");
+    }
+
+    public void ApplyProfileImages()
+    {
+        ApplyProfileImage(MultiplayerLobbyState.HostProfileImageRaw, play1ProfileImage);
+        ApplyProfileImage(MultiplayerLobbyState.ClientProfileImageRaw, play2ProfileImage);
+    }
+
+    private void ApplyProfileImage(byte[] raw, Image target)
+    {
+        if (target == null || raw == null || raw.Length == 0) return;
+
+        Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+        if (!tex.LoadImage(raw)) return;
+
+        Rect rect = new Rect(0, 0, tex.width, tex.height);
+        Vector2 pivot = new Vector2(0.5f, 0.5f);
+        target.sprite = Sprite.Create(tex, rect, pivot);
     }
 
     public void UpdateSquadInLobby(MatchSquadData squad, Transform gridPainel, TMP_Text squadName, TMP_Text squadName2, bool isBlack)
