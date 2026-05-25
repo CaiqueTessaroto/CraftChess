@@ -19,16 +19,20 @@ public class MenuButtonsManager : MonoBehaviour
     public GameObject settingsPanel;
 
     [Header("Play:")]
+    public Button multiplayer;
+    public Button singleplayer;
+    public GameObject playPanel;
+
+    [Header("Single Player:")]
     public Button playIA;
     public Button local;
     public Button simulation;
-    public Button multiplayer;
-    public GameObject playPanel;
-    public GameObject multiplayerPanel;
+    public GameObject singlePanel;
 
-    [Header("Multiplay:")]
+    [Header("Multiplayer:")]
     public Button createLobby;
     public Button enterLobby;
+    public GameObject multiplayerPanel;
     public TMP_InputField codeLobby;
 
     [Header("Create:")]
@@ -95,10 +99,15 @@ public class MenuButtonsManager : MonoBehaviour
             gameManager.ChangeScene("Single Lobby");
 
         });
+
+        singleplayer.onClick.AddListener(() =>
+        {
+            SwitchPainelTo(singlePanel);
+        });
+
         multiplayer.onClick.AddListener(() =>
         {
             SwitchPainelTo(multiplayerPanel);
-
         });
 
         createLobby.onClick.AddListener(() =>
@@ -148,6 +157,7 @@ public class MenuButtonsManager : MonoBehaviour
         playPanel.SetActive(false);
         settingsPanel.SetActive(false);
         multiplayerPanel.SetActive(false);
+        singlePanel.SetActive(false);
 
 
         painel.SetActive(true);

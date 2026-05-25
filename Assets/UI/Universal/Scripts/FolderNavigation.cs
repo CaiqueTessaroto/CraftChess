@@ -16,6 +16,7 @@ public class FolderNavigation : MonoBehaviour
     public NavigationManage_Create manageCreate;
     public NavigationManage_Painting managePainting;
     public NavigationManage_Squad manageSquad;
+    public ProfileImageManager profileImageManager;
 
     [Header("Prefabs")]
     public GameObject folderbuttonPrefab;
@@ -73,7 +74,10 @@ public class FolderNavigation : MonoBehaviour
             if (manageSquad)
                 piecesBtw.gameObject.SetActive(false);
         }
-
+        if (profileImageManager == null)
+        {
+            profileImageManager = FindFirstObjectByType<ProfileImageManager>();
+        }
 
         allBtw.onClick.AddListener(() =>
         {
@@ -196,6 +200,15 @@ public class FolderNavigation : MonoBehaviour
             managePainting.OnClickFolder(pasta, newButton, rootPath);
         else if (manageSquad)
             manageSquad.OnClickFolder(pasta, newButton, rootPath);
+        else if (profileImageManager)
+        {
+            uIHelperUtils.back = true;
+            uIHelperUtils.change = false;
+
+            fileNavigation.StartCreatingFileButtons(pasta, rootPath, fileManager.basePath_Sprite);
+            panelFolders.SetActive(false);
+            fileNavigation.panelFile.SetActive(true);
+        }
 
     }
 

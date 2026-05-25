@@ -18,6 +18,7 @@ public class FileNavigation : MonoBehaviour
     public NavigationManage_Create manageCreate;
     public NavigationManage_Painting managePainting;
     public NavigationManage_Squad manageSquad;
+    public ProfileImageManager profileImageManager;
 
     [Header("Prefabs")]
     public GameObject fileButtonPrefab;
@@ -57,14 +58,16 @@ public class FileNavigation : MonoBehaviour
 
 
         if (manageCreate == null)
-        {
             manageCreate = FindFirstObjectByType<NavigationManage_Create>();
-        }
+    
         if (managePainting == null)
-        {
             managePainting = FindFirstObjectByType<NavigationManage_Painting>();
-        }
+        
+        if (manageSquad == null)
+            manageSquad = FindFirstObjectByType<NavigationManage_Squad>();
 
+        if (profileImageManager == null)
+            profileImageManager = FindFirstObjectByType<ProfileImageManager>();
 
         allBtw.onClick.AddListener(() =>
         {
@@ -330,6 +333,8 @@ public class FileNavigation : MonoBehaviour
                     else if (manageSquad)
                         manageSquad.OnClickFile(jsonPathCopy, rootPath, pastaCopy);
 
+                    panelFile.SetActive(false);
+
                 });
 
                 // Espera 1 frame antes de continuar (alivia a UI)
@@ -391,7 +396,9 @@ public class FileNavigation : MonoBehaviour
                     textComp.text = name;
                 }
 
+                Sprite spriteCopy = sprite;
                 string fileCopy = file; // evita closure
+
                 newButton.GetComponent<Button>().onClick.AddListener(() =>
                 {
                     string nameFolder = Path.GetFileName(Path.GetDirectoryName(fileCopy));
@@ -399,9 +406,13 @@ public class FileNavigation : MonoBehaviour
                     //deleteObj.SetActive(false);
 
                     if (manageCreate)
-                        manageCreate.HandleSelectionArt(Path.GetFileNameWithoutExtension(fileCopy), nameFolder, sprite, rootPath);
+                        manageCreate.HandleSelectionArt(Path.GetFileNameWithoutExtension(fileCopy), nameFolder, spriteCopy, rootPath);
                     else if (managePainting)
                         managePainting.OnFileClick(newButton, fileName, nameFolder, rootPath);
+                    else if (profileImageManager)
+                        profileImageManager.OnImageSelected(spriteCopy.texture);
+
+                    panelFile.SetActive(false);
                 });
 
                 yield return null;
@@ -497,6 +508,8 @@ public class FileNavigation : MonoBehaviour
                         string fileName = Path.GetFileNameWithoutExtension(jsonPath);
                         if (manageCreate)
                             manageCreate.OnFileClick(newButton, fileName, jsonPath, folder, sprite, rootPath, piece);
+
+                        panelFile.SetActive(false);
                     });
                 }
                 catch (Exception e)
@@ -550,7 +563,9 @@ public class FileNavigation : MonoBehaviour
                     textComp.text = name;
                 }
 
+                Sprite spriteCopy = spriteData.Sprite;
                 string pathCopy = spriteData.PngPath;
+
                 newButton.GetComponent<Button>().onClick.AddListener(() =>
                 {
                     string pastaCopy = Path.GetFileName(Path.GetDirectoryName(pathCopy));
@@ -558,9 +573,14 @@ public class FileNavigation : MonoBehaviour
 
 
                     if (manageCreate)
-                        manageCreate.HandleSelectionArt(fileName, pastaCopy, spriteData.Sprite, rootPath);
+                        manageCreate.HandleSelectionArt(fileName, pastaCopy, spriteCopy, rootPath);
                     else if (managePainting)
                         managePainting.OnFileClick(newButton, fileName, pastaCopy, rootPath);
+                    else if (profileImageManager)
+                        profileImageManager.OnImageSelected(spriteCopy.texture);
+
+                    panelFile.SetActive(false);
+
                 });
 
                 yield return null;
