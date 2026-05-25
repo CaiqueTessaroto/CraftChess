@@ -161,12 +161,48 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
         blackDowloadBtn.onClick.AddListener(() =>
         {
-            MultiplayerLobbyState.DownloadSquad(isWhite: false);
+
+
+            string title = UIHelperUtils.T("downloading_title");
+
+            if (string.IsNullOrEmpty(title))
+                title = "Download Squad";
+
+            string message = UIHelperUtils.T("downloading_message");
+
+            if (string.IsNullOrEmpty(message))
+                message = "This squad is not available on your device. Do you want to download it?";
+
+            void DownloadSquad()
+            {
+                MultiplayerLobbyState.DownloadSquad(isWhite: false);
+            }
+
+            FileManager.Instance.CreateWarning(title, message, DownloadSquad);
+
+            //MultiplayerLobbyState.DownloadSquad(isWhite: false);
         });
 
         whiteDowloadBtn.onClick.AddListener(() =>
         {
-            MultiplayerLobbyState.DownloadSquad(isWhite: true);
+            string title = UIHelperUtils.T("downloading_title");
+
+            if (string.IsNullOrEmpty(title))
+                title = "Download Squad";
+
+            string message = UIHelperUtils.T("downloading_message");
+
+            if (string.IsNullOrEmpty(message))
+                message = "This squad is not available on your device. Do you want to download it?";
+
+            void DownloadSquad()
+            {
+                MultiplayerLobbyState.DownloadSquad(isWhite: true);
+            }
+
+            FileManager.Instance.CreateWarning(title, message, DownloadSquad);
+
+            //MultiplayerLobbyState.DownloadSquad(isWhite: true);
         });
 
         blackBtn.onClick.AddListener(() =>
