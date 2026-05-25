@@ -811,6 +811,22 @@
     {
       "key": "cartase.enter",
       "value": "プロジェクトを支援"
-    }
+    },
+
+  { "key": "lobby_no_player", "value": "ロビーに接続している他のプレイヤーはいません。" },
+  { "key": "lobby_entered", "value": "プレイヤーがロビーに参加しました。" },
+  { "key": "lobby_exited", "value": "プレイヤーがロビーから退出しました。" },
+  { "key": "MULTIPLAYER", "value": "マルチプレイヤー" },
+  { "key": "SINGLEPLAYER", "value": "シングルプレイヤー" },
+  { "key": "Enter_Code", "value": "コードを入力" },
+  { "key": "Create_Lobby", "value": "ロビーを作成" },
+  { "key": "Enter_Lobby", "value": "ロビーに入る" },
+  { "key": "lobby_creating", "value": "ロビーを作成中..." },
+  { "key": "lobby_code_copied", "value": "ロビーコードをクリップボードにコピーしました。" },
+  { "key": "READY", "value": "準備完了" },
+  { "key": "Cancel_Ready", "value": "準備完了を取り消す" },
+  { "key": "downloading_title", "value": "チームをダウンロード" },
+  { "key": "downloading_message", "value": "このチームはお使いのデバイスでは利用できません。ダウンロードしますか？" }
+
   ]
 }

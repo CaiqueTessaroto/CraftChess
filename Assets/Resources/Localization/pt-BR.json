@@ -312,7 +312,26 @@
   { "key": "credits.explanation", "value": "Clique aqui para ver os créditos do jogo e conhecer as pessoas que ajudaram a tornar este projeto realidade." },
 
   { "key": "cartase.explanation", "value": "Contribua com o projeto no Catarse, nosso financiamento coletivo, e ajude a viabilizar novos modos, mecânicas e multiplayer online, com recompensas exclusivas para apoiadores." },
-  { "key": "cartase.enter", "value": "Apoiar o Projeto" }
+  { "key": "cartase.enter", "value": "Apoiar o Projeto" },
 
+
+
+
+
+  { "key": "lobby_no_player", "value": "Não há outro jogador conectado ao lobby." },
+  { "key": "lobby_entered", "value": "Um jogador entrou no lobby." },
+  { "key": "lobby_exited", "value": "Um jogador saiu do lobby." },
+  { "key": "MULTIPLAYER", "value": "Multijogador" },
+  { "key": "SINGLEPLAYER", "value": "Um Jogador" },
+  { "key": "Enter_Code", "value": "Inserir Código" },
+  { "key": "Create_Lobby", "value": "Criar lobby" },
+  { "key": "Enter_Lobby", "value": "Entrar no Lobby" },
+  { "key": "lobby_creating", "value": "Criando lobby..." },
+  { "key": "lobby_code_copied", "value": "Código do lobby copiado para a área de transferência." },
+  { "key": "READY", "value": "Pronto" },
+  { "key": "Cancel_Ready", "value": "Cancelar" },
+  { "key": "downloading_title", "value": "Baixar Esquadrão" },
+  { "key": "downloading_message", "value": "Este esquadrão não está disponível no seu dispositivo. Deseja baixá-lo?" }
+  
   ]
 }

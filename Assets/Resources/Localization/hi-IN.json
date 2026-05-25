@@ -811,6 +811,23 @@
     {
       "key": "cartase.enter",
       "value": "परियोजना का समर्थन करें"
-    }
+    },
+
+
+  { "key": "lobby_no_player", "value": "लॉबी से कोई अन्य खिलाड़ी कनेक्ट नहीं है।" },
+  { "key": "lobby_entered", "value": "एक खिलाड़ी लॉबी में शामिल हो गया है।" },
+  { "key": "lobby_exited", "value": "एक खिलाड़ी लॉबी से बाहर हो गया है।" },
+  { "key": "MULTIPLAYER", "value": "मल्टीप्लेयर" },
+  { "key": "SINGLEPLAYER", "value": "एकल खिलाड़ी" },
+  { "key": "Enter_Code", "value": "कोड दर्ज करें" },
+  { "key": "Create_Lobby", "value": "लॉबी बनाएँ" },
+  { "key": "Enter_Lobby", "value": "लॉबी में प्रवेश करें" },
+  { "key": "lobby_creating", "value": "लॉबी बन रही है..." },
+  { "key": "lobby_code_copied", "value": "लॉबी कोड क्लिपबोर्ड पर कॉपी कर दिया गया है।" },
+  { "key": "READY", "value": "तैयार" },
+  { "key": "Cancel_Ready", "value": "तैयार रद्द करें" },
+  { "key": "downloading_title", "value": "दस्ता डाउनलोड करें" },
+  { "key": "downloading_message", "value": "यह दस्ता आपके डिवाइस पर उपलब्ध नहीं है। क्या आप इसे डाउनलोड करना चाहते हैं?" }
+
   ]
 }
