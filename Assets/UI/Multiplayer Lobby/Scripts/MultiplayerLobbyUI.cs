@@ -187,6 +187,7 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
         Back.onClick.AddListener(() =>
         {
+            MultiplayerLobbyState.Reset();
             //sair do lobby
             try
             {
@@ -383,16 +384,17 @@ public class MultiplayerLobbyUI : MonoBehaviour
             if (isBlack)
             {
                 if (MultiplayerLobbyState.BlackSquadOwnerId != NetworkManager.Singleton.LocalClientId.ToString())
-                {
                     blackDowloadBtn.gameObject.SetActive(true);
-                }
+                else
+                    blackDowloadBtn.gameObject.SetActive(false);
             }
             else
             {
                 if (MultiplayerLobbyState.WhiteSquadOwnerId != NetworkManager.Singleton.LocalClientId.ToString())
-                {
                     whiteDowloadBtn.gameObject.SetActive(true);
-                }
+                else
+                    whiteDowloadBtn.gameObject.SetActive(false);
+
             }
 
             RenderPiecesGrid(gridPainel, squad, isBlack);

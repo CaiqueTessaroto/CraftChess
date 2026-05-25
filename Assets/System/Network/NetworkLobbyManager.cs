@@ -227,6 +227,7 @@ public class NetworkLobbyManager : MonoBehaviour
     }
     public void HandleDisconnect(string scene = "Menu")
     {
+        MultiplayerLobbyState.Reset();
         currentLobby = null;
         NetworkManager.Singleton.Shutdown();
 
@@ -270,7 +271,7 @@ public class NetworkLobbyManager : MonoBehaviour
             {
                 // Pega a mensagem interna sem acessar .Message direto no AggregateException
                 string error = task.Exception?.InnerException?.Message ?? "Unknown error";
-                Debug.LogWarning($"[Poll] {error}");
+                //Debug.LogWarning($"[Poll] {error}");
                 continue;
             }
 

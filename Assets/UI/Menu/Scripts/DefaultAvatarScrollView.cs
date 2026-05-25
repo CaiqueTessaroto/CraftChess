@@ -143,8 +143,10 @@ public class DefaultAvatarScrollView : MonoBehaviour
             return;
         }
 
+        scrollViewPanel.SetActive(false); // Fecha o painel de seleção
+
         ProfileImageManager.Instance.OnImageSelected(_selectedSprite.texture);
 
-        Debug.Log($"[DefaultAvatarScrollView] Avatar confirmado: {_selectedSprite.name}");
+        //Debug.Log($"[DefaultAvatarScrollView] Avatar confirmado: {_selectedSprite.name}");
     }
 }

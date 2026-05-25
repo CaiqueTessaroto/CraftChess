@@ -186,6 +186,21 @@ public static class MultiplayerLobbyState
         Debug.Log($"[MultiplayerLobbyState] Download completo → {squadFolder}");
     }
 
+    public static void Reset()
+    {
+        WhiteSquad = null;
+        BlackSquad = null;
+        LocalIsWhite = false;
+        WhiteSquadOwnerId = null;
+        BlackSquadOwnerId = null;
+
+        WhiteSpritesRaw.Clear();
+        BlackSpritesRaw.Clear();
+
+        HostProfileImageRaw   = null;
+        ClientProfileImageRaw = null;
+    }
+
 }
 
 
@@ -231,16 +246,7 @@ public class SquadSyncManager : NetworkBehaviour
         expectedSpriteCountWhite = expectedSpriteCountBlack = 0;
         receivedSpriteCountWhite = receivedSpriteCountBlack = 0;
         jsonReceivedWhite = jsonReceivedBlack = false;
-
-        //WhiteSquad = null;
-        //BlackSquad = null;
-
-        //WhiteSquad = MultiplayerLobbyState.WhiteSquad;
-        //BlackSquad = MultiplayerLobbyState.BlackSquad;
-
-        //Debug.Log("[SquadSync] Estado de sync resetado.");
     }
-
     // ───────────────────────────────────────────────────────────────────────
     // API PÚBLICA
     // ───────────────────────────────────────────────────────────────────────
@@ -511,7 +517,7 @@ public class SquadSyncManager : NetworkBehaviour
         //host envia a dele pro client
         StartCoroutine(SendProfileImageDelayed(clientId));
         // Pede o squad do client
-        RequestSquadFromClientRpc(clientId);
+        // RequestSquadFromClientRpc(clientId);
     }
 
     private IEnumerator SendProfileImageDelayed(ulong clientId)

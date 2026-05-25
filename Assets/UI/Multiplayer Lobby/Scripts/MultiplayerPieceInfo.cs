@@ -150,6 +150,13 @@ public class MultiplayerPieceInfo : MonoBehaviour
 
         Sprite sprite = null;
 
+        if (MultiplayerLobbyState.WhiteSquad?.Sprites == null || 
+            MultiplayerLobbyState.BlackSquad?.Sprites == null)
+        {
+            Debug.LogWarning("MultiplayerLobbyState or squads not properly initialized.");
+            yield break;
+        }
+
         if (isWhite)
         {
             if (MultiplayerLobbyState.WhiteSquad.Sprites.ContainsKey($"{fileName}"))
