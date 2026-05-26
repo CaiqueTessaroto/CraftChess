@@ -142,6 +142,48 @@ public class MultiplayerLobbyUI : MonoBehaviour
                 return;
             }
 
+            /*
+            if (currentMatch.StartOption == StartOption.Black)
+            {
+                BlackSquad.Player = new Player("Jogador", 1, Color.black);
+                WhiteSquad.Player = new Player("Bot", 0, Color.white);
+
+                Squads.Add(WhiteSquad);
+                Squads.Add(BlackSquad);
+
+            }
+            else if (currentMatch.StartOption == StartOption.White)
+            {
+                WhiteSquad.Player = new Player("Jogador", 0, Color.white);
+                BlackSquad.Player = new Player("Bot", 1, Color.black);
+
+                Squads.Add(WhiteSquad);
+                Squads.Add(BlackSquad);
+            }
+            else
+            {
+                bool userStarts = UnityEngine.Random.value > 0.5f;
+
+                if (userStarts)
+                {
+                    BlackSquad.Player = new Player("Jogador", 1, Color.black);
+                    WhiteSquad.Player = new Player("Bot", 0, Color.white);
+
+                    Squads.Add(WhiteSquad);
+                    Squads.Add(BlackSquad);
+
+                }
+                else
+                {
+                    WhiteSquad.Player = new Player("Jogador", 0, Color.white);
+                    BlackSquad.Player = new Player("Bot", 1, Color.black);
+
+                    Squads.Add(WhiteSquad);
+                    Squads.Add(BlackSquad);
+                }
+
+                //Debug.Log($"Começo aleatório → {(userStarts ? "Jogador começa" : "Bot começa")}");
+            */
 
         });
 
@@ -451,11 +493,12 @@ public class MultiplayerLobbyUI : MonoBehaviour
             Destroy(child.gameObject);
 
         foreach (var piece in squad.Data.Pieces)
-        {
+        {   
 
-            //if (squad.Sprites.ContainsKey(piece.NameInSquad))
+            Sprite sprite = null;
 
-            Sprite sprite = squad.Sprites[piece.NameInSquad];
+            if (squad.Sprites.ContainsKey(piece.NameInSquad))
+                sprite = squad.Sprites[piece.NameInSquad];
 
             MovementConfigData wrapper = squad.Pieces[piece.NameInSquad];
 
@@ -464,7 +507,17 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
             Image imgComp = img.GetComponent<Image>();
             if (imgComp != null)
-                imgComp.sprite = sprite;
+            {
+                if (sprite != null)
+                {
+                    imgComp.sprite = sprite;
+                    imgComp.color = Color.white; // visível
+                }
+                else
+                {
+                    imgComp.color = Color.clear; // invisível (alpha = 0)
+                }
+            }
 
             TextMeshProUGUI text = img.GetComponentInChildren<TextMeshProUGUI>();
             if (text != null)

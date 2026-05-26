@@ -14,7 +14,6 @@ public class NavigationManage_Lobby : MonoBehaviour
 
     [Header("Scripts")]
     public InteractiveLobby interactiveLobby;
-    public InteractiveMultiplayerLobby interactiveMultiplayerLobby;
 
     [Header("Options")]
     public Button allBtw;
@@ -34,9 +33,6 @@ public class NavigationManage_Lobby : MonoBehaviour
 
         if (interactiveLobby == null)
             interactiveLobby = FindFirstObjectByType<InteractiveLobby>();
-
-        if (interactiveMultiplayerLobby == null)
-            interactiveMultiplayerLobby = FindFirstObjectByType<InteractiveMultiplayerLobby>();
 
         allBtw.onClick.AddListener(() =>
         {
@@ -184,7 +180,7 @@ public class NavigationManage_Lobby : MonoBehaviour
 
             // Imagem
             Image imageComponent = newButton.GetComponentInChildren<Image>();
-            if (imageComponent != null)
+            if (imageComponent != null && File.Exists(pngFile))
             {
                 byte[] bytes = File.ReadAllBytes(pngFile);
                 Texture2D tex = new Texture2D(2, 2);
