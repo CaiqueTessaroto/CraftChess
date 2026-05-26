@@ -318,20 +318,70 @@
 
 
 
-  { "key": "lobby_no_player", "value": "Não há outro jogador conectado ao lobby." },
-  { "key": "lobby_entered", "value": "Um jogador entrou no lobby." },
-  { "key": "lobby_exited", "value": "Um jogador saiu do lobby." },
-  { "key": "MULTIPLAYER", "value": "Multijogador" },
-  { "key": "SINGLEPLAYER", "value": "Um Jogador" },
-  { "key": "Enter_Code", "value": "Inserir Código" },
-  { "key": "Create_Lobby", "value": "Criar lobby" },
-  { "key": "Enter_Lobby", "value": "Entrar no Lobby" },
-  { "key": "lobby_creating", "value": "Criando lobby..." },
-  { "key": "lobby_code_copied", "value": "Código do lobby copiado para a área de transferência." },
-  { "key": "READY", "value": "Pronto" },
-  { "key": "Cancel_Ready", "value": "Cancelar" },
-  { "key": "downloading_title", "value": "Baixar Esquadrão" },
-  { "key": "downloading_message", "value": "Este esquadrão não está disponível no seu dispositivo. Deseja baixá-lo?" }
+  {
+    "key": "lobby_no_player",
+    "value": "Não há outro jogador conectado ao lobby."
+  },
+  {
+    "key": "lobby_entered",
+    "value": "Um jogador entrou no lobby."
+  },
+  {
+    "key": "lobby_exited",
+    "value": "Um jogador saiu do lobby."
+  },
+  {
+    "key": "MULTIPLAYER",
+    "value": "Multijogador"
+  },
+  {
+    "key": "SINGLEPLAYER",
+    "value": "Um Jogador"
+  },
+  {
+    "key": "Enter_Code",
+    "value": "Inserir Código"
+  },
+  {
+    "key": "Create_Lobby",
+    "value": "Criar lobby"
+  },
+  {
+    "key": "Enter_Lobby",
+    "value": "Entrar no Lobby"
+  },
+  {
+    "key": "lobby_creating",
+    "value": "Criando lobby..."
+  },
+  {
+    "key": "lobby_code_copied",
+    "value": "Código do lobby copiado para a área de transferência."
+  },
+  {
+    "key": "READY",
+    "value": "Pronto"
+  },
+  {
+    "key": "Cancel_Ready",
+    "value": "Cancelar"
+  },
+  {
+    "key": "downloading_title",
+    "value": "Baixar Esquadrão"
+  },
+  {
+    "key": "downloading_message",
+    "value": "Este esquadrão não está disponível no seu dispositivo. Deseja baixá-lo?"
+  },
+  {
+    "key": "downloaded_successfully",
+    "value": "O esquadrão foi baixado com sucesso."
+  },
+  {
+    "key": "lobby_client_not_ready",
+    "value": "O outro jogador ainda não está pronto."
+  }
   
   ]
 }

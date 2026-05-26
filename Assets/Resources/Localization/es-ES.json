@@ -383,20 +383,70 @@
 
 
 
-  { "key": "lobby_no_player", "value": "No hay ningún otro jugador conectado a la sala." },
-  { "key": "lobby_entered", "value": "Un jugador se ha unido a la sala." },
-  { "key": "lobby_exited", "value": "Un jugador ha salido de la sala." },
-  { "key": "MULTIPLAYER", "value": "Multijugador" },
-  { "key": "SINGLEPLAYER", "value": "Un Jugador" },
-  { "key": "Enter_Code", "value": "Ingresar código" },
-  { "key": "Create_Lobby", "value": "Crear sala" },
-  { "key": "Enter_Lobby", "value": "Entrar a la sala" },
-  { "key": "lobby_creating", "value": "Creando sala..." },
-  { "key": "lobby_code_copied", "value": "Código de la sala copiado al portapapeles." },
-  { "key": "READY", "value": "Listo" },
-  { "key": "Cancel_Ready", "value": "Cancelar Listo" },
-  { "key": "downloading_title", "value": "Descargar equipo" },
-  { "key": "downloading_message", "value": "Este equipo no está disponible en tu dispositivo. ¿Quieres descargarlo?" }
+  {
+    "key": "lobby_no_player",
+    "value": "No hay ningún otro jugador conectado a la sala."
+  },
+  {
+    "key": "lobby_entered",
+    "value": "Un jugador se ha unido a la sala."
+  },
+  {
+    "key": "lobby_exited",
+    "value": "Un jugador ha salido de la sala."
+  },
+  {
+    "key": "MULTIPLAYER",
+    "value": "Multijugador"
+  },
+  {
+    "key": "SINGLEPLAYER",
+    "value": "Un Jugador"
+  },
+  {
+    "key": "Enter_Code",
+    "value": "Ingresar código"
+  },
+  {
+    "key": "Create_Lobby",
+    "value": "Crear sala"
+  },
+  {
+    "key": "Enter_Lobby",
+    "value": "Entrar a la sala"
+  },
+  {
+    "key": "lobby_creating",
+    "value": "Creando sala..."
+  },
+  {
+    "key": "lobby_code_copied",
+    "value": "Código de la sala copiado al portapapeles."
+  },
+  {
+    "key": "READY",
+    "value": "Listo"
+  },
+  {
+    "key": "Cancel_Ready",
+    "value": "Cancelar"
+  },
+  {
+    "key": "downloading_title",
+    "value": "Descargar equipo"
+  },
+  {
+    "key": "downloading_message",
+    "value": "Este equipo no está disponible en tu dispositivo. ¿Quieres descargarlo?"
+  },
+  {
+    "key": "downloaded_successfully",
+    "value": "El equipo se ha descargado correctamente."
+  },
+  {
+    "key": "lobby_client_not_ready",
+    "value": "El otro jugador aún no está listo."
+  }
 
 
   ]

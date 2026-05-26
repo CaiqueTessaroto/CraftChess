@@ -814,20 +814,70 @@
     },
 
 
-  { "key": "lobby_no_player", "value": "Aucun autre joueur n'est connecté au lobby." },
-  { "key": "lobby_entered", "value": "Un joueur a rejoint le lobby." },
-  { "key": "lobby_exited", "value": "Un joueur a quitté le lobby." },
-  { "key": "MULTIPLAYER", "value": "Multijoueur" },
-  { "key": "SINGLEPLAYER", "value": "Solo" },
-  { "key": "Enter_Code", "value": "Entrer le code" },
-  { "key": "Create_Lobby", "value": "Créer un lobby" },
-  { "key": "Enter_Lobby", "value": "Rejoindre le lobby" },
-  { "key": "lobby_creating", "value": "Création du lobby..." },
-  { "key": "lobby_code_copied", "value": "Code du lobby copié dans le presse-papiers." },
-  { "key": "READY", "value": "Prêt" },
-  { "key": "Cancel_Ready", "value": "Annuler Prêt" },
-  { "key": "downloading_title", "value": "Télécharger l'escouade" },
-  { "key": "downloading_message", "value": "Cette escouade n'est pas disponible sur votre appareil. Voulez-vous la télécharger ?" }
+    {
+      "key": "lobby_no_player",
+      "value": "Aucun autre joueur n'est connecté au lobby."
+    },
+    {
+      "key": "lobby_entered",
+      "value": "Un joueur a rejoint le lobby."
+    },
+    {
+      "key": "lobby_exited",
+      "value": "Un joueur a quitté le lobby."
+    },
+    {
+      "key": "MULTIPLAYER",
+      "value": "Multijoueur"
+    },
+    {
+      "key": "SINGLEPLAYER",
+      "value": "Solo"
+    },
+    {
+      "key": "Enter_Code",
+      "value": "Entrer le code"
+    },
+    {
+      "key": "Create_Lobby",
+      "value": "Créer un lobby"
+    },
+    {
+      "key": "Enter_Lobby",
+      "value": "Rejoindre le lobby"
+    },
+    {
+      "key": "lobby_creating",
+      "value": "Création du lobby..."
+    },
+    {
+      "key": "lobby_code_copied",
+      "value": "Code du lobby copié dans le presse-papiers."
+    },
+    {
+      "key": "READY",
+      "value": "Prêt"
+    },
+    {
+      "key": "Cancel_Ready",
+      "value": "Annuler Prêt"
+    },
+    {
+      "key": "downloading_title",
+      "value": "Télécharger l'escouade"
+    },
+    {
+      "key": "downloading_message",
+      "value": "Cette escouade n'est pas disponible sur votre appareil. Voulez-vous la télécharger ?"
+    },
+    {
+      "key": "downloaded_successfully",
+      "value": "L'escouade a été téléchargée avec succès."
+    },
+    {
+      "key": "lobby_client_not_ready",
+      "value": "L'autre joueur n'est pas encore prêt."
+    }
 
   ]
 }

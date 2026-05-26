@@ -813,20 +813,70 @@
       "value": "Поддержать Проект"
     },
 
-  { "key": "lobby_no_player", "value": "Нет других игроков, подключенных к лобби." },
-  { "key": "lobby_entered", "value": "Игрок присоединился к лобби." },
-  { "key": "lobby_exited", "value": "Игрок покинул лобби." },
-  { "key": "MULTIPLAYER", "value": "Мультиплеер" },
-  { "key": "SINGLEPLAYER", "value": "Одиночная игра" },
-  { "key": "Enter_Code", "value": "Введите код" },
-  { "key": "Create_Lobby", "value": "Создать лобби" },
-  { "key": "Enter_Lobby", "value": "Войти в лобби" },
-  { "key": "lobby_creating", "value": "Создание лобби..." },
-  { "key": "lobby_code_copied", "value": "Код лобби скопирован в буфер обмена." },
-  { "key": "READY", "value": "Готов" },
-  { "key": "Cancel_Ready", "value": "Отменить готовность" },
-  { "key": "downloading_title", "value": "Скачать отряд" },
-  { "key": "downloading_message", "value": "Этот отряд недоступен на вашем устройстве. Хотите скачать его?" }
+    {
+      "key": "lobby_no_player",
+      "value": "Нет других игроков, подключенных к лобби."
+    },
+    {
+      "key": "lobby_entered",
+      "value": "Игрок присоединился к лобби."
+    },
+    {
+      "key": "lobby_exited",
+      "value": "Игрок покинул лобби."
+    },
+    {
+      "key": "MULTIPLAYER",
+      "value": "Мультиплеер"
+    },
+    {
+      "key": "SINGLEPLAYER",
+      "value": "Одиночная игра"
+    },
+    {
+      "key": "Enter_Code",
+      "value": "Введите код"
+    },
+    {
+      "key": "Create_Lobby",
+      "value": "Создать лобби"
+    },
+    {
+      "key": "Enter_Lobby",
+      "value": "Войти в лобби"
+    },
+    {
+      "key": "lobby_creating",
+      "value": "Создание лобби..."
+    },
+    {
+      "key": "lobby_code_copied",
+      "value": "Код лобби скопирован в буфер обмена."
+    },
+    {
+      "key": "READY",
+      "value": "Готов"
+    },
+    {
+      "key": "Cancel_Ready",
+      "value": "Отменить готовность"
+    },
+    {
+      "key": "downloading_title",
+      "value": "Скачать отряд"
+    },
+    {
+      "key": "downloading_message",
+      "value": "Этот отряд недоступен на вашем устройстве. Хотите скачать его?"
+    },
+    {
+      "key": "downloaded_successfully",
+      "value": "Отряд успешно загружен."
+    },
+    {
+      "key": "lobby_client_not_ready",
+      "value": "Другой игрок еще не готов."
+    }
 
   ]
 }

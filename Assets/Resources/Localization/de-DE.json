@@ -813,21 +813,70 @@
       "value": "Projekt unterstützen"
     },
 
-
-  { "key": "lobby_no_player", "value": "Es ist kein anderer Spieler mit der Lobby verbunden." },
-  { "key": "lobby_entered", "value": "Ein Spieler hat die Lobby betreten." },
-  { "key": "lobby_exited", "value": "Ein Spieler hat die Lobby verlassen." },
-  { "key": "MULTIPLAYER", "value": "Mehrspieler" },
-  { "key": "SINGLEPLAYER", "value": "Einzelspieler" },
-  { "key": "Enter_Code", "value": "Code eingeben" },
-  { "key": "Create_Lobby", "value": "Lobby erstellen" },
-  { "key": "Enter_Lobby", "value": "Lobby betreten" },
-  { "key": "lobby_creating", "value": "Lobby wird erstellt..." },
-  { "key": "lobby_code_copied", "value": "Lobby-Code in die Zwischenablage kopiert." },
-  { "key": "READY", "value": "Bereit" },
-  { "key": "Cancel_Ready", "value": "Bereitschaft abbrechen" },
-  { "key": "downloading_title", "value": "Truppe herunterladen" },
-  { "key": "downloading_message", "value": "Diese Truppe ist auf Ihrem Gerät nicht verfügbar. Möchten Sie sie herunterladen?" }
+    {
+      "key": "lobby_no_player",
+      "value": "Es ist kein anderer Spieler mit der Lobby verbunden."
+    },
+    {
+      "key": "lobby_entered",
+      "value": "Ein Spieler hat die Lobby betreten."
+    },
+    {
+      "key": "lobby_exited",
+      "value": "Ein Spieler hat die Lobby verlassen."
+    },
+    {
+      "key": "MULTIPLAYER",
+      "value": "Mehrspieler"
+    },
+    {
+      "key": "SINGLEPLAYER",
+      "value": "Einzelspieler"
+    },
+    {
+      "key": "Enter_Code",
+      "value": "Code eingeben"
+    },
+    {
+      "key": "Create_Lobby",
+      "value": "Lobby erstellen"
+    },
+    {
+      "key": "Enter_Lobby",
+      "value": "Lobby betreten"
+    },
+    {
+      "key": "lobby_creating",
+      "value": "Lobby wird erstellt..."
+    },
+    {
+      "key": "lobby_code_copied",
+      "value": "Lobby-Code in die Zwischenablage kopiert."
+    },
+    {
+      "key": "READY",
+      "value": "Bereit"
+    },
+    {
+      "key": "Cancel_Ready",
+      "value": "Bereitschaft abbrechen"
+    },
+    {
+      "key": "downloading_title",
+      "value": "Truppe herunterladen"
+    },
+    {
+      "key": "downloading_message",
+      "value": "Diese Truppe ist auf Ihrem Gerät nicht verfügbar. Möchten Sie sie herunterladen?"
+    },
+    {
+      "key": "downloaded_successfully",
+      "value": "Die Truppe wurde erfolgreich heruntergeladen."
+    },
+    {
+      "key": "lobby_client_not_ready",
+      "value": "Der andere Spieler ist noch nicht bereit."
+    }
 
   ]
 }

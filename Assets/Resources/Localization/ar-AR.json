@@ -814,19 +814,70 @@
     },
 
 
-  { "key": "lobby_no_player", "value": "لا يوجد لاعب آخر متصل باللوبي." },
-  { "key": "lobby_entered", "value": "انضم لاعب إلى اللوبي." },
-  { "key": "lobby_exited", "value": "غادر لاعب اللوبي." },
-  { "key": "MULTIPLAYER", "value": "متعدد اللاعبين" },
-  { "key": "SINGLEPLAYER", "value": "لاعب واحد" },
-  { "key": "Enter_Code", "value": "أدخل الرمز" },
-  { "key": "Create_Lobby", "value": "إنشاء لوبي" },
-  { "key": "Enter_Lobby", "value": "دخول اللوبي" },
-  { "key": "lobby_creating", "value": "جاري إنشاء اللوبي..." },
-  { "key": "lobby_code_copied", "value": "تم نسخ رمز اللوبي إلى الحافظة." },
-  { "key": "READY", "value": "جاهز" },
-  { "key": "Cancel_Ready", "value": "إلغاء الجاهزية" },
-  { "key": "downloading_title", "value": "تنزيل الفريق" },
-  { "key": "downloading_message", "value": "هذا الفريق غير متوفر على جهازك. هل تريد تنزيله؟" }
+    {
+      "key": "lobby_no_player",
+      "value": "لا يوجد لاعب آخر متصل باللوبي."
+    },
+    {
+      "key": "lobby_entered",
+      "value": "انضم لاعب إلى اللوبي."
+    },
+    {
+      "key": "lobby_exited",
+      "value": "غادر لاعب اللوبي."
+    },
+    {
+      "key": "MULTIPLAYER",
+      "value": "متعدد اللاعبين"
+    },
+    {
+      "key": "SINGLEPLAYER",
+      "value": "لاعب واحد"
+    },
+    {
+      "key": "Enter_Code",
+      "value": "أدخل الرمز"
+    },
+    {
+      "key": "Create_Lobby",
+      "value": "إنشاء لوبي"
+    },
+    {
+      "key": "Enter_Lobby",
+      "value": "دخول اللوبي"
+    },
+    {
+      "key": "lobby_creating",
+      "value": "جاري إنشاء اللوبي..."
+    },
+    {
+      "key": "lobby_code_copied",
+      "value": "تم نسخ رمز اللوبي إلى الحافظة."
+    },
+    {
+      "key": "READY",
+      "value": "جاهز"
+    },
+    {
+      "key": "Cancel_Ready",
+      "value": "إلغاء الجاهزية"
+    },
+    {
+      "key": "downloading_title",
+      "value": "تنزيل الفريق"
+    },
+    {
+      "key": "downloading_message",
+      "value": "هذا الفريق غير متوفر على جهازك. هل تريد تنزيله؟"
+    },
+    {
+      "key": "downloaded_successfully",
+      "value": "تم تنزيل الفريق بنجاح."
+    },
+    {
+      "key": "lobby_client_not_ready",
+      "value": "اللاعب الآخر ليس جاهزًا بعد."
+    }
+    
   ]
 }

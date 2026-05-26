@@ -392,25 +392,70 @@
   { "key": "cartase.enter", "value": "Support the Project" },
 
 
-
-
-
-
-
-  { "key": "lobby_no_player", "value": "There is no other player connected to the lobby." },
-  { "key": "lobby_entered", "value": "A player has joined the lobby." },
-  { "key": "lobby_exited", "value": "A player has left the lobby." },
-  { "key": "MULTIPLAYER", "value": "Multiplayer" },
-  { "key": "SINGLEPLAYER", "value": "Single Player" },
-  { "key": "Enter_Code", "value": "Enter Code" },
-  { "key": "Create_Lobby", "value": "Create lobby" },
-  { "key": "Enter_Lobby", "value": "Enter Lobby" },
-  { "key": "lobby_creating", "value": "Creating lobby..." },
-  { "key": "lobby_code_copied", "value": "Lobby code copied to clipboard." },
-  { "key": "READY", "value": "Ready" },
-  { "key": "Cancel_Ready", "value": "Cancel Ready" },
-  { "key": "downloading_title", "value": "Download Squad" },
-  { "key": "downloading_message", "value": "This squad is not available on your device. Do you want to download it?" }
+  {
+    "key": "lobby_no_player",
+    "value": "There is no other player connected to the lobby."
+  },
+  {
+    "key": "lobby_entered",
+    "value": "A player has joined the lobby."
+  },
+  {
+    "key": "lobby_exited",
+    "value": "A player has left the lobby."
+  },
+  {
+    "key": "MULTIPLAYER",
+    "value": "Multiplayer"
+  },
+  {
+    "key": "SINGLEPLAYER",
+    "value": "Single Player"
+  },
+  {
+    "key": "Enter_Code",
+    "value": "Enter Code"
+  },
+  {
+    "key": "Create_Lobby",
+    "value": "Create lobby"
+  },
+  {
+    "key": "Enter_Lobby",
+    "value": "Enter Lobby"
+  },
+  {
+    "key": "lobby_creating",
+    "value": "Creating lobby..."
+  },
+  {
+    "key": "lobby_code_copied",
+    "value": "Lobby code copied to clipboard."
+  },
+  {
+    "key": "READY",
+    "value": "Ready"
+  },
+  {
+    "key": "Cancel_Ready",
+    "value": "Cancel Ready"
+  },
+  {
+    "key": "downloading_title",
+    "value": "Download Squad"
+  },
+  {
+    "key": "downloading_message",
+    "value": "This squad is not available on your device. Do you want to download it?"
+  },
+  {
+    "key": "downloaded_successfully",
+    "value": "The squad has been downloaded successfully."
+  },
+  {
+    "key": "lobby_client_not_ready",
+    "value": "The other player is not ready yet."
+  }
 
   ]
 }
