@@ -17,6 +17,7 @@ public class MultiplayerLobbyUI : MonoBehaviour
     [Header("Fotos de Perfil")]
     public Image play1ProfileImage;
     public Image play2ProfileImage;
+    public Sprite defaultProfileSprite;
 
     [Header("Buttons")]
     public Button play;
@@ -288,7 +289,7 @@ public class MultiplayerLobbyUI : MonoBehaviour
         // Só o host precisa reagir ao ready do client
         if (!NetworkManager.Singleton.IsHost) return;
 
-        play.interactable = MultiplayerLobbyState.ClientIsReady;
+        //play.interactable = MultiplayerLobbyState.ClientIsReady;
     }
 
     // ───────────────────────────────────────────────────────────────────────

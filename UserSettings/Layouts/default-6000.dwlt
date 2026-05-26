@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 121
+  controlID: 39
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -606,59 +606,46 @@ MonoBehaviour:
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -125118
-      - m_Data: -125072
-      - m_Data: -124386
-      - m_Data: -124204
-      - m_Data: -124014
-      - m_Data: -123976
-      - m_Data: -123922
-      - m_Data: -123730
-      - m_Data: -122858
-      - m_Data: -68292
-      - m_Data: -33880
-      - m_Data: -33834
-      - m_Data: -33148
-      - m_Data: -32966
-      - m_Data: -32776
-      - m_Data: -32738
-      - m_Data: -32684
-      - m_Data: -32492
-      - m_Data: -31618
-      - m_Data: -15802
-      - m_Data: -15754
-      - m_Data: -15060
-      - m_Data: -14868
-      - m_Data: -14668
-      - m_Data: -14620
-      - m_Data: -14556
-      - m_Data: -14348
-      - m_Data: -13464
-      - m_Data: -10422
-      - m_Data: -10110
-      - m_Data: -7660
-      - m_Data: -5982
-      - m_Data: -2604
+      - m_Data: -32860
+      - m_Data: -32814
+      - m_Data: -32120
+      - m_Data: -31928
+      - m_Data: -31728
+      - m_Data: -31680
+      - m_Data: -31616
+      - m_Data: -31408
+      - m_Data: -30526
+      - m_Data: -26386
+      - m_Data: -26340
+      - m_Data: -25646
+      - m_Data: -25454
+      - m_Data: -25254
+      - m_Data: -25206
+      - m_Data: -25142
+      - m_Data: -24934
+      - m_Data: -24052
+      - m_Data: -9694
+      - m_Data: -9648
+      - m_Data: -9042
+      - m_Data: -8854
+      - m_Data: -8658
+      - m_Data: -8614
+      - m_Data: -8554
+      - m_Data: -8350
+      - m_Data: -7472
+      - m_Data: -5540
+      - m_Data: -5492
+      - m_Data: -4806
+      - m_Data: -4624
+      - m_Data: -4434
+      - m_Data: -4396
+      - m_Data: -4342
+      - m_Data: -4150
+      - m_Data: -3278
       - m_Data: -1318
       - m_Data: -12
-      - m_Data: 56988
-      - m_Data: 57462
-      - m_Data: 66960
-      - m_Data: 67370
-      - m_Data: 68206
-      - m_Data: 68292
-      - m_Data: 267054
-      - m_Data: 267464
-      - m_Data: 268300
-      - m_Data: 268386
-      - m_Data: 332220
-      - m_Data: 333012
-      - m_Data: 333242
-      - m_Data: 333552
-      - m_Data: 333622
-      - m_Data: 333718
-      - m_Data: 333970
-      - m_Data: 333980
+      - m_Data: 65296
+      - m_Data: 66962
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -708,7 +695,7 @@ MonoBehaviour:
     x: 274
     y: 79
     width: 1362
-    height: 688
+    height: 609
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1391,9 +1378,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 695.1476, y: 441.1984, z: 1.8781176}
+    m_Target: {x: 411.95312, y: 339.6924, z: 0.37899274}
     speed: 2
-    m_Value: {x: 695.1476, y: 441.1984, z: 1.8781176}
+    m_Value: {x: 411.95312, y: 339.6924, z: 0.37899274}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 1
@@ -1443,9 +1430,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 194.13806
+    m_Target: 344.0507
     speed: 2
-    m_Value: 194.13806
+    m_Value: 344.0507
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1583,7 +1570,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Resources/Sprites/Avatar
+    - Assets/Resources
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1593,18 +1580,18 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 67
   m_LastFolders:
-  - Assets/Resources/Sprites/Avatar
+  - Assets/Resources
   m_LastFoldersGridSize: 67
   m_LastProjectPath: D:\Workspace Unity\CraftChess
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 147}
+    scrollPos: {x: 0, y: 87}
     m_SelectedIDs:
-    - m_Data: 51708
+    - m_Data: 51602
     m_LastClickedID:
-      m_Data: 51708
+      m_Data: 51602
     m_ExpandedIDs:
     - m_Data: 0
     - m_Data: 51596
@@ -1616,7 +1603,6 @@ MonoBehaviour:
     - m_Data: 51608
     - m_Data: 51610
     - m_Data: 51612
-    - m_Data: 51614
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1658,7 +1644,6 @@ MonoBehaviour:
     - m_Data: 51608
     - m_Data: 51610
     - m_Data: 51612
-    - m_Data: 51614
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1740,9 +1725,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 793
+    y: 714
     width: 1637
-    height: 193
+    height: 272
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0

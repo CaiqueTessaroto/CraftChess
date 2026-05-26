@@ -6709,6 +6709,7 @@ MonoBehaviour:
   gridLobby: {fileID: 281858385}
   play1ProfileImage: {fileID: 1191050539}
   play2ProfileImage: {fileID: 1147595024}
+  defaultProfileSprite: {fileID: 21300000, guid: 8b2e863cdc1c20c4482c06193ce81276, type: 3}
   play: {fileID: 1247534831}
   ready: {fileID: 960452565}
   Back: {fileID: 555975681}

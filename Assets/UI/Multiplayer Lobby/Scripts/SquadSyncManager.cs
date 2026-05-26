@@ -34,7 +34,7 @@ public static class MultiplayerLobbyState
     public static string BlackSquadOwnerId;  // clientId de quem enviou o Black
     public static Dictionary<string, byte[]> WhiteSpritesRaw = new Dictionary<string, byte[]>();
     public static Dictionary<string, byte[]> BlackSpritesRaw = new Dictionary<string, byte[]>();
-    public static byte[] HostProfileImageRaw; 
+    public static byte[] HostProfileImageRaw;
     public static byte[] ClientProfileImageRaw;
     public static void Log(string context = "")
     {
@@ -140,14 +140,14 @@ public static class MultiplayerLobbyState
 
         // ─── JSON do squad ────────────────────────────────────────────────
         string squadJson = JsonUtility.ToJson(squad.Data, true);
-        string squadJsonPath = Path.Combine(squadFolder, squad.Data.Name + ".json");
+        string squadJsonPath = Path.Combine(squadFolder, folderName  + ".json");
         File.WriteAllText(squadJsonPath, squadJson);
         Debug.Log($"[Download] Squad JSON salvo: {squadJsonPath}");
 
         // ─── Imagem do squad ──────────────────────────────────────────────
         if (squad.SquadImageRaw != null)
         {
-            string imagePath = Path.Combine(squadFolder, squad.Data.Name + ".png");
+            string imagePath = Path.Combine(squadFolder, folderName  + ".png");
             File.WriteAllBytes(imagePath, squad.SquadImageRaw);
             Debug.Log($"[Download] Squad image salva: {imagePath}");
         }
@@ -183,7 +183,14 @@ public static class MultiplayerLobbyState
             Debug.Log($"[Download] Sprite salva: {spritePath}");
         }
 
-        Debug.Log($"[MultiplayerLobbyState] Download completo → {squadFolder}");
+        string text = UIHelperUtils.T("downloaded_successfully");
+
+        if (string.IsNullOrEmpty(text))
+            text = "The squad has been downloaded successfully.";
+
+        FileManager.Instance.SpawnMessage(text);
+
+        //Debug.Log($"[MultiplayerLobbyState] Download completo → {squadFolder}");
     }
 
     public static void Reset()
@@ -197,7 +204,7 @@ public static class MultiplayerLobbyState
         WhiteSpritesRaw.Clear();
         BlackSpritesRaw.Clear();
 
-        HostProfileImageRaw   = null;
+        HostProfileImageRaw = null;
         ClientProfileImageRaw = null;
     }
 
@@ -363,7 +370,7 @@ public class SquadSyncManager : NetworkBehaviour
             NetworkManager.Singleton.CustomMessagingManager
                 .RegisterNamedMessageHandler(MSG_SPRITE_CLIENT_TO_HOST, OnReceiveSpriteFromClient);
             NetworkManager.Singleton.CustomMessagingManager
-                .RegisterNamedMessageHandler(MSG_PROFILE_CLIENT_TO_HOST, OnReceiveProfileFromClient); 
+                .RegisterNamedMessageHandler(MSG_PROFILE_CLIENT_TO_HOST, OnReceiveProfileFromClient);
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
         }
@@ -450,7 +457,7 @@ public class SquadSyncManager : NetworkBehaviour
         reader.ReadBytesSafe(ref raw, length);
 
         if (IsHost) MultiplayerLobbyState.ClientProfileImageRaw = raw;
-        else         MultiplayerLobbyState.HostProfileImageRaw = raw;
+        else MultiplayerLobbyState.HostProfileImageRaw = raw;
 
         Debug.Log($"[SquadSync] ProfileImage recebida | {length / 1024f:F1} kb");
 
@@ -472,22 +479,27 @@ public class SquadSyncManager : NetworkBehaviour
                 FileManager.Instance.SpawnMessage(text);
             }
 
-            NetworkManager.Singleton.CustomMessagingManager
-                .UnregisterNamedMessageHandler(MSG_PROFILE_CLIENT_TO_HOST);
+            //NetworkManager.Singleton.CustomMessagingManager
+            //    .UnregisterNamedMessageHandler(MSG_PROFILE_CLIENT_TO_HOST);
+
+            if(MultiplayerLobbyUI.Instance)
+                MultiplayerLobbyUI.Instance.play2ProfileImage.sprite = MultiplayerLobbyUI.Instance.defaultProfileSprite;
         }
         else
         {
-            NetworkManager.Singleton.CustomMessagingManager
-                .UnregisterNamedMessageHandler(MSG_PROFILE_HOST_TO_CLIENT);
+            //NetworkManager.Singleton.CustomMessagingManager
+            //    .UnregisterNamedMessageHandler(MSG_PROFILE_HOST_TO_CLIENT);
 
             // Cliente perdeu conexão com o host
             NetworkLobbyManager.Instance.HandleDisconnect();
         }
 
     }
-    
+
     private void OnClientConnected(ulong clientId)
     {
+
+        ResetSync();
 
         if (clientId == NetworkManager.ServerClientId) return;
         else
@@ -517,8 +529,14 @@ public class SquadSyncManager : NetworkBehaviour
 
         //host envia a dele pro client
         StartCoroutine(SendProfileImageDelayed(clientId));
+        //client envia a dele pro host
+        StartCoroutine(SendProfileImageDelayed_Client());
+
         // Pede o squad do client
-        // RequestSquadFromClientRpc(clientId);
+        //SendSquadJsonToHostServerRpc(BuildJsonPayload(false));
+        //StartCoroutine(SendSpritesToHost(false));
+
+        //RequestSquadFromClientRpc(clientId);
     }
 
     private IEnumerator SendProfileImageDelayed(ulong clientId)
@@ -535,9 +553,6 @@ public class SquadSyncManager : NetworkBehaviour
     private void RequestSquadFromClientRpc(ulong targetClientId)
     {
         if (NetworkManager.Singleton.LocalClientId != targetClientId) return;
-
-        //client envia a dele pro host
-        StartCoroutine(SendProfileImageDelayed_Client());
 
         bool isWhite = MultiplayerLobbyState.LocalIsWhite;
 
@@ -818,11 +833,11 @@ public class SquadSyncManager : NetworkBehaviour
 
         return new SquadJsonPayload
         {
-            SquadJson     = JsonUtility.ToJson(squad.Data),
-            PieceCount    = pieceJsons.Count,
-            Pieces        = pieceJsons.ToArray(),
-            IsWhite       = isWhite,
-            SenderId      = senderId ?? NetworkManager.Singleton.LocalClientId.ToString(),
+            SquadJson = JsonUtility.ToJson(squad.Data),
+            PieceCount = pieceJsons.Count,
+            Pieces = pieceJsons.ToArray(),
+            IsWhite = isWhite,
+            SenderId = senderId ?? NetworkManager.Singleton.LocalClientId.ToString(),
             SquadImageRaw = squad.SquadImageRaw
         };
     }
