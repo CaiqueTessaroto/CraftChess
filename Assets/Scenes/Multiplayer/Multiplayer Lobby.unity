@@ -6732,6 +6732,7 @@ MonoBehaviour:
   whiteUnbalancedObj: {fileID: 574033719}
   piece_ImgPrefab: {fileID: 5251047543970744015, guid: 70cd7860d851e4548bb42aa9f34c3be1, type: 3}
   isWhite: 0
+  startOption: 1
 --- !u!1 &940105260
 GameObject:
   m_ObjectHideFlags: 0
@@ -10883,6 +10884,10 @@ MonoBehaviour:
   autoSwitchSide: 0
   IAvsIA: 0
   Squads: []
+  isMultiplayer: 0
+  HostIsWhite: 0
+  HostProfileSprite: {fileID: 0}
+  ClientProfileSprite: {fileID: 0}
 --- !u!4 &1348919907
 Transform:
   m_ObjectHideFlags: 0
@@ -15765,7 +15770,6 @@ MonoBehaviour:
   uIHelperUtils: {fileID: 2075470869}
   fileManager: {fileID: 904364699}
   interactiveLobby: {fileID: 0}
-  interactiveMultiplayerLobby: {fileID: 904364703}
   allBtw: {fileID: 1076605306}
   myBtw: {fileID: 1976072684}
   libraryBtw: {fileID: 867134518}

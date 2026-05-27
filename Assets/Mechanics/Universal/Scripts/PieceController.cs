@@ -171,7 +171,7 @@ public class PieceController : MonoBehaviour
 
         MatchSquadData matchSquad;
 
-        if (component.Player.id == 0)
+        if (component.Player.color == Color.white)
             matchSquad = boardManager.Squads[0];
         else
             matchSquad = boardManager.Squads[1];
@@ -401,7 +401,7 @@ public class PieceController : MonoBehaviour
 
                     if (lastPieceMoved.InitialMoved && lastPieceMoved.Player.id != pieceComponent.Player.id)
                     {
-                        Vector2Int direction = (lastPieceMoved.Player.id == 0) ? new Vector2Int(0, 1) : new Vector2Int(0, -1);
+                        Vector2Int direction = (lastPieceMoved.Player.color == Color.white) ? new Vector2Int(0, 1) : new Vector2Int(0, -1);
                         Vector2Int behind = lastMoved.TargetPosition - direction;
 
                         if (clickedPosition == behind)
@@ -623,7 +623,7 @@ public class PieceController : MonoBehaviour
         if (piece.IsPromoted) return false;
 
         // Determina a linha de promoção
-        int promotionRank = (piece.Player.id == 0) ? boardManager.gridHeight - 1 : 0;
+        int promotionRank = (piece.Player.color == Color.white) ? boardManager.gridHeight - 1 : 0;
 
         // Verifica a posição Y no grid
         bool reachedPromotionRank = targetPosition.y == promotionRank;
@@ -643,7 +643,7 @@ public class PieceController : MonoBehaviour
 
             MatchSquadData squadData;
 
-            if (piece.Player.id == 0)
+            if (piece.Player.color == Color.white)
                 squadData = boardManager.Squads[0];
             else
                 squadData = boardManager.Squads[1];

@@ -47,7 +47,7 @@ public class SingleLobbyManager : MonoBehaviour
     {
 
         if (interactiveLobby == null)
-            interactiveLobby = FindObjectOfType<InteractiveLobby>();
+            interactiveLobby = FindFirstObjectByType<InteractiveLobby>();
 
 
         Back.onClick.AddListener(() =>
@@ -56,7 +56,7 @@ public class SingleLobbyManager : MonoBehaviour
             gameManager.ChangeScene("Menu");
         });
 
-    }
+    } 
 
     public void StartMatch(SingleMatchConfig currentMatch, List<MatchSquadData> Squads)
     {

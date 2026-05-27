@@ -21,8 +21,12 @@ public class MatchData : MonoBehaviour
 
     [Header("Data")]
     public List<MatchSquadData> Squads = new List<MatchSquadData>();
-    //public MatchSquadData Squad = new MatchSquadData();
-    //public MatchSquadData BotSquad = new MatchSquadData();
+
+    [Header("Multiplayer")]
+    public bool isMultiplayer = false;
+    public bool HostIsWhite = false;
+    public Sprite HostProfileSprite;
+    public Sprite ClientProfileSprite;
 
     private void Awake()
     {

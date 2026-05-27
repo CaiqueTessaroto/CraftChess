@@ -263,7 +263,7 @@ public class IAn3 : MonoBehaviour
         if (piece.PromotionPieces != null && piece.PromotionPieces.Count > 0)
         {
             int promotionRank =
-                piece.Player.id == 0 ? boardManager.gridHeight - 1 : 0;
+                piece.Player.color == Color.white ? boardManager.gridHeight - 1 : 0;
 
             if (target.y == promotionRank)
                 score += 200;

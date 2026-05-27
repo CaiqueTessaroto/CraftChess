@@ -91,10 +91,12 @@ public class PieceMovement : MonoBehaviour
         }
 
 
+
         if (!gridManager.noRules)
         {
-            bool hasKing =
-            thisPiece.Player.id == 0
+            bool isWhite = thisPiece.Player.color == Color.white;
+
+            bool hasKing = isWhite
                 ? pieceController.haskingWhite
                 : pieceController.haskingBlack;
 
@@ -117,9 +119,11 @@ public class PieceMovement : MonoBehaviour
             {
                 if (thisPiece.IsKing)
                 {
-                    if (thisPiece.Player.id == 0 && !pieceController.kingWhiteIsInCheck)
+                    bool isWhite = thisPiece.Player.color == Color.white;
+
+                    if (isWhite && !pieceController.kingWhiteIsInCheck)
                         validMoves.AddRange(GetCastlingMove(thisPiece.CastlingPieces));
-                    else if (thisPiece.Player.id == 1 && !pieceController.kingBlackIsInCheck)
+                    else if (!isWhite && !pieceController.kingBlackIsInCheck)
                         validMoves.AddRange(GetCastlingMove(thisPiece.CastlingPieces));
                 }
                 else
@@ -138,6 +142,8 @@ public class PieceMovement : MonoBehaviour
         if (!thisPiece.IsKing)
             return validMoves;
 
+        bool isWhite = thisPiece.Player.color == Color.white;
+
         List<Vector2Int> kingValidMoves = new List<Vector2Int>();
 
         foreach (Vector2Int move in validMoves)
@@ -145,7 +151,7 @@ public class PieceMovement : MonoBehaviour
             GameObject gameObject_Cell = gridManager.GetCellAtPosition(move.x, move.y);
             Cell cell = gameObject_Cell.GetComponent<Cell>();
 
-            if (thisPiece.Player.id == 0)
+            if (isWhite)
             {
                 if (!cell.house.isControlledByBlack)
                     kingValidMoves.Add(move);
@@ -162,8 +168,7 @@ public class PieceMovement : MonoBehaviour
             .GetCellAtPosition(thisPiece.Position.x, thisPiece.Position.y)
             .GetComponent<Cell>();
 
-        List<PieceComponent> attackers =
-            thisPiece.Player.id == 0
+        List<PieceComponent> attackers = isWhite
                 ? cellcomp.house.BlackPiecesControl
                 : cellcomp.house.WhitePiecesControl;
 
@@ -261,15 +266,16 @@ public class PieceMovement : MonoBehaviour
             .GetCellAtPosition(piecePos.x, piecePos.y)
             .GetComponent<Cell>();
 
-        List<PieceComponent> attackers =
-            thisPiece.Player.id == 0
+        bool isWhite = thisPiece.Player.color == Color.white;
+
+        List<PieceComponent> attackers = isWhite
                 ? cell.house.BlackPiecesControl
                 : cell.house.WhitePiecesControl;
 
         if (attackers.Count == 0)
             return validMoves;
 
-        Vector2Int kingPos = thisPiece.Player.id == 0
+        Vector2Int kingPos = isWhite
             ? pieceController.KingWhite.Position
             : pieceController.KingBlack.Position;
 
@@ -406,8 +412,9 @@ public class PieceMovement : MonoBehaviour
         if (thisPiece.IsKing)
             return validMoves;
 
-        bool check =
-            piece.Player.id == 0
+        bool isWhite = piece.Player.color == Color.white;
+
+        bool check = isWhite
                 ? pieceController.kingWhiteIsInCheck
                 : pieceController.kingBlackIsInCheck;
 
@@ -415,7 +422,7 @@ public class PieceMovement : MonoBehaviour
             return validMoves;
 
         // Rei
-        Vector2Int kingPos = piece.Player.id == 0
+        Vector2Int kingPos = isWhite
             ? pieceController.KingWhite.Position
             : pieceController.KingBlack.Position;
 
@@ -424,8 +431,7 @@ public class PieceMovement : MonoBehaviour
             .GetComponent<Cell>();
 
         // Atacantes
-        List<PieceComponent> attackers =
-            piece.Player.id == 0
+        List<PieceComponent> attackers = isWhite
                 ? kingCell.house.BlackPiecesControl
                 : kingCell.house.WhitePiecesControl;
 
@@ -586,7 +592,7 @@ public class PieceMovement : MonoBehaviour
             GameObject gameObjectPiece = gridManager.GetCellAtPosition(current.x, current.y);
             Cell cell = gameObjectPiece.GetComponent<Cell>();
 
-            if (thisPiece.Player.id == 0)
+            if (thisPiece.Player.color == Color.white)
             {
                 if (cell.house.isControlledByBlack)
                     return false;
@@ -607,7 +613,7 @@ public class PieceMovement : MonoBehaviour
     {
         List<Vector2Int> validMoves = new List<Vector2Int>();
 
-        Vector2Int direction = (piece.Player.id == 0) ? Vector2Int.up : Vector2Int.down;
+        Vector2Int direction = (piece.Player.color == Color.white) ? Vector2Int.up : Vector2Int.down;
         //Vector2Int direction = (piece.Player.id == 0) ? new Vector2Int(1, 0) : new Vector2Int(-1, 0);
         Vector2Int behind = initialMove - direction;
 
@@ -833,7 +839,7 @@ public class PieceMovement : MonoBehaviour
         {
             Vector2Int adjustedMove = move;
 
-            if (thisPiece.Player.id == 1)
+            if (thisPiece.Player.color == Color.black)
                 adjustedMove = new Vector2Int(-move.x, -move.y);
 
             rotatedMoves.Add(new Vector2Int(

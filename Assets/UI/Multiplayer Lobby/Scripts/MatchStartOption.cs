@@ -113,6 +113,8 @@ public class MatchStartOption : MonoBehaviour
 
     private void UpdateCrowns(StartOption option)
     {
+        MultiplayerLobbyUI.Instance.startOption = option;
+        
         switch (option)
         {
             case StartOption.White:

@@ -241,7 +241,7 @@ public class PromotionUI : MonoBehaviour
 
         if (currentPiece.IsKing)
         {
-            if (currentPiece.Player.id == 0)
+            if (currentPiece.Player.color == Color.white)
                 pieceController.KingWhite = component;
             else
                 pieceController.KingBlack = component;

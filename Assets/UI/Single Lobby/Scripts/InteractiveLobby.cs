@@ -176,8 +176,8 @@ public class InteractiveLobby : MonoBehaviour
 
             if (currentMatch.StartOption == StartOption.Black)
             {
-                BlackSquad.Player = new Player("Jogador", 1, Color.black);
                 WhiteSquad.Player = new Player("Bot", 0, Color.white);
+                BlackSquad.Player = new Player("Jogador", 1, Color.black);
 
                 Squads.Add(WhiteSquad);
                 Squads.Add(BlackSquad);
@@ -197,8 +197,8 @@ public class InteractiveLobby : MonoBehaviour
 
                 if (userStarts)
                 {
-                    BlackSquad.Player = new Player("Jogador", 1, Color.black);
                     WhiteSquad.Player = new Player("Bot", 0, Color.white);
+                    BlackSquad.Player = new Player("Jogador", 1, Color.black);
 
                     Squads.Add(WhiteSquad);
                     Squads.Add(BlackSquad);

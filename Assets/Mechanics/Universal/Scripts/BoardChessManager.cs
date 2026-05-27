@@ -628,7 +628,7 @@ public class BoardChessManager : MonoBehaviour
         {
             Vector2Int pos = piece.Position;
 
-            if (matchSquad.Player.id == 1)
+            if (matchSquad.Player.color == Color.black)
             {
                 // Inverte as coordenadas para o outro time
                 pos = new Vector2Int(pos.x, gridHeight - 1 - pos.y);
@@ -644,7 +644,7 @@ public class BoardChessManager : MonoBehaviour
             }
         }
 
-        if (matchSquad.Player.id == 0)
+        if (matchSquad.Player.color == Color.white)
         {
             if (pieceController.KingWhite == null)
                 pieceController.KingWhite = powerfullPiece;
@@ -660,7 +660,7 @@ public class BoardChessManager : MonoBehaviour
             if (sprites.TryGetValue(piece.Name, out Sprite sprite))
             {
 
-                if (matchSquad.Player.id == 0)
+                if (matchSquad.Player.color == Color.white)
                 {
                     if (!managerPieceInfo.pieceSpritesWhite.ContainsKey($"{piece.NameInSquad}{piece.Squad}"))
                         managerPieceInfo.pieceSpritesWhite[$"{piece.NameInSquad}{piece.Squad}"] = sprite;
@@ -776,7 +776,7 @@ public class BoardChessManager : MonoBehaviour
         {
             pieceComponent.Initialize(pieceData.Squad, name, pieceData.Power, pieceData.PromotionPieces, pieceData.CastlingPieces, player, pos, true);
 
-            if (player.id == 0)
+            if (player.color == Color.white)
             {
                 pieceController.KingWhite = pieceComponent;
                 pieceController.haskingWhite = true;
@@ -877,7 +877,7 @@ public class BoardChessManager : MonoBehaviour
                 //if (GetPieceAtPosition(move.x, move.y))
                 //    cellComp.house.isOccupied = true;
 
-                if (component.Player.id == 0)
+                if (component.Player.color == Color.white)
                 {
                     cellComp.house.isControlledByWhite = true;
                     cellComp.house.WhitePiecesControl.Add(component);
@@ -915,7 +915,7 @@ public class BoardChessManager : MonoBehaviour
             component.PossibleMoves = movement.GetValidMoves();
 
             if (!WhiteHasMoves || !BlackHasMoves)
-                if (component.Player.id == 0)
+                if (component.Player.color == Color.white)
                 {
                     if (component.PossibleMoves.Count != 0)
                         WhiteHasMoves = true;
@@ -926,7 +926,7 @@ public class BoardChessManager : MonoBehaviour
                         BlackHasMoves = true;
                 }
 
-            if (component.Player.id == 0)
+            if (component.Player.color == Color.white)
                 WhitePieces.Add(piece);
             else
                 BlackPieces.Add(piece);

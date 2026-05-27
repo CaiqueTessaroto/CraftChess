@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using Unity.Services.Lobbies.Models;
+using System.Collections.Generic;
 
 public class MultiplayerLobbyUI : MonoBehaviour
 {
@@ -54,6 +55,7 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
     [Header("Control")]
     public bool isWhite = false;
+    public StartOption startOption = StartOption.White;
     public static MultiplayerLobbyUI Instance { get; private set; }
 
     private void Awake()
@@ -142,23 +144,21 @@ public class MultiplayerLobbyUI : MonoBehaviour
                 return;
             }
 
-            /*
-            if (currentMatch.StartOption == StartOption.Black)
-            {
-                BlackSquad.Player = new Player("Jogador", 1, Color.black);
-                WhiteSquad.Player = new Player("Bot", 0, Color.white);
 
-                Squads.Add(WhiteSquad);
-                Squads.Add(BlackSquad);
+            MatchData m = MatchData.Instance;
+
+            if (startOption == StartOption.Black)
+            {
+                MultiplayerLobbyState.WhiteSquad.Player = new Player("Client", 0, Color.white);
+                MultiplayerLobbyState.BlackSquad.Player = new Player("Host", 1, Color.black);
+                m.HostIsWhite = false;
 
             }
-            else if (currentMatch.StartOption == StartOption.White)
+            else if (startOption == StartOption.White)
             {
-                WhiteSquad.Player = new Player("Jogador", 0, Color.white);
-                BlackSquad.Player = new Player("Bot", 1, Color.black);
-
-                Squads.Add(WhiteSquad);
-                Squads.Add(BlackSquad);
+                MultiplayerLobbyState.WhiteSquad.Player = new Player("Host", 0, Color.white);
+                MultiplayerLobbyState.BlackSquad.Player = new Player("Client", 1, Color.black);
+                m.HostIsWhite = true;
             }
             else
             {
@@ -166,24 +166,24 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
                 if (userStarts)
                 {
-                    BlackSquad.Player = new Player("Jogador", 1, Color.black);
-                    WhiteSquad.Player = new Player("Bot", 0, Color.white);
-
-                    Squads.Add(WhiteSquad);
-                    Squads.Add(BlackSquad);
+                    MultiplayerLobbyState.WhiteSquad.Player = new Player("Client", 0, Color.white);
+                    MultiplayerLobbyState.BlackSquad.Player = new Player("Host", 1, Color.black);
+                    m.HostIsWhite = false;
 
                 }
                 else
                 {
-                    WhiteSquad.Player = new Player("Jogador", 0, Color.white);
-                    BlackSquad.Player = new Player("Bot", 1, Color.black);
-
-                    Squads.Add(WhiteSquad);
-                    Squads.Add(BlackSquad);
+                    MultiplayerLobbyState.WhiteSquad.Player = new Player("Host", 0, Color.white);
+                    MultiplayerLobbyState.BlackSquad.Player = new Player("Client", 1, Color.black);
+                    m.HostIsWhite = true;
                 }
+            }
 
-                //Debug.Log($"Começo aleatório → {(userStarts ? "Jogador começa" : "Bot começa")}");
-            */
+            PrepareMatchData();
+
+
+            //managerLobby.SaveMatchConfig(currentMatch);
+            //managerLobby.StartMatch(currentMatch, Squads);
 
         });
 
@@ -311,6 +311,30 @@ public class MultiplayerLobbyUI : MonoBehaviour
         if (NetworkManager.Singleton.IsListening)
             SetupButtons();
 
+    }
+
+    public void PrepareMatchData()
+    {
+        MatchData m = MatchData.Instance;
+
+        m.whoStarts = startOption;
+        m.isMultiplayer = true;
+        m.Squads = new List<MatchSquadData>
+                                {
+                                    MultiplayerLobbyState.WhiteSquad,
+                                    MultiplayerLobbyState.BlackSquad
+                                };
+        m.HostProfileSprite = play1ProfileImage.sprite;
+        m.ClientProfileSprite = play2ProfileImage.sprite;
+
+        var lobby = NetworkLobbyManager.Instance.currentLobby;
+        if (lobby?.Data != null)
+        {
+            m.noRules = lobby.Data.TryGetValue("NoRules", out var nr) && bool.Parse(nr.Value);
+            m.noTurns = lobby.Data.TryGetValue("NoTurns", out var nt) && bool.Parse(nt.Value);
+        }
+
+        //MultiplayerLobbyState.Reset(); // limpa o lobby, dados já estão no MatchData
     }
 
     private void SetupButtons()
@@ -493,7 +517,7 @@ public class MultiplayerLobbyUI : MonoBehaviour
             Destroy(child.gameObject);
 
         foreach (var piece in squad.Data.Pieces)
-        {   
+        {
 
             Sprite sprite = null;
 
