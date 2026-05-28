@@ -10876,7 +10876,7 @@ MonoBehaviour:
   blackSquadName: 
   whiteSquadName: 
   mapName: 
-  whoStarts: 0
+  whoStarts: 1
   botDifficulty: 0
   noRules: 0
   noTurns: 0

@@ -31,7 +31,7 @@ public class MatchGameOptionsSync : MonoBehaviour
         }
     }
 
-    private void OnEnable()  => LobbyDataSync.Instance.OnLobbyDataUpdated += ApplyLobbyDataToUI;
+    private void OnEnable() => LobbyDataSync.Instance.OnLobbyDataUpdated += ApplyLobbyDataToUI;
     private void OnDisable() => LobbyDataSync.Instance.OnLobbyDataUpdated -= ApplyLobbyDataToUI;
 
     // ── Listeners (host only) ────────────────────────────────────────────────
@@ -78,6 +78,9 @@ public class MatchGameOptionsSync : MonoBehaviour
     {
         if (NetworkLobbyManager.Instance.currentLobby == null) return;
 
+        //MultiplayerLobbyState.SendReadyStateToHost(false);
+        //MultiplayerLobbyUI.Instance.UpdateReadyUI(false);
+
         await LobbyService.Instance.UpdateLobbyAsync(
             NetworkLobbyManager.Instance.currentLobby.Id,
             new UpdateLobbyOptions
@@ -94,14 +97,42 @@ public class MatchGameOptionsSync : MonoBehaviour
 
     // ── UI ───────────────────────────────────────────────────────────────────
 
+    private string _lastNoRules = "";
+    private string _lastNoTurns = "";
+
     private void ApplyLobbyDataToUI(Dictionary<string, DataObject> data)
     {
         if (data == null) return;
 
         if (data.TryGetValue("NoRules", out var noRules))
+        {
             noRulesToggle.SetIsOnWithoutNotify(bool.Parse(noRules.Value));
 
+            if (noRules.Value != _lastNoRules)
+            {
+                _lastNoRules = noRules.Value;
+                OnHostChangedOption();
+            }
+        }
+
         if (data.TryGetValue("NoTurns", out var noTurns))
+        {
             noTurnsToggle.SetIsOnWithoutNotify(bool.Parse(noTurns.Value));
+
+            if (noTurns.Value != _lastNoTurns)
+            {
+                _lastNoTurns = noTurns.Value;
+                OnHostChangedOption();
+            }
+        }
     }
+
+    private void OnHostChangedOption()
+    {
+        if (isHost) return; // host não precisa resetar o próprio ready
+
+        MultiplayerLobbyUI.Instance.UpdateReadyUI(false);
+        MultiplayerLobbyState.SendReadyStateToHost(false);
+    }
+
 }

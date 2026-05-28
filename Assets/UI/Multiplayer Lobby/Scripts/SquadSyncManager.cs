@@ -111,7 +111,6 @@ public class SquadSyncManager : NetworkBehaviour
         if (File.Exists(spriteSquadPath))
         {
             squad.SquadImageRaw = File.ReadAllBytes(spriteSquadPath);
-            //squad.SquadImage    = UIHelperUtils.GetSpriteFromPath(spriteSquadPath);
         }
 
         foreach (SquadPieceData piece in data.Pieces)
@@ -277,7 +276,7 @@ public class SquadSyncManager : NetworkBehaviour
             //NetworkManager.Singleton.CustomMessagingManager
             //    .UnregisterNamedMessageHandler(MSG_PROFILE_CLIENT_TO_HOST);
 
-            if(MultiplayerLobbyUI.Instance)
+            if (MultiplayerLobbyUI.Instance)
                 MultiplayerLobbyUI.Instance.play2ProfileImage.sprite = MultiplayerLobbyUI.Instance.defaultProfileSprite;
         }
         else
@@ -462,6 +461,13 @@ public class SquadSyncManager : NetworkBehaviour
 
         if (squad == null) yield break;
 
+        bool ready = MultiplayerLobbyState.ClientIsReady;
+        if(ready)
+        {
+            MultiplayerLobbyUI.Instance.UpdateReadyUI(false);
+            MultiplayerLobbyState.SendReadyStateToHost(false);
+        }
+        
         foreach (SquadPieceData piece in squad.Data.Pieces)
         {
             byte[] pngBytes = LoadPngBytes(piece);
@@ -504,6 +510,13 @@ public class SquadSyncManager : NetworkBehaviour
 
     private void ProcessReceivedSprite(FastBufferReader reader)
     {
+        bool ready = MultiplayerLobbyState.ClientIsReady;
+        if(ready)
+        {
+            MultiplayerLobbyUI.Instance.UpdateReadyUI(false);
+            MultiplayerLobbyState.SendReadyStateToHost(false);
+        }
+
         reader.ReadValueSafe(out string pieceName);
         reader.ReadValueSafe(out int length);
 

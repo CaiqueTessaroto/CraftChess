@@ -18,11 +18,11 @@ public class PieceMovement : MonoBehaviour
     {
         thisPiece = GetComponent<PieceComponent>();
 
-        gridManager = FindObjectOfType<BoardChessManager>();
+        gridManager = FindFirstObjectByType<BoardChessManager>();
 
-        moveTracker = FindObjectOfType<MoveTracker>();
+        moveTracker = FindFirstObjectByType<MoveTracker>();
 
-        pieceController = FindObjectOfType<PieceController>();
+        pieceController = FindFirstObjectByType<PieceController>();
 
         if (gridManager == null)
             Debug.LogError("GridManager não encontrado.");

@@ -19,16 +19,15 @@ public class MatchStartOption : MonoBehaviour
     public Sprite crowBlack;
     public Sprite crowRandon;
 
-    private const string LOBBY_KEY = "StartOption";
+    private const string LOBBY_KEY_CHOICE   = "StartOptionChoice";
+    private const string LOBBY_KEY_RESOLVED = "StartOptionResolved";
+
     private bool isHost = false;
+    private string _lastStartOption = "";
 
     private void Start()
     {
-
         if (NetworkLobbyManager.Instance.currentLobby == null) return;
-
-        // Notifica subscribers que já estavam ativos antes do LobbyDataSync existir
-        //OnLobbyDataUpdated?.Invoke(LobbyManager.Instance.currentLobby.Data);
 
         isHost = NetworkLobbyManager.Instance.currentLobby.HostId
                  == AuthenticationService.Instance.PlayerId;
@@ -48,7 +47,6 @@ public class MatchStartOption : MonoBehaviour
                     if (Enum.TryParse(cleanName, true, out StartOption option))
                     {
                         _ = UpdateLobbyData(option);
-
                         UpdateCrowns(option);
                     }
                 });
@@ -70,9 +68,13 @@ public class MatchStartOption : MonoBehaviour
 
     // ── Rede ─────────────────────────────────────────────────────────────────
 
-    private async Task UpdateLobbyData(StartOption option)
+    private async Task UpdateLobbyData(StartOption chosen)
     {
         if (NetworkLobbyManager.Instance.currentLobby == null) return;
+
+        StartOption resolved = chosen == StartOption.Random
+            ? (UnityEngine.Random.value > 0.5f ? StartOption.White : StartOption.Black)
+            : chosen;
 
         try
         {
@@ -82,10 +84,8 @@ public class MatchStartOption : MonoBehaviour
                 {
                     Data = new Dictionary<string, DataObject>
                     {
-                        {
-                            LOBBY_KEY,
-                            new DataObject(DataObject.VisibilityOptions.Public, option.ToString())
-                        }
+                        { LOBBY_KEY_CHOICE,   new DataObject(DataObject.VisibilityOptions.Public, chosen.ToString()) },
+                        { LOBBY_KEY_RESOLVED, new DataObject(DataObject.VisibilityOptions.Public, resolved.ToString()) }
                     }
                 });
         }
@@ -99,22 +99,38 @@ public class MatchStartOption : MonoBehaviour
 
     private void ApplyLobbyDataToUI(Dictionary<string, DataObject> data)
     {
-        if (data == null)
-            return;
+        if (data == null) return;
 
-        if (!data.TryGetValue(LOBBY_KEY, out var startOptionData))
-            return;
+        // UI: preserva o sprite Random
+        if (data.TryGetValue(LOBBY_KEY_CHOICE, out var choiceData))
+            if (Enum.TryParse(choiceData.Value, true, out StartOption displayOption))
+            {
+                if (!isHost)
+                    UpdateCrowns(displayOption);
 
-        if (Enum.TryParse(startOptionData.Value, true, out StartOption option))
-            if(!isHost)
-                UpdateCrowns(option);
-        
+                if (choiceData.Value != _lastStartOption)
+                {
+                    _lastStartOption = choiceData.Value;
+                    OnHostChangedOption();
+                }
+            }
+
+        // Lógica: valor já resolvido (White ou Black)
+        if (data.TryGetValue(LOBBY_KEY_RESOLVED, out var resolvedData))
+            if (Enum.TryParse(resolvedData.Value, true, out StartOption resolvedOption))
+                MultiplayerLobbyUI.Instance.startOption = resolvedOption;
+    }
+
+    private void OnHostChangedOption()
+    {
+        if (isHost) return;
+
+        MultiplayerLobbyUI.Instance.UpdateReadyUI(false);
+        MultiplayerLobbyState.SendReadyStateToHost(false);
     }
 
     private void UpdateCrowns(StartOption option)
     {
-        MultiplayerLobbyUI.Instance.startOption = option;
-        
         switch (option)
         {
             case StartOption.White:

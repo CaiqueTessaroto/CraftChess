@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Multiplayer/Multiplayer Lobby.unity
     guid: 8476cd63fe9437f4abb4eb0dbe802d72
+  - enabled: 1
+    path: Assets/Scenes/Multiplayer/Multiplayer.unity
+    guid: 31242c0b2cdd2b34c8df95447fe67681
   m_configObjects:
     com.unity.adaptivePerformance.basic.provider_settings: {fileID: 11400000, guid: a84091da6f17c9441893112cf511a141, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 1c5ca10480d10c249828a7053a6ce107, type: 2}

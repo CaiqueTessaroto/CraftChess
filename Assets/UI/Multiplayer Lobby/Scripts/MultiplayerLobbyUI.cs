@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 using Unity.Services.Lobbies.Models;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class MultiplayerLobbyUI : MonoBehaviour
 {
@@ -83,6 +84,8 @@ public class MultiplayerLobbyUI : MonoBehaviour
             bool next = !MultiplayerLobbyState.ClientIsReady;
             MultiplayerLobbyState.SendReadyStateToHost(next);
 
+            PrepareMatchData();
+
             string readyTxt = UIHelperUtils.T("READY");
 
             if (string.IsNullOrEmpty(readyTxt))
@@ -144,46 +147,9 @@ public class MultiplayerLobbyUI : MonoBehaviour
                 return;
             }
 
-
-            MatchData m = MatchData.Instance;
-
-            if (startOption == StartOption.Black)
-            {
-                MultiplayerLobbyState.WhiteSquad.Player = new Player("Client", 0, Color.white);
-                MultiplayerLobbyState.BlackSquad.Player = new Player("Host", 1, Color.black);
-                m.HostIsWhite = false;
-
-            }
-            else if (startOption == StartOption.White)
-            {
-                MultiplayerLobbyState.WhiteSquad.Player = new Player("Host", 0, Color.white);
-                MultiplayerLobbyState.BlackSquad.Player = new Player("Client", 1, Color.black);
-                m.HostIsWhite = true;
-            }
-            else
-            {
-                bool userStarts = UnityEngine.Random.value > 0.5f;
-
-                if (userStarts)
-                {
-                    MultiplayerLobbyState.WhiteSquad.Player = new Player("Client", 0, Color.white);
-                    MultiplayerLobbyState.BlackSquad.Player = new Player("Host", 1, Color.black);
-                    m.HostIsWhite = false;
-
-                }
-                else
-                {
-                    MultiplayerLobbyState.WhiteSquad.Player = new Player("Host", 0, Color.white);
-                    MultiplayerLobbyState.BlackSquad.Player = new Player("Client", 1, Color.black);
-                    m.HostIsWhite = true;
-                }
-            }
-
             PrepareMatchData();
 
-
-            //managerLobby.SaveMatchConfig(currentMatch);
-            //managerLobby.StartMatch(currentMatch, Squads);
+            NetworkLobbyManager.StartMultiplayerMatch("Multiplayer");
 
         });
 
@@ -313,12 +279,41 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
     }
 
+    public void UpdateReadyUI(bool isReady)
+    {
+        if (isReady)
+            return;
+
+        string readyTxt = UIHelperUtils.T("READY");
+
+        if (string.IsNullOrEmpty(readyTxt))
+            readyTxt = "Ready";
+
+
+        ready.GetComponentInChildren<TMP_Text>().text = readyTxt;
+    }
+
     public void PrepareMatchData()
     {
         MatchData m = MatchData.Instance;
 
+        if (startOption == StartOption.Black)
+        {
+            MultiplayerLobbyState.WhiteSquad.Player = new Player("Client", 0, Color.white);
+            MultiplayerLobbyState.BlackSquad.Player = new Player("Host", 1, Color.black);
+            m.HostIsWhite = false;
+
+        }
+        else if (startOption == StartOption.White)
+        {
+            MultiplayerLobbyState.WhiteSquad.Player = new Player("Host", 0, Color.white);
+            MultiplayerLobbyState.BlackSquad.Player = new Player("Client", 1, Color.black);
+            m.HostIsWhite = true;
+        }
+
         m.whoStarts = startOption;
         m.isMultiplayer = true;
+
         m.Squads = new List<MatchSquadData>
                                 {
                                     MultiplayerLobbyState.WhiteSquad,
@@ -354,6 +349,17 @@ public class MultiplayerLobbyUI : MonoBehaviour
     {
         // Só o host precisa reagir ao ready do client
         if (!NetworkManager.Singleton.IsHost) return;
+
+        // Aplica visualmente a cor de desabilitado sem alterar interactable
+        var colors = play.colors;
+        if (!MultiplayerLobbyState.ClientIsReady)
+        {
+            play.image.color = colors.disabledColor;
+        }
+        else
+        {
+            play.image.color = colors.normalColor; // Para restaurar (volta à cor normal)
+        }
 
         //play.interactable = MultiplayerLobbyState.ClientIsReady;
     }

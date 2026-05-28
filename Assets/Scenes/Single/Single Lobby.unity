@@ -3435,6 +3435,7 @@ MonoBehaviour:
   blackHouse: {r: 0.17254902, g: 0.23137255, b: 0.27450982, a: 1}
   rows: 8
   cols: 8
+  posInGrid: []
 --- !u!114 &281858386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7674,10 +7675,9 @@ MonoBehaviour:
   AutoSwitchSideToggle: {fileID: 279439343}
   IAvsIAToggle: {fileID: 2035803437}
   play: {fileID: 1247534831}
-  map: {fileID: 0}
   ImageHuman: {fileID: 1191050539}
   ImageBot: {fileID: 1147595024}
-  Human: {fileID: 21300000, guid: f0b8c06b28f69ac43b0078b0d7a1c218, type: 3}
+  Human: {fileID: 21300000, guid: 97c5b72494dbde7499ebe79ae0c007c9, type: 3}
   Robot: {fileID: 21300000, guid: c84b25896860993439d25c1c60502b7b, type: 3}
   crowPlayer1: {fileID: 1085920888}
   crowPlayer2: {fileID: 104298288}
@@ -7686,12 +7686,10 @@ MonoBehaviour:
   crowBlack: {fileID: 21300000, guid: b6b7016afcd9a334fb1a47516b45ed47, type: 3}
   difficultyOption: {fileID: 1694111019}
   startOption: {fileID: 2134178186}
-  userSquadView: {fileID: 372447553}
   blackSquadTMP: {fileID: 1573191324}
   blackSquadTMP2: {fileID: 54751231}
   blackBtn: {fileID: 1609167946}
   BlackPiecesGrid: {fileID: 230138876}
-  enemySquadView: {fileID: 264182129}
   whiteSquadTMP: {fileID: 1514950502}
   whiteSquadTMP2: {fileID: 1271882229}
   whiteBtn: {fileID: 124944897}
@@ -10131,7 +10129,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f0b8c06b28f69ac43b0078b0d7a1c218, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 97c5b72494dbde7499ebe79ae0c007c9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11653,6 +11651,10 @@ MonoBehaviour:
   autoSwitchSide: 0
   IAvsIA: 0
   Squads: []
+  isMultiplayer: 0
+  HostIsWhite: 0
+  HostProfileSprite: {fileID: 0}
+  ClientProfileSprite: {fileID: 0}
 --- !u!4 &1348919907
 Transform:
   m_ObjectHideFlags: 0

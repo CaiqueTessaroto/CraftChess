@@ -14,6 +14,7 @@ using UnityEngine.SceneManagement;
 using Unity.Collections;
 using System;
 using System.Threading.Tasks;
+using System.Security.Cryptography.X509Certificates;
 
 public class NetworkLobbyManager : MonoBehaviour
 {
@@ -45,6 +46,15 @@ public class NetworkLobbyManager : MonoBehaviour
         if (NetworkManager.Singleton != null)
         {
 
+        }
+    }
+
+    public static void StartMultiplayerMatch(string scene)
+    {
+        // Só o host carrega a cena — o Netcode sincroniza automaticamente para o cliente
+        if (NetworkManager.Singleton.IsHost)
+        {
+            NetworkManager.Singleton.SceneManager.LoadScene(scene, LoadSceneMode.Single);
         }
     }
 

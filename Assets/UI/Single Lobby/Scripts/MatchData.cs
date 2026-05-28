@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MatchData : MonoBehaviour
+public class  MatchData : MonoBehaviour
 {
     public static MatchData Instance;
 
