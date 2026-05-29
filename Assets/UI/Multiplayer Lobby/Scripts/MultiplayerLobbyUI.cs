@@ -275,8 +275,44 @@ public class MultiplayerLobbyUI : MonoBehaviour
         codeText.text = lobbyManager.currentLobby.LobbyCode;
 
         if (NetworkManager.Singleton.IsListening)
+        {
             SetupButtons();
+            RestoreStateIfAvailable();
+        }
 
+    }
+
+    private void RestoreStateIfAvailable()
+    {
+        // Restaura imagens de perfil
+        ApplyProfileImages();
+
+        // Restaura os painéis de squad se já existirem no state
+        bool hasWhite = MultiplayerLobbyState.WhiteSquad != null;
+        bool hasBlack = MultiplayerLobbyState.BlackSquad != null;
+
+        if (!hasWhite && !hasBlack) return;
+
+        if (gridLobby == null)
+            gridLobby = FindFirstObjectByType<GridLobby>();
+
+        gridLobby.posInGrid.Clear();
+
+        if (hasWhite)
+            UpdateSquadInLobby(
+                MultiplayerLobbyState.WhiteSquad,
+                whitePiecesGrid, whiteSquadName, whiteSquadName2,
+                isBlack: false);
+
+        if (hasBlack)
+            UpdateSquadInLobby(
+                MultiplayerLobbyState.BlackSquad,
+                blackPiecesGrid, blackSquadName, blackSquadName2,
+                isBlack: true);
+
+        gridLobby.ClearGrid(gridLobby.posInGrid);
+
+        Debug.Log("[MultiplayerLobbyUI] Estado restaurado do match anterior.");
     }
 
     public void UpdateReadyUI(bool isReady)
@@ -321,6 +357,9 @@ public class MultiplayerLobbyUI : MonoBehaviour
                                 };
         m.HostProfileSprite = play1ProfileImage.sprite;
         m.ClientProfileSprite = play2ProfileImage.sprite;
+
+        m.whiteSquadName = MultiplayerLobbyState.WhiteSquad.Data.Name;
+        m.blackSquadName = MultiplayerLobbyState.BlackSquad.Data.Name;
 
         var lobby = NetworkLobbyManager.Instance.currentLobby;
         if (lobby?.Data != null)
@@ -442,8 +481,10 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
     public void ApplyProfileImages()
     {
-        ApplyProfileImage(MultiplayerLobbyState.HostProfileImageRaw, play1ProfileImage);
-        ApplyProfileImage(MultiplayerLobbyState.ClientProfileImageRaw, play2ProfileImage);
+        if (MultiplayerLobbyState.HostProfileImageRaw != null)
+            ApplyProfileImage(MultiplayerLobbyState.HostProfileImageRaw, play1ProfileImage);
+        if (MultiplayerLobbyState.ClientProfileImageRaw != null)
+            ApplyProfileImage(MultiplayerLobbyState.ClientProfileImageRaw, play2ProfileImage);
     }
 
     private void ApplyProfileImage(byte[] raw, Image target)

@@ -58,13 +58,17 @@ public class GameInterfaceManager : MonoBehaviour
 
         giveUpBtn.onClick.AddListener(() =>
         {
-
             if (pieceController.endGame)
                 return;
 
-            bool black = false;
-            bool white = false;
-            bool draw = false;
+            if (boardChessManager.isMultiplayer)
+            {
+                PieceControllerNetwork.Instance.SendGiveUp();
+                return; // resultado vem pelo ClientRpc
+            }
+
+            // lógica local/bot permanece igual
+            bool black = false, white = false, draw = false;
 
             if (boardChessManager.localGame)
             {
@@ -81,18 +85,34 @@ public class GameInterfaceManager : MonoBehaviour
                     black = true;
             }
 
-
-
             pieceController.SetEndGame(black, white, draw);
-
         });
+
 
         MenuBtn.onClick.AddListener(() =>
         {
 
-
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-            gameManager.ChangeScene("Menu");
+
+            if (boardChessManager.isMultiplayer)
+            {
+                MultiplayerLobbyState.Reset();
+                //sair do lobby
+                try
+                {
+                    NetworkLobbyManager.Instance.HandleDisconnect();
+                    //NetworkLobbyManager.Instance.LeaveLobby("Menu");
+                }
+                catch
+                {
+                    gameManager.ChangeScene("Menu");
+                }
+            }
+            else
+            {
+                gameManager.ChangeScene("Menu");
+            }
+
         });
 
 
@@ -104,7 +124,10 @@ public class GameInterfaceManager : MonoBehaviour
         continueBtn.onClick.AddListener(() =>
         {
 
-            gameManager.ChangeScene("Single Lobby");
+            if (boardChessManager.isMultiplayer)
+                gameManager.ChangeScene("Multiplayer Lobby");
+            else
+                gameManager.ChangeScene("Single Lobby");
         });
 
         returnBtn2.onClick.AddListener(() =>
@@ -115,15 +138,20 @@ public class GameInterfaceManager : MonoBehaviour
         continueBtn2.onClick.AddListener(() =>
         {
 
-            gameManager.ChangeScene("Single Lobby");
+            if (boardChessManager.isMultiplayer)
+                gameManager.ChangeScene("Multiplayer Lobby");
+            else
+                gameManager.ChangeScene("Single Lobby");
         });
-
 
         BackLobbyBtn.onClick.AddListener(() =>
         {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
-            gameManager.ChangeScene("Single Lobby");
+            if (boardChessManager.isMultiplayer)
+                gameManager.ChangeScene("Multiplayer Lobby");
+            else
+                gameManager.ChangeScene("Single Lobby");
         });
 
         ViewInfoBtn.onClick.AddListener(() =>

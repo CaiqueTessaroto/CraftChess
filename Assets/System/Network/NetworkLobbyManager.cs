@@ -14,7 +14,6 @@ using UnityEngine.SceneManagement;
 using Unity.Collections;
 using System;
 using System.Threading.Tasks;
-using System.Security.Cryptography.X509Certificates;
 
 public class NetworkLobbyManager : MonoBehaviour
 {
@@ -25,14 +24,21 @@ public class NetworkLobbyManager : MonoBehaviour
     public NetworkVariable<FixedString32Bytes> LobbyCode =
         new NetworkVariable<FixedString32Bytes>();
 
-    public bool startedHost = false;
+    public bool IsHost = false;
 
     [Header("Player")]
     public Sprite CurrentSprite;
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnEnable()
@@ -112,7 +118,7 @@ public class NetworkLobbyManager : MonoBehaviour
             //Debug.Log("Lobby criado");
             //Debug.Log("Código: " + currentLobby.LobbyCode);
 
-            startedHost = NetworkManager.Singleton.StartHost();
+            IsHost = NetworkManager.Singleton.StartHost();
 
             StartCoroutine(LeaveRoutine(scene));
         }
@@ -223,6 +229,9 @@ public class NetworkLobbyManager : MonoBehaviour
 
         yield return null;
 
+        if (scene == "Menu")
+            Destroy(NetworkManager.Singleton.gameObject);
+
         if (!string.IsNullOrEmpty(scene))
             SceneManager.LoadScene(scene);
     }
@@ -249,7 +258,7 @@ public class NetworkLobbyManager : MonoBehaviour
     }
 
 
-    
+
     private Coroutine _pollCoroutine;
 
     public void StartPollingLobby()

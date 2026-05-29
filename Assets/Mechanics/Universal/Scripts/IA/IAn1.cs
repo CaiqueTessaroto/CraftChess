@@ -28,7 +28,7 @@ public class IAn1 : MonoBehaviour
             moveTracker = FindFirstObjectByType<MoveTracker>();
 
         if (!selectId)
-            botPlayerId = boardManager.GetBotId();
+            botPlayerId = boardManager.GetOpponentId();
 
     }
 

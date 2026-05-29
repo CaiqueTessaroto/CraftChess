@@ -26,7 +26,7 @@ public class IAn3 : MonoBehaviour
             pieceControllerIA = GetComponent<PieceControllerIA>();
 
         if (!selectId)
-            botPlayerId = boardManager.GetBotId();
+            botPlayerId = boardManager.GetOpponentId();
     }
 
     void Update()

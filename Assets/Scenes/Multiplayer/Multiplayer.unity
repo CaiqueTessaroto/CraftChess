@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -406,6 +407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -568,6 +570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -867,6 +870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -1271,6 +1275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -1433,6 +1438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -1699,6 +1705,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -1861,6 +1868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -2100,6 +2108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -2460,6 +2469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -2735,6 +2745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -2897,6 +2908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -3059,6 +3071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -3493,6 +3506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -3655,6 +3669,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -3968,6 +3983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -4166,6 +4182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -4328,6 +4345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -4490,6 +4508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -4652,6 +4671,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -4964,6 +4984,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -5196,7 +5217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardChessManager: {fileID: 1163510829}
-  pieceController: {fileID: 1726832950}
+  pieceController: {fileID: 0}
   moveTracker: {fileID: 0}
   gameManager: {fileID: 1425975908}
   MenuBtn: {fileID: 352610080}
@@ -5410,6 +5431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -5572,6 +5594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -5734,6 +5757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -5896,6 +5920,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -6058,6 +6083,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -6220,6 +6246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -6486,6 +6513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -6707,7 +6735,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -6860,6 +6888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -7143,6 +7172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -7305,6 +7335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -7778,6 +7809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -8015,6 +8047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -8533,6 +8566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -8695,6 +8729,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -8857,6 +8892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -9140,6 +9176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -9302,6 +9339,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -9464,6 +9502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -9625,6 +9664,7 @@ MonoBehaviour:
   noRules: 0
   noTurns: 0
   localGame: 0
+  isMultiplayer: 0
   autoSwitchSide: 0
   IAvsIA: 0
   setCursor: 0
@@ -9777,6 +9817,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -9939,6 +9980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -10101,6 +10143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -10325,7 +10368,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -10416,6 +10459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -10578,6 +10622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -11201,6 +11246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -11363,6 +11409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -11617,6 +11664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -11779,6 +11827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -11941,6 +11990,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -12256,6 +12306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -12418,6 +12469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -12721,6 +12773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -13126,7 +13179,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -13217,6 +13270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -13379,6 +13433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -13502,10 +13557,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1726832948}
-  - component: {fileID: 1726832950}
   - component: {fileID: 1726832949}
   - component: {fileID: 1726832951}
   - component: {fileID: 1726832952}
+  - component: {fileID: 1726832953}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -13543,7 +13598,7 @@ MonoBehaviour:
   gridManager: {fileID: 1163510829}
   moveColor: {r: 0, g: 1, b: 0, a: 0.39215687}
   captureColor: {r: 1, g: 0, b: 0, a: 0.39215687}
---- !u!114 &1726832950
+--- !u!114 &1726832951
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13552,9 +13607,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 1726832946}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 710b12dd7dfdf214ba6338bc9ebc4376, type: 3}
+  m_Script: {fileID: 11500000, guid: 3cdcef5691a30df4fbb0be23d5b2d8d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardChess: {fileID: 1163510829}
+  moveHistory: []
+--- !u!114 &1726832952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1726832946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37f7e1147d860f04a9be7a4620a4f0d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  promotionCanvasPrefab: {fileID: 3955260787696597196, guid: 628ab0c81c5a16f488654faf04014451, type: 3}
+  promotionButtonPrefab: {fileID: 1898461192767568498, guid: 604466979ea71c44f8ff3c24a760c77f, type: 3}
+--- !u!114 &1726832953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1726832946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5649c2de418fa2c4f92dd1f47bc6bdae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MultiplayerPieceController
   boardManager: {fileID: 1163510829}
   motionVisualization: {fileID: 1726832949}
   moveTracker: {fileID: 1726832951}
@@ -13575,34 +13658,6 @@ MonoBehaviour:
   haskingBlack: 0
   KingWhite: {fileID: 0}
   KingBlack: {fileID: 0}
---- !u!114 &1726832951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1726832946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cdcef5691a30df4fbb0be23d5b2d8d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boardChess: {fileID: 0}
-  moveHistory: []
---- !u!114 &1726832952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1726832946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37f7e1147d860f04a9be7a4620a4f0d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  promotionCanvasPrefab: {fileID: 3955260787696597196, guid: 628ab0c81c5a16f488654faf04014451, type: 3}
-  promotionButtonPrefab: {fileID: 1898461192767568498, guid: 604466979ea71c44f8ff3c24a760c77f, type: 3}
 --- !u!1 &1732014145
 GameObject:
   m_ObjectHideFlags: 0
@@ -13651,6 +13706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -13813,6 +13869,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -14159,6 +14216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -14321,6 +14379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -14483,6 +14542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -14772,6 +14832,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -15085,6 +15146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -15368,6 +15430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -15530,6 +15593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}
@@ -15949,7 +16013,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -16027,6 +16091,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   pieceController: {fileID: 0}
+  multiplayerPieceController: {fileID: 0}
   house:
     HouseName: 
     Position: {x: 0, y: 0}

@@ -6,21 +6,6 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using Unity.Services.Authentication;
 
-/// <summary>
-/// Gerencia a troca de esquadrões entre host e client via NGO.
-/// JSONs trafegam via ServerRpc/ClientRpc.
-/// Sprites trafegam via CustomMessagingManager (sem limite de tamanho).
-/// </summary>
-
-/*
-// No MultiplayerLobbyUI ou onde for iniciar a partida:
-MatchSquadData hostSquad   = SquadSyncManager.Instance.HostSquad;
-MatchSquadData clientSquad = SquadSyncManager.Instance.ClientSquad;
-
-// Brancas/Pretas dependem da escolha no lobby — ex:
-MultiplayerLobbyState.WhiteSquad = hostSquad;
-MultiplayerLobbyState.BlackSquad = clientSquad;
-*/
 public static class MultiplayerLobbyState
 {
     public static MatchSquadData WhiteSquad;

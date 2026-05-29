@@ -545,7 +545,7 @@ public class InteractiveLobby : MonoBehaviour
                     if (piece.NameInSquad == data.King.Name)
                         IsKing = true;
 
-                    managerPieceInfo.SelectPiece(piece.NameInSquad, piece, wrapper, sprite, IsKing);
+                    managerPieceInfo.SelectPiece(piece.NameInSquad, piece, wrapper, sprite, OnWhite, IsKing);
                     //    squadManager.SelectPiece(nameInSquad, pieceData, File.ReadAllText(jsonPath), sprite, rootPath);
                 });
 
@@ -560,9 +560,9 @@ public class InteractiveLobby : MonoBehaviour
                 if (!WhiteSquad.Pieces.ContainsKey(piece.NameInSquad))
                     WhiteSquad.Pieces[piece.NameInSquad] = wrapper;
 
-                if (!managerPieceInfo.pieceSpritesWhite.ContainsKey($"{piece.NameInSquad}{piece.Squad}"))
+                if (!managerPieceInfo.pieceSpritesWhite.ContainsKey($"{piece.NameInSquad}"))
                 {
-                    managerPieceInfo.pieceSpritesWhite[$"{piece.NameInSquad}{piece.Squad}"] = sprite;
+                    managerPieceInfo.pieceSpritesWhite[$"{piece.NameInSquad}"] = sprite;
                 }
 
             }
@@ -574,9 +574,9 @@ public class InteractiveLobby : MonoBehaviour
                 if (!BlackSquad.Pieces.ContainsKey(piece.NameInSquad))
                     BlackSquad.Pieces[piece.NameInSquad] = wrapper;
 
-                if (!managerPieceInfo.pieceSpritesBlack.ContainsKey($"{piece.NameInSquad}{piece.Squad}"))
+                if (!managerPieceInfo.pieceSpritesBlack.ContainsKey($"{piece.NameInSquad}"))
                 {
-                    managerPieceInfo.pieceSpritesBlack[$"{piece.NameInSquad}{piece.Squad}"] = sprite;
+                    managerPieceInfo.pieceSpritesBlack[$"{piece.NameInSquad}"] = sprite;
                 }
             }
 

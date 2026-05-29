@@ -30,7 +30,7 @@ public class MoveTracker : MonoBehaviour
     {
 
         if (boardChess == null)
-            boardChess = FindObjectOfType<BoardChessManager>();
+            boardChess = FindFirstObjectByType<BoardChessManager>();
 
     }
 

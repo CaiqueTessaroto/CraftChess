@@ -34,16 +34,20 @@ public class Cell : MonoBehaviour
 
     public BoardChessManager gridManager;
     public PieceController pieceController;
+    public MultiplayerPieceController multiplayerPieceController;
     public House house;
 
     // Start is called before the first frame update
     void Start()
     {
         if (gridManager == null)
-            gridManager = FindObjectOfType<BoardChessManager>();
+            gridManager = FindFirstObjectByType<BoardChessManager>();
 
         if (pieceController == null)
-            pieceController = FindObjectOfType<PieceController>();
+            pieceController = FindFirstObjectByType<PieceController>();
+
+        if (multiplayerPieceController == null)
+            multiplayerPieceController = FindFirstObjectByType<MultiplayerPieceController>();
     }
 
     private void OnMouseDown()
@@ -51,8 +55,14 @@ public class Cell : MonoBehaviour
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
             return;
 
-        if (pieceController != null)
+        //if (pieceController != null)
+        //    pieceController.OnCellClicked(house.Position);
+
+        if (MatchData.Instance.isMultiplayer && multiplayerPieceController != null)
+            multiplayerPieceController.OnCellClicked(house.Position);
+        else if(pieceController != null)
             pieceController.OnCellClicked(house.Position);
+
     }
 
 }

@@ -24,6 +24,8 @@ public class ManagerPieceInfo : MonoBehaviour
 
     public BoardChessManager boardChessManager;
 
+    private bool isWhite;
+
     public Dictionary<string, Sprite> pieceSpritesWhite = new Dictionary<string, Sprite>();
     public Dictionary<string, Sprite> pieceSpritesBlack = new Dictionary<string, Sprite>();
 
@@ -37,7 +39,7 @@ public class ManagerPieceInfo : MonoBehaviour
         closePiecebtn.onClick.AddListener(() =>
         {
             Panel.SetActive(false);
-            
+
             if (boardChessManager)
                 boardChessManager.infoPiece = false;
         });
@@ -50,10 +52,11 @@ public class ManagerPieceInfo : MonoBehaviour
 
     }
 
-    public void SelectPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite, bool IsKing)
+    public void SelectPiece(string namePieceSquad, SquadPieceData pieceData, MovementConfigData config, Sprite sprite, bool isBlack, bool IsKing)
     {
 
         //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(json);
+        isWhite = !isBlack;
 
         if (config.piece.Name != currentPieceName || config.piece.Squad != squadPiece || Panel.activeSelf == false)
         {
@@ -160,16 +163,27 @@ public class ManagerPieceInfo : MonoBehaviour
 
         //string name = fileName.Trim();
         //string name = fileName.Replace(" ", "").Trim();
+        //sprite = pieceSpritesWhite[$"{name}{squad}"];
+        //sprite = pieceSpritesBlack[$"{name}{squad}"];
 
         // Acha a imagem dentro do painel
         Image img = clone.GetComponentInChildren<Image>();
 
         Sprite sprite = null;
+        if (isWhite)
+        {
+            //sprite = boardChessManager.Squads[0].Sprites[name];
+            
+            if (pieceSpritesWhite.ContainsKey($"{fileName}"))
+                sprite = pieceSpritesWhite[$"{fileName}"];
+        }
+        else
+        {
+            //sprite = boardChessManager.Squads[1].Sprites[name];
 
-        if (pieceSpritesWhite.ContainsKey($"{name}{squad}"))
-            sprite = pieceSpritesWhite[$"{name}{squad}"];
-        else if (pieceSpritesBlack.ContainsKey($"{name}{squad}"))
-            sprite = pieceSpritesBlack[$"{name}{squad}"];
+            if (pieceSpritesBlack.ContainsKey($"{fileName}"))
+                sprite = pieceSpritesBlack[$"{fileName}"];
+        }
 
 
         if (img != null)

@@ -32,6 +32,7 @@ public class BoardChessManager : MonoBehaviour
     public bool noRules = false;
     public bool noTurns = false;
     public bool localGame = false;
+    public bool isMultiplayer = false;
     public bool autoSwitchSide = false;
     public bool IAvsIA = false;
 
@@ -79,25 +80,13 @@ public class BoardChessManager : MonoBehaviour
         if (pieceController == null)
             pieceController = FindFirstObjectByType<PieceController>();
 
-        //Debug.Log("Mapa: " + MatchData.Instance.mapName);
-        //Debug.Log("Esquadrão do Jogador: " + MatchData.Instance.userSquadName);
-        //Debug.Log("Dificuldade: " + MatchData.Instance.botDifficulty);
-        //Debug.Log("Quem começa: " + MatchData.Instance.whoStarts);
-
-
-        //var squad = MatchData.Instance.yourSquad;
-        //var sprite = MatchData.Instance.yourPieceSprites["Rei"];
-        //var pieceData = MatchData.Instance.yourPieces["Rei"];
-        //var enemyData = MatchData.Instance.enemySquad;
-
-        //managerPieceInfo.pieceSprites.AddRange(MatchData.Instance.Squads[0].Sprites);
-        //managerPieceInfo.pieceSprites.AddRange(MatchData.Instance.Squads[1].Sprites);
-
-        //Debug.Log(pieceData);
-
         noRules = MatchData.Instance.noRules;
         noTurns = MatchData.Instance.noTurns;
         localGame = MatchData.Instance.localGame;
+        isMultiplayer = MatchData.Instance.isMultiplayer;
+
+        if(isMultiplayer)
+            MultiplayerLobbyState.SendReadyStateToHost(false);
 
         if (localGame)
             autoSwitchSide = MatchData.Instance.autoSwitchSide;
@@ -110,13 +99,9 @@ public class BoardChessManager : MonoBehaviour
             return;
         }
 
-        //Squad = MatchData.Instance.Squad;
-        //BotSquad = MatchData.Instance.BotSquad;
-
-
         Squads = MatchData.Instance.Squads;
 
-        if (Squads[0].Player.name == "Bot" && !localGame)
+        if (ShouldReverseGrid())
             GenerateGrid_reverse();
         else
             GenerateGrid();
@@ -130,7 +115,7 @@ public class BoardChessManager : MonoBehaviour
 
         StartCoroutine(AfterStart());
 
-        if (!localGame)
+        if (!localGame && !isMultiplayer)
         {
             GameObject iAgameObject = GameObject.Find("IA");
 
@@ -184,49 +169,56 @@ public class BoardChessManager : MonoBehaviour
         }
     }
 
-    public bool getIAvsIA()
+    private bool ShouldReverseGrid()
     {
-        return IAvsIA;
+        // Jogo contra Bot: inverte se o Bot está no Squads[0] (lado branco)
+        if (!localGame && !IAvsIA)
+        {
+            if (Squads[0].Player.name == "Bot")
+                return true;
+        }
+        // Multiplayer: inverte se o jogador local for preto
+        if (MatchData.Instance.isMultiplayer)
+        {
+            // Host é branco → Client é preto → Client inverte
+            // Host é preto  → Host inverte
+            bool localPlayerIsBlack = MatchData.Instance.HostIsWhite
+                ? !NetworkLobbyManager.Instance.IsHost   // Client é preto
+                : NetworkLobbyManager.Instance.IsHost;    // Host é preto
+
+            return localPlayerIsBlack;
+        }
+        return false;
     }
 
-    public int GetBotId()
+    public int GetOpponentId()
     {
-        int id;
+        if (MatchData.Instance.isMultiplayer)
+        {
+            // No multiplayer, o "bot" é o jogador remoto (o oponente)
+            return NetworkLobbyManager.Instance.IsHost
+                ? (MatchData.Instance.HostIsWhite ? 1 : 0)  // oponente é o Client
+                : (MatchData.Instance.HostIsWhite ? 0 : 1); // oponente é o Host
+        }
 
-
+        // Lógica original para jogo local/bot
         Squads = MatchData.Instance.Squads;
-
-        if (Squads[0].Player.name == "Bot")
-        {
-            id = 0;
-        }
-        else
-        {
-            id = 1;
-        }
-
-        return id;
-
+        return Squads[0].Player.name == "Bot" ? 0 : 1;
     }
 
     public int GetPlayerId()
     {
-        int id;
+        if (MatchData.Instance.isMultiplayer)
+        {
+            // No multiplayer, o "player" é o jogador local
+            return NetworkLobbyManager.Instance.IsHost
+                ? (MatchData.Instance.HostIsWhite ? 0 : 1)  // local é o Host
+                : (MatchData.Instance.HostIsWhite ? 1 : 0); // local é o Client
+        }
 
-
+        // Lógica original para jogo local/bot
         Squads = MatchData.Instance.Squads;
-
-        if (Squads[0].Player.name == "Bot")
-        {
-            id = 1;
-        }
-        else
-        {
-            id = 0;
-        }
-
-        return id;
-
+        return Squads[0].Player.name == "Bot" ? 1 : 0;
     }
 
     IEnumerator AfterStart()
@@ -479,6 +471,14 @@ public class BoardChessManager : MonoBehaviour
 
         currentOrigin = CreateOverlay(originCell, selectedColor);
         currentTarget = CreateOverlay(targetCell, selectedColor);
+
+        // Multiplayer: registra o movimento para envio
+        if (MatchData.Instance.isMultiplayer)
+        {
+            MultiplayerPieceController mp = pieceController as MultiplayerPieceController;
+            if (mp != null)
+                mp.RegisterMove(origin, target);
+        }
     }
 
     private GameObject CreateOverlay(GameObject parent, Color color, string name = "Overlay")
@@ -662,12 +662,12 @@ public class BoardChessManager : MonoBehaviour
 
                 if (matchSquad.Player.color == Color.white)
                 {
-                    if (!managerPieceInfo.pieceSpritesWhite.ContainsKey($"{piece.NameInSquad}{piece.Squad}"))
-                        managerPieceInfo.pieceSpritesWhite[$"{piece.NameInSquad}{piece.Squad}"] = sprite;
+                    if (!managerPieceInfo.pieceSpritesWhite.ContainsKey($"{piece.NameInSquad}"))
+                        managerPieceInfo.pieceSpritesWhite[$"{piece.NameInSquad}"] = sprite;
                 }
                 else
-                    if (!managerPieceInfo.pieceSpritesBlack.ContainsKey($"{piece.NameInSquad}{piece.Squad}"))
-                        managerPieceInfo.pieceSpritesBlack[$"{piece.NameInSquad}{piece.Squad}"] = sprite;
+                    if (!managerPieceInfo.pieceSpritesBlack.ContainsKey($"{piece.NameInSquad}"))
+                        managerPieceInfo.pieceSpritesBlack[$"{piece.NameInSquad}"] = sprite;
 
 
             }
@@ -937,15 +937,4 @@ public class BoardChessManager : MonoBehaviour
 
 
 
-
-
-
 }
-
-
-
-
-
-
-
-

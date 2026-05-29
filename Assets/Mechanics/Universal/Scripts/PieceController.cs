@@ -61,7 +61,7 @@ public class PieceController : MonoBehaviour
             gameInterfaceManager = FindFirstObjectByType<GameInterfaceManager>();
 
 
-        botPlayerId = boardManager.GetBotId();
+        botPlayerId = boardManager.GetOpponentId();
     }
 
     // Update is called once per frame
@@ -72,7 +72,7 @@ public class PieceController : MonoBehaviour
     }
 
 
-    public void OnCellClicked(Vector2Int clickedPos, bool IA = false)
+    public void OnCellClicked(Vector2Int clickedPos, bool forceMove = false, bool IA = false)
     {
         this.IA = IA;
 
@@ -97,10 +97,11 @@ public class PieceController : MonoBehaviour
                 return;
             }
 
-            if ((!boardManager.localGame && comp.Player.id == botPlayerId && IA == false) || boardManager.IAvsIA)
-                return;
+            if (!forceMove)
+                if ((!boardManager.localGame && comp.Player.id == botPlayerId && IA == false) || boardManager.IAvsIA)
+                    return;
 
-            if (boardManager.noTurns || comp.Player.id == moveTracker.GetTurnPlayer())
+            if (boardManager.noTurns || (comp.Player.id == moveTracker.GetTurnPlayer()) || forceMove)
                 SelectPiece(piece);
             //Debug.Log($"Selecionou peça {piece.name} em {clickedPos}");
 
@@ -171,7 +172,9 @@ public class PieceController : MonoBehaviour
 
         MatchSquadData matchSquad;
 
-        if (component.Player.color == Color.white)
+        bool isWhite = component.Player.color == Color.white;
+        
+        if (isWhite)
             matchSquad = boardManager.Squads[0];
         else
             matchSquad = boardManager.Squads[1];
@@ -182,11 +185,12 @@ public class PieceController : MonoBehaviour
         Squad squad = matchSquad.Data;
         SquadPieceData pieceData = squad.Pieces.Find(p => p.NameInSquad == component.name);
 
-        managerPieceInfo.SelectPiece(component.name, pieceData, movement.configData, sprite, component.IsKing);
+        managerPieceInfo.SelectPiece(component.name, pieceData, movement.configData, sprite, !isWhite, component.IsKing);
 
     }
 
-    public void BoardUpdate()
+    // PieceController.cs
+    public virtual void BoardUpdate()
     {
         StartCoroutine(DelayedBoardUpdate());
     }
@@ -254,7 +258,7 @@ public class PieceController : MonoBehaviour
 
     public void SetEndGame(bool black = false, bool white = false, bool draw = false)
     {
-        if (boardManager.localGame || boardManager.IAvsIA)
+        if (boardManager.localGame || boardManager.IAvsIA || boardManager.isMultiplayer)
             EndGameLocal(black, white, draw);
         else
             EndGame(black, white, draw);
@@ -263,23 +267,57 @@ public class PieceController : MonoBehaviour
     public void EndGameLocal(bool black = false, bool white = false, bool draw = false)
     {
         if (draw)
+        {
             gameInterfaceManager.EndGame("Draw");
-        else if (black)
-        {
-            Sprite sprite = managerPieceInfo.pieceSpritesBlack[$"{KingBlack.Name}{KingBlack.Squad}"];
-            gameInterfaceManager.EndGameLocal(MatchData.Instance.blackSquadName, sprite);
-        }
-        else if (white)
-        {
-            Sprite sprite = managerPieceInfo.pieceSpritesWhite[$"{KingWhite.Name}{KingWhite.Squad}"];
-            gameInterfaceManager.EndGameLocal(MatchData.Instance.whiteSquadName, sprite);
+            return;
         }
 
+        Sprite winnerSprite = null;
+        string winnerName = null;
+
+        if (black) // pretas venceram
+        {
+            winnerName = MatchData.Instance.blackSquadName;
+
+            if (MatchData.Instance.isMultiplayer)
+            {
+                // Quem joga de preto venceu — host é branco ou não?
+                bool blackIsHost = !MatchData.Instance.HostIsWhite;
+                winnerSprite = blackIsHost
+                    ? MatchData.Instance.HostProfileSprite
+                    : MatchData.Instance.ClientProfileSprite;
+            }
+            else
+            {
+                winnerSprite = managerPieceInfo.pieceSpritesBlack[$"{KingBlack.Name}"];
+            }
+
+            gameInterfaceManager.EndGameLocal(winnerName, winnerSprite);
+            endGame = true;
+        }
+        else if (white) // brancas venceram
+        {
+            winnerName = MatchData.Instance.whiteSquadName;
+
+            if (MatchData.Instance.isMultiplayer)
+            {
+                bool whiteIsHost = MatchData.Instance.HostIsWhite;
+                winnerSprite = whiteIsHost
+                    ? MatchData.Instance.HostProfileSprite
+                    : MatchData.Instance.ClientProfileSprite;
+            }
+            else
+            {
+                winnerSprite = managerPieceInfo.pieceSpritesWhite[$"{KingWhite.Name}"];
+            }
+
+            gameInterfaceManager.EndGameLocal(winnerName, winnerSprite);
+            endGame = true;
+        }
     }
 
     public void EndGame(bool black = false, bool white = false, bool draw = false)
     {
-
         if (draw)
             gameInterfaceManager.EndGame("Draw");
 

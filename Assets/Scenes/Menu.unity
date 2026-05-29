@@ -2300,7 +2300,7 @@ MonoBehaviour:
         byte0027: 0
         byte0028: 0
         byte0029: 0
-  startedHost: 0
+  IsHost: 0
   CurrentSprite: {fileID: 0}
 --- !u!114 &201686086
 MonoBehaviour:
@@ -9010,7 +9010,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b95560d929fe14145af871056f05e0a1, type: 2}
   - {fileID: 11400000, guid: 54724a4de2f8bf34fa3cb6ba5a6896e4, type: 2}
   - {fileID: 11400000, guid: d75c64bc187f16d4683e944e51ca4298, type: 2}
-  - {fileID: 11400000, guid: ff2a2df4564959a4e8caa5fec126a7f9, type: 2}
   rewardFeed: {fileID: 887408053}
   unlock: {fileID: 8300000, guid: fc5cfc441b31e8a439300e367f4270cc, type: 3}
   unlockPanel: {fileID: 1177405469}
@@ -9450,6 +9449,7 @@ GameObject:
   - component: {fileID: 877656735}
   - component: {fileID: 877656734}
   - component: {fileID: 877656733}
+  - component: {fileID: 877656736}
   m_Layer: 0
   m_Name: NetworkSquadSync
   m_TagString: Untagged
@@ -9510,6 +9510,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &877656736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877656732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06072669033e0dd4db683dbf5a53ad36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PieceControllerNetwork
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &887408049
 GameObject:
   m_ObjectHideFlags: 0

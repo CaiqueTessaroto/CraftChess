@@ -54,7 +54,7 @@ public class PieceControllerIA : MonoBehaviour
         //KingWhite = pieceController.KingWhite;
         //KingBlack = pieceController.KingBlack;
 
-        botPlayerId = boardManager.GetBotId();
+        botPlayerId = boardManager.GetOpponentId();
     }
 
     // Update is called once per frame
