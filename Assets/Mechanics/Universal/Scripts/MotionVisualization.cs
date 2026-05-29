@@ -20,13 +20,13 @@ public class MotionVisualization : MonoBehaviour
     void Start()
     {
         if (gridManager == null)
-            gridManager = FindObjectOfType<BoardChessManager>();
+            gridManager = FindFirstObjectByType<BoardChessManager>();
 
         moveOverlayPrefab = gridManager.selectionPrefab;
 
-        moveTracker = FindObjectOfType<MoveTracker>();
+        moveTracker = FindFirstObjectByType<MoveTracker>();
 
-        pieceController = FindObjectOfType<PieceController>();
+        pieceController = FindFirstObjectByType<PieceController>();
 
 
         if (moveTracker == null)

@@ -87,4 +87,25 @@ public class PieceControllerNetwork : NetworkBehaviour
 
         pc.SetEndGame(black: blackWins, white: whiteWins, draw: false);
     }
+
+
+    public void SendPromotion(int ox, int oy, int tx, int ty, string pieceName, int playerId)
+    {
+        SendPromotionServerRpc(ox, oy, tx, ty, pieceName, playerId);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SendPromotionServerRpc(int ox, int oy, int tx, int ty, string pieceName, int playerId)
+    {
+        ConfirmPromotionClientRpc(ox, oy, tx, ty, pieceName, playerId);
+    }
+
+    [ClientRpc]
+    private void ConfirmPromotionClientRpc(int ox, int oy, int tx, int ty, string pieceName, int playerId)
+    {
+        MultiplayerPieceController mp = FindFirstObjectByType<MultiplayerPieceController>();
+        if (mp == null) return;
+
+        mp.ExecuteConfirmedPromotion(new Vector2Int(ox, oy), new Vector2Int(tx, ty), pieceName, playerId);
+    }
 }

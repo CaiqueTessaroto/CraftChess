@@ -55,9 +55,6 @@ public class Cell : MonoBehaviour
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
             return;
 
-        //if (pieceController != null)
-        //    pieceController.OnCellClicked(house.Position);
-
         if (MatchData.Instance.isMultiplayer && multiplayerPieceController != null)
             multiplayerPieceController.OnCellClicked(house.Position);
         else if(pieceController != null)

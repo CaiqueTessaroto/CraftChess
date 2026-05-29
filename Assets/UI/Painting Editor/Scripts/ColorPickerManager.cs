@@ -45,10 +45,10 @@ public class ColorPickerManager : MonoBehaviour
     {
 
         if (paletteManager == null)
-            paletteManager = FindObjectOfType<DynamicColorPaletteManager>();
+            paletteManager = FindFirstObjectByType<DynamicColorPaletteManager>();
 
         if (gridManager == null)
-            gridManager = FindObjectOfType<PaintingGridManager>();
+            gridManager = FindFirstObjectByType<PaintingGridManager>();
 
 
         buttonRGB.onClick.AddListener(() =>

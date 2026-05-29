@@ -471,14 +471,6 @@ public class BoardChessManager : MonoBehaviour
 
         currentOrigin = CreateOverlay(originCell, selectedColor);
         currentTarget = CreateOverlay(targetCell, selectedColor);
-
-        // Multiplayer: registra o movimento para envio
-        if (MatchData.Instance.isMultiplayer)
-        {
-            MultiplayerPieceController mp = pieceController as MultiplayerPieceController;
-            if (mp != null)
-                mp.RegisterMove(origin, target);
-        }
     }
 
     private GameObject CreateOverlay(GameObject parent, Color color, string name = "Overlay")

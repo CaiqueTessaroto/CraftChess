@@ -18,7 +18,7 @@ public class UIDragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     void Start()
     {
 
-        squadManager = FindObjectOfType<SquadManager>();
+        squadManager = FindFirstObjectByType<SquadManager>();
 
         canvas = GetComponentInParent<Canvas>();
     }

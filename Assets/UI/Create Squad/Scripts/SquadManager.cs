@@ -108,12 +108,12 @@ public class SquadManager : MonoBehaviour
 
         if (fileManager == null)
         {
-            fileManager = FindObjectOfType<FileManager>();
+            fileManager = FindFirstObjectByType<FileManager>();
         }
 
         if (gridSquadManager == null)
         {
-            gridSquadManager = FindObjectOfType<GridSquadManager>();
+            gridSquadManager = FindFirstObjectByType<GridSquadManager>();
         }
 
         backtoolBtn.onClick.AddListener(() =>

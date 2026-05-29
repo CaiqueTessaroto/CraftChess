@@ -31,6 +31,7 @@ public class PieceController : MonoBehaviour
     public bool endGame = false;
     public bool haskingWhite = false;
     public bool haskingBlack = false;
+    public bool forceMove = false;
     public PieceComponent KingWhite;
     public PieceComponent KingBlack;
 
@@ -75,6 +76,7 @@ public class PieceController : MonoBehaviour
     public void OnCellClicked(Vector2Int clickedPos, bool forceMove = false, bool IA = false)
     {
         this.IA = IA;
+        this.forceMove = forceMove;
 
         GameObject cell = boardManager.gridCells[clickedPos.x, clickedPos.y];
         boardManager.HighlightSelect(cell); // muda a cor da célula selecionada
@@ -136,7 +138,7 @@ public class PieceController : MonoBehaviour
         pieceComponent = null;
         pieceMovement = null;
 
-        if (!IA)
+        if (!forceMove)
             motionVisualization.ClearMoveOverlays();
     }
 
@@ -155,7 +157,7 @@ public class PieceController : MonoBehaviour
             pieceMovement.enabled = true;
 
 
-            if (!IA) // pieceComponent.Player.id != botPlayerId
+            if (!forceMove) // pieceComponent.Player.id != botPlayerId
                 motionVisualization.VisualizeMoves(pieceComponent, pieceMovement);
 
             return true;
@@ -173,7 +175,7 @@ public class PieceController : MonoBehaviour
         MatchSquadData matchSquad;
 
         bool isWhite = component.Player.color == Color.white;
-        
+
         if (isWhite)
             matchSquad = boardManager.Squads[0];
         else
@@ -496,7 +498,6 @@ public class PieceController : MonoBehaviour
                 {
                     //moveTracker.AddMove(selectedPiece, pieceComponent, pieceComponent.Position, clickedPosition);
                     // Captura normal
-                    boardManager.HighlightLastMove(pieceComponent.Position, clickedPosition);
                     CaptureEnemyPiece(selectedPiece, targetPiece, clickedPosition);
 
                     AudioManager.Instance?.PlaySFX(captureSound);
@@ -512,11 +513,6 @@ public class PieceController : MonoBehaviour
             }
             else
             {
-                // Movimento normal
-
-                //moveTracker.AddMove(selectedPiece, pieceComponent, pieceComponent.Position, clickedPosition);
-
-                boardManager.HighlightLastMove(pieceComponent.Position, clickedPosition);
                 MovePiece(selectedPiece, clickedPosition, captured);
 
                 AudioManager.Instance?.PlaySFX(moveSound);
@@ -536,6 +532,16 @@ public class PieceController : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void RegisterMove(Vector2Int origin, Vector2Int target)
+    {
+        if (MatchData.Instance.isMultiplayer)
+        {
+            MultiplayerPieceController mp = this as MultiplayerPieceController;
+            if (mp != null)
+                mp.RegisterMove(origin, target);
+        }
     }
 
     public void AddMove(bool captured, int distanceRook = 0)
@@ -582,7 +588,11 @@ public class PieceController : MonoBehaviour
         if (targetPiece != null && targetPiece.name != "Selection Overlay")
         {
 
-            PieceComponent componentTarget = targetPiece.GetComponent<PieceComponent>();
+            //PieceComponent componentTarget = targetPiece.GetComponent<PieceComponent>();
+
+            //boardManager.HighlightLastMove(component.Position, targetPosition);
+            //RegisterMove(component.Position, targetPosition);
+
             // Captura: remove a peça inimiga
             boardManager.AddCapturedPiece(targetPiece, component.Player.id);
             boardManager.AllPieces.Remove(targetPiece);
@@ -605,7 +615,9 @@ public class PieceController : MonoBehaviour
             if (PromotePiece(component, targetPosition))
                 return;
 
-        moveTracker.AddMove(selectedPiece, pieceComponent, pieceComponent.Position, targetPosition);
+        boardManager.HighlightLastMove(component.Position, targetPosition);
+        RegisterMove(component.Position, targetPosition);
+        moveTracker.AddMove(selectedPiece, component, component.Position, targetPosition);
 
         if (component.InitialMoved)
             component.InitialMoved = false;
@@ -674,9 +686,6 @@ public class PieceController : MonoBehaviour
 
         if (reachedPromotionRank && isPositionValid)
         {
-            //promotionUI.promotionCanvas.SetActive(true);
-            //promotionUI.ShowPromotionOptions(selectedPiece);
-
             PromotionUI newpromotionUI = piece.gameObject.AddComponent<PromotionUI>();
 
             MatchSquadData squadData;
@@ -686,7 +695,7 @@ public class PieceController : MonoBehaviour
             else
                 squadData = boardManager.Squads[1];
 
-            newpromotionUI.Initialize(piece, createPromotionUI.promotionCanvasPrefab, createPromotionUI.promotionButtonPrefab, squadData, targetPosition, IA, targetPiece);
+            newpromotionUI.Initialize(piece, createPromotionUI.promotionCanvasPrefab, createPromotionUI.promotionButtonPrefab, squadData, targetPosition, forceMove, IA, targetPiece);
         }
         else
             return false;
@@ -727,6 +736,7 @@ public class PieceController : MonoBehaviour
 
             moveTracker.AddMove(selectedPiece, pieceComponent, origin, middlePosition);
             boardManager.HighlightLastMove(origin, middlePosition);
+            RegisterMove(pieceComponent.Position, middlePosition);
 
             // Limpa as partículas e desseleciona a peça
             DeselectPiece();
@@ -756,7 +766,7 @@ public class PieceController : MonoBehaviour
 
         moveTracker.AddMove(selectedPiece, pieceComponent, kingOrigin, rookOrigin);
         boardManager.HighlightLastMove(kingOrigin, rookOrigin);
-
+        RegisterMove(kingOrigin, rookOrigin);
         DeselectPiece();
     }
 

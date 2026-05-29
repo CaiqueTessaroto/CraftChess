@@ -233,7 +233,6 @@ public class PieceControllerIA : MonoBehaviour
                 {
                     //moveTracker.AddMove(selectedPiece, pieceComponent, pieceComponent.Position, clickedPosition);
                     // Captura normal
-                    boardManager.HighlightLastMove(pieceComponent.Position, clickedPosition);
                     CaptureEnemyPiece(selectedPiece, targetPiece, clickedPosition);
 
                     AudioManager.Instance?.PlaySFX(pieceController.captureSound);
@@ -249,11 +248,6 @@ public class PieceControllerIA : MonoBehaviour
             }
             else
             {
-                // Movimento normal
-
-                //moveTracker.AddMove(selectedPiece, pieceComponent, pieceComponent.Position, clickedPosition);
-
-                boardManager.HighlightLastMove(pieceComponent.Position, clickedPosition);
                 MovePiece(selectedPiece, clickedPosition, captured);
 
                 AudioManager.Instance?.PlaySFX(pieceController.moveSound);
@@ -321,6 +315,8 @@ public class PieceControllerIA : MonoBehaviour
 
             PieceComponent componentTarget = targetPiece.GetComponent<PieceComponent>();
             // Captura: remove a peça inimiga
+            boardManager.HighlightLastMove(component.Position, targetPosition);
+
             boardManager.AddCapturedPiece(targetPiece, component.Player.id);
             boardManager.AllPieces.Remove(targetPiece);
             Destroy(targetPiece);
@@ -342,6 +338,7 @@ public class PieceControllerIA : MonoBehaviour
             if (PromotePiece(component, targetPosition))
                 return;
 
+        boardManager.HighlightLastMove(component.Position, targetPosition);
         moveTracker.AddMove(selectedPiece, pieceComponent, pieceComponent.Position, targetPosition);
 
         if (component.InitialMoved)
@@ -423,7 +420,7 @@ public class PieceControllerIA : MonoBehaviour
             else
                 squadData = boardManager.Squads[1];
 
-            newpromotionUI.Initialize(piece, createPromotionUI.promotionCanvasPrefab, createPromotionUI.promotionButtonPrefab, squadData, targetPosition, IA, targetPiece);
+            newpromotionUI.Initialize(piece, createPromotionUI.promotionCanvasPrefab, createPromotionUI.promotionButtonPrefab, squadData, targetPosition, true, IA, targetPiece);
         }
         else
             return false;

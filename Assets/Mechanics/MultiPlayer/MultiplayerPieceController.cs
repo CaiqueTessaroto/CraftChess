@@ -8,7 +8,7 @@ public class MultiplayerPieceController : PieceController
     private Vector2Int pendingTarget;
     private bool hasPendingMove = false;
 
-    public new void OnCellClicked(Vector2Int clickedPos, bool IA = false, bool forceMove = false)
+    public new void OnCellClicked(Vector2Int clickedPos, bool forceMove = false, bool IA = false)
     {
 
         if (boardManager.infoPiece && !IA)
@@ -71,30 +71,32 @@ public class MultiplayerPieceController : PieceController
 
         Debug.Log($"[Multiplayer] Executando movimento do oponente: {origin} → {target}");
 
-        // Verifica o que tem na origem
         GameObject pieceAtOrigin = boardManager.GetPieceAtPosition(origin.x, origin.y);
-        GameObject pieceAtTarget = boardManager.GetPieceAtPosition(target.x, target.y);
 
-        Debug.Log($"[Multiplayer] Peça na origem {origin}: {(pieceAtOrigin != null ? pieceAtOrigin.name : "NENHUMA")}");
-        Debug.Log($"[Multiplayer] Peça no destino {target}: {(pieceAtTarget != null ? pieceAtTarget.name : "NENHUMA")}");
-
-        if (pieceAtOrigin != null)
+        if (pieceAtOrigin == null)
         {
-            PieceComponent comp = pieceAtOrigin.GetComponent<PieceComponent>();
-            Debug.Log($"[Multiplayer] Peça origem — Player.id: {comp.Player.id} | PossibleMoves count: {comp.PossibleMoves?.Count ?? -1}");
-
-            if (comp.PossibleMoves != null)
-                Debug.Log($"[Multiplayer] PossibleMoves contém destino {target}: {comp.PossibleMoves.Contains(target)}");
+            Debug.LogWarning($"[Multiplayer] Nenhuma peça em {origin} para mover.");
+            return;
         }
 
-        isReceivingMove = true;
-        base.OnCellClicked(origin, forceMove: true);
-        base.OnCellClicked(target, forceMove: true);
-        isReceivingMove = false;
+        PieceComponent comp = pieceAtOrigin.GetComponent<PieceComponent>();
 
-        // Verifica resultado
-        GameObject pieceAfter = boardManager.GetPieceAtPosition(target.x, target.y);
-        Debug.Log($"[Multiplayer] Peça no destino após movimento: {(pieceAfter != null ? pieceAfter.name : "NENHUMA")}");
+        // ✅ Garante que PossibleMoves está atualizado ANTES de executar
+        PieceMovement movement = pieceAtOrigin.GetComponent<PieceMovement>();
+        if (movement != null)
+        {
+            movement.enabled = true;
+            boardManager.UpdateBoardControl();          // atualiza controle do tabuleiro
+            comp.PossibleMoves = movement.GetValidMoves(); // recalcula movimentos válidos
+        }
+
+        Debug.Log($"[Multiplayer] PossibleMoves count: {comp.PossibleMoves?.Count ?? -1}");
+        Debug.Log($"[Multiplayer] Destino {target} está em PossibleMoves: {comp.PossibleMoves?.Contains(target)}");
+
+        isReceivingMove = true;
+        base.OnCellClicked(origin, forceMove: true, false);
+        base.OnCellClicked(target, forceMove: true, false);
+        isReceivingMove = false;
     }
 
     public bool IsMyTurnPublic()
@@ -107,5 +109,47 @@ public class MultiplayerPieceController : PieceController
         return NetworkLobbyManager.Instance.IsHost
             ? (MatchData.Instance.HostIsWhite ? 0 : 1)
             : (MatchData.Instance.HostIsWhite ? 1 : 0);
+    }
+
+
+    public void ExecuteConfirmedPromotion(Vector2Int origin, Vector2Int target, string pieceName, int playerId)
+    {
+        if (IsMyTurnPublic())
+        {
+            Debug.Log("[Multiplayer] Promoção própria confirmada — já executada.");
+            return;
+        }
+
+        Debug.Log($"[Multiplayer] Aplicando promoção do oponente | origem: {origin} destino: {target} peça: {pieceName} | playerId: {playerId}");
+
+        // ✅ Busca o peão na origem, não no destino
+        GameObject pawnObj = boardManager.GetPieceAtPosition(origin.x, origin.y);
+        if (pawnObj == null)
+        {
+            Debug.LogError($"[Multiplayer] Nenhuma peça encontrada em {origin} para promover.");
+            return;
+        }
+
+        PieceComponent pawn = pawnObj.GetComponent<PieceComponent>();
+
+        GameObject targetPiece = boardManager.GetPieceAtPosition(target.x, target.y);
+
+        MatchSquadData squadData = (playerId == 0)
+            ? boardManager.Squads[0]
+            : boardManager.Squads[1];
+
+        PromotionUI promotionUI = pawnObj.GetComponent<PromotionUI>();
+        if (promotionUI == null)
+            promotionUI = pawnObj.AddComponent<PromotionUI>();
+
+        promotionUI.InitializeWithPiece(
+            pawn,
+            createPromotionUI.promotionCanvasPrefab,
+            createPromotionUI.promotionButtonPrefab,
+            squadData,
+            target,   // pos de destino para PlacePiece
+            pieceName,
+            targetPiece
+        );
     }
 }

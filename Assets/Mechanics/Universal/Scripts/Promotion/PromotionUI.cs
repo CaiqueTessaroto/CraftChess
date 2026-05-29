@@ -30,9 +30,11 @@ public class PromotionUI : MonoBehaviour
 
     [Header("Data")]
     public MatchSquadData squad = new MatchSquadData();
+    [HideInInspector]
+    public bool isRemotePromotion = false;
 
 
-    public void Initialize(PieceComponent piecePromotion, GameObject promotionCanvasPrefab, GameObject promotionButtonPrefab, MatchSquadData squadData, Vector2Int pos, bool IA = false, GameObject targetPiece = null)
+    public void Initialize(PieceComponent piecePromotion, GameObject promotionCanvasPrefab, GameObject promotionButtonPrefab, MatchSquadData squadData, Vector2Int pos, bool forceMove = false, bool IA = false, GameObject targetPiece = null)
     {
         this.promotionCanvasPrefab = promotionCanvasPrefab;
         this.promotionButtonPrefab = promotionButtonPrefab;
@@ -53,9 +55,10 @@ public class PromotionUI : MonoBehaviour
         if (pieceController == null)
             pieceController = FindFirstObjectByType<PieceController>();
 
-        if (!IA) // piecePromotion.Player.id != pieceController.botPlayerId || boardManager.localGame
+        if (!forceMove) // piecePromotion.Player.id != pieceController.botPlayerId || boardManager.localGame
             CreateCanvas(currentPiece);
-        else
+
+        if (IA)
         {
             SquadPieceData strongestPiece = null;
             float maxPower = 0;
@@ -83,6 +86,30 @@ public class PromotionUI : MonoBehaviour
         //StartCoroutine(DestroyObject());
     }
 
+    public void InitializeWithPiece(PieceComponent piecePromotion,
+        GameObject canvasPrefab, GameObject buttonPrefab,
+        MatchSquadData squadData, Vector2Int targetPos,
+        string chosenPieceName, GameObject targetPiece = null)
+    {
+        this.promotionCanvasPrefab = canvasPrefab;
+        this.promotionButtonPrefab = buttonPrefab;
+        this.currentPiece = piecePromotion;
+        this.targetPiece = targetPiece;
+        this.pos = targetPos;
+        this.squad = squadData;
+
+        if (moveTracker == null) moveTracker = FindFirstObjectByType<MoveTracker>();
+        if (chessMovesPanel == null) chessMovesPanel = FindFirstObjectByType<ChessMovesPanel>();
+        if (boardManager == null) boardManager = FindFirstObjectByType<BoardChessManager>();
+        if (pieceController == null) pieceController = FindFirstObjectByType<PieceController>();
+
+        isRemotePromotion = true; // ✅ marca como remota antes de tudo
+
+        SquadPieceData pieceData = squadData.Data.Pieces.Find(p => p.Name == chosenPieceName);
+        Sprite sprite = squadData.Sprites[pieceData.NameInSquad];
+
+        Promotion(chosenPieceName, sprite);
+    }
 
     void Start()
     {
@@ -225,7 +252,6 @@ public class PromotionUI : MonoBehaviour
 
     public void Promotion(string pieceName, Sprite sprite)
     {
-
         GameObject newPiece = boardManager.PlacePiece(pieceName, sprite, pos, squad);
 
         if (newPiece == null)
@@ -249,7 +275,22 @@ public class PromotionUI : MonoBehaviour
             component.IsKing = true;
         }
 
-
+        // ✅ Apenas registra move e envia pela rede se for local
+        if (!isRemotePromotion)
+        {
+            if (boardManager.isMultiplayer && PieceControllerNetwork.Instance != null)
+            {
+                MultiplayerPieceController mp = FindFirstObjectByType<MultiplayerPieceController>();
+                if (mp != null && mp.IsMyTurnPublic())
+                    // ✅ currentPiece.Position já é a origem pois o peão ainda não foi destruído
+                    PieceControllerNetwork.Instance.SendPromotion(
+                        currentPiece.Position.x, currentPiece.Position.y,
+                        pos.x, pos.y,
+                        pieceName,
+                        currentPiece.Player.id
+                    );
+            }
+        }
 
         string letter = $"{(char)('a' + pos.x)}";
         string number = $"{pos.y + 1}";
@@ -266,15 +307,10 @@ public class PromotionUI : MonoBehaviour
             house = $"{letter}{number}=";
 
         boardManager.UpdatePiecePosition(currentPiece.Position, pos, component.Name);
-
         pieceController.DeselectPiece();
 
-        // 5️⃣ Garante inicialização de movimentos
         if (newMovement != null)
-        {
-            //component.PossibleMoves = new List<Vector2Int>();
             newMovement.enabled = true;
-        }
 
         boardManager.AllPieces.Remove(currentPiece.gameObject);
 
@@ -283,14 +319,22 @@ public class PromotionUI : MonoBehaviour
         StartCoroutine(BoardUpdate(house, sr, sprite));
     }
 
+
     public IEnumerator BoardUpdate(string house, SpriteRenderer sr, Sprite sprite)
     {
-        yield return StartCoroutine(pieceController.DelayedBoardUpdate());
+        GameObject pawnToDestroy = currentPiece.gameObject;
 
-        moveTracker.AddMove(currentPiece.gameObject, currentPiece, currentPiece.Position, pos);
+        // ✅ Remoto só precisa destruir o peão e atualizar o painel
+        if (!isRemotePromotion)
+            yield return StartCoroutine(pieceController.DelayedBoardUpdate());
+        else
+            yield return null; // aguarda um frame para garantir que PlacePiece finalizou
+
+        moveTracker.AddMove(pawnToDestroy, currentPiece, currentPiece.Position, pos);
         chessMovesPanel.AddMove(house, sr.sprite, sprite);
 
-        Destroy(currentPiece.gameObject);
+        if (pawnToDestroy != null)
+            Destroy(pawnToDestroy);
 
         if (currentPromotionCanvas)
             Destroy(currentPromotionCanvas);

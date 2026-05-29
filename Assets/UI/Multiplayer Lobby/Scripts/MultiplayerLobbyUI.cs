@@ -79,6 +79,9 @@ public class MultiplayerLobbyUI : MonoBehaviour
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
 
+        var colors = play.colors;
+        play.image.color = colors.disabledColor;
+
         ready.onClick.AddListener(() =>
         {
             bool next = !MultiplayerLobbyState.ClientIsReady;
