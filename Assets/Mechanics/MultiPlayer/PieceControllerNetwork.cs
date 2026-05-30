@@ -127,4 +127,37 @@ public class PieceControllerNetwork : NetworkBehaviour
 
         pc.SetEndGame(black: blackWins, white: whiteWins, draw: draw);
     }
+
+
+
+
+
+
+    public void SendCastle(int kingOx, int kingOy, int kingTx, int kingTy,
+                            int rookOx, int rookOy, int rookTx, int rookTy)
+    {
+        SendCastleServerRpc(kingOx, kingOy, kingTx, kingTy,
+                            rookOx, rookOy, rookTx, rookTy);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SendCastleServerRpc(int kingOx, int kingOy, int kingTx, int kingTy,
+                                      int rookOx, int rookOy, int rookTx, int rookTy)
+    {
+        ConfirmCastleClientRpc(kingOx, kingOy, kingTx, kingTy,
+                               rookOx, rookOy, rookTx, rookTy);
+    }
+
+    [ClientRpc]
+    private void ConfirmCastleClientRpc(int kingOx, int kingOy, int kingTx, int kingTy,
+                                         int rookOx, int rookOy, int rookTx, int rookTy)
+    {
+        MultiplayerPieceController mp = FindFirstObjectByType<MultiplayerPieceController>();
+        if (mp == null) return;
+
+        mp.ExecuteConfirmedCastle(
+            new Vector2Int(kingOx, kingOy), new Vector2Int(kingTx, kingTy),
+            new Vector2Int(rookOx, rookOy), new Vector2Int(rookTx, rookTy)
+        );
+    }
 }

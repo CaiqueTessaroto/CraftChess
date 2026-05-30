@@ -541,16 +541,6 @@ public class PieceController : MonoBehaviour
         return false;
     }
 
-    public void RegisterMove(Vector2Int origin, Vector2Int target)
-    {
-        if (MatchData.Instance.isMultiplayer)
-        {
-            MultiplayerPieceController mp = this as MultiplayerPieceController;
-            if (mp != null)
-                mp.RegisterMove(origin, target);
-        }
-    }
-
     public void AddMove(bool captured, int distanceRook = 0)
     {
 
@@ -571,9 +561,6 @@ public class PieceController : MonoBehaviour
             house = $"x{letter}{number}";
         else
             house = $"{letter}{number}";
-
-        //if(rook)
-        //    house = 
 
 
         SpriteRenderer sr = move.PieceObject.GetComponent<SpriteRenderer>();
@@ -639,7 +626,7 @@ public class PieceController : MonoBehaviour
 
 
 
-    private void Move(GameObject selectedPiece, Vector2Int targetPosition)
+    public void Move(GameObject selectedPiece, Vector2Int targetPosition)
     {
         PieceComponent component = selectedPiece.GetComponent<PieceComponent>();
         PieceMovement movement = selectedPiece.GetComponent<PieceMovement>();
@@ -737,13 +724,16 @@ public class PieceController : MonoBehaviour
 
         if (distance != 1)
         {
+
+            RegisterCastle(origin, middlePosition,
+                castlePiece.GetComponent<PieceComponent>().Position, oneBackFromMiddle);
+                
             Move(selectedPiece, middlePosition);
 
             Move(castlePiece, oneBackFromMiddle);
 
             moveTracker.AddMove(selectedPiece, pieceComponent, origin, middlePosition);
             boardManager.HighlightLastMove(origin, middlePosition);
-            RegisterMove(pieceComponent.Position, middlePosition);
 
             // Limpa as partículas e desseleciona a peça
             DeselectPiece();
@@ -765,6 +755,8 @@ public class PieceController : MonoBehaviour
         Vector2Int kingOrigin = pieceComponent.Position;
         Vector2Int rookOrigin = swapPiece.Position;
 
+        RegisterCastle(kingOrigin, rookOrigin, rookOrigin, kingOrigin);
+
         // Move o rei para a posição da torre
         Move(selectedPiece, rookOrigin);
 
@@ -773,9 +765,27 @@ public class PieceController : MonoBehaviour
 
         moveTracker.AddMove(selectedPiece, pieceComponent, kingOrigin, rookOrigin);
         boardManager.HighlightLastMove(kingOrigin, rookOrigin);
-        RegisterMove(kingOrigin, rookOrigin);
+
         DeselectPiece();
     }
+    public void RegisterCastle(Vector2Int kingOrigin, Vector2Int kingTarget, Vector2Int rookOrigin, Vector2Int rookTarget)
+    {
+        if (MatchData.Instance.isMultiplayer)
+        {
+            MultiplayerPieceController mp = this as MultiplayerPieceController;
+            if (mp != null)
+                mp.RegisterCastle(kingOrigin, kingTarget, rookOrigin, rookTarget);
+        }
+    }
 
+    public void RegisterMove(Vector2Int origin, Vector2Int target)
+    {
+        if (MatchData.Instance.isMultiplayer)
+        {
+            MultiplayerPieceController mp = this as MultiplayerPieceController;
+            if (mp != null)
+                mp.RegisterMove(origin, target);
+        }
+    }
 
 }

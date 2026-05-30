@@ -6,7 +6,13 @@ public class MultiplayerPieceController : PieceController
 
     private Vector2Int pendingOrigin;
     private Vector2Int pendingTarget;
+
+    private Vector2Int pendingKingOrigin;
+    private Vector2Int pendingKingTarget;
+    private Vector2Int pendingRookOrigin;
+    private Vector2Int pendingRookTarget;
     private bool hasPendingMove = false;
+    private bool hasPendingCastle = false;
 
     public new void OnCellClicked(Vector2Int clickedPos, bool forceMove = false, bool IA = false)
     {
@@ -42,23 +48,45 @@ public class MultiplayerPieceController : PieceController
         hasPendingMove = true;
     }
 
+    public new void RegisterCastle(Vector2Int kingOrigin, Vector2Int kingTarget,
+                                Vector2Int rookOrigin, Vector2Int rookTarget)
+    {
+        // Se o movimento veio da rede, não reagenda envio
+        if (isReceivingMove) return;
+
+        pendingKingOrigin = kingOrigin;
+        pendingKingTarget = kingTarget;
+        pendingRookOrigin = rookOrigin;
+        pendingRookTarget = rookTarget;
+        hasPendingCastle = true;
+    }
+
     public override void BoardUpdate()
     {
         base.BoardUpdate();
 
+        if (hasPendingCastle && !isReceivingMove)
+        {
+            PieceControllerNetwork.Instance?.SendCastle(
+                pendingKingOrigin.x, pendingKingOrigin.y,
+                pendingKingTarget.x, pendingKingTarget.y,
+                pendingRookOrigin.x, pendingRookOrigin.y,
+                pendingRookTarget.x, pendingRookTarget.y
+            );
+            hasPendingCastle = false;
+        }
+
         if (hasPendingMove && !isReceivingMove)
         {
-            if (PieceControllerNetwork.Instance == null)
-            {
-                //Debug.LogError("[Multiplayer] PieceControllerNetwork.Instance é null! GameObject de rede não encontrado.");
-                return;
-            }
-
-            //Debug.Log($"[Multiplayer] Enviando via PieceControllerNetwork: {pendingOrigin} → {pendingTarget}");
-            PieceControllerNetwork.Instance.SendMove(pendingOrigin.x, pendingOrigin.y, pendingTarget.x, pendingTarget.y);
+            PieceControllerNetwork.Instance?.SendMove(
+                pendingOrigin.x, pendingOrigin.y,
+                pendingTarget.x, pendingTarget.y
+            );
             hasPendingMove = false;
         }
     }
+
+
 
     // Chamado para TODOS após confirmação do servidor
     public void ExecuteConfirmedMove(Vector2Int origin, Vector2Int target)
@@ -152,4 +180,38 @@ public class MultiplayerPieceController : PieceController
             targetPiece
         );
     }
+
+    public void ExecuteConfirmedCastle(Vector2Int kingOrigin, Vector2Int kingTarget,
+                                        Vector2Int rookOrigin, Vector2Int rookTarget)
+    {
+        // Quem enviou já executou localmente
+        if (IsMyTurnPublic()) return;
+
+        GameObject kingObj = boardManager.GetPieceAtPosition(kingOrigin.x, kingOrigin.y);
+        GameObject rookObj = boardManager.GetPieceAtPosition(rookOrigin.x, rookOrigin.y);
+
+        if (kingObj == null || rookObj == null)
+        {
+            Debug.LogWarning("[Multiplayer] Castle: rei ou torre não encontrados.");
+            return;
+        }
+
+        isReceivingMove = true;
+
+        // Reutiliza o Move interno do base controller para não disparar nova rede
+        base.Move(kingObj, kingTarget);
+        base.Move(rookObj, rookTarget);
+
+        PieceComponent kingComponent = kingObj.GetComponent<PieceComponent>();
+
+        int distance = Mathf.Abs(kingOrigin.x - rookOrigin.x) + Mathf.Abs(kingOrigin.y - rookOrigin.y);
+
+        moveTracker.AddMove(kingObj, kingComponent, kingOrigin, kingTarget);
+        AddMove(false, distance);
+        boardManager.HighlightLastMove(kingOrigin, kingTarget);
+        boardManager.UpdateBoardControl();
+
+        isReceivingMove = false;
+    }
+
 }
