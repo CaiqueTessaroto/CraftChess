@@ -12,7 +12,7 @@ public class ColorPaletteUI : MonoBehaviour
 
         if (manager == null)
         {
-            manager = FindObjectOfType<PaintingGridManager>();
+            manager = FindFirstObjectByType<PaintingGridManager>();
         }
 
         Button button = GetComponent<Button>();

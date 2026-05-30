@@ -110,11 +110,11 @@ public class LocalizationManager : MonoBehaviour
             txt.UpdateText();
 
 
-        TutorialController tutorial = FindObjectOfType<TutorialController>();
+        TutorialController tutorial = FindFirstObjectByType<TutorialController>();
         if (tutorial != null)
             tutorial.ShowPage(0);
 
-        RewardFeed rewardFeed = FindObjectOfType<RewardFeed>();
+        RewardFeed rewardFeed = FindFirstObjectByType<RewardFeed>();
         if (rewardFeed != null)
             rewardFeed.ShowReward(rewardFeed.currentIndex);
 

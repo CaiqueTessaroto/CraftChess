@@ -99,7 +99,7 @@ public class InfoGridView : MonoBehaviour
 
         if (squadManager == null)
         {
-            squadManager = FindObjectOfType<SquadManager>();
+            squadManager = FindFirstObjectByType<SquadManager>();
         }
 
         gridTransform = transform;

@@ -209,8 +209,8 @@ public class AdsManager : MonoBehaviour,
 
             if (state == UnityAdsShowCompletionState.COMPLETED)
             {
-                Instance.rewardPending = true;
-                Instance.firstAd = true;
+                rewardPending = true;
+                firstAd = true;
                 //Debug.Log("Recompensa concedida");
 
                 RewardData reward = null;

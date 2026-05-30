@@ -76,7 +76,7 @@ public class MovementCreation : MonoBehaviour
 
         if (navigationManage == null)
         {
-            navigationManage = FindObjectOfType<NavigationManage_Create>();
+            navigationManage = FindFirstObjectByType<NavigationManage_Create>();
         }
 
         GetToggles(straight, straightObject);

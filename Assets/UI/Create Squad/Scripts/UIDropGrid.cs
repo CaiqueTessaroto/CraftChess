@@ -10,7 +10,7 @@ public class UIDropGrid : MonoBehaviour, IDropHandler
     void Start()
     {
 
-        squadManager = FindObjectOfType<SquadManager>();
+        squadManager = FindFirstObjectByType<SquadManager>();
 
     }
 

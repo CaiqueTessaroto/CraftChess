@@ -15,7 +15,7 @@ public class SpectrumPicker : MonoBehaviour, IPointerDownHandler, IDragHandler
     {
 
         if (colorPickerManager == null)
-            colorPickerManager = FindObjectOfType<ColorPickerManager>();
+            colorPickerManager = FindFirstObjectByType<ColorPickerManager>();
 
     }
 
