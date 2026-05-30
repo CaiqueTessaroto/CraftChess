@@ -199,13 +199,7 @@ public class PieceController : MonoBehaviour
 
     public IEnumerator DelayedBoardUpdate()
     {
-
-        bool black = false;
-        bool white = false;
-        bool draw = false;
-
         yield return new WaitForEndOfFrame();
-        //yield return new WaitForSecondsRealtime(1f);
 
         if (boardManager != null)
         {
@@ -219,44 +213,57 @@ public class PieceController : MonoBehaviour
         else
             DeselectPiece();
 
+        // Em multiplayer, só o host avalia e propaga fim de jogo
+        if (boardManager.isMultiplayer)
+        {
+            if (NetworkLobbyManager.Instance.IsHost)
+                CheckAndSendEndGame();
+            // cliente não faz nada — aguarda o ClientRpc
+            yield break;
+        }
 
+        // Lógica local/IA mantida igual
+        bool black = false, white = false, draw = false;
+        EvaluateEndGame(ref black, ref white, ref draw);
+        SetEndGame(black, white, draw);
+    }
+
+    // Detecta e envia pelo host
+    private void CheckAndSendEndGame()
+    {
+        bool black = false, white = false, draw = false;
+        EvaluateEndGame(ref black, ref white, ref draw);
+
+        if (black || white || draw)
+            PieceControllerNetwork.Instance.SendEndGame(black, white, draw);
+    }
+
+    // Extrai a lógica de detecção — usada por ambos os caminhos
+    private void EvaluateEndGame(ref bool black, ref bool white, ref bool draw)
+    {
         if (!boardManager.WhiteHasMoves)
         {
             if (kingWhiteIsInCheck || boardManager.WhitePieces.Count == 0)
-            {
                 black = true;
-            }
             else if (moveTracker.GetTurnPlayer() == 0)
-            {
                 draw = true;
-            }
         }
         else if (!boardManager.BlackHasMoves)
         {
             if (kingBlackIsInCheck || boardManager.BlackPieces.Count == 0)
-            {
                 white = true;
-            }
             else if (moveTracker.GetTurnPlayer() == 1)
-            {
                 draw = true;
-            }
         }
         else if (boardManager.AllPieces.Count == 2 && haskingBlack && haskingWhite)
         {
             draw = true;
         }
 
-        if (KingWhite == null && haskingWhite)
-            black = true;
-
-        if (KingBlack == null && haskingBlack)
-            white = true;
-
-
-        SetEndGame(black, white, draw);
-
+        if (KingWhite == null && haskingWhite) black = true;
+        if (KingBlack == null && haskingBlack) white = true;
     }
+
 
     public void SetEndGame(bool black = false, bool white = false, bool draw = false)
     {

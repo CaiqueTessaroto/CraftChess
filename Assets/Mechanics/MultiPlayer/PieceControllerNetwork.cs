@@ -108,4 +108,23 @@ public class PieceControllerNetwork : NetworkBehaviour
 
         mp.ExecuteConfirmedPromotion(new Vector2Int(ox, oy), new Vector2Int(tx, ty), pieceName, playerId);
     }
+
+
+
+
+    public void SendEndGame(bool blackWins, bool whiteWins, bool draw)
+    {
+        // Só o host deve chamar isso
+        if (!NetworkManager.Singleton.IsHost) return;
+        EndGameClientRpc(blackWins, whiteWins, draw);
+    }
+
+    [ClientRpc]
+    private void EndGameClientRpc(bool blackWins, bool whiteWins, bool draw)
+    {
+        PieceController pc = FindFirstObjectByType<MultiplayerPieceController>();
+        if (pc == null) return;
+
+        pc.SetEndGame(black: blackWins, white: whiteWins, draw: draw);
+    }
 }

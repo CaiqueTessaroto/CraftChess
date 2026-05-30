@@ -85,7 +85,7 @@ public class BoardChessManager : MonoBehaviour
         localGame = MatchData.Instance.localGame;
         isMultiplayer = MatchData.Instance.isMultiplayer;
 
-        if(isMultiplayer)
+        if (isMultiplayer)
             MultiplayerLobbyState.SendReadyStateToHost(false);
 
         if (localGame)
@@ -518,7 +518,7 @@ public class BoardChessManager : MonoBehaviour
     {
         SpriteRenderer sr = overlay.GetComponent<SpriteRenderer>();
 
-        while (true)
+        while (!pieceController.endGame)
         {
             if (sr != null)
                 sr.enabled = true;
@@ -528,6 +528,9 @@ public class BoardChessManager : MonoBehaviour
                 sr.enabled = false;
             yield return new WaitForSeconds(0.4f);
         }
+
+        if (sr != null)
+            sr.enabled = false;
     }
 
     public void StopCheckBlink(Cell cell, ref Coroutine blinkRoutine)
