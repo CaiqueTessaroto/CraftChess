@@ -40,10 +40,10 @@ public class DefaultAvatarScrollView : MonoBehaviour
 
     // ── Estado interno ─────────────────────────────────────────────────────────
     private Sprite _selectedSprite;
-    private Image  _selectedItemImage;   // para destacar visualmente o item ativo
+    private Image _selectedItemImage;   // para destacar visualmente o item ativo
 
     [Header("Visual de seleção")]
-    [SerializeField] private Color selectedTint   = new Color(0.6f, 0.9f, 1f, 1f);
+    [SerializeField] private Color selectedTint = new Color(0.6f, 0.9f, 1f, 1f);
     [SerializeField] private Color deselectedTint = Color.white;
 
     // ══════════════════════════════════════════════════════════════════════════
@@ -81,7 +81,7 @@ public class DefaultAvatarScrollView : MonoBehaviour
         foreach (Transform child in content)
             Destroy(child.gameObject);
 
-        _selectedSprite    = null;
+        _selectedSprite = null;
         _selectedItemImage = null;
 
         // Carrega todos os sprites da pasta
@@ -97,9 +97,9 @@ public class DefaultAvatarScrollView : MonoBehaviour
         {
             Sprite spriteCopy = avatar;   // captura local para o closure
 
-            GameObject item  = Instantiate(itemPrefab, content);
-            Image      img   = item.GetComponent<Image>();
-            Button     btn   = item.GetComponent<Button>();
+            GameObject item = Instantiate(itemPrefab, content);
+            Image img = item.GetComponent<Image>();
+            Button btn = item.GetComponent<Button>();
 
             if (img != null) img.sprite = spriteCopy;
 
@@ -118,7 +118,7 @@ public class DefaultAvatarScrollView : MonoBehaviour
             _selectedItemImage.color = deselectedTint;
 
         // Aplica destaque no item clicado
-        _selectedSprite    = sprite;
+        _selectedSprite = sprite;
         _selectedItemImage = itemImage;
         if (itemImage != null) itemImage.color = selectedTint;
 
@@ -145,8 +145,30 @@ public class DefaultAvatarScrollView : MonoBehaviour
 
         scrollViewPanel.SetActive(false); // Fecha o painel de seleção
 
-        ProfileImageManager.Instance.OnImageSelected(_selectedSprite.texture);
+        Texture2D readableTexture = MakeReadable(_selectedSprite.texture);
+        ProfileImageManager.Instance.OnImageSelected(readableTexture);
 
         //Debug.Log($"[DefaultAvatarScrollView] Avatar confirmado: {_selectedSprite.name}");
     }
+    private Texture2D MakeReadable(Texture2D source)
+    {
+        RenderTexture rt = RenderTexture.GetTemporary(
+            source.width, source.height, 0,
+            RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB);
+
+        Graphics.Blit(source, rt);
+
+        RenderTexture previous = RenderTexture.active;
+        RenderTexture.active = rt;
+
+        Texture2D readable = new Texture2D(source.width, source.height, TextureFormat.RGBA32, false);
+        readable.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
+        readable.Apply();
+
+        RenderTexture.active = previous;
+        RenderTexture.ReleaseTemporary(rt);
+
+        return readable;
+    }
+
 }

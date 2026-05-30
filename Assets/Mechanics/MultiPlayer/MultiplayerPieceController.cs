@@ -20,23 +20,23 @@ public class MultiplayerPieceController : PieceController
 
         if (!isReceivingMove && !IsMyTurnPublic())
         {
-            Debug.Log($"[Multiplayer] Bloqueado — não é o turno local. Turno: {moveTracker.GetTurnPlayer()}, Local: {GetLocalPlayerId()}");
+            //Debug.Log($"[Multiplayer] Bloqueado — não é o turno local. Turno: {moveTracker.GetTurnPlayer()}, Local: {GetLocalPlayerId()}");
             return;
         }
 
-        Debug.Log($"[Multiplayer] OnCellClicked em {clickedPos} | forceMove: {forceMove} | isReceivingMove: {isReceivingMove}");
+        //Debug.Log($"[Multiplayer] OnCellClicked em {clickedPos} | forceMove: {forceMove} | isReceivingMove: {isReceivingMove}");
         base.OnCellClicked(clickedPos, forceMove, IA);
     }
 
-    public void RegisterMove(Vector2Int origin, Vector2Int target)
+    public new void RegisterMove(Vector2Int origin, Vector2Int target)
     {
         if (isReceivingMove)
         {
-            Debug.Log("[Multiplayer] RegisterMove ignorado — veio da rede.");
+            //Debug.Log("[Multiplayer] RegisterMove ignorado — veio da rede.");
             return;
         }
 
-        Debug.Log($"[Multiplayer] RegisterMove: {origin} → {target}");
+        //Debug.Log($"[Multiplayer] RegisterMove: {origin} → {target}");
         pendingOrigin = origin;
         pendingTarget = target;
         hasPendingMove = true;
@@ -50,11 +50,11 @@ public class MultiplayerPieceController : PieceController
         {
             if (PieceControllerNetwork.Instance == null)
             {
-                Debug.LogError("[Multiplayer] PieceControllerNetwork.Instance é null! GameObject de rede não encontrado.");
+                //Debug.LogError("[Multiplayer] PieceControllerNetwork.Instance é null! GameObject de rede não encontrado.");
                 return;
             }
 
-            Debug.Log($"[Multiplayer] Enviando via PieceControllerNetwork: {pendingOrigin} → {pendingTarget}");
+            //Debug.Log($"[Multiplayer] Enviando via PieceControllerNetwork: {pendingOrigin} → {pendingTarget}");
             PieceControllerNetwork.Instance.SendMove(pendingOrigin.x, pendingOrigin.y, pendingTarget.x, pendingTarget.y);
             hasPendingMove = false;
         }
@@ -65,17 +65,17 @@ public class MultiplayerPieceController : PieceController
     {
         if (IsMyTurnPublic())
         {
-            Debug.Log("[Multiplayer] Movimento próprio confirmado — já executado.");
+            //Debug.Log("[Multiplayer] Movimento próprio confirmado — já executado.");
             return;
         }
 
-        Debug.Log($"[Multiplayer] Executando movimento do oponente: {origin} → {target}");
+        //Debug.Log($"[Multiplayer] Executando movimento do oponente: {origin} → {target}");
 
         GameObject pieceAtOrigin = boardManager.GetPieceAtPosition(origin.x, origin.y);
 
         if (pieceAtOrigin == null)
         {
-            Debug.LogWarning($"[Multiplayer] Nenhuma peça em {origin} para mover.");
+            //Debug.LogWarning($"[Multiplayer] Nenhuma peça em {origin} para mover.");
             return;
         }
 
@@ -90,8 +90,8 @@ public class MultiplayerPieceController : PieceController
             comp.PossibleMoves = movement.GetValidMoves(); // recalcula movimentos válidos
         }
 
-        Debug.Log($"[Multiplayer] PossibleMoves count: {comp.PossibleMoves?.Count ?? -1}");
-        Debug.Log($"[Multiplayer] Destino {target} está em PossibleMoves: {comp.PossibleMoves?.Contains(target)}");
+        //Debug.Log($"[Multiplayer] PossibleMoves count: {comp.PossibleMoves?.Count ?? -1}");
+        //Debug.Log($"[Multiplayer] Destino {target} está em PossibleMoves: {comp.PossibleMoves?.Contains(target)}");
 
         isReceivingMove = true;
         base.OnCellClicked(origin, forceMove: true, false);
@@ -116,17 +116,17 @@ public class MultiplayerPieceController : PieceController
     {
         if (IsMyTurnPublic())
         {
-            Debug.Log("[Multiplayer] Promoção própria confirmada — já executada.");
+            //Debug.Log("[Multiplayer] Promoção própria confirmada — já executada.");
             return;
         }
 
-        Debug.Log($"[Multiplayer] Aplicando promoção do oponente | origem: {origin} destino: {target} peça: {pieceName} | playerId: {playerId}");
+        //Debug.Log($"[Multiplayer] Aplicando promoção do oponente | origem: {origin} destino: {target} peça: {pieceName} | playerId: {playerId}");
 
         // ✅ Busca o peão na origem, não no destino
         GameObject pawnObj = boardManager.GetPieceAtPosition(origin.x, origin.y);
         if (pawnObj == null)
         {
-            Debug.LogError($"[Multiplayer] Nenhuma peça encontrada em {origin} para promover.");
+            //Debug.LogError($"[Multiplayer] Nenhuma peça encontrada em {origin} para promover.");
             return;
         }
 
