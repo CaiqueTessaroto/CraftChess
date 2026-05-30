@@ -174,7 +174,11 @@ public class SquadSyncManager : NetworkBehaviour
                 .RegisterNamedMessageHandler(MSG_SPRITE_HOST_TO_CLIENT, OnReceiveSpriteFromHost);
             NetworkManager.Singleton.CustomMessagingManager
                 .RegisterNamedMessageHandler(MSG_PROFILE_HOST_TO_CLIENT, OnReceiveProfileFromHost);
+
+
+            StartCoroutine(SendProfileImageDelayed_Client()); //client envia a dele pro host
         }
+
     }
 
     public override void OnNetworkDespawn()
@@ -204,7 +208,6 @@ public class SquadSyncManager : NetworkBehaviour
 
     private void SendProfileImage(ulong targetClientId, bool toHost)
     {
-        // Texture 'King' is not readabl
         byte[] raw = ProfileImageManager.Instance?.CurrentTexture != null
             ? ProfileImageManager.Instance.CurrentTexture.EncodeToPNG()
             : null;
@@ -214,6 +217,14 @@ public class SquadSyncManager : NetworkBehaviour
             Debug.Log("[SquadSync] Sem foto de perfil para enviar.");
             return;
         }
+
+        // Salva localmente antes de enviar
+        if (IsHost)
+            MultiplayerLobbyState.HostProfileImageRaw = raw;
+        else
+            MultiplayerLobbyState.ClientProfileImageRaw = raw;
+
+        MultiplayerLobbyUI.Instance?.ApplyProfileImages(); // <- aplica imediatamente
 
         var writer = new FastBufferWriter(4 + raw.Length + 8, Allocator.Temp);
         using (writer)
@@ -323,8 +334,6 @@ public class SquadSyncManager : NetworkBehaviour
 
         //host envia a dele pro client
         StartCoroutine(SendProfileImageDelayed(clientId));
-        //client envia a dele pro host
-        StartCoroutine(SendProfileImageDelayed_Client());
 
         // Pede o squad do client
         //SendSquadJsonToHostServerRpc(BuildJsonPayload(false));
@@ -339,6 +348,11 @@ public class SquadSyncManager : NetworkBehaviour
         SendProfileImage(clientId, toHost: false);
     }
 
+    private IEnumerator SendProfileImageDelayed_Client()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SendProfileImage(NetworkManager.ServerClientId, toHost: true);
+    }
     // ───────────────────────────────────────────────────────────────────────
     // PASSO 2 — Host pede o squad ao client
     // ───────────────────────────────────────────────────────────────────────
@@ -361,12 +375,6 @@ public class SquadSyncManager : NetworkBehaviour
         SendSquadJsonToHostServerRpc(BuildJsonPayload(isWhite));
 
         StartCoroutine(SendSpritesToHost(isWhite));
-    }
-
-    private IEnumerator SendProfileImageDelayed_Client()
-    {
-        yield return new WaitForSeconds(1.5f);
-        SendProfileImage(NetworkManager.ServerClientId, toHost: true);
     }
 
     // ───────────────────────────────────────────────────────────────────────
@@ -462,12 +470,12 @@ public class SquadSyncManager : NetworkBehaviour
         if (squad == null) yield break;
 
         bool ready = MultiplayerLobbyState.ClientIsReady;
-        if(ready)
+        if (ready)
         {
             MultiplayerLobbyUI.Instance.UpdateReadyUI(false);
             MultiplayerLobbyState.SendReadyStateToHost(false);
         }
-        
+
         foreach (SquadPieceData piece in squad.Data.Pieces)
         {
             byte[] pngBytes = LoadPngBytes(piece);
@@ -511,7 +519,7 @@ public class SquadSyncManager : NetworkBehaviour
     private void ProcessReceivedSprite(FastBufferReader reader)
     {
         bool ready = MultiplayerLobbyState.ClientIsReady;
-        if(ready)
+        if (ready)
         {
             MultiplayerLobbyUI.Instance.UpdateReadyUI(false);
             MultiplayerLobbyState.SendReadyStateToHost(false);
