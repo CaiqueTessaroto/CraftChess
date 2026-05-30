@@ -24,7 +24,7 @@ public class MultiplayerPieceController : PieceController
             return;
         }
 
-        if (!isReceivingMove && !IsMyTurnPublic())
+        if (!isReceivingMove && !boardManager.noTurns && !IsMyTurnPublic())
         {
             //Debug.Log($"[Multiplayer] Bloqueado — não é o turno local. Turno: {moveTracker.GetTurnPlayer()}, Local: {GetLocalPlayerId()}");
             return;
@@ -91,7 +91,7 @@ public class MultiplayerPieceController : PieceController
     // Chamado para TODOS após confirmação do servidor
     public void ExecuteConfirmedMove(Vector2Int origin, Vector2Int target)
     {
-        if (IsMyTurnPublic())
+        if (!boardManager.noTurns && IsMyTurnPublic())
         {
             //Debug.Log("[Multiplayer] Movimento próprio confirmado — já executado.");
             return;
@@ -142,7 +142,7 @@ public class MultiplayerPieceController : PieceController
 
     public void ExecuteConfirmedPromotion(Vector2Int origin, Vector2Int target, string pieceName, int playerId)
     {
-        if (IsMyTurnPublic())
+        if (!boardManager.noTurns && IsMyTurnPublic())
         {
             //Debug.Log("[Multiplayer] Promoção própria confirmada — já executada.");
             return;
@@ -185,7 +185,7 @@ public class MultiplayerPieceController : PieceController
                                         Vector2Int rookOrigin, Vector2Int rookTarget)
     {
         // Quem enviou já executou localmente
-        if (IsMyTurnPublic()) return;
+        if (!boardManager.noTurns && IsMyTurnPublic()) return;
 
         GameObject kingObj = boardManager.GetPieceAtPosition(kingOrigin.x, kingOrigin.y);
         GameObject rookObj = boardManager.GetPieceAtPosition(rookOrigin.x, rookOrigin.y);
