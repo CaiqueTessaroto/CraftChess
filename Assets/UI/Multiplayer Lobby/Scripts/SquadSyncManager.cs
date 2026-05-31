@@ -418,10 +418,26 @@ public class SquadSyncManager : NetworkBehaviour
         SetJsonReceivedByColor(true, isWhite);
 
         // Sempre reenvia o squad recebido de volta para o client confirmar
-        ReceiveSquadJsonClientRpc(BuildJsonPayload(isWhite, payload.SenderId.ToString()));
-        StartCoroutine(SendSpritesToClient(NetworkManager.Singleton.ConnectedClientsIds, isWhite));
+        //ReceiveSquadJsonClientRpc(BuildJsonPayload(isWhite, payload.SenderId.ToString()));
+        //StartCoroutine(SendSpritesToClient(NetworkManager.Singleton.ConnectedClientsIds, isWhite));
+
+        // ✅ Substitua por confirmação simples:
+        ConfirmSquadReceivedClientRpc(isWhite);
     }
 
+    [ClientRpc]
+    private void ConfirmSquadReceivedClientRpc(bool isWhite)
+    {
+        if (IsHost) return;
+
+        Debug.Log($"[SquadSync] Host confirmou recebimento do squad ({(isWhite ? "White" : "Black")}).");
+
+        // O squad já está em MultiplayerLobbyState (enviado pelo client)
+        // Apenas marca como completo e atualiza a UI
+        SetJsonReceivedByColor(true, isWhite);
+        CheckIfComplete(isWhite);
+        MultiplayerLobbyUI.Instance?.RefreshLocalUI();
+    }
     // ───────────────────────────────────────────────────────────────────────
     // PASSO 3b — Host → Client (ClientRpc)
     // ───────────────────────────────────────────────────────────────────────

@@ -168,7 +168,9 @@ public class PieceController : MonoBehaviour
 
     public void GetPieceInfo(GameObject piece)
     {
-
+        if (piece == null)
+            return;
+            
         PieceComponent component = piece.GetComponent<PieceComponent>();
         PieceMovement movement = piece.GetComponent<PieceMovement>();
 

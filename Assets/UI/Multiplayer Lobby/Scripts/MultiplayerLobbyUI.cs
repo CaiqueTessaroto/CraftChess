@@ -84,6 +84,29 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
         ready.onClick.AddListener(() =>
         {
+            if (MultiplayerLobbyState.WhiteSquad == null)
+            {
+                string text = UIHelperUtils.T("select_white");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "Select the white pieces.";
+
+                FileManager.Instance.CreateAdvice(text);
+
+                return;
+            }
+
+            if (MultiplayerLobbyState.BlackSquad == null)
+            {
+                string text = UIHelperUtils.T("select_black");
+
+                if (string.IsNullOrEmpty(text))
+                    text = "Select the black pieces.";
+
+                FileManager.Instance.CreateAdvice(text);
+                return;
+            }
+
             bool next = !MultiplayerLobbyState.ClientIsReady;
             MultiplayerLobbyState.SendReadyStateToHost(next);
 
@@ -341,6 +364,12 @@ public class MultiplayerLobbyUI : MonoBehaviour
     public void PrepareMatchData()
     {
         MatchData m = MatchData.Instance;
+
+        if (startOption == StartOption.Random)
+        {
+            Debug.LogError("PrepareMatchData chamado antes da resolução do StartOption!");
+            return;
+        }
 
         if (startOption == StartOption.Black)
         {
