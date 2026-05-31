@@ -543,7 +543,10 @@ public class PieceController : MonoBehaviour
             {
                 MovePiece(selectedPiece, clickedPosition, captured);
 
-                AudioManager.Instance?.PlaySFX(moveSound);
+                if (captured)
+                    AudioManager.Instance?.PlaySFX(captureSound);
+                else
+                    AudioManager.Instance?.PlaySFX(moveSound);
 
                 DeselectPiece();
 

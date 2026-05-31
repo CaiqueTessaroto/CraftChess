@@ -210,13 +210,7 @@ public class PieceControllerIA : MonoBehaviour
 
             if (isEnPassant && enemyBehind != null)
             {
-                //VoxelSplitter voxelSplitter = enemyBehind.gameObject.GetComponent<VoxelSplitter>();
-                //voxelSplitter.Splitter();
 
-                //PieceDestroyer destroyer = GetComponent<PieceDestroyer>();
-                //destroyer.DestroyPiece(enemyBehind.gameObject);
-
-                //enemyBehind.gameObject.SetActive(false);
                 boardManager.AddCapturedPiece(enemyBehind.gameObject, pieceComponent.Player.id);
                 boardManager.AllPieces.Remove(enemyBehind.gameObject);
                 Destroy(enemyBehind.gameObject);
@@ -250,7 +244,10 @@ public class PieceControllerIA : MonoBehaviour
             {
                 MovePiece(selectedPiece, clickedPosition, captured);
 
-                AudioManager.Instance?.PlaySFX(pieceController.moveSound);
+                if (captured)
+                    AudioManager.Instance?.PlaySFX(pieceController.captureSound);
+                else
+                    AudioManager.Instance?.PlaySFX(pieceController.moveSound);
 
                 DeselectPiece();
 
