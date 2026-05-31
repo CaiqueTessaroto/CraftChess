@@ -14,6 +14,7 @@ using UnityEngine.SceneManagement;
 using Unity.Collections;
 using System;
 using System.Threading.Tasks;
+using Unity.Services.Authentication;
 
 public class NetworkLobbyManager : MonoBehaviour
 {
@@ -41,20 +42,10 @@ public class NetworkLobbyManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void OnEnable()
+    public bool IsConnected()
     {
-
+        return NetworkManager.Singleton != null && NetworkManager.Singleton.IsConnectedClient;
     }
-
-    private void OnDisable()
-    {
-
-        if (NetworkManager.Singleton != null)
-        {
-
-        }
-    }
-
     public static void StartMultiplayerMatch(string scene)
     {
         // Só o host carrega a cena — o Netcode sincroniza automaticamente para o cliente
@@ -63,7 +54,6 @@ public class NetworkLobbyManager : MonoBehaviour
             NetworkManager.Singleton.SceneManager.LoadScene(scene, LoadSceneMode.Single);
         }
     }
-
     public async void CreateLobby(string scene = null)
     {
 
@@ -132,43 +122,79 @@ public class NetworkLobbyManager : MonoBehaviour
     {
         try
         {
-            Lobby lobby =
-                await LobbyService.Instance.JoinLobbyByCodeAsync(
-                    lobbyCode
-                );
+            Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode);
 
-            currentLobby = lobby;
-
-            string relayJoinCode =
-                lobby.Data["joinCode"].Value;
-
-            JoinAllocation allocation =
-                await RelayService.Instance.JoinAllocationAsync(
-                    relayJoinCode
-                );
-
-            UnityTransport transport =
-                NetworkManager.Singleton.GetComponent<UnityTransport>();
-
-            transport.SetClientRelayData(
-                allocation.RelayServer.IpV4,
-                (ushort)allocation.RelayServer.Port,
-                allocation.AllocationIdBytes,
-                allocation.Key,
-                allocation.ConnectionData,
-                allocation.HostConnectionData
-            );
-
-            NetworkManager.Singleton.StartClient();
-
-            StartCoroutine(LeaveRoutine(scene));
-
-            //Debug.Log("Entrou no lobby");
+            await SetupRelayAndStart(lobby, scene);
+        }
+        catch (LobbyServiceException ex)
+        {
+            // Jogador já está no lobby — tenta reconectar
+            if (ex.ErrorCode == 409 || ex.Message.Contains("already a member"))
+            {
+                await HandleAlreadyInLobby(lobbyCode, scene);
+            }
+            else
+            {
+                Debug.LogError($"Lobby error: {ex}");
+            }
         }
         catch (System.Exception ex)
         {
             Debug.LogError(ex);
         }
+    }
+
+    private async Task HandleAlreadyInLobby(string lobbyCode, string scene)
+    {
+        try
+        {
+            // Opção 1: Reconectar direto (mantém o player no lobby)
+            Lobby lobby = await LobbyService.Instance.ReconnectToLobbyAsync(currentLobby?.Id);
+            await SetupRelayAndStart(lobby, scene);
+        }
+        catch (LobbyServiceException)
+        {
+            // Opção 2: Se reconectar falhar, sair e entrar de novo
+            try
+            {
+                if (currentLobby != null)
+                {
+                    await LobbyService.Instance.RemovePlayerAsync(
+                        currentLobby.Id,
+                        AuthenticationService.Instance.PlayerId
+                    );
+                }
+
+                Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode);
+                await SetupRelayAndStart(lobby, scene);
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"Falha ao re-entrar no lobby: {ex}");
+            }
+        }
+    }
+
+    private async Task SetupRelayAndStart(Lobby lobby, string scene)
+    {
+        currentLobby = lobby;
+
+        string relayJoinCode = lobby.Data["joinCode"].Value;
+
+        JoinAllocation allocation = await RelayService.Instance.JoinAllocationAsync(relayJoinCode);
+
+        UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+        transport.SetClientRelayData(
+            allocation.RelayServer.IpV4,
+            (ushort)allocation.RelayServer.Port,
+            allocation.AllocationIdBytes,
+            allocation.Key,
+            allocation.ConnectionData,
+            allocation.HostConnectionData
+        );
+
+        NetworkManager.Singleton.StartClient();
+        StartCoroutine(LeaveRoutine(scene));
     }
 
 
@@ -240,19 +266,57 @@ public class NetworkLobbyManager : MonoBehaviour
     [ClientRpc]
     private void NotifyHostLeftClientRpc()
     {
-        // Só executa nos clientes (não no host)
-        if (!NetworkManager.Singleton.IsHost)
+        if (NetworkManager.Singleton.IsHost) return;
+
+        string scene = SceneManager.GetActiveScene().name;
+
+        if (scene == "Multiplayer Lobby")
         {
-            Debug.Log("Host encerrou a partida.");
-            HandleDisconnect();
+            HandleDisconnect("Menu");
+        }
+        else if (scene == "Multiplayer")
+        {
+            currentLobby = null;
+            if (PieceControllerNetwork.Instance != null)
+                PieceControllerNetwork.Instance.SendGiveUp();
         }
     }
+
+    /*
     public void HandleDisconnect(string scene = "Menu")
     {
         MultiplayerLobbyState.Reset();
         currentLobby = null;
         NetworkManager.Singleton.Shutdown();
 
+        if (!string.IsNullOrEmpty(scene))
+            SceneManager.LoadScene(scene);
+    }
+    */
+
+    public void HandleDisconnect(string scene = "Menu")
+    {
+        MultiplayerLobbyState.Reset();
+        currentLobby = null;
+
+        if (NetworkManager.Singleton.IsHost)
+        {
+            StartCoroutine(HostShutdownSequence(scene));
+        }
+        else
+        {
+            NetworkManager.Singleton.Shutdown();
+            if (!string.IsNullOrEmpty(scene))
+                SceneManager.LoadScene(scene);
+        }
+    }
+
+    private IEnumerator HostShutdownSequence(string scene)
+    {
+        NotifyHostLeftClientRpc();
+        yield return new WaitForSeconds(0.3f);
+        NetworkManager.Singleton.Shutdown();
+        yield return null;
         if (!string.IsNullOrEmpty(scene))
             SceneManager.LoadScene(scene);
     }

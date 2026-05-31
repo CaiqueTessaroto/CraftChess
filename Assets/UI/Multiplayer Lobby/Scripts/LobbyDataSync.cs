@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 public class LobbyDataSync : MonoBehaviour
 {
@@ -52,21 +53,41 @@ public class LobbyDataSync : MonoBehaviour
         {
             Debug.LogWarning($"Falha ao atualizar lobby: {e.Message}");
 
-            if (e.Reason == LobbyExceptionReason.LobbyNotFound || 
+            if (e.Reason == LobbyExceptionReason.LobbyNotFound ||
                 e.Reason == LobbyExceptionReason.Forbidden)
             {
-                NetworkLobbyManager.Instance.HandleDisconnect();
+                NetworkLobbyManager.Instance.HandleDisconnect("Menu");
                 return;
             }
 
             // Erros temporários: só desconecta após N falhas seguidas
             _failCount++;
             if (_failCount >= MAX_FAILS)
-                NetworkLobbyManager.Instance.HandleDisconnect();
+                NetworkLobbyManager.Instance.HandleDisconnect("Menu");
         }
         finally
         {
             isRefreshing = false;
         }
     }
+
+    public void LoseConnectionDuringMatch()
+    {
+        bool multiplayerScene = SceneManager.GetActiveScene().name == "Multiplayer";
+        if (!multiplayerScene)
+            return;
+
+        string text = UIHelperUtils.T("lobby_exited");
+        if (string.IsNullOrEmpty(text))
+            text = "A player has left the lobby.";
+        FileManager.Instance.SpawnMessage(text);
+
+        NetworkLobbyManager.Instance.currentLobby = null;
+
+        MultiplayerPieceController mp = FindFirstObjectByType<MultiplayerPieceController>();
+        if (mp != null)
+            if (!NetworkLobbyManager.Instance.IsHost)
+                mp.EndGameHostLoseConnection();
+    }
+
 }

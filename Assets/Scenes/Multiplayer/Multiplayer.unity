@@ -10839,6 +10839,7 @@ GameObject:
   - component: {fileID: 1425975909}
   - component: {fileID: 1425975908}
   - component: {fileID: 1425975910}
+  - component: {fileID: 1425975911}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -10895,6 +10896,31 @@ MonoBehaviour:
   OnFiles: 0
   OnFolder: 1
   TrashIcon: {fileID: 21300000, guid: f1d11f241380b00409ddec68c9046e9d, type: 3}
+--- !u!114 &1425975911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425975907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d79bc320bd695743aafe591301f5a3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileManager
+  basePath_Sprite: Sprites
+  basePath_PaintingData: PaintingEditor
+  basePath_UserData: User
+  basePath_PieceData: Pieces
+  basePath_SquadData: Squads
+  warningPrefab: {fileID: 1170677462298655775, guid: bb0e6a0bda49e77478d9d9eb1c3b2ed7, type: 3}
+  advicePrefab: {fileID: 8681817349286575285, guid: 69c790aebce36024bbac98470c0fdc3c, type: 3}
+  inputPrefab: {fileID: 4861523131148347322, guid: ddb14cc30c79bff459925aaab5afc042, type: 3}
+  messagePrefab: {fileID: 3987015553489549906, guid: 4cb543b959557e442a5a3567c0193e08, type: 3}
+  panel: {fileID: 1795530517}
+  warning: 0
+  fadeDuration: 1
+  lifetime: 1
 --- !u!1 &1442584574
 GameObject:
   m_ObjectHideFlags: 0
@@ -13656,6 +13682,7 @@ MonoBehaviour:
   endGame: 0
   haskingWhite: 0
   haskingBlack: 0
+  forceMove: 0
   KingWhite: {fileID: 0}
   KingBlack: {fileID: 0}
 --- !u!1 &1732014145

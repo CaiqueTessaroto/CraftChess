@@ -290,11 +290,18 @@ public class PieceController : MonoBehaviour
 
             if (MatchData.Instance.isMultiplayer)
             {
-                // Quem joga de preto venceu — host é branco ou não?
+
                 bool blackIsHost = !MatchData.Instance.HostIsWhite;
                 winnerSprite = blackIsHost
                     ? MatchData.Instance.HostProfileSprite
                     : MatchData.Instance.ClientProfileSprite;
+
+                if (GetLocalPlayerId() == 0)
+                {
+                    EndGame(black, white, draw);
+                    endGame = true;
+                    return;
+                }
             }
             else
             {
@@ -314,6 +321,13 @@ public class PieceController : MonoBehaviour
                 winnerSprite = whiteIsHost
                     ? MatchData.Instance.HostProfileSprite
                     : MatchData.Instance.ClientProfileSprite;
+
+                if (GetLocalPlayerId() == 1)
+                {
+                    EndGame(black, white, draw);
+                    endGame = true;
+                    return;
+                }
             }
             else
             {
@@ -323,6 +337,13 @@ public class PieceController : MonoBehaviour
             gameInterfaceManager.EndGameLocal(winnerName, winnerSprite);
             endGame = true;
         }
+    }
+
+    private int GetLocalPlayerId()
+    {
+        return NetworkLobbyManager.Instance.IsHost
+            ? (MatchData.Instance.HostIsWhite ? 0 : 1)
+            : (MatchData.Instance.HostIsWhite ? 1 : 0);
     }
 
     public void EndGame(bool black = false, bool white = false, bool draw = false)
@@ -727,7 +748,7 @@ public class PieceController : MonoBehaviour
 
             RegisterCastle(origin, middlePosition,
                 castlePiece.GetComponent<PieceComponent>().Position, oneBackFromMiddle);
-                
+
             Move(selectedPiece, middlePosition);
 
             Move(castlePiece, oneBackFromMiddle);

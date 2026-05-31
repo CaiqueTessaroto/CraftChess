@@ -63,7 +63,8 @@ public class GameInterfaceManager : MonoBehaviour
 
             if (boardChessManager.isMultiplayer)
             {
-                PieceControllerNetwork.Instance.SendGiveUp();
+                if (NetworkLobbyManager.Instance.IsConnected())
+                    PieceControllerNetwork.Instance.SendGiveUp();
                 return; // resultado vem pelo ClientRpc
             }
 
@@ -91,28 +92,16 @@ public class GameInterfaceManager : MonoBehaviour
 
         MenuBtn.onClick.AddListener(() =>
         {
-
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
             if (boardChessManager.isMultiplayer)
             {
-                MultiplayerLobbyState.Reset();
-                //sair do lobby
-                try
-                {
-                    NetworkLobbyManager.Instance.HandleDisconnect();
-                    //NetworkLobbyManager.Instance.LeaveLobby("Menu");
-                }
-                catch
-                {
-                    gameManager.ChangeScene("Menu");
-                }
+                LeaveToMenu();
             }
             else
             {
                 gameManager.ChangeScene("Menu");
             }
-
         });
 
 
@@ -149,7 +138,10 @@ public class GameInterfaceManager : MonoBehaviour
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
             if (boardChessManager.isMultiplayer)
-                gameManager.ChangeScene("Multiplayer Lobby");
+                if (NetworkLobbyManager.Instance.IsConnected())
+                    gameManager.ChangeScene("Multiplayer Lobby");
+                else
+                    LeaveToMenu();
             else
                 gameManager.ChangeScene("Single Lobby");
         });
@@ -169,6 +161,28 @@ public class GameInterfaceManager : MonoBehaviour
         });
 
 
+    }
+
+
+    public void LeaveToMenu()
+    {
+        MultiplayerLobbyState.Reset();
+        try
+        {
+            if (NetworkLobbyManager.Instance.IsConnected())
+            {
+                NetworkLobbyManager.Instance.HandleDisconnect();
+            }
+            else
+            {
+                NetworkLobbyManager.Instance.currentLobby = null;
+                gameManager.ChangeScene("Menu");
+            }
+        }
+        catch
+        {
+            gameManager.ChangeScene("Menu");
+        }
     }
 
     public void EndGame(string result)

@@ -14,6 +14,28 @@ public class MultiplayerPieceController : PieceController
     private bool hasPendingMove = false;
     private bool hasPendingCastle = false;
 
+    public void EndGameHostLoseConnection()
+    {
+        if(endGame) return;
+
+        bool white = !MatchData.Instance.HostIsWhite;
+        bool black = MatchData.Instance.HostIsWhite;
+        bool draw = false;
+
+        base.EndGameLocal(black, white, draw);
+    }
+
+    public void EndGameClientLoseConnection()
+    {
+        if(endGame) return;
+        
+        bool white = MatchData.Instance.HostIsWhite;
+        bool black = !MatchData.Instance.HostIsWhite;
+        bool draw = false;
+
+        base.EndGameLocal(black, white, draw);
+    }
+
     public new void OnCellClicked(Vector2Int clickedPos, bool forceMove = false, bool IA = false)
     {
 

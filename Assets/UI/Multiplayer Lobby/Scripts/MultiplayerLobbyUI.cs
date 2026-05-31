@@ -236,16 +236,22 @@ public class MultiplayerLobbyUI : MonoBehaviour
         Back.onClick.AddListener(() =>
         {
             MultiplayerLobbyState.Reset();
-            //sair do lobby
             try
             {
-                NetworkLobbyManager.Instance.LeaveLobby("Menu");
+                if (NetworkLobbyManager.Instance.IsConnected())
+                {
+                    NetworkLobbyManager.Instance.HandleDisconnect();
+                }
+                else
+                {
+                    NetworkLobbyManager.Instance.currentLobby = null;
+                    gameManager.ChangeScene("Menu");
+                }
             }
             catch
             {
                 gameManager.ChangeScene("Menu");
             }
-
         });
 
         OpenOpt.onClick.AddListener(() =>
@@ -488,6 +494,8 @@ public class MultiplayerLobbyUI : MonoBehaviour
             ApplyProfileImage(MultiplayerLobbyState.HostProfileImageRaw, play1ProfileImage);
         if (MultiplayerLobbyState.ClientProfileImageRaw != null)
             ApplyProfileImage(MultiplayerLobbyState.ClientProfileImageRaw, play2ProfileImage);
+        else
+            play2ProfileImage.sprite = defaultProfileSprite;
     }
 
     private void ApplyProfileImage(byte[] raw, Image target)

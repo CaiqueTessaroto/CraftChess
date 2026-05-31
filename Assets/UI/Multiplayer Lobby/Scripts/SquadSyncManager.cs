@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.Collections;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SquadSyncManager : NetworkBehaviour
 {
@@ -15,8 +17,7 @@ public class SquadSyncManager : NetworkBehaviour
     // ─── Eventos ───────────────────────────────────────────────────────────
     public event Action<bool> OnRemoteSquadReady; // true = White, false = Black
 
-    // ─── Controle interno ──────────────────────────────────────────────────
-    private FileManager fileManager;
+    // ─── Controle interno ─────────────────────────────────────────────────
 
     private Dictionary<string, Sprite> pendingSpritesWhite = new Dictionary<string, Sprite>();
     private Dictionary<string, Sprite> pendingSpritesBlack = new Dictionary<string, Sprite>();
@@ -37,7 +38,6 @@ public class SquadSyncManager : NetworkBehaviour
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        fileManager = FindFirstObjectByType<FileManager>();
     }
 
     private void ResetSync()
@@ -106,7 +106,7 @@ public class SquadSyncManager : NetworkBehaviour
         var squad = new MatchSquadData { Data = data };
 
         string spriteSquadPath = Path.Combine(rootPath,
-            fileManager.basePath_SquadData, folderName, squadName + ".png");
+            FileManager.Instance.basePath_SquadData, folderName, squadName + ".png");
 
         if (File.Exists(spriteSquadPath))
         {
@@ -117,11 +117,11 @@ public class SquadSyncManager : NetworkBehaviour
         {
             // ─── Movement JSON ─────────────────────────────────────────────
             string movPath = Path.Combine(rootPath,
-                fileManager.basePath_PieceData, piece.Squad, piece.Name + ".json");
+                FileManager.Instance.basePath_PieceData, piece.Squad, piece.Name + ".json");
 
             if (!File.Exists(movPath))
                 movPath = Path.Combine(Application.streamingAssetsPath,
-                    fileManager.basePath_PieceData, piece.Squad, piece.Name + ".json");
+                    FileManager.Instance.basePath_PieceData, piece.Squad, piece.Name + ".json");
 
             if (!File.Exists(movPath))
             {
@@ -136,7 +136,7 @@ public class SquadSyncManager : NetworkBehaviour
 
             // ─── Sprite ────────────────────────────────────────────────────
             string spritePath = Path.Combine(rootPath,
-                fileManager.basePath_Sprite, piece.SpriteSet, piece.Sprite.Trim() + ".png");
+                FileManager.Instance.basePath_Sprite, piece.SpriteSet, piece.Sprite.Trim() + ".png");
 
             if (!File.Exists(spritePath))
             {
@@ -166,7 +166,6 @@ public class SquadSyncManager : NetworkBehaviour
             NetworkManager.Singleton.CustomMessagingManager
                 .RegisterNamedMessageHandler(MSG_PROFILE_CLIENT_TO_HOST, OnReceiveProfileFromClient);
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
         }
         else
         {
@@ -179,10 +178,15 @@ public class SquadSyncManager : NetworkBehaviour
             StartCoroutine(SendProfileImageDelayed_Client()); //client envia a dele pro host
         }
 
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+
     }
 
     public override void OnNetworkDespawn()
     {
+        if (NetworkManager.Singleton != null)
+            return;
+
         if (NetworkManager.Singleton?.CustomMessagingManager != null)
         {
             NetworkManager.Singleton.CustomMessagingManager
@@ -195,11 +199,12 @@ public class SquadSyncManager : NetworkBehaviour
                 .UnregisterNamedMessageHandler(MSG_PROFILE_CLIENT_TO_HOST);
         }
 
-        if (IsHost && NetworkManager.Singleton != null)
+        if (IsHost)
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
-            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
         }
+
+        NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
     }
 
     // ───────────────────────────────────────────────────────────────────────
@@ -268,37 +273,63 @@ public class SquadSyncManager : NetworkBehaviour
 
         MultiplayerLobbyUI.Instance?.ApplyProfileImages();
     }
-
     private void OnClientDisconnect(ulong clientId)
     {
+        bool multiplayerScene = SceneManager.GetActiveScene().name == "Multiplayer";
+        bool lobbyScene = SceneManager.GetActiveScene().name == "Multiplayer Lobby";
 
         if (IsHost)
         {
-            // Um cliente saiu
             if (clientId != NetworkManager.ServerClientId)
             {
                 string text = UIHelperUtils.T("lobby_exited");
                 if (string.IsNullOrEmpty(text))
                     text = "A player has left the lobby.";
-
                 FileManager.Instance.SpawnMessage(text);
             }
 
-            //NetworkManager.Singleton.CustomMessagingManager
-            //    .UnregisterNamedMessageHandler(MSG_PROFILE_CLIENT_TO_HOST);
+            if (multiplayerScene)
+            {
+                MultiplayerPieceController mp = FindFirstObjectByType<MultiplayerPieceController>();
+                if (mp != null)
+                    mp.EndGameClientLoseConnection();
+
+                MultiplayerLobbyState.ClientProfileImageRaw = null;
+            }
 
             if (MultiplayerLobbyUI.Instance)
-                MultiplayerLobbyUI.Instance.play2ProfileImage.sprite = MultiplayerLobbyUI.Instance.defaultProfileSprite;
+                MultiplayerLobbyUI.Instance.play2ProfileImage.sprite =
+                    MultiplayerLobbyUI.Instance.defaultProfileSprite;
         }
         else
         {
-            //NetworkManager.Singleton.CustomMessagingManager
-            //    .UnregisterNamedMessageHandler(MSG_PROFILE_HOST_TO_CLIENT);
+            // Host caiu no lobby → vai pro menu
+            if (lobbyScene)
+            {
+                NetworkLobbyManager.Instance.currentLobby = null;
+                MultiplayerLobbyState.Reset();
+                SceneManager.LoadScene("Menu");
+            }
+            else if (multiplayerScene)
+            {
+                string text = UIHelperUtils.T("lobby_exited");
+                if (string.IsNullOrEmpty(text))
+                    text = "A player has left the lobby.";
+                FileManager.Instance.SpawnMessage(text);
 
-            // Cliente perdeu conexão com o host
-            NetworkLobbyManager.Instance.HandleDisconnect();
+                NetworkLobbyManager.Instance.currentLobby = null;
+
+                MultiplayerPieceController mp = FindFirstObjectByType<MultiplayerPieceController>();
+                if (mp != null)
+                    if (!NetworkLobbyManager.Instance.IsHost)
+                        mp.EndGameHostLoseConnection();
+            }
+            else
+            {
+                // Qualquer outra cena, comportamento padrão
+                NetworkLobbyManager.Instance.HandleDisconnect();
+            }
         }
-
     }
 
     private void OnClientConnected(ulong clientId)
@@ -334,12 +365,6 @@ public class SquadSyncManager : NetworkBehaviour
 
         //host envia a dele pro client
         StartCoroutine(SendProfileImageDelayed(clientId));
-
-        // Pede o squad do client
-        //SendSquadJsonToHostServerRpc(BuildJsonPayload(false));
-        //StartCoroutine(SendSpritesToHost(false));
-
-        //RequestSquadFromClientRpc(clientId);
     }
 
     private IEnumerator SendProfileImageDelayed(ulong clientId)
@@ -632,7 +657,7 @@ public class SquadSyncManager : NetworkBehaviour
         foreach (SquadPieceData piece in squad.Data.Pieces)
         {
             string movPath = Path.Combine(Application.persistentDataPath,
-                fileManager.basePath_PieceData, piece.Squad, piece.Name + ".json");
+                FileManager.Instance.basePath_PieceData, piece.Squad, piece.Name + ".json");
 
             if (!File.Exists(movPath))
             {
@@ -686,11 +711,11 @@ public class SquadSyncManager : NetworkBehaviour
     private byte[] LoadPngBytes(SquadPieceData piece)
     {
         string path = Path.Combine(Application.persistentDataPath,
-            fileManager.basePath_Sprite, piece.Squad, piece.Sprite.Trim() + ".png");
+            FileManager.Instance.basePath_Sprite, piece.Squad, piece.Sprite.Trim() + ".png");
 
         if (!File.Exists(path))
             path = Path.Combine(Application.streamingAssetsPath,
-                fileManager.basePath_Sprite, piece.Squad, piece.Sprite.Trim() + ".png");
+                FileManager.Instance.basePath_Sprite, piece.Squad, piece.Sprite.Trim() + ".png");
 
         return File.Exists(path) ? File.ReadAllBytes(path) : null;
     }
