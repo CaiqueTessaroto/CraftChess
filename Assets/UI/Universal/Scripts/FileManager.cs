@@ -642,12 +642,12 @@ public class FileManager : MonoBehaviour
 
         if (File.Exists(filePath))
         {
-            Debug.Log($"Arquivo carregado de: {filePath}");
+            //Debug.Log($"Arquivo carregado de: {filePath}");
             return File.ReadAllText(filePath);
         }
         else
         {
-            Debug.LogWarning($"Arquivo não encontrado: {filePath}");
+            //Debug.LogWarning($"Arquivo não encontrado: {filePath}");
             return null;
         }
     }

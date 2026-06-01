@@ -196,7 +196,7 @@ public class DynamicColorPaletteManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(json))
         {
-            Debug.LogWarning("Arquivo de paletas não encontrado: " + fileName);
+            //Debug.LogWarning("Arquivo de paletas não encontrado: " + fileName);
             return;
         }
 

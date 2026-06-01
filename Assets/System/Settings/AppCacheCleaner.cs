@@ -1,8 +1,11 @@
+using System.Collections;
 using System.IO;
 using UnityEngine;
 
 public class AppCacheCleaner : MonoBehaviour
 {
+
+    public static AppCacheCleaner Instance { get; private set; }
 
     [Header("Limite em MB")]
     public float maxCacheSizeMB = 20f;
@@ -10,22 +13,12 @@ public class AppCacheCleaner : MonoBehaviour
     [Header("Opcional - pastas específicas para limpar dentro do persistentDataPath")]
     public string[] foldersToClear = { "Sprites", "Pieces", "Squads" };
 
-    void Start()
-    {
-        CheckAndClearCache();
-    }
-
     private void Awake()
     {
-        const string key = "DataCleared_v1";
 
-        if (PlayerPrefs.GetInt(key, 0) == 0)
+        if (Instance == null)
         {
-            ClearAllPersistentDataSprites();
-
-            // Grava o flag APÓS limpar (PlayerPrefs.DeleteAll foi chamado dentro)
-            PlayerPrefs.SetInt(key, 1);
-            PlayerPrefs.Save();
+            Instance = this;
         }
     }
     public void CheckAndClearCache()
@@ -109,6 +102,15 @@ public class AppCacheCleaner : MonoBehaviour
 
     public void ClearAllPersistentDataSprites()
     {
+
+        const string key = "DataCleared_v1";
+
+        if (PlayerPrefs.GetInt(key, 0) == 1)
+        {
+            Debug.Log("[DataCleared] Dados já foram limpos anteriormente. Pulando...");
+            return;
+        }
+
         try
         {
             string path = Application.persistentDataPath;
@@ -130,6 +132,8 @@ public class AppCacheCleaner : MonoBehaviour
             }
 
             PlayerPrefs.DeleteAll();
+
+            PlayerPrefs.SetInt("DataCleared_v1", 1);
             PlayerPrefs.Save();
 
             Debug.Log("✔ Dados persistentes apagados (pasta Sprites preservada).");

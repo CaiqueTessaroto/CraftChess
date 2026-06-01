@@ -15,7 +15,7 @@ public class OptionsPanelUI : MonoBehaviour
     public Button discord;
 
 
-    DateTime dataLimite = new DateTime(2026, 2, 28);
+    DateTime dataLimite = new DateTime(2026, 6, 28);
     DateTime dataAtual = DateTime.Now;
 
     void Start()
@@ -86,13 +86,6 @@ public class OptionsPanelUI : MonoBehaviour
 
     public void ResetTutorialAndAssets()
     {
-
-        foreach (RewardData reward in RewardManager.Instance.rewards) // Limpa os dados de desbloqueio dos rewards
-        {
-            PlayerPrefs.DeleteKey("Reward_" + reward.id);
-        }
-
-        PlayerPrefs.DeleteKey("StreamingAssetsCopied"); // Permite recopia dos arquivos para testar o processo de cópia
 
         PlayerPrefs.DeleteKey("TutorialSeen");
         PlayerPrefs.DeleteKey("TutorialSeenMenu");

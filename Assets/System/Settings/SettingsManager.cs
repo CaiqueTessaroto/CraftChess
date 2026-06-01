@@ -94,12 +94,13 @@ public class SettingsManager : MonoBehaviour
             //#if UNITY_ANDROID && !UNITY_EDITOR
             //if (!PlayerPrefs.HasKey("StreamingAssetsCopied"))
             //{
-            bool alreadyCopied = PlayerPrefs.GetInt("StreamingAssetsCopied", 0) == 1;
+            //bool alreadyCopied = PlayerPrefs.GetInt(FIRST_RUN_KEY, 0) == 1;
 
-            if (!alreadyCopied)
-            {
-                StartCoroutine(CopyInitialNativeData());
-            }
+            //if (!alreadyCopied)
+            AppCacheCleaner.Instance.ClearAllPersistentDataSprites();
+            
+            StartCoroutine(CopyInitialNativeData());
+
             //}
             //#endif
 
@@ -197,13 +198,14 @@ public class SettingsManager : MonoBehaviour
 
     IEnumerator CopyInitialNativeData()
     {
+        //yield return StartCoroutine(AppCacheCleaner.Instance.ClearAllPersistentDataSprites());
         // 🔁 Adicione aqui TODAS as pastas que você precisa listar depois
         yield return StartCoroutine(CopyStreamingAssetsFolder("Pieces"));
         yield return StartCoroutine(CopyStreamingAssetsFolder("Sprites"));
         yield return StartCoroutine(CopyStreamingAssetsFolder("Squads"));
 
-        PlayerPrefs.SetInt("StreamingAssetsCopied", 1);
-        PlayerPrefs.Save();
+        //PlayerPrefs.SetInt(FIRST_RUN_KEY, 1);
+        //PlayerPrefs.Save();
 
         //Debug.Log("✔ StreamingAssets copiado para persistentDataPath");
     }
@@ -216,9 +218,9 @@ public class SettingsManager : MonoBehaviour
 
         yield return null;
 
-        if (Directory.Exists(extractPath))
+        if (Directory.Exists(extractPath) && Directory.GetFiles(extractPath, "*", SearchOption.AllDirectories).Length > 0)
         {
-            Debug.Log("Exists: " + extractPath);
+            Debug.Log("Already populated, skipping: " + extractPath);
             yield break;
         }
 
@@ -246,7 +248,7 @@ public class SettingsManager : MonoBehaviour
         System.IO.Compression.ZipFile.ExtractToDirectory(targetZip, extractPath);
         File.Delete(targetZip);
 
-         yield return null;
+        yield return null;
 
         OrderFoldersByDate(folderName, orderedFolders);
     }

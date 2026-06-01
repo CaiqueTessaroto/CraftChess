@@ -9003,7 +9003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd92d3561011024dac1e9a65fa8fbf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appCacheCleaner: {fileID: 0}
+  appCacheCleaner: {fileID: 1733793183}
   rewards:
   - {fileID: 11400000, guid: 28ea6f2601fb93045859a806e282f436, type: 2}
   - {fileID: 11400000, guid: 7669d355b27ae8f4cad4f7e4c4743451, type: 2}
