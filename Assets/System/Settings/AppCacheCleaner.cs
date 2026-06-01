@@ -15,6 +15,19 @@ public class AppCacheCleaner : MonoBehaviour
         CheckAndClearCache();
     }
 
+    private void Awake()
+    {
+        const string key = "DataCleared_v1";
+
+        if (PlayerPrefs.GetInt(key, 0) == 0)
+        {
+            ClearAllPersistentDataSprites();
+
+            // Grava o flag APÓS limpar (PlayerPrefs.DeleteAll foi chamado dentro)
+            PlayerPrefs.SetInt(key, 1);
+            PlayerPrefs.Save();
+        }
+    }
     public void CheckAndClearCache()
     {
         string path = Application.temporaryCachePath;
@@ -94,6 +107,38 @@ public class AppCacheCleaner : MonoBehaviour
         }
     }
 
+    public void ClearAllPersistentDataSprites()
+    {
+        try
+        {
+            string path = Application.persistentDataPath;
+
+            if (Directory.Exists(path))
+            {
+                foreach (string file in Directory.GetFiles(path))
+                {
+                    File.Delete(file);
+                }
+
+                foreach (string dir in Directory.GetDirectories(path))
+                {
+                    if (Path.GetFileName(dir) != "Sprites")
+                    {
+                        Directory.Delete(dir, true);
+                    }
+                }
+            }
+
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
+
+            Debug.Log("✔ Dados persistentes apagados (pasta Sprites preservada).");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Erro ao limpar persistentDataPath: " + e.Message);
+        }
+    }
     // 🔹 Limpa TUDO do persistentDataPath (CUIDADO)
     public void ClearAllPersistentData()
     {

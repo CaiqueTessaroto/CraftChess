@@ -15,7 +15,7 @@ public class ProfileImageManager : MonoBehaviour
     [Header("UI")]
     [Tooltip("RawImage ou Image que exibe o avatar do jogador.")]
     [SerializeField] private RawImage profileRawImage;   // prefira RawImage para Texture2D
-    [SerializeField] private Image     profileImage;     // alternativa se usar Image/Sprite
+    [SerializeField] private Image profileImage;     // alternativa se usar Image/Sprite
     public Button setAvatarButton; // Botão para abrir o seletor de avatar
 
     [Header("Padrão")]
@@ -179,7 +179,13 @@ public class ProfileImageManager : MonoBehaviour
             profileRawImage.texture = defaultSprite != null ? defaultSprite.texture : null;
 
         if (profileImage != null)
+        {
             profileImage.sprite = defaultSprite;
+
+            if (NetworkLobbyManager.Instance != null)
+                NetworkLobbyManager.Instance.CurrentSprite = defaultSprite;
+        }
+
     }
 
     // ══════════════════════════════════════════════════════════════════════════

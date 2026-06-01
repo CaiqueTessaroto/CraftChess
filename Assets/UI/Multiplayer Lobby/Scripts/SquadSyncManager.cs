@@ -55,6 +55,9 @@ public class SquadSyncManager : NetworkBehaviour
 
     public void SetLocalSquadAndSync(string rootPath, string folderName, string squadName, string jsonFile)
     {
+        
+        if (MultiplayerLobbyUI.Instance == null)
+            return;
 
         bool isWhite = MultiplayerLobbyUI.Instance.isWhite;
 

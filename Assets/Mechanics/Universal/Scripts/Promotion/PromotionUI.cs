@@ -129,7 +129,7 @@ public class PromotionUI : MonoBehaviour
 
     private float GetObjectHeight(Transform obj)
     {
-        float height = 2.25f; // valor padrão caso não tenha renderer ou collider
+        float height = 4.8f; // valor padrão caso não tenha renderer ou collider
 
         Renderer renderer = obj.GetComponentInChildren<Renderer>();
         if (renderer != null)
@@ -179,32 +179,21 @@ public class PromotionUI : MonoBehaviour
         if (piecetransform == null)
             piecetransform = cell.transform;
 
-        float height = GetObjectHeight(piecetransform);
-        Vector3 heightOffset = new Vector3(0, -height, 0);
+        
+        bool isBlack = currentPiece.Player.color == Color.black;
 
-        Vector3 desiredWorldPos = new Vector3(0, 0, 0); ;
-
-        if (boardManager.inBlackView)
-            desiredWorldPos = piecetransform.position + heightOffset + (offset * -1f);
+        float fixedHeight = 2.60f;
+        float heightDirection;
+        if(isBlack)
+            heightDirection = boardManager.inBlackView ? 1f : -1f;
         else
-            desiredWorldPos = piecetransform.position + heightOffset + offset;
+            heightDirection = boardManager.inBlackView ? -1f : 1f;
 
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(desiredWorldPos);
-
-        if (screenPos.y >= Screen.height * 0.8f)
-        {
-            if (boardManager.inBlackView)
-                currentPromotionCanvas.transform.position = piecetransform.position + heightOffset + offset;
-            else
-                currentPromotionCanvas.transform.position = piecetransform.position - heightOffset - (offset * -1f);
-        }
-        else
-        {
-            if (boardManager.inBlackView)
-                currentPromotionCanvas.transform.position = piecetransform.position + heightOffset + (offset * -1f);
-            else
-                currentPromotionCanvas.transform.position = piecetransform.position - heightOffset - offset;
-        }
+        currentPromotionCanvas.transform.position = new Vector3(
+            piecetransform.position.x,
+            fixedHeight * heightDirection,
+            piecetransform.position.z
+        );
 
         CreateSpriteButtons(squad);
     }
