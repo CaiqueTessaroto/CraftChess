@@ -181,6 +181,7 @@ public class ProfileImageManager : MonoBehaviour
         if (profileImage != null)
         {
             profileImage.sprite = defaultSprite;
+            CurrentTexture = defaultSprite.texture;
 
             if (NetworkLobbyManager.Instance != null)
                 NetworkLobbyManager.Instance.CurrentSprite = defaultSprite;
