@@ -13,6 +13,7 @@ public class PromotionUI : MonoBehaviour
     public BoardChessManager boardManager;
     public PieceController pieceController;
     public MoveTracker moveTracker;
+    private MultiplayerPieceController mp;
 
     [Header("Prefabs")]
     public GameObject promotionCanvasPrefab;
@@ -179,12 +180,12 @@ public class PromotionUI : MonoBehaviour
         if (piecetransform == null)
             piecetransform = cell.transform;
 
-        
+
         bool isBlack = currentPiece.Player.color == Color.black;
 
         float fixedHeight = 2.60f;
         float heightDirection;
-        if(isBlack)
+        if (isBlack)
             heightDirection = boardManager.inBlackView ? 1f : -1f;
         else
             heightDirection = boardManager.inBlackView ? -1f : 1f;
@@ -241,6 +242,30 @@ public class PromotionUI : MonoBehaviour
 
     public void Promotion(string pieceName, Sprite sprite)
     {
+
+        // ✅ Apenas registra move e envia pela rede se for local
+        if (!isRemotePromotion)
+        {
+            if (boardManager.isMultiplayer && PieceControllerNetwork.Instance != null)
+            {
+                if (mp == null)
+                    mp = FindFirstObjectByType<MultiplayerPieceController>();
+                if (mp != null && mp.IsMyTurnPublic())
+                    // ✅ currentPiece.Position já é a origem pois o peão ainda não foi destruído
+
+                    mp.RegisterPromotion(currentPiece.Position, pos, pieceName, currentPiece.Player.id);
+
+                    PieceControllerNetwork.Instance.SendPromotion(
+                        currentPiece.Position.x, currentPiece.Position.y,
+                        pos.x, pos.y,
+                        pieceName,
+                        currentPiece.Player.id
+                );
+            }
+
+            return;
+        }
+
         GameObject newPiece = boardManager.PlacePiece(pieceName, sprite, pos, squad);
 
         if (newPiece == null)
@@ -264,23 +289,6 @@ public class PromotionUI : MonoBehaviour
             component.IsKing = true;
         }
 
-        // ✅ Apenas registra move e envia pela rede se for local
-        if (!isRemotePromotion)
-        {
-            if (boardManager.isMultiplayer && PieceControllerNetwork.Instance != null)
-            {
-                MultiplayerPieceController mp = FindFirstObjectByType<MultiplayerPieceController>();
-                if (mp != null && mp.IsMyTurnPublic())
-                    // ✅ currentPiece.Position já é a origem pois o peão ainda não foi destruído
-                    PieceControllerNetwork.Instance.SendPromotion(
-                        currentPiece.Position.x, currentPiece.Position.y,
-                        pos.x, pos.y,
-                        pieceName,
-                        currentPiece.Player.id
-                    );
-            }
-        }
-
         string letter = $"{(char)('a' + pos.x)}";
         string number = $"{pos.y + 1}";
         string house;
@@ -291,9 +299,12 @@ public class PromotionUI : MonoBehaviour
             boardManager.AddCapturedPiece(targetPiece, currentPiece.Player.id);
             boardManager.AllPieces.Remove(targetPiece);
             Destroy(targetPiece);
+            AudioManager.Instance?.PlaySFX(pieceController.captureSound);
         }
-        else
+        else{
             house = $"{letter}{number}=";
+            AudioManager.Instance?.PlaySFX(pieceController.moveSound);
+        }
 
         boardManager.UpdatePiecePosition(currentPiece.Position, pos, component.Name);
         pieceController.DeselectPiece();
@@ -313,11 +324,7 @@ public class PromotionUI : MonoBehaviour
     {
         GameObject pawnToDestroy = currentPiece.gameObject;
 
-        // ✅ Remoto só precisa destruir o peão e atualizar o painel
-        if (!isRemotePromotion)
-            yield return StartCoroutine(pieceController.DelayedBoardUpdate());
-        else
-            yield return null; // aguarda um frame para garantir que PlacePiece finalizou
+        yield return null;
 
         moveTracker.AddMove(pawnToDestroy, currentPiece, currentPiece.Position, pos);
         chessMovesPanel.AddMove(house, sr.sprite, sprite);
@@ -327,6 +334,12 @@ public class PromotionUI : MonoBehaviour
 
         if (currentPromotionCanvas)
             Destroy(currentPromotionCanvas);
+
+
+        //yield return StartCoroutine(pieceController.DelayedBoardUpdate());
+
+        pieceController.BoardUpdate();
+
     }
 
 

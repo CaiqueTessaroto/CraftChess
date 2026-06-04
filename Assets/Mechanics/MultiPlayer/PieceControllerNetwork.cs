@@ -5,6 +5,9 @@ public class PieceControllerNetwork : NetworkBehaviour
 {
     public static PieceControllerNetwork Instance { get; private set; }
 
+    private MultiplayerPieceController mp;
+    private PieceController pc;
+
     private void Awake()
     {
         if (Instance == null)
@@ -36,13 +39,8 @@ public class PieceControllerNetwork : NetworkBehaviour
     {
         Debug.Log($"[Network][Client] Movimento confirmado pelo servidor: ({ox},{oy}) → ({tx},{ty})");
 
-        MultiplayerPieceController mp = FindFirstObjectByType<MultiplayerPieceController>();
-
         if (mp == null)
-        {
-            Debug.LogError("[Network][Client] MultiplayerPieceController não encontrado!");
-            return;
-        }
+            mp = FindFirstObjectByType<MultiplayerPieceController>();
 
         mp.ExecuteConfirmedMove(new Vector2Int(ox, oy), new Vector2Int(tx, ty));
     }
@@ -82,8 +80,8 @@ public class PieceControllerNetwork : NetworkBehaviour
     [ClientRpc]
     private void GiveUpClientRpc(bool blackWins, bool whiteWins)
     {
-        PieceController pc = FindFirstObjectByType<MultiplayerPieceController>();
-        if (pc == null) return;
+        if (pc == null)
+            pc = FindFirstObjectByType<MultiplayerPieceController>();
 
         pc.SetEndGame(black: blackWins, white: whiteWins, draw: false);
     }
@@ -103,13 +101,11 @@ public class PieceControllerNetwork : NetworkBehaviour
     [ClientRpc]
     private void ConfirmPromotionClientRpc(int ox, int oy, int tx, int ty, string pieceName, int playerId)
     {
-        MultiplayerPieceController mp = FindFirstObjectByType<MultiplayerPieceController>();
-        if (mp == null) return;
+        if (mp == null)
+            mp = FindFirstObjectByType<MultiplayerPieceController>();
 
         mp.ExecuteConfirmedPromotion(new Vector2Int(ox, oy), new Vector2Int(tx, ty), pieceName, playerId);
     }
-
-
 
 
     public void SendEndGame(bool blackWins, bool whiteWins, bool draw)
@@ -122,8 +118,9 @@ public class PieceControllerNetwork : NetworkBehaviour
     [ClientRpc]
     private void EndGameClientRpc(bool blackWins, bool whiteWins, bool draw)
     {
-        PieceController pc = FindFirstObjectByType<MultiplayerPieceController>();
-        if (pc == null) return;
+
+        if (pc == null)
+            pc = FindFirstObjectByType<MultiplayerPieceController>();
 
         pc.SetEndGame(black: blackWins, white: whiteWins, draw: draw);
     }
@@ -152,8 +149,9 @@ public class PieceControllerNetwork : NetworkBehaviour
     private void ConfirmCastleClientRpc(int kingOx, int kingOy, int kingTx, int kingTy,
                                          int rookOx, int rookOy, int rookTx, int rookTy)
     {
-        MultiplayerPieceController mp = FindFirstObjectByType<MultiplayerPieceController>();
-        if (mp == null) return;
+
+        if (mp == null)
+            mp = FindFirstObjectByType<MultiplayerPieceController>();
 
         mp.ExecuteConfirmedCastle(
             new Vector2Int(kingOx, kingOy), new Vector2Int(kingTx, kingTy),

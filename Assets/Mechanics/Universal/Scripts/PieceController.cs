@@ -65,13 +65,6 @@ public class PieceController : MonoBehaviour
         botPlayerId = boardManager.GetOpponentId();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-
-    }
-
 
     public void OnCellClicked(Vector2Int clickedPos, bool forceMove = false, bool IA = false)
     {
@@ -103,7 +96,7 @@ public class PieceController : MonoBehaviour
                 if ((!boardManager.localGame && comp.Player.id == botPlayerId && IA == false) || boardManager.IAvsIA)
                     return;
 
-            if (boardManager.noTurns || (comp.Player.id == moveTracker.GetTurnPlayer()) || forceMove)
+            if (boardManager.noTurns || (comp.Player.id == moveTracker.GetTurnPlayer()) || forceMove) //erro ao mover o rei em check
                 SelectPiece(piece);
             //Debug.Log($"Selecionou peça {piece.name} em {clickedPos}");
 
@@ -170,7 +163,7 @@ public class PieceController : MonoBehaviour
     {
         if (piece == null)
             return;
-            
+
         PieceComponent component = piece.GetComponent<PieceComponent>();
         PieceMovement movement = piece.GetComponent<PieceMovement>();
 
@@ -492,8 +485,6 @@ public class PieceController : MonoBehaviour
                 {
                     PerformCastle(targetPiece, clickedPosition);
 
-                    AudioManager.Instance?.PlaySFX(moveSound);
-
                     DeselectPiece();
 
                     //boardManager.UpdateBoardControl();
@@ -530,8 +521,6 @@ public class PieceController : MonoBehaviour
                     // Captura normal
                     CaptureEnemyPiece(selectedPiece, targetPiece, clickedPosition);
 
-                    AudioManager.Instance?.PlaySFX(captureSound);
-
                     DeselectPiece();
 
                     //boardManager.UpdateBoardControl();
@@ -544,11 +533,6 @@ public class PieceController : MonoBehaviour
             else
             {
                 MovePiece(selectedPiece, clickedPosition, captured);
-
-                if (captured)
-                    AudioManager.Instance?.PlaySFX(captureSound);
-                else
-                    AudioManager.Instance?.PlaySFX(moveSound);
 
                 DeselectPiece();
 
@@ -603,7 +587,11 @@ public class PieceController : MonoBehaviour
             if (PromotePiece(component, targetPosition, targetPiece))
                 return;
 
-
+        if (boardManager.isMultiplayer && !forceMove)
+        {
+            RegisterMove(component.Position, targetPosition);
+            return;
+        }
 
         if (targetPiece != null && targetPiece.name != "Selection Overlay")
         {
@@ -617,6 +605,7 @@ public class PieceController : MonoBehaviour
             boardManager.AddCapturedPiece(targetPiece, component.Player.id);
             boardManager.AllPieces.Remove(targetPiece);
             Destroy(targetPiece);
+            AudioManager.Instance?.PlaySFX(captureSound);
             //targetPiece.SetActive(false);
             //Debug.Log($"Peça {targetPiece.name} capturada em {targetPosition}");
         }
@@ -635,8 +624,18 @@ public class PieceController : MonoBehaviour
             if (PromotePiece(component, targetPosition))
                 return;
 
+        if (boardManager.isMultiplayer && !forceMove)
+        {
+            RegisterMove(component.Position, targetPosition);
+            return;
+        }
+
+        if (captured)
+            AudioManager.Instance?.PlaySFX(captureSound);
+        else
+            AudioManager.Instance?.PlaySFX(moveSound);
+
         boardManager.HighlightLastMove(component.Position, targetPosition);
-        RegisterMove(component.Position, targetPosition);
         moveTracker.AddMove(selectedPiece, component, component.Position, targetPosition);
 
         if (component.InitialMoved)
@@ -748,12 +747,17 @@ public class PieceController : MonoBehaviour
 
         int distance = Mathf.Abs(origin.x - targetPosition.x) + Mathf.Abs(origin.y - targetPosition.y);
 
-        if (distance != 1)
+        if (boardManager.isMultiplayer && !forceMove)
         {
-
             RegisterCastle(origin, middlePosition,
                 castlePiece.GetComponent<PieceComponent>().Position, oneBackFromMiddle);
+            return;
+        }
 
+        AudioManager.Instance?.PlaySFX(moveSound);
+
+        if (distance != 1)
+        {
             Move(selectedPiece, middlePosition);
 
             Move(castlePiece, oneBackFromMiddle);

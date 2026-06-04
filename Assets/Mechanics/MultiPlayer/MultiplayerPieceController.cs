@@ -14,9 +14,10 @@ public class MultiplayerPieceController : PieceController
     private bool hasPendingMove = false;
     private bool hasPendingCastle = false;
 
+
     public void EndGameHostLoseConnection()
     {
-        if(endGame) return;
+        if (endGame) return;
 
         bool white = !MatchData.Instance.HostIsWhite;
         bool black = MatchData.Instance.HostIsWhite;
@@ -27,8 +28,8 @@ public class MultiplayerPieceController : PieceController
 
     public void EndGameClientLoseConnection()
     {
-        if(endGame) return;
-        
+        if (endGame) return;
+
         bool white = MatchData.Instance.HostIsWhite;
         bool black = !MatchData.Instance.HostIsWhite;
         bool draw = false;
@@ -56,24 +57,19 @@ public class MultiplayerPieceController : PieceController
         base.OnCellClicked(clickedPos, forceMove, IA);
     }
 
+    // ── gravar último lance ───────────────────────────────────────────────
     public new void RegisterMove(Vector2Int origin, Vector2Int target)
     {
-        if (isReceivingMove)
-        {
-            //Debug.Log("[Multiplayer] RegisterMove ignorado — veio da rede.");
-            return;
-        }
+        if (isReceivingMove) return;
 
-        //Debug.Log($"[Multiplayer] RegisterMove: {origin} → {target}");
         pendingOrigin = origin;
         pendingTarget = target;
         hasPendingMove = true;
     }
 
     public new void RegisterCastle(Vector2Int kingOrigin, Vector2Int kingTarget,
-                                Vector2Int rookOrigin, Vector2Int rookTarget)
+                                    Vector2Int rookOrigin, Vector2Int rookTarget)
     {
-        // Se o movimento veio da rede, não reagenda envio
         if (isReceivingMove) return;
 
         pendingKingOrigin = kingOrigin;
@@ -81,8 +77,16 @@ public class MultiplayerPieceController : PieceController
         pendingRookOrigin = rookOrigin;
         pendingRookTarget = rookTarget;
         hasPendingCastle = true;
+
+    }
+    
+    public void RegisterPromotion(Vector2Int origin, Vector2Int target, string pieceName, int playerId)
+    {
+        if (isReceivingMove) return;
+
     }
 
+    // ── BoardUpdate com timer ─────────────────────────────────────────────
     public override void BoardUpdate()
     {
         base.BoardUpdate();
@@ -109,15 +113,12 @@ public class MultiplayerPieceController : PieceController
     }
 
 
-
     // Chamado para TODOS após confirmação do servidor
     public void ExecuteConfirmedMove(Vector2Int origin, Vector2Int target)
     {
-        if (!boardManager.noTurns && IsMyTurnPublic())
-        {
-            //Debug.Log("[Multiplayer] Movimento próprio confirmado — já executado.");
-            return;
-        }
+
+        // Quem enviou já executou localmente
+        //if (!boardManager.noTurns && IsMyTurnPublic()) return;
 
         //Debug.Log($"[Multiplayer] Executando movimento do oponente: {origin} → {target}");
 
@@ -164,11 +165,9 @@ public class MultiplayerPieceController : PieceController
 
     public void ExecuteConfirmedPromotion(Vector2Int origin, Vector2Int target, string pieceName, int playerId)
     {
-        if (!boardManager.noTurns && IsMyTurnPublic())
-        {
-            //Debug.Log("[Multiplayer] Promoção própria confirmada — já executada.");
-            return;
-        }
+
+        // Quem enviou já executou localmente
+        //if (!boardManager.noTurns && IsMyTurnPublic()) return;
 
         //Debug.Log($"[Multiplayer] Aplicando promoção do oponente | origem: {origin} destino: {target} peça: {pieceName} | playerId: {playerId}");
 
@@ -207,7 +206,7 @@ public class MultiplayerPieceController : PieceController
                                         Vector2Int rookOrigin, Vector2Int rookTarget)
     {
         // Quem enviou já executou localmente
-        if (!boardManager.noTurns && IsMyTurnPublic()) return;
+        //if (!boardManager.noTurns && IsMyTurnPublic()) return;
 
         GameObject kingObj = boardManager.GetPieceAtPosition(kingOrigin.x, kingOrigin.y);
         GameObject rookObj = boardManager.GetPieceAtPosition(rookOrigin.x, rookOrigin.y);
