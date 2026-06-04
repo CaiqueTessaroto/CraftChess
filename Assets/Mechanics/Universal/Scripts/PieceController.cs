@@ -424,6 +424,8 @@ public class PieceController : MonoBehaviour
 
     }
 
+    private PieceComponent enemyBehind = null;
+    bool isEnPassant = false;
     private bool AttemptMoveOrCapture(Vector2Int clickedPosition)
     {
 
@@ -451,8 +453,8 @@ public class PieceController : MonoBehaviour
 
             GameObject targetPiece = boardManager.GetPieceAtPosition(clickedPosition.x, clickedPosition.y);
 
-            bool isEnPassant = false;
-            PieceComponent enemyBehind = null;
+            isEnPassant = false;
+            enemyBehind = null;
 
             // Verifica se é captura en passant
             if (pieceComponent.Power <= 50 && targetPiece == null && moveTracker.GetLastMoved() != null)
@@ -496,19 +498,7 @@ public class PieceController : MonoBehaviour
 
             if (isEnPassant && enemyBehind != null)
             {
-                //VoxelSplitter voxelSplitter = enemyBehind.gameObject.GetComponent<VoxelSplitter>();
-                //voxelSplitter.Splitter();
-
-                //PieceDestroyer destroyer = GetComponent<PieceDestroyer>();
-                //destroyer.DestroyPiece(enemyBehind.gameObject);
-
-                //enemyBehind.gameObject.SetActive(false);
-                boardManager.AddCapturedPiece(enemyBehind.gameObject, pieceComponent.Player.id);
-                boardManager.AllPieces.Remove(enemyBehind.gameObject);
-                Destroy(enemyBehind.gameObject);
-
                 captured = true;
-
             }
 
             if (targetPiece != null)
@@ -628,6 +618,13 @@ public class PieceController : MonoBehaviour
         {
             RegisterMove(component.Position, targetPosition);
             return;
+        }
+
+        if (captured && isEnPassant)
+        {
+            boardManager.AddCapturedPiece(enemyBehind.gameObject, pieceComponent.Player.id);
+            boardManager.AllPieces.Remove(enemyBehind.gameObject);
+            Destroy(enemyBehind.gameObject);
         }
 
         if (captured)

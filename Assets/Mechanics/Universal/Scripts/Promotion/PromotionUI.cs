@@ -43,6 +43,7 @@ public class PromotionUI : MonoBehaviour
         this.targetPiece = targetPiece;
         this.pos = pos;
         this.squad = squadData;
+        isRemotePromotion = false;
 
         if (moveTracker == null)
             moveTracker = FindFirstObjectByType<MoveTracker>();
@@ -244,9 +245,9 @@ public class PromotionUI : MonoBehaviour
     {
 
         // ✅ Apenas registra move e envia pela rede se for local
-        if (!isRemotePromotion)
+        if (!isRemotePromotion && boardManager.isMultiplayer)
         {
-            if (boardManager.isMultiplayer && PieceControllerNetwork.Instance != null)
+            if (PieceControllerNetwork.Instance != null)
             {
                 if (mp == null)
                     mp = FindFirstObjectByType<MultiplayerPieceController>();
@@ -265,6 +266,8 @@ public class PromotionUI : MonoBehaviour
 
             return;
         }
+
+
 
         GameObject newPiece = boardManager.PlacePiece(pieceName, sprite, pos, squad);
 
