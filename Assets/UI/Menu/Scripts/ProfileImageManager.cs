@@ -120,6 +120,11 @@ public class ProfileImageManager : MonoBehaviour
         {
             Debug.Log("[ProfileImageManager] Nenhuma imagem salva encontrada. Usando padrão.");
             ApplyDefault();
+
+            // Persiste o defaultSprite no disco para não repetir esse fluxo
+            if (defaultSprite != null)
+                SaveProfileImage(defaultSprite.texture);
+
             return;
         }
 
