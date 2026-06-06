@@ -14,6 +14,40 @@ public class MultiplayerPieceController : PieceController
     private bool hasPendingMove = false;
     private bool hasPendingCastle = false;
 
+    // ── campos de resync ──────────────────────────────────────────────────
+
+    public enum LastMoveType { None, Move, Castle, Promotion }
+    public LastMoveType lastMoveType = LastMoveType.None;
+
+    // Move normal
+    public Vector2Int lastMoveOrigin;
+    public Vector2Int lastMoveTarget;
+    public Vector2Int lastCastleKingOrigin, lastCastleKingTarget;
+    public Vector2Int lastCastleRookOrigin, lastCastleRookTarget;
+    public Vector2Int lastPromotionOrigin;
+    public Vector2Int lastPromotionTarget;
+    public string lastPromotionPieceName;
+    public int lastPromotionPlayerId; private float heartbeatTimer = 0f;
+    private const float HEARTBEAT_INTERVAL = 10f;
+
+
+    private void Update()
+    {
+        if (!NetworkLobbyManager.Instance.IsHost) return; // só o host envia heartbeat
+
+        heartbeatTimer += Time.deltaTime;
+        if (heartbeatTimer >= HEARTBEAT_INTERVAL)
+        {
+            heartbeatTimer = 0f;
+            SendTurnHeartbeat();
+        }
+    }
+
+    private void SendTurnHeartbeat()
+    {
+        int currentTurn = GetCurrentTurn();
+        PieceControllerNetwork.Instance?.TurnHeartbeatClientRpc(currentTurn);
+    }
 
     public void EndGameHostLoseConnection()
     {
@@ -65,6 +99,10 @@ public class MultiplayerPieceController : PieceController
         pendingOrigin = origin;
         pendingTarget = target;
         hasPendingMove = true;
+
+        lastMoveOrigin = origin;
+        lastMoveTarget = target;
+        lastMoveType = LastMoveType.Move;
     }
 
     public new void RegisterCastle(Vector2Int kingOrigin, Vector2Int kingTarget,
@@ -78,15 +116,23 @@ public class MultiplayerPieceController : PieceController
         pendingRookTarget = rookTarget;
         hasPendingCastle = true;
 
+        lastCastleKingOrigin = kingOrigin; lastCastleKingTarget = kingTarget;
+        lastCastleRookOrigin = rookOrigin; lastCastleRookTarget = rookTarget;
+        lastMoveType = LastMoveType.Castle;
     }
-    
+
+    // Chame esse método logo antes de chamar PieceControllerNetwork.Instance?.SendPromotion(...)
     public void RegisterPromotion(Vector2Int origin, Vector2Int target, string pieceName, int playerId)
     {
         if (isReceivingMove) return;
 
+        lastPromotionOrigin = origin;
+        lastPromotionTarget = target;
+        lastPromotionPieceName = pieceName;
+        lastPromotionPlayerId = playerId;
+        lastMoveType = LastMoveType.Promotion;
     }
 
-    // ── BoardUpdate com timer ─────────────────────────────────────────────
     public override void BoardUpdate()
     {
         base.BoardUpdate();
@@ -110,6 +156,11 @@ public class MultiplayerPieceController : PieceController
             );
             hasPendingMove = false;
         }
+    }
+
+    public int GetCurrentTurn()
+    {
+        return moveTracker.GetTurnNumber(); // ou o equivalente no seu MoveTracker
     }
 
 

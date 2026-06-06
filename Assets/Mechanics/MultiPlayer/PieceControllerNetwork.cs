@@ -35,10 +35,9 @@ public class PieceControllerNetwork : NetworkBehaviour
 
     // Todos recebem — cada um decide se executa ou ignora
     [ClientRpc]
-    private void ConfirmMoveClientRpc(int ox, int oy, int tx, int ty)
+    private void ConfirmMoveClientRpc(int ox, int oy, int tx, int ty,
+        ClientRpcParams clientRpcParams = default)
     {
-        Debug.Log($"[Network][Client] Movimento confirmado pelo servidor: ({ox},{oy}) → ({tx},{ty})");
-
         if (mp == null)
             mp = FindFirstObjectByType<MultiplayerPieceController>();
 
@@ -99,14 +98,17 @@ public class PieceControllerNetwork : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void ConfirmPromotionClientRpc(int ox, int oy, int tx, int ty, string pieceName, int playerId)
+    private void ConfirmPromotionClientRpc(int ox, int oy, int tx, int ty,
+        string pieceName, int playerId,
+        ClientRpcParams clientRpcParams = default)
     {
         if (mp == null)
             mp = FindFirstObjectByType<MultiplayerPieceController>();
 
-        mp.ExecuteConfirmedPromotion(new Vector2Int(ox, oy), new Vector2Int(tx, ty), pieceName, playerId);
+        mp.ExecuteConfirmedPromotion(
+            new Vector2Int(ox, oy), new Vector2Int(tx, ty), pieceName, playerId
+        );
     }
-
 
     public void SendEndGame(bool blackWins, bool whiteWins, bool draw)
     {
@@ -147,9 +149,9 @@ public class PieceControllerNetwork : NetworkBehaviour
 
     [ClientRpc]
     private void ConfirmCastleClientRpc(int kingOx, int kingOy, int kingTx, int kingTy,
-                                         int rookOx, int rookOy, int rookTx, int rookTy)
+                                         int rookOx, int rookOy, int rookTx, int rookTy,
+                                         ClientRpcParams clientRpcParams = default)
     {
-
         if (mp == null)
             mp = FindFirstObjectByType<MultiplayerPieceController>();
 
@@ -158,4 +160,83 @@ public class PieceControllerNetwork : NetworkBehaviour
             new Vector2Int(rookOx, rookOy), new Vector2Int(rookTx, rookTy)
         );
     }
+
+
+
+
+
+    [ClientRpc]
+    public void TurnHeartbeatClientRpc(int hostTurn)
+    {
+        // O host recebe o próprio ClientRpc mas ignora
+        if (NetworkManager.Singleton.IsHost) return;
+
+        if (mp == null)
+            mp = FindFirstObjectByType<MultiplayerPieceController>();
+
+        int localTurn = mp.GetCurrentTurn();
+
+        if (localTurn != hostTurn)
+        {
+            Debug.LogWarning($"[Heartbeat] Dessincronização detectada! Local: {localTurn} | Host: {hostTurn}. Solicitando reenvio...");
+            RequestResyncServerRpc();
+        }
+
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestResyncServerRpc(ServerRpcParams rpcParams = default)
+    {
+        if (mp == null)
+            mp = FindFirstObjectByType<MultiplayerPieceController>();
+
+        // ✅ Bug 1 corrigido
+        if (mp.lastMoveType == MultiplayerPieceController.LastMoveType.None)
+        {
+            Debug.LogWarning("[Heartbeat] Resync solicitado mas nenhum lance foi registrado.");
+            return;
+        }
+
+        Debug.Log($"[Heartbeat] Reenviando último lance ({mp.lastMoveType}) para client desincronizado.");
+
+        ClientRpcParams targetClient = new ClientRpcParams
+        {
+            Send = new ClientRpcSendParams
+            {
+                TargetClientIds = new[] { rpcParams.Receive.SenderClientId }
+            }
+        };
+
+        // ✅ Bug 2 corrigido — vai direto ao ClientRpc targeted, sem passar pelo ServerRpc de novo
+        switch (mp.lastMoveType)
+        {
+            case MultiplayerPieceController.LastMoveType.Move:
+                ConfirmMoveClientRpc(
+                    mp.lastMoveOrigin.x, mp.lastMoveOrigin.y,
+                    mp.lastMoveTarget.x, mp.lastMoveTarget.y,
+                    targetClient
+                );
+                break;
+
+            case MultiplayerPieceController.LastMoveType.Castle:
+                ConfirmCastleClientRpc(
+                    mp.lastCastleKingOrigin.x, mp.lastCastleKingOrigin.y,
+                    mp.lastCastleKingTarget.x, mp.lastCastleKingTarget.y,
+                    mp.lastCastleRookOrigin.x, mp.lastCastleRookOrigin.y,
+                    mp.lastCastleRookTarget.x, mp.lastCastleRookTarget.y,
+                    targetClient
+                );
+                break;
+
+            case MultiplayerPieceController.LastMoveType.Promotion:
+                ConfirmPromotionClientRpc(
+                    mp.lastPromotionOrigin.x, mp.lastPromotionOrigin.y,
+                    mp.lastPromotionTarget.x, mp.lastPromotionTarget.y,
+                    mp.lastPromotionPieceName,
+                    mp.lastPromotionPlayerId,
+                    targetClient
+                );
+                break;
+        }
+    }
+
 }

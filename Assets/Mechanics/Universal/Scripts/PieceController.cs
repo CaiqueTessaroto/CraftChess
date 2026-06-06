@@ -437,18 +437,14 @@ public class PieceController : MonoBehaviour
         //List<Vector2Int> validMoves = pieceMovement.GetValidMoves();
         List<Vector2Int> validMoves = pieceComponent.PossibleMoves;
 
-        //if (pieceComponent.CastlingPieces.Count > 0 && pieceComponent.CastlingPieces != null)
-        //    validMoves.AddRange(pieceMovement.GetCastlingMove(pieceComponent.CastlingPieces));
-
-        if (validMoves == null)
+        if (validMoves == null && !forceMove)
         {
-            //boardManager.UpdateBoardControl();
             BoardUpdate();
         }
 
         bool captured = false;
 
-        if (validMoves.Contains(clickedPosition) && validMoves != null)
+        if (validMoves.Contains(clickedPosition) && validMoves != null && !forceMove)
         {
 
             GameObject targetPiece = boardManager.GetPieceAtPosition(clickedPosition.x, clickedPosition.y);
@@ -744,17 +740,18 @@ public class PieceController : MonoBehaviour
 
         int distance = Mathf.Abs(origin.x - targetPosition.x) + Mathf.Abs(origin.y - targetPosition.y);
 
-        if (boardManager.isMultiplayer && !forceMove)
-        {
-            RegisterCastle(origin, middlePosition,
-                castlePiece.GetComponent<PieceComponent>().Position, oneBackFromMiddle);
-            return;
-        }
-
-        AudioManager.Instance?.PlaySFX(moveSound);
-
         if (distance != 1)
         {
+
+            if (boardManager.isMultiplayer && !forceMove)
+            {
+                RegisterCastle(origin, middlePosition,
+                    castlePiece.GetComponent<PieceComponent>().Position, oneBackFromMiddle);
+                return;
+            }
+
+            AudioManager.Instance?.PlaySFX(moveSound);
+
             Move(selectedPiece, middlePosition);
 
             Move(castlePiece, oneBackFromMiddle);
@@ -782,7 +779,13 @@ public class PieceController : MonoBehaviour
         Vector2Int kingOrigin = pieceComponent.Position;
         Vector2Int rookOrigin = swapPiece.Position;
 
-        RegisterCastle(kingOrigin, rookOrigin, rookOrigin, kingOrigin);
+        if (boardManager.isMultiplayer && !forceMove)
+        {
+            RegisterCastle(kingOrigin, rookOrigin, rookOrigin, kingOrigin);
+            return;
+        }
+
+        AudioManager.Instance?.PlaySFX(moveSound);
 
         // Move o rei para a posição da torre
         Move(selectedPiece, rookOrigin);
