@@ -10,6 +10,7 @@ public class BoardChessManager : MonoBehaviour
     public CapturedPiecesManager capturedManager;
     public GameInterfaceManager gameInterfaceManager;
     public PieceController pieceController;
+    public ChessClock chessClock;
 
     [Header("Grid Settings")]
     public int gridWidth = 8;
@@ -80,6 +81,9 @@ public class BoardChessManager : MonoBehaviour
         if (pieceController == null)
             pieceController = FindFirstObjectByType<PieceController>();
 
+        if (chessClock == null)
+            chessClock = FindFirstObjectByType<ChessClock>();
+
         noRules = MatchData.Instance.noRules;
         noTurns = MatchData.Instance.noTurns;
         localGame = MatchData.Instance.localGame;
@@ -102,9 +106,15 @@ public class BoardChessManager : MonoBehaviour
         Squads = MatchData.Instance.Squads;
 
         if (ShouldReverseGrid())
+        {
             GenerateGrid_reverse();
+            if (chessClock != null)
+                chessClock.verticalLayoutGroup.reverseArrangement = true;
+        }
         else
+        {
             GenerateGrid();
+        }
 
         foreach (var squad in Squads)
         {

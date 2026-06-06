@@ -9450,6 +9450,7 @@ GameObject:
   - component: {fileID: 877656734}
   - component: {fileID: 877656733}
   - component: {fileID: 877656736}
+  - component: {fileID: 877656737}
   m_Layer: 0
   m_Name: NetworkSquadSync
   m_TagString: Untagged
@@ -9523,6 +9524,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PieceControllerNetwork
   ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &877656737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877656732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f079f0660acbb664dab6b8a967cee575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChessClockNetwork
 --- !u!1 &887408049
 GameObject:
   m_ObjectHideFlags: 0

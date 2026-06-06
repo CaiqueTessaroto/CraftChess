@@ -439,12 +439,12 @@ public class PieceController : MonoBehaviour
 
         if (validMoves == null && !forceMove)
         {
-            BoardUpdate();
+                BoardUpdate();
         }
 
         bool captured = false;
 
-        if (validMoves.Contains(clickedPosition) && validMoves != null && !forceMove)
+        if ((validMoves.Contains(clickedPosition) && validMoves != null) || forceMove)
         {
 
             GameObject targetPiece = boardManager.GetPieceAtPosition(clickedPosition.x, clickedPosition.y);

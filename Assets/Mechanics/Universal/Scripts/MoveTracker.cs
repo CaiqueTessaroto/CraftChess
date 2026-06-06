@@ -41,6 +41,13 @@ public class MoveTracker : MonoBehaviour
 
         if (boardChess.autoSwitchSide)
             boardChess.SwitchSide();
+
+        if (boardChess.isMultiplayer)
+            if (boardChess.chessClock != null)
+            {
+                bool IsWhiteTurn = GetTurnPlayer() == 0;
+                boardChess.chessClock.chessClockNetwork.SwitchTurn(IsWhiteTurn);
+            }
     }
 
     public Move GetLastMoved()
