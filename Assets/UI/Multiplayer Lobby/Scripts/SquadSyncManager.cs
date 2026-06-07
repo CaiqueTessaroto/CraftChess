@@ -29,10 +29,12 @@ public class SquadSyncManager : NetworkBehaviour
     private const string MSG_SPRITE_HOST_TO_CLIENT = "SquadSprite_H2C";
     private const string MSG_SPRITE_CLIENT_TO_HOST = "SquadSprite_C2H";
 
+    private const string MSG_SQUAD_JSON_HOST_TO_CLIENT = "SquadJson_H2C";
+    private const string MSG_SQUAD_JSON_CLIENT_TO_HOST = "SquadJson_C2H";
+
     // ───────────────────────────────────────────────────────────────────────
     // LIFECYCLE
     // ───────────────────────────────────────────────────────────────────────
-
     void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -55,7 +57,7 @@ public class SquadSyncManager : NetworkBehaviour
 
     public void SetLocalSquadAndSync(string rootPath, string folderName, string squadName, string jsonFile)
     {
-        
+
         if (MultiplayerLobbyUI.Instance == null)
             return;
 
@@ -82,7 +84,14 @@ public class SquadSyncManager : NetworkBehaviour
             foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
             {
                 if (clientId == NetworkManager.ServerClientId) continue;
-                ReceiveSquadJsonClientRpc(BuildJsonPayload(isWhite));
+
+                //ReceiveSquadJsonClientRpc(BuildJsonPayload(isWhite));
+                foreach (ulong u_clientId in NetworkManager.Singleton.ConnectedClientsIds)
+                {
+                    if (u_clientId == NetworkManager.ServerClientId) continue;
+                    SendSquadJson(BuildJsonPayloadRaw(false), u_clientId, toHost: false);
+                }
+
                 StartCoroutine(SendSpritesToClient(
                     NetworkManager.Singleton.ConnectedClientsIds, isWhite));
             }
@@ -91,7 +100,8 @@ public class SquadSyncManager : NetworkBehaviour
         }
         else
         {
-            SendSquadJsonToHostServerRpc(BuildJsonPayload(isWhite));
+            //SendSquadJsonToHostServerRpc(BuildJsonPayload(isWhite));
+            SendSquadJson(BuildJsonPayloadRaw(isWhite), 0, toHost: true);
             StartCoroutine(SendSpritesToHost(isWhite));
         }
     }
@@ -169,6 +179,9 @@ public class SquadSyncManager : NetworkBehaviour
             NetworkManager.Singleton.CustomMessagingManager
                 .RegisterNamedMessageHandler(MSG_PROFILE_CLIENT_TO_HOST, OnReceiveProfileFromClient);
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+
+            NetworkManager.Singleton.CustomMessagingManager
+                .RegisterNamedMessageHandler(MSG_SQUAD_JSON_CLIENT_TO_HOST, OnReceiveSquadJsonFromClient);
         }
         else
         {
@@ -177,6 +190,8 @@ public class SquadSyncManager : NetworkBehaviour
             NetworkManager.Singleton.CustomMessagingManager
                 .RegisterNamedMessageHandler(MSG_PROFILE_HOST_TO_CLIENT, OnReceiveProfileFromHost);
 
+            NetworkManager.Singleton.CustomMessagingManager
+                .RegisterNamedMessageHandler(MSG_SQUAD_JSON_HOST_TO_CLIENT, OnReceiveSquadJsonFromHost);
 
             StartCoroutine(SendProfileImageDelayed_Client()); //client envia a dele pro host
         }
@@ -200,6 +215,12 @@ public class SquadSyncManager : NetworkBehaviour
                 .UnregisterNamedMessageHandler(MSG_PROFILE_HOST_TO_CLIENT);
             NetworkManager.Singleton.CustomMessagingManager
                 .UnregisterNamedMessageHandler(MSG_PROFILE_CLIENT_TO_HOST);
+
+
+            NetworkManager.Singleton.CustomMessagingManager
+                .UnregisterNamedMessageHandler(MSG_SQUAD_JSON_CLIENT_TO_HOST);
+            NetworkManager.Singleton.CustomMessagingManager
+                .UnregisterNamedMessageHandler(MSG_SQUAD_JSON_HOST_TO_CLIENT);
         }
 
         if (IsHost)
@@ -276,6 +297,53 @@ public class SquadSyncManager : NetworkBehaviour
 
         MultiplayerLobbyUI.Instance?.ApplyProfileImages();
     }
+
+    private void OnReceiveSquadJsonFromHost(ulong senderId, FastBufferReader reader)
+        => ProcessReceivedSquadJson(reader, fromHost: true);
+
+    private void OnReceiveSquadJsonFromClient(ulong senderId, FastBufferReader reader)
+        => ProcessReceivedSquadJson(reader, fromHost: false);
+
+    private void ProcessReceivedSquadJson(FastBufferReader reader, bool fromHost)
+    {
+        reader.ReadValueSafe(out int length);
+        byte[] data = new byte[length];
+        reader.ReadBytesSafe(ref data, length);
+
+        string json = System.Text.Encoding.UTF8.GetString(data);
+        var payload = JsonUtility.FromJson<SquadJsonPayloadRaw>(json);
+
+        bool isWhite = payload.IsWhite;
+
+        // Reconstrói o MatchSquadData
+        var squad = new MatchSquadData
+        {
+            Data = JsonUtility.FromJson<Squad>(payload.SquadJson)
+        };
+        foreach (var p in payload.Pieces)
+            squad.Pieces[p.Name] = JsonUtility.FromJson<MovementConfigData>(p.MovementJson);
+
+        if (payload.SquadImageRaw != null && payload.SquadImageRaw.Length > 0)
+            squad.SquadImageRaw = payload.SquadImageRaw;
+
+        SetIdByColor(payload.SenderId, isWhite);
+        AssignSquadByColor(squad, isWhite, isLocal: false);
+        SetExpectedByColor(payload.PieceCount, isWhite);
+        SetJsonReceivedByColor(true, isWhite);
+
+        if (fromHost)
+        {
+            // client recebeu do host, nada mais a fazer
+        }
+        else
+        {
+            // host recebeu do client, confirma
+            ConfirmSquadReceivedClientRpc(isWhite);
+        }
+
+        Debug.Log($"[SquadSync] SquadJSON processado | {(isWhite ? "White" : "Black")} | {payload.PieceCount} peças");
+    }
+
     private void OnClientDisconnect(ulong clientId)
     {
         bool multiplayerScene = SceneManager.GetActiveScene().name == "Multiplayer";
@@ -356,13 +424,25 @@ public class SquadSyncManager : NetworkBehaviour
         // Envia squads já definidos pelo host
         if (MultiplayerLobbyState.WhiteSquad != null)
         {
-            ReceiveSquadJsonClientRpc(BuildJsonPayload(true));
+            //ReceiveSquadJsonClientRpc(BuildJsonPayload(true));
+            foreach (ulong u_clientId in NetworkManager.Singleton.ConnectedClientsIds)
+            {
+                if (u_clientId == NetworkManager.ServerClientId) continue;
+                SendSquadJson(BuildJsonPayloadRaw(true), u_clientId, toHost: false);
+            }
+
             StartCoroutine(SendSpritesToClient(NetworkManager.Singleton.ConnectedClientsIds, true));
         }
 
         if (MultiplayerLobbyState.BlackSquad != null)
         {
-            ReceiveSquadJsonClientRpc(BuildJsonPayload(false));
+            //ReceiveSquadJsonClientRpc(BuildJsonPayload(false));
+            foreach (ulong u_clientId in NetworkManager.Singleton.ConnectedClientsIds)
+            {
+                if (u_clientId == NetworkManager.ServerClientId) continue;
+                SendSquadJson(BuildJsonPayloadRaw(false), u_clientId, toHost: false);
+            }
+
             StartCoroutine(SendSpritesToClient(NetworkManager.Singleton.ConnectedClientsIds, false));
         }
 
@@ -400,7 +480,8 @@ public class SquadSyncManager : NetworkBehaviour
 
         Debug.Log("[SquadSync] Recebi pedido do host. Enviando meu squad...");
 
-        SendSquadJsonToHostServerRpc(BuildJsonPayload(isWhite));
+        //SendSquadJsonToHostServerRpc(BuildJsonPayload(isWhite));
+        SendSquadJson(BuildJsonPayloadRaw(isWhite), 0, toHost: true);
 
         StartCoroutine(SendSpritesToHost(isWhite));
     }
@@ -409,23 +490,27 @@ public class SquadSyncManager : NetworkBehaviour
     // PASSO 3a — Client → Host (ServerRpc)
     // ───────────────────────────────────────────────────────────────────────
 
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-    private void SendSquadJsonToHostServerRpc(SquadJsonPayload payload)
+    private void SendSquadJson(SquadJsonPayloadRaw payload, ulong targetClientId, bool toHost)
     {
-        bool isWhite = payload.IsWhite;
+        string json = JsonUtility.ToJson(payload);
+        byte[] data = System.Text.Encoding.UTF8.GetBytes(json);
 
-        MatchSquadData rebuilt = RebuildSquadFromJson(payload);
-        SetIdByColor(payload.SenderId.ToString(), isWhite);
-        AssignSquadByColor(rebuilt, isWhite, isLocal: false);
-        SetExpectedByColor(payload.PieceCount, isWhite);
-        SetJsonReceivedByColor(true, isWhite);
+        // +8 de margem
+        var writer = new FastBufferWriter(4 + data.Length + 8, Allocator.Temp, 4 + data.Length + 8);
+        using (writer)
+        {
+            writer.WriteValueSafe(data.Length);
+            writer.WriteBytesSafe(data);
 
-        // Sempre reenvia o squad recebido de volta para o client confirmar
-        //ReceiveSquadJsonClientRpc(BuildJsonPayload(isWhite, payload.SenderId.ToString()));
-        //StartCoroutine(SendSpritesToClient(NetworkManager.Singleton.ConnectedClientsIds, isWhite));
+            string channel = toHost ? MSG_SQUAD_JSON_CLIENT_TO_HOST : MSG_SQUAD_JSON_HOST_TO_CLIENT;
+            ulong target = toHost ? NetworkManager.ServerClientId : targetClientId;
 
-        // ✅ Substitua por confirmação simples:
-        ConfirmSquadReceivedClientRpc(isWhite);
+            NetworkManager.Singleton.CustomMessagingManager.SendNamedMessage(
+                channel, target, writer,
+                NetworkDelivery.ReliableFragmentedSequenced);
+        }
+
+        Debug.Log($"[SquadSync] SquadJSON enviado | {data.Length / 1024f:F1} kb | toHost={toHost}");
     }
 
     [ClientRpc]
@@ -440,26 +525,6 @@ public class SquadSyncManager : NetworkBehaviour
         SetJsonReceivedByColor(true, isWhite);
         CheckIfComplete(isWhite);
         MultiplayerLobbyUI.Instance?.RefreshLocalUI();
-    }
-    // ───────────────────────────────────────────────────────────────────────
-    // PASSO 3b — Host → Client (ClientRpc)
-    // ───────────────────────────────────────────────────────────────────────
-
-    [ClientRpc]
-    private void ReceiveSquadJsonClientRpc(SquadJsonPayload payload)
-    {
-        if (IsHost) return;
-
-        bool isWhite = payload.IsWhite;
-
-        Debug.Log($"[SquadSync] Client recebeu JSON do host. Cor: {(isWhite ? "White" : "Black")} | {payload.PieceCount} peças.");
-
-        MatchSquadData rebuilt = RebuildSquadFromJson(payload);
-
-        SetIdByColor(payload.SenderId.ToString(), isWhite);
-        AssignSquadByColor(rebuilt, isWhite, isLocal: false);
-        SetExpectedByColor(payload.PieceCount, isWhite);
-        SetJsonReceivedByColor(true, isWhite);
     }
 
     // ───────────────────────────────────────────────────────────────────────
@@ -665,13 +730,13 @@ public class SquadSyncManager : NetworkBehaviour
         else jsonReceivedBlack = value;
     }
 
-    private SquadJsonPayload BuildJsonPayload(bool isWhite, string senderId = null)
+    private SquadJsonPayloadRaw BuildJsonPayloadRaw(bool isWhite, string senderId = null)
     {
         MatchSquadData squad = isWhite
             ? MultiplayerLobbyState.WhiteSquad
             : MultiplayerLobbyState.BlackSquad;
 
-        var pieceJsons = new List<PieceJsonData>();
+        var pieceJsons = new List<SquadJsonPayloadRaw.PieceJsonDataRaw>();
 
         foreach (SquadPieceData piece in squad.Data.Pieces)
         {
@@ -684,14 +749,14 @@ public class SquadSyncManager : NetworkBehaviour
                 continue;
             }
 
-            pieceJsons.Add(new PieceJsonData
+            pieceJsons.Add(new SquadJsonPayloadRaw.PieceJsonDataRaw
             {
                 Name = piece.NameInSquad,
                 MovementJson = File.ReadAllText(movPath)
             });
         }
 
-        return new SquadJsonPayload
+        return new SquadJsonPayloadRaw
         {
             SquadJson = JsonUtility.ToJson(squad.Data),
             PieceCount = pieceJsons.Count,
@@ -701,22 +766,20 @@ public class SquadSyncManager : NetworkBehaviour
             SquadImageRaw = squad.SquadImageRaw
         };
     }
-
-    private MatchSquadData RebuildSquadFromJson(SquadJsonPayload payload)
+    private MatchSquadData RebuildSquadFromJson(SquadJsonPayloadRaw payload)
     {
         var squadData = new MatchSquadData
         {
-            Data = JsonUtility.FromJson<Squad>(payload.SquadJson.Value)
+            Data = JsonUtility.FromJson<Squad>(payload.SquadJson)
         };
 
-        foreach (PieceJsonData pieceJson in payload.Pieces)
-            squadData.Pieces[pieceJson.Name.Value] =
-                JsonUtility.FromJson<MovementConfigData>(pieceJson.MovementJson.Value);
+        foreach (SquadJsonPayloadRaw.PieceJsonDataRaw pieceJson in payload.Pieces)
+            squadData.Pieces[pieceJson.Name] =
+                JsonUtility.FromJson<MovementConfigData>(pieceJson.MovementJson);
 
         if (payload.SquadImageRaw != null && payload.SquadImageRaw.Length > 0)
         {
             squadData.SquadImageRaw = payload.SquadImageRaw;
-
             Debug.Log($"[SquadSync] SquadImage recebida | {payload.SquadImageRaw.Length / 1024f:F1} kb | Cor: {(payload.IsWhite ? "White" : "Black")}");
         }
         else
@@ -743,50 +806,20 @@ public class SquadSyncManager : NetworkBehaviour
 // ─── Structs de payload ────────────────────────────────────────────────────
 
 [Serializable]
-public struct PieceJsonData : INetworkSerializable
+public class SquadJsonPayloadRaw
 {
-    public FixedString128Bytes Name;
-    public FixedString4096Bytes MovementJson;
-
-    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
-    {
-        serializer.SerializeValue(ref Name);
-        serializer.SerializeValue(ref MovementJson);
-    }
-}
-
-[Serializable]
-public struct SquadJsonPayload : INetworkSerializable
-{
-    public FixedString4096Bytes SquadJson;
+    public string SquadJson;
     public int PieceCount;
-    public PieceJsonData[] Pieces;
+    public PieceJsonDataRaw[] Pieces;
     public bool IsWhite;
-    public FixedString64Bytes SenderId;
-    public byte[] SquadImageRaw;
+    public string SenderId;
+    public byte[] SquadImageRaw; // JsonUtility serializa byte[] como base64
 
-    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+    [Serializable]
+    public class PieceJsonDataRaw
     {
-        serializer.SerializeValue(ref SquadJson);
-        serializer.SerializeValue(ref PieceCount);
-        serializer.SerializeValue(ref IsWhite);
-        serializer.SerializeValue(ref SenderId);
-
-        // SquadImageRaw
-        int imageLen = SquadImageRaw?.Length ?? 0;
-        serializer.SerializeValue(ref imageLen);
-        if (serializer.IsReader) SquadImageRaw = imageLen > 0 ? new byte[imageLen] : null;
-        for (int i = 0; i < imageLen; i++)
-            serializer.SerializeValue(ref SquadImageRaw[i]);
-
-        if (serializer.IsReader)
-            Pieces = new PieceJsonData[PieceCount];
-
-        for (int i = 0; i < PieceCount; i++)
-            serializer.SerializeValue(ref Pieces[i]);
+        public string Name;
+        public string MovementJson;
     }
-
-
-
-
 }
+

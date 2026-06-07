@@ -547,6 +547,9 @@ public class MultiplayerLobbyUI : MonoBehaviour
             {
                 string name = UIHelperUtils.T(squad.Data.Name);
 
+                if(string.IsNullOrEmpty(name))
+                    name = squad.Data.Name;
+
                 squadName.text = $"{name}\n{squad.Data.Power}";
                 squadName2.text = name;
             }
