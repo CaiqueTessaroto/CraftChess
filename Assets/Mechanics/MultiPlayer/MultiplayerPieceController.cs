@@ -163,37 +163,86 @@ public class MultiplayerPieceController : PieceController
         return moveTracker.GetTurnNumber(); // ou o equivalente no seu MoveTracker
     }
 
+    public enum PendingMoveType { None, Move, Castle, Promotion }
 
-    // Chamado para TODOS após confirmação do servidor
+    private PendingMoveType pendingNetworkType = PendingMoveType.None;
+    private Vector2Int pendingNetworkOrigin;
+    private Vector2Int pendingNetworkTarget;
+    private Vector2Int pendingNetworkKingOrigin, pendingNetworkKingTarget;
+    private Vector2Int pendingNetworkRookOrigin, pendingNetworkRookTarget;
+    private string pendingNetworkPieceName;
+    private int pendingNetworkPlayerId;
+
+    // Fase 1 — salvar o que chegou (cancelando qualquer pendente anterior)
+    public void SetPendingNetworkMove(Vector2Int origin, Vector2Int target,
+        PendingMoveType type)
+    {
+        if (pendingNetworkType != PendingMoveType.None)
+            Debug.Log($"[TwoPhase] Movimento pendente ({pendingNetworkType}) cancelado por novo Move.");
+
+        pendingNetworkOrigin = origin;
+        pendingNetworkTarget = target;
+        pendingNetworkType = type;
+    }
+
+    public void SetPendingNetworkCastle(Vector2Int kOrigin, Vector2Int kTarget,
+                                        Vector2Int rOrigin, Vector2Int rTarget)
+    {
+        if (pendingNetworkType != PendingMoveType.None)
+            Debug.Log($"[TwoPhase] Movimento pendente ({pendingNetworkType}) cancelado por novo Castle.");
+
+        pendingNetworkKingOrigin = kOrigin; pendingNetworkKingTarget = kTarget;
+        pendingNetworkRookOrigin = rOrigin; pendingNetworkRookTarget = rTarget;
+        pendingNetworkType = PendingMoveType.Castle;
+    }
+
+    public void SetPendingNetworkPromotion(Vector2Int origin, Vector2Int target,
+                                           string pieceName, int playerId)
+    {
+        if (pendingNetworkType != PendingMoveType.None)
+            Debug.Log($"[TwoPhase] Movimento pendente ({pendingNetworkType}) cancelado por nova Promoção.");
+
+        pendingNetworkOrigin = origin;
+        pendingNetworkTarget = target;
+        pendingNetworkPieceName = pieceName;
+        pendingNetworkPlayerId = playerId;
+        pendingNetworkType = PendingMoveType.Promotion;
+    }
+
+    // Fase 2 — ExecuteConfirmed só executa se o pendente bate com o confirmado
+
     public void ExecuteConfirmedMove(Vector2Int origin, Vector2Int target)
     {
-
-        // Quem enviou já executou localmente
-        //if (!boardManager.noTurns && IsMyTurnPublic()) return;
-
-        //Debug.Log($"[Multiplayer] Executando movimento do oponente: {origin} → {target}");
-
-        GameObject pieceAtOrigin = boardManager.GetPieceAtPosition(origin.x, origin.y);
-
-        if (pieceAtOrigin == null)
+        if (pendingNetworkType != PendingMoveType.None
+            && pendingNetworkType != PendingMoveType.Move)
         {
-            //Debug.LogWarning($"[Multiplayer] Nenhuma peça em {origin} para mover.");
+            Debug.LogWarning("[TwoPhase] Confirmação de Move ignorada — tipo pendente diferente.");
+            pendingNetworkType = PendingMoveType.None;
             return;
         }
 
-        PieceComponent comp = pieceAtOrigin.GetComponent<PieceComponent>();
+        if (pendingNetworkType == PendingMoveType.Move
+            && (pendingNetworkOrigin != origin || pendingNetworkTarget != target))
+        {
+            Debug.LogWarning("[TwoPhase] Confirmação de Move ignorada — posições não batem com pendente.");
+            pendingNetworkType = PendingMoveType.None;
+            return;
+        }
 
-        // ✅ Garante que PossibleMoves está atualizado ANTES de executar
+        pendingNetworkType = PendingMoveType.None;
+
+        // --- lógica original ---
+        GameObject pieceAtOrigin = boardManager.GetPieceAtPosition(origin.x, origin.y);
+        if (pieceAtOrigin == null) return;
+
+        PieceComponent comp = pieceAtOrigin.GetComponent<PieceComponent>();
         PieceMovement movement = pieceAtOrigin.GetComponent<PieceMovement>();
         if (movement != null)
         {
             movement.enabled = true;
-            boardManager.UpdateBoardControl();          // atualiza controle do tabuleiro
-            comp.PossibleMoves = movement.GetValidMoves(); // recalcula movimentos válidos
+            boardManager.UpdateBoardControl();
+            comp.PossibleMoves = movement.GetValidMoves();
         }
-
-        //Debug.Log($"[Multiplayer] PossibleMoves count: {comp.PossibleMoves?.Count ?? -1}");
-        //Debug.Log($"[Multiplayer] Destino {target} está em PossibleMoves: {comp.PossibleMoves?.Contains(target)}");
 
         isReceivingMove = true;
         base.OnCellClicked(origin, forceMove: true, false);
@@ -201,37 +250,61 @@ public class MultiplayerPieceController : PieceController
         isReceivingMove = false;
     }
 
-    public bool IsMyTurnPublic()
+    public void ExecuteConfirmedCastle(Vector2Int kingOrigin, Vector2Int kingTarget,
+                                        Vector2Int rookOrigin, Vector2Int rookTarget)
     {
-        return moveTracker.GetTurnPlayer() == GetLocalPlayerId();
-    }
-
-    private int GetLocalPlayerId()
-    {
-        return NetworkLobbyManager.Instance.IsHost
-            ? (MatchData.Instance.HostIsWhite ? 0 : 1)
-            : (MatchData.Instance.HostIsWhite ? 1 : 0);
-    }
-
-
-    public void ExecuteConfirmedPromotion(Vector2Int origin, Vector2Int target, string pieceName, int playerId)
-    {
-
-        // Quem enviou já executou localmente
-        //if (!boardManager.noTurns && IsMyTurnPublic()) return;
-
-        //Debug.Log($"[Multiplayer] Aplicando promoção do oponente | origem: {origin} destino: {target} peça: {pieceName} | playerId: {playerId}");
-
-        // ✅ Busca o peão na origem, não no destino
-        GameObject pawnObj = boardManager.GetPieceAtPosition(origin.x, origin.y);
-        if (pawnObj == null)
+        if (pendingNetworkType != PendingMoveType.None
+            && pendingNetworkType != PendingMoveType.Castle)
         {
-            //Debug.LogError($"[Multiplayer] Nenhuma peça encontrada em {origin} para promover.");
+            Debug.LogWarning("[TwoPhase] Castle ignorado — tipo pendente diferente.");
+            pendingNetworkType = PendingMoveType.None;
             return;
         }
 
-        PieceComponent pawn = pawnObj.GetComponent<PieceComponent>();
+        pendingNetworkType = PendingMoveType.None;
 
+        // --- lógica original ---
+        GameObject kingObj = boardManager.GetPieceAtPosition(kingOrigin.x, kingOrigin.y);
+        GameObject rookObj = boardManager.GetPieceAtPosition(rookOrigin.x, rookOrigin.y);
+        if (kingObj == null || rookObj == null)
+        {
+            Debug.LogWarning("[Multiplayer] Castle: rei ou torre não encontrados.");
+            return;
+        }
+
+        isReceivingMove = true;
+        base.Move(kingObj, kingTarget);
+        base.Move(rookObj, rookTarget);
+
+        PieceComponent kingComponent = kingObj.GetComponent<PieceComponent>();
+        int distance = Mathf.Abs(kingOrigin.x - rookOrigin.x)
+                     + Mathf.Abs(kingOrigin.y - rookOrigin.y);
+
+        moveTracker.AddMove(kingObj, kingComponent, kingOrigin, kingTarget);
+        AddMove(false, distance);
+        boardManager.HighlightLastMove(kingOrigin, kingTarget);
+        boardManager.UpdateBoardControl();
+        isReceivingMove = false;
+    }
+
+    public void ExecuteConfirmedPromotion(Vector2Int origin, Vector2Int target,
+                                           string pieceName, int playerId)
+    {
+        if (pendingNetworkType != PendingMoveType.None
+            && pendingNetworkType != PendingMoveType.Promotion)
+        {
+            Debug.LogWarning("[TwoPhase] Promoção ignorada — tipo pendente diferente.");
+            pendingNetworkType = PendingMoveType.None;
+            return;
+        }
+
+        pendingNetworkType = PendingMoveType.None;
+
+        // --- lógica original ---
+        GameObject pawnObj = boardManager.GetPieceAtPosition(origin.x, origin.y);
+        if (pawnObj == null) return;
+
+        PieceComponent pawn = pawnObj.GetComponent<PieceComponent>();
         GameObject targetPiece = boardManager.GetPieceAtPosition(target.x, target.y);
 
         MatchSquadData squadData = (playerId == 0)
@@ -247,43 +320,23 @@ public class MultiplayerPieceController : PieceController
             createPromotionUI.promotionCanvasPrefab,
             createPromotionUI.promotionButtonPrefab,
             squadData,
-            target,   // pos de destino para PlacePiece
+            target,
             pieceName,
             targetPiece
         );
     }
 
-    public void ExecuteConfirmedCastle(Vector2Int kingOrigin, Vector2Int kingTarget,
-                                        Vector2Int rookOrigin, Vector2Int rookTarget)
+    public bool IsMyTurnPublic()
     {
-        // Quem enviou já executou localmente
-        //if (!boardManager.noTurns && IsMyTurnPublic()) return;
-
-        GameObject kingObj = boardManager.GetPieceAtPosition(kingOrigin.x, kingOrigin.y);
-        GameObject rookObj = boardManager.GetPieceAtPosition(rookOrigin.x, rookOrigin.y);
-
-        if (kingObj == null || rookObj == null)
-        {
-            Debug.LogWarning("[Multiplayer] Castle: rei ou torre não encontrados.");
-            return;
-        }
-
-        isReceivingMove = true;
-
-        // Reutiliza o Move interno do base controller para não disparar nova rede
-        base.Move(kingObj, kingTarget);
-        base.Move(rookObj, rookTarget);
-
-        PieceComponent kingComponent = kingObj.GetComponent<PieceComponent>();
-
-        int distance = Mathf.Abs(kingOrigin.x - rookOrigin.x) + Mathf.Abs(kingOrigin.y - rookOrigin.y);
-
-        moveTracker.AddMove(kingObj, kingComponent, kingOrigin, kingTarget);
-        AddMove(false, distance);
-        boardManager.HighlightLastMove(kingOrigin, kingTarget);
-        boardManager.UpdateBoardControl();
-
-        isReceivingMove = false;
+        return moveTracker.GetTurnPlayer() == GetLocalPlayerId();
     }
+
+    private int GetLocalPlayerId()
+    {
+        return NetworkLobbyManager.Instance.IsHost
+            ? (MatchData.Instance.HostIsWhite ? 0 : 1)
+            : (MatchData.Instance.HostIsWhite ? 1 : 0);
+    }
+
 
 }

@@ -10,6 +10,8 @@ public class MenuButtonsManager : MonoBehaviour
     public Button ButtonRewards;
     public GameObject RewardsPanel;
 
+    public TextMeshProUGUI versionText;
+
     [Header("Main:")]
     public Button playBtn;
     public Button createBtn;
@@ -44,6 +46,8 @@ public class MenuButtonsManager : MonoBehaviour
 
     void Start()
     {
+
+        versionText.text = $"v{Application.version}";
 
         //testBtn.onClick.AddListener(() => AdsManager.ShowRewarded());
         //testBtn2.onClick.AddListener(() => AdsManager.ShowInterstitial());

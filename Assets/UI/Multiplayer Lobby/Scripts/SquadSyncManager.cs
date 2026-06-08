@@ -131,7 +131,7 @@ public class SquadSyncManager : NetworkBehaviour
                 foreach (ulong u_clientId in NetworkManager.Singleton.ConnectedClientsIds)
                 {
                     if (u_clientId == NetworkManager.ServerClientId) continue;
-                    SendSquadJson(BuildJsonPayloadRaw(false), u_clientId, toHost: false);
+                    SendSquadJson(BuildJsonPayloadRaw(isWhite), u_clientId, toHost: false);
                 }
 
                 StartCoroutine(SendSpritesToClient(
@@ -296,7 +296,7 @@ public class SquadSyncManager : NetworkBehaviour
 
     private IEnumerator SendProfileImageDelayed_Client()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         SendProfileImage(NetworkManager.ServerClientId, toHost: true);
     }
 

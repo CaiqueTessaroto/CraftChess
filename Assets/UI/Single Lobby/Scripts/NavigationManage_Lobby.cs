@@ -133,7 +133,7 @@ public class NavigationManage_Lobby : MonoBehaviour
 
         if (!Directory.Exists(squadsRoot))
         {
-            Debug.LogWarning("Pasta não encontrada: " + squadsRoot);
+            //Debug.LogWarning("Pasta não encontrada: " + squadsRoot);
             return;
         }
 
