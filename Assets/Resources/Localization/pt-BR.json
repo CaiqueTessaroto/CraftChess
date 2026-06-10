@@ -362,10 +362,10 @@
     "key": "READY",
     "value": "Pronto"
   },
-  {
-    "key": "Cancel_Ready",
-    "value": "Cancelar"
-  },
+  { "key": "lobby_full", "value": "O lobby está cheio." },
+  { "key": "lobby_error", "value": "Erro ao tentar entrar no lobby." },
+  { "key": "lobby_not_found", "value": "Lobby não encontrado." },
+  { "key": "Cancel_Ready", "value": "Cancelar" },
   {
     "key": "downloading_title",
     "value": "Baixar Esquadrão"

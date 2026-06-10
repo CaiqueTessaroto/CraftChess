@@ -11,6 +11,7 @@ public static class MultiplayerLobbyState
     public static MatchSquadData WhiteSquad;
     public static MatchSquadData BlackSquad;
     public static bool LocalIsWhite;
+    public static bool IsSpectator = false; // Indica se o cliente entrou como espectador (apenas assistindo, sem jogar)
     public static string WhiteSquadOwnerId;  // clientId de quem enviou o White
     public static string BlackSquadOwnerId;  // clientId de quem enviou o Black
     public static Dictionary<string, byte[]> WhiteSpritesRaw = new Dictionary<string, byte[]>();

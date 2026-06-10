@@ -19,36 +19,6 @@ public class MultiplayerPieceController : PieceController
     public enum LastMoveType { None, Move, Castle, Promotion }
     public LastMoveType lastMoveType = LastMoveType.None;
 
-    // Move normal
-    public Vector2Int lastMoveOrigin;
-    public Vector2Int lastMoveTarget;
-    public Vector2Int lastCastleKingOrigin, lastCastleKingTarget;
-    public Vector2Int lastCastleRookOrigin, lastCastleRookTarget;
-    public Vector2Int lastPromotionOrigin;
-    public Vector2Int lastPromotionTarget;
-    public string lastPromotionPieceName;
-    public int lastPromotionPlayerId; private float heartbeatTimer = 0f;
-    private const float HEARTBEAT_INTERVAL = 10f;
-
-
-    private void Update()
-    {
-        if (!NetworkLobbyManager.Instance.IsHost) return; // só o host envia heartbeat
-
-        heartbeatTimer += Time.deltaTime;
-        if (heartbeatTimer >= HEARTBEAT_INTERVAL)
-        {
-            heartbeatTimer = 0f;
-            SendTurnHeartbeat();
-        }
-    }
-
-    private void SendTurnHeartbeat()
-    {
-        int currentTurn = GetCurrentTurn();
-        PieceControllerNetwork.Instance?.TurnHeartbeatClientRpc(currentTurn);
-    }
-
     public void EndGameHostLoseConnection()
     {
         if (endGame) return;
@@ -81,6 +51,9 @@ public class MultiplayerPieceController : PieceController
             return;
         }
 
+        if (MultiplayerLobbyState.IsSpectator)
+            return;
+
         if (!isReceivingMove && !boardManager.noTurns && !IsMyTurnPublic())
         {
             //Debug.Log($"[Multiplayer] Bloqueado — não é o turno local. Turno: {moveTracker.GetTurnPlayer()}, Local: {GetLocalPlayerId()}");
@@ -100,8 +73,6 @@ public class MultiplayerPieceController : PieceController
         pendingTarget = target;
         hasPendingMove = true;
 
-        lastMoveOrigin = origin;
-        lastMoveTarget = target;
         lastMoveType = LastMoveType.Move;
     }
 
@@ -116,8 +87,6 @@ public class MultiplayerPieceController : PieceController
         pendingRookTarget = rookTarget;
         hasPendingCastle = true;
 
-        lastCastleKingOrigin = kingOrigin; lastCastleKingTarget = kingTarget;
-        lastCastleRookOrigin = rookOrigin; lastCastleRookTarget = rookTarget;
         lastMoveType = LastMoveType.Castle;
     }
 
@@ -126,10 +95,6 @@ public class MultiplayerPieceController : PieceController
     {
         if (isReceivingMove) return;
 
-        lastPromotionOrigin = origin;
-        lastPromotionTarget = target;
-        lastPromotionPieceName = pieceName;
-        lastPromotionPlayerId = playerId;
         lastMoveType = LastMoveType.Promotion;
     }
 
@@ -333,6 +298,8 @@ public class MultiplayerPieceController : PieceController
 
     private int GetLocalPlayerId()
     {
+        if (MultiplayerLobbyState.IsSpectator) return -1;
+
         return NetworkLobbyManager.Instance.IsHost
             ? (MatchData.Instance.HostIsWhite ? 0 : 1)
             : (MatchData.Instance.HostIsWhite ? 1 : 0);

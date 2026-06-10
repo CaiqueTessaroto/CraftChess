@@ -190,6 +190,8 @@ public class BoardChessManager : MonoBehaviour
         // Multiplayer: inverte se o jogador local for preto
         if (MatchData.Instance.isMultiplayer)
         {
+            if (MultiplayerLobbyState.IsSpectator)
+                return false;
             // Host é branco → Client é preto → Client inverte
             // Host é preto  → Host inverte
             bool localPlayerIsBlack = MatchData.Instance.HostIsWhite
@@ -220,6 +222,10 @@ public class BoardChessManager : MonoBehaviour
     {
         if (MatchData.Instance.isMultiplayer)
         {
+            if (MultiplayerLobbyState.IsSpectator)
+            {
+                return -1; // ID especial para espectadores
+            }
             // No multiplayer, o "player" é o jogador local
             return NetworkLobbyManager.Instance.IsHost
                 ? (MatchData.Instance.HostIsWhite ? 0 : 1)  // local é o Host

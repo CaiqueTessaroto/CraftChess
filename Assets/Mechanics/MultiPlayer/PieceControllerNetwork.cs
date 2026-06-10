@@ -171,68 +171,6 @@ public class PieceControllerNetwork : NetworkBehaviour
         pc.SetEndGame(black: blackWins, white: whiteWins, draw: draw);
     }
 
-    // ─── Heartbeat / Resync ───────────────────────────────────────────────
-
-    [ClientRpc]
-    public void TurnHeartbeatClientRpc(int hostTurn)
-    {
-        if (NetworkManager.Singleton.IsHost) return;
-
-        EnsureMP();
-        if (mp.GetCurrentTurn() != hostTurn)
-        {
-            Debug.LogWarning($"[Heartbeat] Dessync! Local: {mp.GetCurrentTurn()} | Host: {hostTurn}");
-            RequestResyncServerRpc();
-        }
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    private void RequestResyncServerRpc(ServerRpcParams rpcParams = default)
-    {
-        EnsureMP();
-
-        if (mp.lastMoveType == MultiplayerPieceController.LastMoveType.None)
-        {
-            Debug.LogWarning("[Heartbeat] Resync solicitado mas nenhum lance registrado.");
-            return;
-        }
-
-        ClientRpcParams target = new ClientRpcParams
-        {
-            Send = new ClientRpcSendParams
-            {
-                TargetClientIds = new[] { rpcParams.Receive.SenderClientId }
-            }
-        };
-
-        switch (mp.lastMoveType)
-        {
-            case MultiplayerPieceController.LastMoveType.Move:
-                ConfirmMoveClientRpc(
-                    mp.lastMoveOrigin.x, mp.lastMoveOrigin.y,
-                    mp.lastMoveTarget.x, mp.lastMoveTarget.y,
-                    target);
-                break;
-
-            case MultiplayerPieceController.LastMoveType.Castle:
-                ConfirmCastleClientRpc(
-                    mp.lastCastleKingOrigin.x, mp.lastCastleKingOrigin.y,
-                    mp.lastCastleKingTarget.x, mp.lastCastleKingTarget.y,
-                    mp.lastCastleRookOrigin.x, mp.lastCastleRookOrigin.y,
-                    mp.lastCastleRookTarget.x, mp.lastCastleRookTarget.y,
-                    target);
-                break;
-
-            case MultiplayerPieceController.LastMoveType.Promotion:
-                ConfirmPromotionClientRpc(
-                    mp.lastPromotionOrigin.x, mp.lastPromotionOrigin.y,
-                    mp.lastPromotionTarget.x, mp.lastPromotionTarget.y,
-                    mp.lastPromotionPieceName,
-                    mp.lastPromotionPlayerId,
-                    target);
-                break;
-        }
-    }
 
     // ─── Helpers ──────────────────────────────────────────────────────────
 

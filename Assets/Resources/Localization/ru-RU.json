@@ -857,10 +857,10 @@
       "key": "READY",
       "value": "Готов"
     },
-    {
-      "key": "Cancel_Ready",
-      "value": "Отменить готовность"
-    },
+  { "key": "lobby_full", "value": "Лобби заполнено." },
+  { "key": "lobby_error", "value": "Ошибка при попытке войти в лобби." },
+  { "key": "lobby_not_found", "value": "Лобби не найдено." },
+  { "key": "Cancel_Ready", "value": "Отмена" },
     {
       "key": "downloading_title",
       "value": "Скачать отряд"

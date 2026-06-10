@@ -857,10 +857,10 @@
       "key": "READY",
       "value": "준비됨"
     },
-    {
-      "key": "Cancel_Ready",
-      "value": "준비 취소"
-    },
+  { "key": "lobby_full", "value": "로비가 가득 찼습니다." },
+  { "key": "lobby_error", "value": "로비에 입장하는 중 오류가 발생했습니다." },
+  { "key": "lobby_not_found", "value": "로비를 찾을 수 없습니다." },
+  { "key": "Cancel_Ready", "value": "취소" },
     {
       "key": "downloading_title",
       "value": "분대 다운로드"

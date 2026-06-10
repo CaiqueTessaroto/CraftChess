@@ -858,10 +858,10 @@
       "key": "READY",
       "value": "جاهز"
     },
-    {
-      "key": "Cancel_Ready",
-      "value": "إلغاء الجاهزية"
-    },
+  { "key": "lobby_full", "value": "اللوبي ممتلئ." },
+  { "key": "lobby_error", "value": "خطأ أثناء محاولة الدخول إلى اللوبي." },
+  { "key": "lobby_not_found", "value": "اللوبي غير موجود." },
+  { "key": "Cancel_Ready", "value": "إلغاء" },
     {
       "key": "downloading_title",
       "value": "تنزيل الفريق"

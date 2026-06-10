@@ -436,10 +436,10 @@
     "key": "READY",
     "value": "Ready"
   },
-  {
-    "key": "Cancel_Ready",
-    "value": "Cancel"
-  },
+ { "key": "lobby_full", "value": "Lobby is full." },
+  { "key": "lobby_error", "value": "Error while trying to enter the lobby." },
+  { "key": "lobby_not_found", "value": "Lobby not found." },
+  { "key": "Cancel_Ready", "value": "Cancel" },
   {
     "key": "downloading_title",
     "value": "Download Squad"

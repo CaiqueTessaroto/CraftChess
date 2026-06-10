@@ -279,6 +279,31 @@ public class PieceController : MonoBehaviour
         Sprite winnerSprite = null;
         string winnerName = null;
 
+        if (MatchData.Instance.isMultiplayer)
+            if (MultiplayerLobbyState.IsSpectator)
+            {
+                if (black)
+                {
+                    winnerName = MatchData.Instance.blackSquadName;
+                    bool blackIsHost = !MatchData.Instance.HostIsWhite;
+                    winnerSprite = blackIsHost
+                        ? MatchData.Instance.HostProfileSprite
+                        : MatchData.Instance.ClientProfileSprite;
+                }
+                else if (white)
+                {
+                    winnerName = MatchData.Instance.whiteSquadName;
+                    bool whiteIsHost = MatchData.Instance.HostIsWhite;
+                    winnerSprite = whiteIsHost
+                        ? MatchData.Instance.HostProfileSprite
+                        : MatchData.Instance.ClientProfileSprite;
+                }
+
+                gameInterfaceManager.EndGameLocal(winnerName, winnerSprite);
+                endGame = true;
+                return;
+            }
+
         if (black) // pretas venceram
         {
             winnerName = MatchData.Instance.blackSquadName;
@@ -379,7 +404,7 @@ public class PieceController : MonoBehaviour
 
             kingWhiteIsInCheck = cellWhite.house.isControlledByBlack;
 
-            if (boardManager.localGame || (KingWhite.Player.id != botPlayerId && !boardManager.IAvsIA && !boardManager.noRules))
+            if (boardManager.localGame || (!boardManager.IAvsIA && !boardManager.noRules)) //KingWhite.Player.id != botPlayerId &&
                 if (kingWhiteIsInCheck)
                 {
                     AudioManager.Instance.PlaySFX(checkSound);
@@ -408,7 +433,7 @@ public class PieceController : MonoBehaviour
 
             kingBlackIsInCheck = cellBlack.house.isControlledByWhite;
 
-            if (boardManager.localGame || (KingBlack.Player.id != botPlayerId && !boardManager.IAvsIA && !boardManager.noRules))
+            if (boardManager.localGame || (!boardManager.IAvsIA && !boardManager.noRules)) //KingBlack.Player.id != botPlayerId &&
                 if (kingBlackIsInCheck)
                 {
                     AudioManager.Instance.PlaySFX(checkSound);
@@ -439,7 +464,7 @@ public class PieceController : MonoBehaviour
 
         if (validMoves == null && !forceMove)
         {
-                BoardUpdate();
+            BoardUpdate();
         }
 
         bool captured = false;

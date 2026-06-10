@@ -857,10 +857,10 @@
       "key": "READY",
       "value": "準備完了"
     },
-    {
-      "key": "Cancel_Ready",
-      "value": "準備完了を取り消す"
-    },
+  { "key": "lobby_full", "value": "ロビーは満員です。" },
+  { "key": "lobby_error", "value": "ロビーに入ろうとしてエラーが発生しました。" },
+  { "key": "lobby_not_found", "value": "ロビーが見つかりません。" },
+  { "key": "Cancel_Ready", "value": "キャンセル" },
     {
       "key": "downloading_title",
       "value": "チームをダウンロード"

@@ -858,10 +858,10 @@
       "key": "READY",
       "value": "तैयार"
     },
-    {
-      "key": "Cancel_Ready",
-      "value": "तैयार रद्द करें"
-    },
+  { "key": "lobby_full", "value": "लॉबी भरी हुई है।" },
+  { "key": "lobby_error", "value": "लॉबी में प्रवेश करने का प्रयास करते समय त्रुटि।" },
+  { "key": "lobby_not_found", "value": "लॉबी नहीं मिली।" },
+  { "key": "Cancel_Ready", "value": "रद्द करें" },
     {
       "key": "downloading_title",
       "value": "दस्ता डाउनलोड करें"

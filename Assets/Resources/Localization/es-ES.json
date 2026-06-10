@@ -427,10 +427,10 @@
     "key": "READY",
     "value": "Listo"
   },
-  {
-    "key": "Cancel_Ready",
-    "value": "Cancelar"
-  },
+  { "key": "lobby_full", "value": "La sala está llena." },
+  { "key": "lobby_error", "value": "Error al intentar entrar en la sala." },
+  { "key": "lobby_not_found", "value": "Sala no encontrada." },
+  { "key": "Cancel_Ready", "value": "Cancelar" },
   {
     "key": "downloading_title",
     "value": "Descargar equipo"

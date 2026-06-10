@@ -858,10 +858,10 @@
       "key": "READY",
       "value": "Prêt"
     },
-    {
-      "key": "Cancel_Ready",
-      "value": "Annuler Prêt"
-    },
+  { "key": "lobby_full", "value": "Le lobby est plein." },
+  { "key": "lobby_error", "value": "Erreur lors de la tentative d'entrée dans le lobby." },
+  { "key": "lobby_not_found", "value": "Lobby introuvable." },
+  { "key": "Cancel_Ready", "value": "Annuler" },
     {
       "key": "downloading_title",
       "value": "Télécharger l'escouade"

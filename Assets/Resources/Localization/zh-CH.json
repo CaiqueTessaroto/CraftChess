@@ -857,10 +857,10 @@
       "key": "READY",
       "value": "准备就绪"
     },
-    {
-      "key": "Cancel_Ready",
-      "value": "取消准备"
-    },
+  { "key": "lobby_full", "value": "大厅已满。" },
+  { "key": "lobby_error", "value": "尝试进入大厅时出错。" },
+  { "key": "lobby_not_found", "value": "未找到大厅。" },
+  { "key": "Cancel_Ready", "value": "取消" },
     {
       "key": "downloading_title",
       "value": "下载小队"

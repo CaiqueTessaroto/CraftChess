@@ -66,7 +66,7 @@ public class NetworkLobbyManager : MonoBehaviour
         try
         {
             // Cria Relay
-            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(2);
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(3);
 
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
@@ -89,19 +89,14 @@ public class NetworkLobbyManager : MonoBehaviour
             {
                 Data = new Dictionary<string, DataObject>
                 {
-                    {
-                        "joinCode",
-                        new DataObject(
-                            visibility: DataObject.VisibilityOptions.Public,
-                            value: joinCode
-                        )
-                    }
+                    { "joinCode", new DataObject(DataObject.VisibilityOptions.Public, joinCode) },
+                    { "maxPlayers", new DataObject(DataObject.VisibilityOptions.Public, "2") }
                 }
             };
 
             currentLobby = await LobbyService.Instance.CreateLobbyAsync(
                 "Chess Lobby",
-                2,
+                3,
                 options
             );
 
@@ -124,6 +119,12 @@ public class NetworkLobbyManager : MonoBehaviour
         {
             Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode);
 
+            int maxPlayers = int.Parse(lobby.Data["maxPlayers"].Value);
+            int realPlayers = CountRealPlayers(lobby); // veja abaixo
+
+            bool isSpectator = realPlayers >= maxPlayers;
+            MultiplayerLobbyState.IsSpectator = isSpectator;
+
             await SetupRelayAndStart(lobby, scene);
         }
         catch (LobbyServiceException ex)
@@ -133,8 +134,16 @@ public class NetworkLobbyManager : MonoBehaviour
             {
                 await HandleAlreadyInLobby(lobbyCode, scene);
             }
+            else if (ex.Reason == LobbyExceptionReason.LobbyNotFound)
+                FileManager.Instance.SpawnMessage(UIHelperUtils.T("lobby_not_found") ?? "Lobby not found.");
+            else if (ex.Reason == LobbyExceptionReason.LobbyFull) // ← adicionar
+            {
+                FileManager.Instance.SpawnMessage(UIHelperUtils.T("lobby_full") ?? "Lobby is full.");
+            }
             else
             {
+                FileManager.Instance.SpawnMessage(
+                    UIHelperUtils.T("lobby_error") ?? "Error while trying to enter the lobby.");
                 Debug.LogError($"Lobby error: {ex}");
             }
         }
@@ -142,6 +151,22 @@ public class NetworkLobbyManager : MonoBehaviour
         {
             Debug.LogError(ex);
         }
+    }
+
+    private int CountRealPlayers(Lobby lobby)
+    {
+        string localId = AuthenticationService.Instance.PlayerId;
+        int count = 0;
+        foreach (var player in lobby.Players)
+        {
+            if (player.Id == localId) continue;
+
+            bool spectator = player.Data != null
+                && player.Data.ContainsKey("isSpectator")
+                && player.Data["isSpectator"].Value == "true";
+            if (!spectator) count++;
+        }
+        return count;
     }
 
     private async Task HandleAlreadyInLobby(string lobbyCode, string scene)
@@ -177,6 +202,23 @@ public class NetworkLobbyManager : MonoBehaviour
 
     private async Task SetupRelayAndStart(Lobby lobby, string scene)
     {
+
+        await LobbyService.Instance.UpdatePlayerAsync(lobby.Id,
+            AuthenticationService.Instance.PlayerId,
+            new UpdatePlayerOptions
+            {
+                Data = new Dictionary<string, PlayerDataObject>
+                {
+                {
+                    "isSpectator",
+                    new PlayerDataObject(
+                        PlayerDataObject.VisibilityOptions.Member,
+                        MultiplayerLobbyState.IsSpectator ? "true" : "false"
+                    )
+                }
+                }
+            });
+
         currentLobby = lobby;
 
         string relayJoinCode = lobby.Data["joinCode"].Value;
