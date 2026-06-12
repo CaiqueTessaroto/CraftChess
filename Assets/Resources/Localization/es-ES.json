@@ -1,58 +1,177 @@
 {
   "entries": [
-
-    { "key": "PLAY", "value": "Jugar" },
-    { "key": "CREATE", "value": "Crear" },
-    { "key": "SETTINGS", "value": "Configuración" },
-    { "key": "EXIT", "value": "Salir" },
-
-    { "key": "MENU_SQUAD", "value": "Crear Escuadrón" },
-    { "key": "MENU_PIECE", "value": "Crear Pieza" },
-    { "key": "MENU_PAINTING", "value": "Editor de Arte" },
-
-    { "key": "MASTER", "value": "General:" },
-    { "key": "MUSIC", "value": "Música:" },
-    { "key": "SFX", "value": "Efectos:" },
-    { "key": "FULLSCREEN", "value": "Pantalla Completa:" },
-    { "key": "RESOLUTION", "value": "Resolución:" },
-    { "key": "LANGUAGES", "value": "Idiomas:" },
-
-    { "key": "art.set", "value": "| Conjunto |" },
-    { "key": "ENTERNAME", "value": "Nombre" },
-    { "key": "IMPORT", "value": "Importar" },
-    { "key": "PREVIEW", "value": "Vista previa" },
-    { "key": "X", "value": "X" },
-    { "key": "QUICKSAVE", "value": "Guardado Rápido" },
-    { "key": "LOAD", "value": "Cargar" },
-    { "key": "SAVE", "value": "Guardar" },
-
-    { "key": "RGB", "value": "RGB" },
-    { "key": "HEX", "value": "HEX" },
-    { "key": "HSL", "value": "HSL" },
-    { "key": "R", "value": "R" },
-    { "key": "G", "value": "G" },
-    { "key": "B", "value": "B" },
-    { "key": "HEXADECIMAL", "value": "Hexadecimal" },
-
-    { "key": "CANCEL", "value": "Cancelar" },
-    { "key": "OK", "value": "Ok" },
-
-    { "key": "NEW", "value": "Crear" },
-    { "key": "DELETE", "value": "Eliminar" },
-
-    { "key": "ALL", "value": "Todos" },
-    { "key": "MY", "value": "Mis" },
-    { "key": "LIBRARY", "value": "Nativo" },
-    { "key": "SETS", "value": "Conjuntos" },
-    { "key": "ARTS", "value": "Artes" },
-    { "key": "PIECES", "value": "Piezas" },
-    { "key": "CLEAR", "value": "Limpiar" },
-    { "key": "squad.pieces", "value": "Piezas:" },
-
-    { "key": "ADD", "value": "Agregar" },
-    { "key": "REMOVE", "value": "Eliminar" },
-    { "key": "DESELECT", "value": "Deseleccionar" },
-
+    {
+      "key": "PLAY",
+      "value": "Jugar"
+    },
+    {
+      "key": "CREATE",
+      "value": "Crear"
+    },
+    {
+      "key": "SETTINGS",
+      "value": "Configuración"
+    },
+    {
+      "key": "EXIT",
+      "value": "Salir"
+    },
+    {
+      "key": "MENU_SQUAD",
+      "value": "Crear Escuadrón"
+    },
+    {
+      "key": "MENU_PIECE",
+      "value": "Crear Pieza"
+    },
+    {
+      "key": "MENU_PAINTING",
+      "value": "Editor de Arte"
+    },
+    {
+      "key": "MASTER",
+      "value": "General:"
+    },
+    {
+      "key": "MUSIC",
+      "value": "Música:"
+    },
+    {
+      "key": "SFX",
+      "value": "Efectos:"
+    },
+    {
+      "key": "FULLSCREEN",
+      "value": "Pantalla Completa:"
+    },
+    {
+      "key": "RESOLUTION",
+      "value": "Resolución:"
+    },
+    {
+      "key": "LANGUAGES",
+      "value": "Idiomas:"
+    },
+    {
+      "key": "art.set",
+      "value": "| Conjunto |"
+    },
+    {
+      "key": "ENTERNAME",
+      "value": "Nombre"
+    },
+    {
+      "key": "IMPORT",
+      "value": "Importar"
+    },
+    {
+      "key": "PREVIEW",
+      "value": "Vista previa"
+    },
+    {
+      "key": "X",
+      "value": "X"
+    },
+    {
+      "key": "QUICKSAVE",
+      "value": "Guardado Rápido"
+    },
+    {
+      "key": "LOAD",
+      "value": "Cargar"
+    },
+    {
+      "key": "SAVE",
+      "value": "Guardar"
+    },
+    {
+      "key": "RGB",
+      "value": "RGB"
+    },
+    {
+      "key": "HEX",
+      "value": "HEX"
+    },
+    {
+      "key": "HSL",
+      "value": "HSL"
+    },
+    {
+      "key": "R",
+      "value": "R"
+    },
+    {
+      "key": "G",
+      "value": "G"
+    },
+    {
+      "key": "B",
+      "value": "B"
+    },
+    {
+      "key": "HEXADECIMAL",
+      "value": "Hexadecimal"
+    },
+    {
+      "key": "CANCEL",
+      "value": "Cancelar"
+    },
+    {
+      "key": "OK",
+      "value": "Ok"
+    },
+    {
+      "key": "NEW",
+      "value": "Crear"
+    },
+    {
+      "key": "DELETE",
+      "value": "Eliminar"
+    },
+    {
+      "key": "ALL",
+      "value": "Todos"
+    },
+    {
+      "key": "MY",
+      "value": "Mis"
+    },
+    {
+      "key": "LIBRARY",
+      "value": "Nativo"
+    },
+    {
+      "key": "SETS",
+      "value": "Conjuntos"
+    },
+    {
+      "key": "ARTS",
+      "value": "Artes"
+    },
+    {
+      "key": "PIECES",
+      "value": "Piezas"
+    },
+    {
+      "key": "CLEAR",
+      "value": "Limpiar"
+    },
+    {
+      "key": "squad.pieces",
+      "value": "Piezas:"
+    },
+    {
+      "key": "ADD",
+      "value": "Agregar"
+    },
+    {
+      "key": "REMOVE",
+      "value": "Eliminar"
+    },
+    {
+      "key": "DESELECT",
+      "value": "Deseleccionar"
+    },
     {
       "key": "rules.power_limit",
       "value": "El poder del escuadrón debe ser menor que 1500"
@@ -85,369 +204,697 @@
       "key": "rules.enabled",
       "value": "Modo estratégico activado"
     },
-
     {
       "key": "power",
       "value": "Poder: {0}"
     },
-
-    { "key": "squad.selectking", "value": "Selecciona el Rey" },
-    { "key": "squad.remove", "value": "Eliminar Piezas" },
-
-    { "key": "SELECTART", "value": "Seleccionar Arte" },
-    { "key": "CHANGESQUAD", "value": "Cambiar Escuadrón" },
-    { "key": "RESET", "value": "Restablecer" },
-    { "key": "piece.squad", "value": "| Escuadrón |" },
-    { "key": "PRESETS", "value": "Preajustes" },
-    { "key": "MOVES", "value": "Movimientos" },
-    { "key": "SPECIAL", "value": "Especiales" },
-
-    { "key": "KING", "value": "Rey" },
-    { "key": "QUEEN", "value": "Reina" },
-    { "key": "BISHOP", "value": "Alfil" },
-    { "key": "KNIGHT", "value": "Caballo" },
-    { "key": "ROOK", "value": "Torre" },
-    { "key": "PAWN", "value": "Peón" },
-
-    { "key": "ACTIVE", "value": "Activo" },
-    { "key": "piece.active", "value": "Activar Movimiento" },
-
-    { "key": "STRAIGHT", "value": "Recto" },
-    { "key": "DIAGONAL", "value": "Diagonal" },
-    { "key": "CUSTOM", "value": "Personalizado" },
-
-    { "key": "MOVE", "value": "Mover" },
-    { "key": "CAPTURE", "value": "Capturar" },
-    { "key": "JUMP", "value": "Saltar" },
-
-    { "key": "FRONT", "value": "Adelante" },
-    { "key": "BACK", "value": "Atrás" },
-    { "key": "RIGHT", "value": "Derecha" },
-    { "key": "LEFT", "value": "Izquierda" },
-
-    { "key": "piece.selecthouses", "value": "Seleccionar casillas:" },
-
-    { "key": "NORULES", "value": "Sin Reglas" },
-    { "key": "NOTURNS", "value": "Sin Turnos" },
-    { "key": "LOCALGAME", "value": "Juego Local" },
-    { "key": "IAVSIA", "value": "IA vs IA" },
-
-    { "key": "EASY", "value": "Fácil" },
-    { "key": "MEDIUM", "value": "Medio" },
-    { "key": "HARD", "value": "Difícil" },
-
-    { "key": "Victory", "value": "Victoria" },
-    { "key": "Draw", "value": "Empate" },
-    { "key": "Defeat", "value": "Derrota" },
-
-    { "key": "match.return", "value": "Volver al Tablero" },
-    { "key": "CONTINUE", "value": "Continuar" },
-
-    { "key": "file.create.title", "value": "Crear Conjunto" },
-    { "key": "file.create.txt", "value": "Escribe el nombre..." },
-
-    { "key": "file.save", "value": "Guardar" },
-
-    { "key": "file.delete.title", "value": "El archivo será eliminado" },
+    {
+      "key": "squad.selectking",
+      "value": "Selecciona el Rey"
+    },
+    {
+      "key": "squad.remove",
+      "value": "Eliminar Piezas"
+    },
+    {
+      "key": "SELECTART",
+      "value": "Seleccionar Arte"
+    },
+    {
+      "key": "CHANGESQUAD",
+      "value": "Cambiar Escuadrón"
+    },
+    {
+      "key": "RESET",
+      "value": "Restablecer"
+    },
+    {
+      "key": "piece.squad",
+      "value": "| Escuadrón |"
+    },
+    {
+      "key": "PRESETS",
+      "value": "Preajustes"
+    },
+    {
+      "key": "MOVES",
+      "value": "Movimientos"
+    },
+    {
+      "key": "SPECIAL",
+      "value": "Especiales"
+    },
+    {
+      "key": "KING",
+      "value": "Rey"
+    },
+    {
+      "key": "QUEEN",
+      "value": "Reina"
+    },
+    {
+      "key": "BISHOP",
+      "value": "Alfil"
+    },
+    {
+      "key": "KNIGHT",
+      "value": "Caballo"
+    },
+    {
+      "key": "ROOK",
+      "value": "Torre"
+    },
+    {
+      "key": "PAWN",
+      "value": "Peón"
+    },
+    {
+      "key": "ACTIVE",
+      "value": "Activo"
+    },
+    {
+      "key": "piece.active",
+      "value": "Activar Movimiento"
+    },
+    {
+      "key": "STRAIGHT",
+      "value": "Recto"
+    },
+    {
+      "key": "DIAGONAL",
+      "value": "Diagonal"
+    },
+    {
+      "key": "CUSTOM",
+      "value": "Personalizado"
+    },
+    {
+      "key": "MOVE",
+      "value": "Mover"
+    },
+    {
+      "key": "CAPTURE",
+      "value": "Capturar"
+    },
+    {
+      "key": "JUMP",
+      "value": "Saltar"
+    },
+    {
+      "key": "FRONT",
+      "value": "Adelante"
+    },
+    {
+      "key": "BACK",
+      "value": "Atrás"
+    },
+    {
+      "key": "RIGHT",
+      "value": "Derecha"
+    },
+    {
+      "key": "LEFT",
+      "value": "Izquierda"
+    },
+    {
+      "key": "piece.selecthouses",
+      "value": "Seleccionar casillas:"
+    },
+    {
+      "key": "NORULES",
+      "value": "Sin Reglas"
+    },
+    {
+      "key": "NOTURNS",
+      "value": "Sin Turnos"
+    },
+    {
+      "key": "LOCALGAME",
+      "value": "Juego Local"
+    },
+    {
+      "key": "IAVSIA",
+      "value": "IA vs IA"
+    },
+    {
+      "key": "EASY",
+      "value": "Fácil"
+    },
+    {
+      "key": "MEDIUM",
+      "value": "Medio"
+    },
+    {
+      "key": "HARD",
+      "value": "Difícil"
+    },
+    {
+      "key": "Victory",
+      "value": "Victoria"
+    },
+    {
+      "key": "Draw",
+      "value": "Empate"
+    },
+    {
+      "key": "Defeat",
+      "value": "Derrota"
+    },
+    {
+      "key": "match.return",
+      "value": "Volver al Tablero"
+    },
+    {
+      "key": "CONTINUE",
+      "value": "Continuar"
+    },
+    {
+      "key": "file.create.title",
+      "value": "Crear Conjunto"
+    },
+    {
+      "key": "file.create.txt",
+      "value": "Escribe el nombre..."
+    },
+    {
+      "key": "file.save",
+      "value": "Guardar"
+    },
+    {
+      "key": "file.delete.title",
+      "value": "El archivo será eliminado"
+    },
     {
       "key": "file.delete.txt",
       "value": "Are you sure you want to delete {0}? This action is permanent and cannot be undone."
     },
-
-    { "key": "folder.delete.title", "value": "La carpeta será eliminada" },
+    {
+      "key": "folder.delete.title",
+      "value": "La carpeta será eliminada"
+    },
     {
       "key": "folder.delete.txt",
       "value": "¿Seguro que quieres eliminar {0}? Esta acción es permanente y no se puede deshacer."
     },
-
-    { "key": "folder.exist", "value": "¡Ya existe un conjunto con este nombre!" },
-
-    { "key": "file.save.title", "value": "¿Reemplazar archivo?" },
+    {
+      "key": "folder.exist",
+      "value": "¡Ya existe un conjunto con este nombre!"
+    },
+    {
+      "key": "file.save.title",
+      "value": "¿Reemplazar archivo?"
+    },
     {
       "key": "file.save.txt",
       "value": "Ya existe un archivo con el mismo nombre en la carpeta. ¿Deseas reemplazarlo?"
     },
-
-    { "key": "file.replace.title", "value": "¿Reemplazar archivo?" },
+    {
+      "key": "file.replace.title",
+      "value": "¿Reemplazar archivo?"
+    },
     {
       "key": "file.replace.txt",
       "value": "Ya existe un archivo con el mismo nombre en la carpeta. ¿Deseas reemplazarlo?"
     },
-
-    { "key": "file.overwrite.title", "value": "¿Guardar archivo?" },
+    {
+      "key": "file.overwrite.title",
+      "value": "¿Guardar archivo?"
+    },
     {
       "key": "file.overwrite.txt",
       "value": "Estás a punto de sobrescribir un archivo existente. El contenido original será eliminado permanentemente y no podrá recuperarse."
     },
-
-    { "key": "file.native.save.txt", "value": "No está permitido guardar en la biblioteca nativa." },
-    { "key": "file.native.delete.txt", "value": "No está permitido eliminar de la biblioteca nativa." },
-
-    { "key": "file.none.art.txt", "value": "Ningún arte seleccionado." },
-
-    { "key": "file.fulls_squad.txt", "value": "El escuadrón está lleno." },
-    { "key": "file.empty_squad.txt", "value": "El escuadrón está vacío." },
-    { "key": "file.no_king.txt", "value": "No hay Rey." },
-
-    { "key": "mode.alert.title", "value": "Modo Estratégico" },
+    {
+      "key": "file.native.save.txt",
+      "value": "No está permitido guardar en la biblioteca nativa."
+    },
+    {
+      "key": "file.native.delete.txt",
+      "value": "No está permitido eliminar de la biblioteca nativa."
+    },
+    {
+      "key": "file.none.art.txt",
+      "value": "Ningún arte seleccionado."
+    },
+    {
+      "key": "file.fulls_squad.txt",
+      "value": "El escuadrón está lleno."
+    },
+    {
+      "key": "file.empty_squad.txt",
+      "value": "El escuadrón está vacío."
+    },
+    {
+      "key": "file.no_king.txt",
+      "value": "No hay Rey."
+    },
+    {
+      "key": "mode.alert.title",
+      "value": "Modo Estratégico"
+    },
     {
       "key": "mode.alert.txt",
       "value": "El escuadrón no puede usarse en el Modo Estratégico."
     },
-
-    { "key": "none.art.txt", "value": "Necesitas un arte para guardar." },
-    { "key": "none.name.txt", "value": "Necesitas un nombre para guardar." },
-
-    { "key": "none.file.txt", "value": "Ningún archivo seleccionado." },
-    { "key": "none.folder.txt", "value": "Ninguna carpeta seleccionada." },
-
-    { "key": "none.cell.txt", "value": "Ninguna celda pintada para guardar." },
-
-     { "key": "file.limit.txt", "value": "Se ha alcanzado el límite de 16 archivos en esta carpeta." },
-
-    { "key": "select_white", "value": "Selecciona las piezas blancas." },
-    { "key": "select_black", "value": "Selecciona las piezas negras." },
-
-
-  {
-    "key": "TutorialSeenMenu0",
-    "value": "Crea las artes que se usarán en tus piezas en proporciones de 17x17 y 34x34. También puedes importar imágenes, que se convertirán automáticamente a la cuadrícula."
-  },
-  {
-    "key": "TutorialSeenMenu1",
-    "value": "Después de crear tu arte, conviértelo en una pieza del tablero.\nEsta pieza representa el movimiento que acabas de crear."
-  },
-  {
-    "key": "TutorialSeenMenu2",
-    "value": "Con tus piezas listas, es hora de formar tu escuadrón.\nOrganiza las piezas en el tablero como prefieras y define cuál será el Rey."
-  },
-  {
-    "key": "TutorialSeenMenu3",
-    "value": "En el lobby, selecciona qué escuadrones jugarán con las piezas negras y blancas haciendo clic en el tablero.\nLuego, elige con cuál jugarás, indicado por el color de la corona.\nLas opciones adicionales del juego están disponibles en la esquina superior derecha."
-  },
-  {
-    "key": "TutorialSeenMenu4",
-    "value": "Ahora solo queda jugar la partida.\nEn la esquina superior izquierda, puedes rendirte si la situación se vuelve difícil.\nEn la esquina superior derecha se encuentran las opciones de visualización.En el lado derecho de la pantalla, puedes seguir el historial de la partida."
-  },
-
-
-  { "key": "TutorialSeenPainting0", "value": "Este borrador le permite borrar rápidamente grandes áreas de píxeles del mismo color." },
-  {
-    "key": "TutorialSeenPainting1",
-    "value": "Para usar las herramientas de círculo, rectángulo, línea o selección, haz clic en dos puntos de la cuadrícula.\nEn PC, el punto pequeño en la esquina superior izquierda indica la posición del ratón."
-  },
-  {
-    "key": "TutorialSeenPainting2",
-    "value": "Después de seleccionar un área, usa las flechas en la esquina inferior izquierda para moverla.\nPulsa el botón central para confirmar el movimiento y finalizar la herramienta."
-  },
-  {
-    "key": "TutorialSeenPainting3",
-    "value": "El botón de guardado rápido se utiliza para artes que ya han sido guardadas o cargadas.\nEl conjunto al que pertenecen se mostrará justo debajo del botón."
-  },
-  {
-    "key": "TutorialSeenPainting4",
-    "value": "Al hacer clic en Guardar, se mostrarán los conjuntos disponibles. Vuelve a hacer clic en el conjunto deseado para confirmar el guardado.\nEn la esquina superior derecha, puedes crear un nuevo conjunto.\nPara eliminar, haz clic en Eliminar, selecciona el conjunto deseado y confirma la acción."
-  },
-
-  {
-    "key": "TutorialSeenPiece0",
-    "value": "Cada color muestra lo que la pieza puede hacer en esa casilla.\nVerde: solo movimiento.\nRojo: solo captura.\nAmarillo: movimiento + captura.\nAzul: movimiento de salto.\nMorado: salto + captura."
-  },
-  {
-    "key": "TutorialSeenPiece1",
-    "value": "En Movimientos, defines cómo se comporta la pieza en el tablero.\nEstablece hasta dónde puede llegar, en qué direcciones puede moverse y qué tipo de acción permite ese movimiento.\nCada ajuste cambia la estrategia y crea nuevas posibilidades de juego."
-  },
-  {
-    "key": "TutorialSeenPiece2",
-    "value": "El movimiento especial es una habilidad única del Peón que solo puede usarse una vez.\nAl igual que el movimiento personalizado del Caballo, solo tienes que seleccionar las casillas deseadas y activar el movimiento."
-  },
-  {
-    "key": "TutorialSeenPiece3",
-    "value": "Después de finalizar una pieza, usa el botón Restablecer para limpiar los datos y crear una nueva pieza desde cero.\nAtención: crear una nueva pieza sin restablecer y usar el Guardado Rápido sobrescribirá la pieza anterior."
-  },
-  {
-    "key": "TutorialSeenPiece4",
-    "value": "Al hacer clic en Guardar, se mostrarán los conjuntos disponibles. Vuelve a hacer clic en el conjunto deseado para confirmar el guardado.\nEn la esquina superior derecha, puedes crear un nuevo conjunto.\nPara eliminar, haz clic en Eliminar, selecciona el conjunto deseado y confirma la acción."
-  },
-
-  {
-    "key": "TutorialSeenSquad0",
-    "value": "Al pulsar Agregar, se mostrarán los conjuntos disponibles.\nElige un conjunto para añadir todas sus piezas de una sola vez.\nPara añadir piezas individualmente, usa el botón Piezas en la esquina superior derecha."
-  },
-  {
-    "key": "TutorialSeenSquad1",
-    "value": "Cuando no hay ninguna pieza ni botón seleccionado, la información de tu escuadrón aparece en el centro de la pantalla.\nAhí puedes ver el total de piezas, el poder del escuadrón y cuál es el Rey."
-  },
-  {
-    "key": "TutorialSeenSquad2",
-    "value": "Usa el botón de la corona para elegir qué pieza será el Rey de tu escuadrón.\nUsa el botón X para quitar una pieza del tablero."
-  },
-  {
-    "key": "TutorialSeenSquad3",
-    "value": "Selecciona una pieza en el lado derecho para ver su información en el centro de la pantalla.\nLuego, simplemente haz clic en la posición del tablero donde quieras colocarla."
-  },
-  {
-    "key": "TutorialSeenSquad4",
-    "value": "Usa el botón + para configurar las promociones y los enroques de la pieza seleccionada.\nSimplemente arrastra las piezas deseadas.\nLas piezas muy poderosas tienen limitaciones: por encima de 25 de poder no pueden promocionar, y por encima de 80 de poder no pueden realizar enroque."
-  },
-
-  {
-  "key": "TutorialSeenSquad5",
-  "value": "Los mensajes que se muestran debajo del tablero indican el estado del Modo Estratégico. Este modo evalúa si tu escuadrón está equilibrado en comparación con un conjunto clásico de ajedrez. Aunque es posible guardar y jugar con escuadrones fuera de este estándar, se recomienda el Modo Estratégico para garantizar una mayor competitividad."
-  },
-
-  { "key": "TutorialSeenLobby0", "value": "Durante el Multijugador Local, el tablero puede rotar automáticamente en cada turno.\nUsa el icono en la esquina superior derecha para activar o desactivar esta rotación." },
-  { "key": "TutorialSeenLobby1", "value": "Las coronas representan a los dos escuadrones: el escuadrón negro en la parte superior y el blanco en la parte inferior. La corona resaltada muestra qué escuadrón controlarás en la partida." },
-  { "key": "TutorialSeenLobby2", "value": "Recuerda: eres un Humano, la corona de arriba es tuya.\nRepresenta a ti y al escuadrón que comandarás en la partida." },
-  { "key": "TutorialSeenLobby3", "value": "Las piezas que se muestran a un lado pueden seleccionarse para ver sus movimientos, habilidades y cuál pieza está definida como el rey." },
-  { "key": "TutorialSeenLobby4", "value": "En el modo Sin Reglas, no estás obligado a proteger al rey en caso de jaque.\nSi no lo notas, la responsabilidad es tuya: fin de la partida." },
-  { "key": "TutorialSeenLobby5", "value": "En el modo Sin Turnos, la partida se juega en tiempo real.\nMueve tus piezas libremente, sin esperar el turno del oponente." },
-
-
-  { "key": "GOTIT", "value": "Entiendo" },
-
-  { "key": "RESTART_TUTORIAL", "value": "Reiniciar Tutorial" },
-
-  { "key": "PLAY_VS_IA", "value": "Jugador vs IA" },
-  { "key": "local", "value": "Multijugador Local" },
-  { "key": "simulation", "value": "Simulación de IA" },
-
-
-  { "key": "squad_piece", "value": "{0} {1}" },
-
-  { "key": "Black", "value": "Negras" },
-  { "key": "White", "value": "Blancas" },
-  { "key": "Red", "value": "Rojo" },
-
-  { "key": "Horde", "value": "Horda" },
-
-  { "key": "Pirates", "value": "Piratas" },
-  { "key": "Fantasy", "value": "Fantasía" },
-  { "key": "Vikings", "value": "Vikingos" },
-  { "key": "Brainrot", "value": "Brainrot" },
-
-  { "key": "Bishop", "value": "Alfil" },
-  { "key": "King", "value": "Rey" },
-  { "key": "Knight", "value": "Caballo" },
-  { "key": "Pawn", "value": "Peón" },
-  { "key": "Queen", "value": "Reina" },
-  { "key": "Rook", "value": "Torre" },
-
-  { "key": "Ballerina", "value": "Bailarina" },
-  { "key": "Brrpatabim", "value": "Brrpatabim" },
-  { "key": "Capuccinoassassino", "value": "Capuccino Asesino" },
-  { "key": "Frigocamello", "value": "Frigocamello" },
-  { "key": "Ketupat", "value": "Ketupat" },
-  { "key": "Tungtung", "value": "Tungtung" },
-
-  { "key": "Dragon", "value": "Dragón" },
-  { "key": "Elf", "value": "Elfa" },
-  { "key": "Orc", "value": "Orco" },
-  { "key": "Tower", "value": "Torre" },
-  { "key": "Wizard", "value": "Mago" },
-
-  { "key": "Lighthouse", "value": "Faro" },
-  { "key": "Mermaid", "value": "Sirena" },
-  { "key": "Pirate King", "value": "Rey Pirata" },
-  { "key": "Shaman", "value": "Chamán" },
-  { "key": "Ship", "value": "Barco" },
-  { "key": "Skeleton", "value": "Esqueleto" },
-
-  { "key": "Soldier", "value": "Soldado" },
-  { "key": "Valkyrie", "value": "Valquiria" },
-  { "key": "Viking Ship", "value": "Barco Vikingo" },
-
-  { "key": "unlock.pack", "value": "El {0} ha sido desbloqueado y ahora está disponible en tu biblioteca." },
-  { "key": "pack", "value": "Paquete {0}" },
-
-  { "key": "Unlock_Reward", "value": "Desbloquear Recompensa" },
-  { "key": "reward.explanation", "value": "Mira un anuncio para desbloquear un conjunto aleatorio de piezas." },
-
-  { "key": "saved.in", "value": "Guardado en {0}" },
-
-  { "key": "import.explanation", "value": "Imágenes en relación de aspecto 34x34, por ejemplo, 340x340, 680x680 y 1020." },
-
-  { "key": "save.to.gallery", "value": "Guardar en la Galería" },
-  { "key": "save.to.images", "value": "Guardar en Imágenes" },
-
-  { "key": "saved.to.gallery", "value": "Guardado en la galería" },
-  { "key": "saved.to.images", "value": "Guardado en la Imágenes" },
-
-  { "key": "Credits", "value": "Créditos" },
-
-  { "key": "credits.explanation", "value": "Haga clic aquí para ver los créditos del juego y conocer a las personas que ayudaron a hacer realidad este proyecto." },
-
-  { "key": "cartase.explanation", "value": "Contribuye al proyecto en Catarse, nuestra plataforma de financiación colectiva, y ayuda a hacer posibles nuevos modos, mecánicas y multijugador en línea, con recompensas exclusivas para los seguidores." },
-  { "key": "cartase.enter", "value": "Apoya el Proyecto" },
-
-
-
-
-  {
-    "key": "lobby_no_player",
-    "value": "No hay ningún otro jugador conectado a la sala."
-  },
-  {
-    "key": "lobby_entered",
-    "value": "Un jugador se ha unido a la sala."
-  },
-  {
-    "key": "lobby_exited",
-    "value": "Un jugador ha salido de la sala."
-  },
-  {
-    "key": "MULTIPLAYER",
-    "value": "Multijugador"
-  },
-  {
-    "key": "SINGLEPLAYER",
-    "value": "Un Jugador"
-  },
-  {
-    "key": "Enter_Code",
-    "value": "Ingresar código"
-  },
-  {
-    "key": "Create_Lobby",
-    "value": "Crear sala"
-  },
-  {
-    "key": "Enter_Lobby",
-    "value": "Entrar a la sala"
-  },
-  {
-    "key": "lobby_creating",
-    "value": "Creando sala..."
-  },
-  {
-    "key": "lobby_code_copied",
-    "value": "Código de la sala copiado al portapapeles."
-  },
-  {
-    "key": "READY",
-    "value": "Listo"
-  },
-  { "key": "lobby_full", "value": "La sala está llena." },
-  { "key": "lobby_error", "value": "Error al intentar entrar en la sala." },
-  { "key": "lobby_not_found", "value": "Sala no encontrada." },
-  { "key": "Cancel_Ready", "value": "Cancelar" },
-  {
-    "key": "downloading_title",
-    "value": "Descargar equipo"
-  },
-  {
-    "key": "downloading_message",
-    "value": "Este equipo no está disponible en tu dispositivo. ¿Quieres descargarlo?"
-  },
-  {
-    "key": "downloaded_successfully",
-    "value": "El equipo se ha descargado correctamente."
-  },
-  {
-    "key": "lobby_client_not_ready",
-    "value": "El otro jugador aún no está listo."
-  }
-
-
+    {
+      "key": "none.art.txt",
+      "value": "Necesitas un arte para guardar."
+    },
+    {
+      "key": "none.name.txt",
+      "value": "Necesitas un nombre para guardar."
+    },
+    {
+      "key": "none.file.txt",
+      "value": "Ningún archivo seleccionado."
+    },
+    {
+      "key": "none.folder.txt",
+      "value": "Ninguna carpeta seleccionada."
+    },
+    {
+      "key": "none.cell.txt",
+      "value": "Ninguna celda pintada para guardar."
+    },
+    {
+      "key": "file.limit.txt",
+      "value": "Se ha alcanzado el límite de 16 archivos en esta carpeta."
+    },
+    {
+      "key": "select_white",
+      "value": "Selecciona las piezas blancas."
+    },
+    {
+      "key": "select_black",
+      "value": "Selecciona las piezas negras."
+    },
+    {
+      "key": "TutorialSeenMenu0",
+      "value": "Crea las artes que se usarán en tus piezas en proporciones de 17x17 y 34x34. También puedes importar imágenes, que se convertirán automáticamente a la cuadrícula."
+    },
+    {
+      "key": "TutorialSeenMenu1",
+      "value": "Después de crear tu arte, conviértelo en una pieza del tablero.\nEsta pieza representa el movimiento que acabas de crear."
+    },
+    {
+      "key": "TutorialSeenMenu2",
+      "value": "Con tus piezas listas, es hora de formar tu escuadrón.\nOrganiza las piezas en el tablero como prefieras y define cuál será el Rey."
+    },
+    {
+      "key": "TutorialSeenMenu3",
+      "value": "En el lobby, selecciona qué escuadrones jugarán con las piezas negras y blancas haciendo clic en el tablero.\nLuego, elige con cuál jugarás, indicado por el color de la corona.\nLas opciones adicionales del juego están disponibles en la esquina superior derecha."
+    },
+    {
+      "key": "TutorialSeenMenu4",
+      "value": "Ahora solo queda jugar la partida.\nEn la esquina superior izquierda, puedes rendirte si la situación se vuelve difícil.\nEn la esquina superior derecha se encuentran las opciones de visualización.En el lado derecho de la pantalla, puedes seguir el historial de la partida."
+    },
+    {
+      "key": "TutorialSeenPainting0",
+      "value": "Este borrador le permite borrar rápidamente grandes áreas de píxeles del mismo color."
+    },
+    {
+      "key": "TutorialSeenPainting1",
+      "value": "Para usar las herramientas de círculo, rectángulo, línea o selección, haz clic en dos puntos de la cuadrícula.\nEn PC, el punto pequeño en la esquina superior izquierda indica la posición del ratón."
+    },
+    {
+      "key": "TutorialSeenPainting2",
+      "value": "Después de seleccionar un área, usa las flechas en la esquina inferior izquierda para moverla.\nPulsa el botón central para confirmar el movimiento y finalizar la herramienta."
+    },
+    {
+      "key": "TutorialSeenPainting3",
+      "value": "El botón de guardado rápido se utiliza para artes que ya han sido guardadas o cargadas.\nEl conjunto al que pertenecen se mostrará justo debajo del botón."
+    },
+    {
+      "key": "TutorialSeenPainting4",
+      "value": "Al hacer clic en Guardar, se mostrarán los conjuntos disponibles. Vuelve a hacer clic en el conjunto deseado para confirmar el guardado.\nEn la esquina superior derecha, puedes crear un nuevo conjunto.\nPara eliminar, haz clic en Eliminar, selecciona el conjunto deseado y confirma la acción."
+    },
+    {
+      "key": "TutorialSeenPiece0",
+      "value": "Cada color muestra lo que la pieza puede hacer en esa casilla.\nVerde: solo movimiento.\nRojo: solo captura.\nAmarillo: movimiento + captura.\nAzul: movimiento de salto.\nMorado: salto + captura."
+    },
+    {
+      "key": "TutorialSeenPiece1",
+      "value": "En Movimientos, defines cómo se comporta la pieza en el tablero.\nEstablece hasta dónde puede llegar, en qué direcciones puede moverse y qué tipo de acción permite ese movimiento.\nCada ajuste cambia la estrategia y crea nuevas posibilidades de juego."
+    },
+    {
+      "key": "TutorialSeenPiece2",
+      "value": "El movimiento especial es una habilidad única del Peón que solo puede usarse una vez.\nAl igual que el movimiento personalizado del Caballo, solo tienes que seleccionar las casillas deseadas y activar el movimiento."
+    },
+    {
+      "key": "TutorialSeenPiece3",
+      "value": "Después de finalizar una pieza, usa el botón Restablecer para limpiar los datos y crear una nueva pieza desde cero.\nAtención: crear una nueva pieza sin restablecer y usar el Guardado Rápido sobrescribirá la pieza anterior."
+    },
+    {
+      "key": "TutorialSeenPiece4",
+      "value": "Al hacer clic en Guardar, se mostrarán los conjuntos disponibles. Vuelve a hacer clic en el conjunto deseado para confirmar el guardado.\nEn la esquina superior derecha, puedes crear un nuevo conjunto.\nPara eliminar, haz clic en Eliminar, selecciona el conjunto deseado y confirma la acción."
+    },
+    {
+      "key": "TutorialSeenSquad0",
+      "value": "Al pulsar Agregar, se mostrarán los conjuntos disponibles.\nElige un conjunto para añadir todas sus piezas de una sola vez.\nPara añadir piezas individualmente, usa el botón Piezas en la esquina superior derecha."
+    },
+    {
+      "key": "TutorialSeenSquad1",
+      "value": "Cuando no hay ninguna pieza ni botón seleccionado, la información de tu escuadrón aparece en el centro de la pantalla.\nAhí puedes ver el total de piezas, el poder del escuadrón y cuál es el Rey."
+    },
+    {
+      "key": "TutorialSeenSquad2",
+      "value": "Usa el botón de la corona para elegir qué pieza será el Rey de tu escuadrón.\nUsa el botón X para quitar una pieza del tablero."
+    },
+    {
+      "key": "TutorialSeenSquad3",
+      "value": "Selecciona una pieza en el lado derecho para ver su información en el centro de la pantalla.\nLuego, simplemente haz clic en la posición del tablero donde quieras colocarla."
+    },
+    {
+      "key": "TutorialSeenSquad4",
+      "value": "Usa el botón + para configurar las promociones y los enroques de la pieza seleccionada.\nSimplemente arrastra las piezas deseadas.\nLas piezas muy poderosas tienen limitaciones: por encima de 25 de poder no pueden promocionar, y por encima de 80 de poder no pueden realizar enroque."
+    },
+    {
+      "key": "TutorialSeenSquad5",
+      "value": "Los mensajes que se muestran debajo del tablero indican el estado del Modo Estratégico. Este modo evalúa si tu escuadrón está equilibrado en comparación con un conjunto clásico de ajedrez. Aunque es posible guardar y jugar con escuadrones fuera de este estándar, se recomienda el Modo Estratégico para garantizar una mayor competitividad."
+    },
+    {
+      "key": "TutorialSeenLobby0",
+      "value": "Durante el Multijugador Local, el tablero puede rotar automáticamente en cada turno.\nUsa el icono en la esquina superior derecha para activar o desactivar esta rotación."
+    },
+    {
+      "key": "TutorialSeenLobby1",
+      "value": "Las coronas representan a los dos escuadrones: el escuadrón negro en la parte superior y el blanco en la parte inferior. La corona resaltada muestra qué escuadrón controlarás en la partida."
+    },
+    {
+      "key": "TutorialSeenLobby2",
+      "value": "Recuerda: eres un Humano, la corona de arriba es tuya.\nRepresenta a ti y al escuadrón que comandarás en la partida."
+    },
+    {
+      "key": "TutorialSeenLobby3",
+      "value": "Las piezas que se muestran a un lado pueden seleccionarse para ver sus movimientos, habilidades y cuál pieza está definida como el rey."
+    },
+    {
+      "key": "TutorialSeenLobby4",
+      "value": "En el modo Sin Reglas, no estás obligado a proteger al rey en caso de jaque.\nSi no lo notas, la responsabilidad es tuya: fin de la partida."
+    },
+    {
+      "key": "TutorialSeenLobby5",
+      "value": "En el modo Sin Turnos, la partida se juega en tiempo real.\nMueve tus piezas libremente, sin esperar el turno del oponente."
+    },
+    {
+      "key": "GOTIT",
+      "value": "Entiendo"
+    },
+    {
+      "key": "RESTART_TUTORIAL",
+      "value": "Reiniciar Tutorial"
+    },
+    {
+      "key": "PLAY_VS_IA",
+      "value": "Jugador vs IA"
+    },
+    {
+      "key": "local",
+      "value": "Multijugador Local"
+    },
+    {
+      "key": "simulation",
+      "value": "Simulación de IA"
+    },
+    {
+      "key": "squad_piece",
+      "value": "{0} {1}"
+    },
+    {
+      "key": "Black",
+      "value": "Negras"
+    },
+    {
+      "key": "White",
+      "value": "Blancas"
+    },
+    {
+      "key": "Red",
+      "value": "Rojo"
+    },
+    {
+      "key": "Horde",
+      "value": "Horda"
+    },
+    {
+      "key": "Pirates",
+      "value": "Piratas"
+    },
+    {
+      "key": "Fantasy",
+      "value": "Fantasía"
+    },
+    {
+      "key": "Vikings",
+      "value": "Vikingos"
+    },
+    {
+      "key": "Brainrot",
+      "value": "Brainrot"
+    },
+    {
+      "key": "Bishop",
+      "value": "Alfil"
+    },
+    {
+      "key": "King",
+      "value": "Rey"
+    },
+    {
+      "key": "Knight",
+      "value": "Caballo"
+    },
+    {
+      "key": "Pawn",
+      "value": "Peón"
+    },
+    {
+      "key": "Queen",
+      "value": "Reina"
+    },
+    {
+      "key": "Rook",
+      "value": "Torre"
+    },
+    {
+      "key": "Ballerina",
+      "value": "Bailarina"
+    },
+    {
+      "key": "Brrpatabim",
+      "value": "Brrpatabim"
+    },
+    {
+      "key": "Capuccinoassassino",
+      "value": "Capuccino Asesino"
+    },
+    {
+      "key": "Frigocamello",
+      "value": "Frigocamello"
+    },
+    {
+      "key": "Ketupat",
+      "value": "Ketupat"
+    },
+    {
+      "key": "Tungtung",
+      "value": "Tungtung"
+    },
+    {
+      "key": "Dragon",
+      "value": "Dragón"
+    },
+    {
+      "key": "Elf",
+      "value": "Elfa"
+    },
+    {
+      "key": "Orc",
+      "value": "Orco"
+    },
+    {
+      "key": "Tower",
+      "value": "Torre"
+    },
+    {
+      "key": "Wizard",
+      "value": "Mago"
+    },
+    {
+      "key": "Lighthouse",
+      "value": "Faro"
+    },
+    {
+      "key": "Mermaid",
+      "value": "Sirena"
+    },
+    {
+      "key": "Pirate King",
+      "value": "Rey Pirata"
+    },
+    {
+      "key": "Shaman",
+      "value": "Chamán"
+    },
+    {
+      "key": "Ship",
+      "value": "Barco"
+    },
+    {
+      "key": "Skeleton",
+      "value": "Esqueleto"
+    },
+    {
+      "key": "Soldier",
+      "value": "Soldado"
+    },
+    {
+      "key": "Valkyrie",
+      "value": "Valquiria"
+    },
+    {
+      "key": "Viking Ship",
+      "value": "Barco Vikingo"
+    },
+    {
+      "key": "unlock.pack",
+      "value": "El {0} ha sido desbloqueado y ahora está disponible en tu biblioteca."
+    },
+    {
+      "key": "pack",
+      "value": "Paquete {0}"
+    },
+    {
+      "key": "Unlock_Reward",
+      "value": "Desbloquear Recompensa"
+    },
+    {
+      "key": "reward.explanation",
+      "value": "Mira un anuncio para desbloquear un conjunto aleatorio de piezas."
+    },
+    {
+      "key": "saved.in",
+      "value": "Guardado en {0}"
+    },
+    {
+      "key": "import.explanation",
+      "value": "Imágenes en relación de aspecto 34x34, por ejemplo, 340x340, 680x680 y 1020."
+    },
+    {
+      "key": "save.to.gallery",
+      "value": "Guardar en la Galería"
+    },
+    {
+      "key": "save.to.images",
+      "value": "Guardar en Imágenes"
+    },
+    {
+      "key": "saved.to.gallery",
+      "value": "Guardado en la galería"
+    },
+    {
+      "key": "saved.to.images",
+      "value": "Guardado en la Imágenes"
+    },
+    {
+      "key": "Credits",
+      "value": "Créditos"
+    },
+    {
+      "key": "credits.explanation",
+      "value": "Haga clic aquí para ver los créditos del juego y conocer a las personas que ayudaron a hacer realidad este proyecto."
+    },
+    {
+      "key": "cartase.explanation",
+      "value": "Contribuye al proyecto en Catarse, nuestra plataforma de financiación colectiva, y ayuda a hacer posibles nuevos modos, mecánicas y multijugador en línea, con recompensas exclusivas para los seguidores."
+    },
+    {
+      "key": "cartase.enter",
+      "value": "Apoya el Proyecto"
+    },
+    {
+      "key": "lobby_no_player",
+      "value": "No hay ningún otro jugador conectado a la sala."
+    },
+    {
+      "key": "lobby_entered",
+      "value": "Un jugador se ha unido a la sala."
+    },
+    {
+      "key": "lobby_exited",
+      "value": "Un jugador ha salido de la sala."
+    },
+    {
+      "key": "MULTIPLAYER",
+      "value": "Multijugador"
+    },
+    {
+      "key": "SINGLEPLAYER",
+      "value": "Un Jugador"
+    },
+    {
+      "key": "Enter_Code",
+      "value": "Ingresar código"
+    },
+    {
+      "key": "Create_Lobby",
+      "value": "Crear sala"
+    },
+    {
+      "key": "Enter_Lobby",
+      "value": "Entrar a la sala"
+    },
+    {
+      "key": "lobby_creating",
+      "value": "Creando sala..."
+    },
+    {
+      "key": "lobby_code_copied",
+      "value": "Código de la sala copiado al portapapeles."
+    },
+    {
+      "key": "READY",
+      "value": "Listo"
+    },
+    {
+      "key": "lobby_full",
+      "value": "La sala está llena."
+    },
+    {
+      "key": "lobby_error",
+      "value": "Error al intentar entrar en la sala."
+    },
+    {
+      "key": "lobby_not_found",
+      "value": "Sala no encontrada."
+    },
+    {
+      "key": "Cancel_Ready",
+      "value": "Cancelar"
+    },
+    {
+      "key": "lobby_entered_spectator",
+      "value": "Un jugador entró en la sala como espectador."
+    },
+    {
+      "key": "lobby_exited_spectator",
+      "value": "Un jugador que era espectador salió de la sala."
+    },
+    {
+      "key": "downloading_title",
+      "value": "Descargar equipo"
+    },
+    {
+      "key": "downloading_message",
+      "value": "Este equipo no está disponible en tu dispositivo. ¿Quieres descargarlo?"
+    },
+    {
+      "key": "downloaded_successfully",
+      "value": "El equipo se ha descargado correctamente."
+    },
+    {
+      "key": "lobby_client_not_ready",
+      "value": "El otro jugador aún no está listo."
+    }
   ]
 }

@@ -1,58 +1,177 @@
 {
   "entries": [
-
-    { "key": "PLAY", "value": "Play" },
-    { "key": "CREATE", "value": "Create" },
-    { "key": "SETTINGS", "value": "Settings" },
-    { "key": "EXIT", "value": "Exit" },
-
-    { "key": "MENU_SQUAD", "value": "Create Squad" },
-    { "key": "MENU_PIECE", "value": "Create Piece" },
-    { "key": "MENU_PAINTING", "value": "Art Editor" },
-
-    { "key": "MASTER", "value": "Master:" },
-    { "key": "MUSIC", "value": "Music:" },
-    { "key": "SFX", "value": "Effects:" },
-    { "key": "FULLSCREEN", "value": "Fullscreen:" },
-    { "key": "RESOLUTION", "value": "Resolution:" },
-    { "key": "LANGUAGES", "value": "Languages:" },
-
-    { "key": "art.set", "value": "| Set |" },
-    { "key": "ENTERNAME", "value": "Name" },
-    { "key": "IMPORT", "value": "Import" },
-    { "key": "PREVIEW", "value": "Preview" },
-    { "key": "X", "value": "X" },
-    { "key": "QUICKSAVE", "value": "Quick Save" },
-    { "key": "LOAD", "value": "Load" },
-    { "key": "SAVE", "value": "Save" },
-
-    { "key": "RGB", "value": "RGB" },
-    { "key": "HEX", "value": "HEX" },
-    { "key": "HSL", "value": "HSL" },
-    { "key": "R", "value": "R" },
-    { "key": "G", "value": "G" },
-    { "key": "B", "value": "B" },
-    { "key": "HEXADECIMAL", "value": "Hexadecimal" },
-
-    { "key": "CANCEL", "value": "Cancel" },
-    { "key": "OK", "value": "Ok" },
-
-    { "key": "NEW", "value": "Create" },
-    { "key": "DELETE", "value": "Delete" },
-
-    { "key": "ALL", "value": "All" },
-    { "key": "MY", "value": "My" },
-    { "key": "LIBRARY", "value": "Native" },
-    { "key": "SETS", "value": "Sets" },
-    { "key": "ARTS", "value": "Arts" },
-    { "key": "PIECES", "value": "Pieces" },
-    { "key": "CLEAR", "value": "Clear" },
-    { "key": "squad.pieces", "value": "Pieces:" },
-
-    { "key": "ADD", "value": "Add" },
-    { "key": "REMOVE", "value": "Remove" },
-    { "key": "DESELECT", "value": "Deselect" },
-
+    {
+      "key": "PLAY",
+      "value": "Play"
+    },
+    {
+      "key": "CREATE",
+      "value": "Create"
+    },
+    {
+      "key": "SETTINGS",
+      "value": "Settings"
+    },
+    {
+      "key": "EXIT",
+      "value": "Exit"
+    },
+    {
+      "key": "MENU_SQUAD",
+      "value": "Create Squad"
+    },
+    {
+      "key": "MENU_PIECE",
+      "value": "Create Piece"
+    },
+    {
+      "key": "MENU_PAINTING",
+      "value": "Art Editor"
+    },
+    {
+      "key": "MASTER",
+      "value": "Master:"
+    },
+    {
+      "key": "MUSIC",
+      "value": "Music:"
+    },
+    {
+      "key": "SFX",
+      "value": "Effects:"
+    },
+    {
+      "key": "FULLSCREEN",
+      "value": "Fullscreen:"
+    },
+    {
+      "key": "RESOLUTION",
+      "value": "Resolution:"
+    },
+    {
+      "key": "LANGUAGES",
+      "value": "Languages:"
+    },
+    {
+      "key": "art.set",
+      "value": "| Set |"
+    },
+    {
+      "key": "ENTERNAME",
+      "value": "Name"
+    },
+    {
+      "key": "IMPORT",
+      "value": "Import"
+    },
+    {
+      "key": "PREVIEW",
+      "value": "Preview"
+    },
+    {
+      "key": "X",
+      "value": "X"
+    },
+    {
+      "key": "QUICKSAVE",
+      "value": "Quick Save"
+    },
+    {
+      "key": "LOAD",
+      "value": "Load"
+    },
+    {
+      "key": "SAVE",
+      "value": "Save"
+    },
+    {
+      "key": "RGB",
+      "value": "RGB"
+    },
+    {
+      "key": "HEX",
+      "value": "HEX"
+    },
+    {
+      "key": "HSL",
+      "value": "HSL"
+    },
+    {
+      "key": "R",
+      "value": "R"
+    },
+    {
+      "key": "G",
+      "value": "G"
+    },
+    {
+      "key": "B",
+      "value": "B"
+    },
+    {
+      "key": "HEXADECIMAL",
+      "value": "Hexadecimal"
+    },
+    {
+      "key": "CANCEL",
+      "value": "Cancel"
+    },
+    {
+      "key": "OK",
+      "value": "Ok"
+    },
+    {
+      "key": "NEW",
+      "value": "Create"
+    },
+    {
+      "key": "DELETE",
+      "value": "Delete"
+    },
+    {
+      "key": "ALL",
+      "value": "All"
+    },
+    {
+      "key": "MY",
+      "value": "My"
+    },
+    {
+      "key": "LIBRARY",
+      "value": "Native"
+    },
+    {
+      "key": "SETS",
+      "value": "Sets"
+    },
+    {
+      "key": "ARTS",
+      "value": "Arts"
+    },
+    {
+      "key": "PIECES",
+      "value": "Pieces"
+    },
+    {
+      "key": "CLEAR",
+      "value": "Clear"
+    },
+    {
+      "key": "squad.pieces",
+      "value": "Pieces:"
+    },
+    {
+      "key": "ADD",
+      "value": "Add"
+    },
+    {
+      "key": "REMOVE",
+      "value": "Remove"
+    },
+    {
+      "key": "DESELECT",
+      "value": "Deselect"
+    },
     {
       "key": "rules.power_limit",
       "value": "Squad power must be less than 1500"
@@ -85,377 +204,697 @@
       "key": "rules.enabled",
       "value": "Strategic mode enabled"
     },
-
     {
       "key": "power",
       "value": "Power: {0}"
     },
-
-    { "key": "squad.selectking", "value": "Select the King" },
-    { "key": "squad.remove", "value": "Remove Pieces" },
-
-    { "key": "SELECTART", "value": "Select Art" },
-    { "key": "CHANGESQUAD", "value": "Change Squad" },
-    { "key": "RESET", "value": "Reset" },
-    { "key": "piece.squad", "value": "| Squad |" },
-    { "key": "PRESETS", "value": "Presets" },
-    { "key": "MOVES", "value": "Moves" },
-    { "key": "SPECIAL", "value": "Special" },
-
-    { "key": "KING", "value": "King" },
-    { "key": "QUEEN", "value": "Queen" },
-    { "key": "BISHOP", "value": "Bishop" },
-    { "key": "KNIGHT", "value": "Knight" },
-    { "key": "ROOK", "value": "Rook" },
-    { "key": "PAWN", "value": "Pawn" },
-
-    { "key": "ACTIVE", "value": "Active" },
-    { "key": "piece.active", "value": "Enable Move" },
-
-    { "key": "STRAIGHT", "value": "Straight" },
-    { "key": "DIAGONAL", "value": "Diagonal" },
-    { "key": "CUSTOM", "value": "Custom" },
-
-    { "key": "MOVE", "value": "Move" },
-    { "key": "CAPTURE", "value": "Capture" },
-    { "key": "JUMP", "value": "Jump" },
-
-    { "key": "FRONT", "value": "Forward" },
-    { "key": "BACK", "value": "Backward" },
-    { "key": "RIGHT", "value": "Right" },
-    { "key": "LEFT", "value": "Left" },
-
-    { "key": "piece.selecthouses", "value": "Select squares:" },
-
-    { "key": "NORULES", "value": "No Rules" },
-    { "key": "NOTURNS", "value": "No Turns" },
-    { "key": "LOCALGAME", "value": "Local Game" },
-    { "key": "IAVSIA", "value": "AI vs AI" },
-
-    { "key": "EASY", "value": "Easy" },
-    { "key": "MEDIUM", "value": "Medium" },
-    { "key": "HARD", "value": "Hard" },
-
-    { "key": "Victory", "value": "Victory" },
-    { "key": "Draw", "value": "Draw" },
-    { "key": "Defeat", "value": "Defeat" },
-
-    { "key": "match.return", "value": "Return to Board" },
-    { "key": "CONTINUE", "value": "Continue" },
-
-    { "key": "file.create.title", "value": "Create Set" },
-    { "key": "file.create.txt", "value": "Enter the name..." },
-
-    { "key": "file.save", "value": "Save" },
-
-    { "key": "file.delete.title", "value": "The file will be deleted" },
+    {
+      "key": "squad.selectking",
+      "value": "Select the King"
+    },
+    {
+      "key": "squad.remove",
+      "value": "Remove Pieces"
+    },
+    {
+      "key": "SELECTART",
+      "value": "Select Art"
+    },
+    {
+      "key": "CHANGESQUAD",
+      "value": "Change Squad"
+    },
+    {
+      "key": "RESET",
+      "value": "Reset"
+    },
+    {
+      "key": "piece.squad",
+      "value": "| Squad |"
+    },
+    {
+      "key": "PRESETS",
+      "value": "Presets"
+    },
+    {
+      "key": "MOVES",
+      "value": "Moves"
+    },
+    {
+      "key": "SPECIAL",
+      "value": "Special"
+    },
+    {
+      "key": "KING",
+      "value": "King"
+    },
+    {
+      "key": "QUEEN",
+      "value": "Queen"
+    },
+    {
+      "key": "BISHOP",
+      "value": "Bishop"
+    },
+    {
+      "key": "KNIGHT",
+      "value": "Knight"
+    },
+    {
+      "key": "ROOK",
+      "value": "Rook"
+    },
+    {
+      "key": "PAWN",
+      "value": "Pawn"
+    },
+    {
+      "key": "ACTIVE",
+      "value": "Active"
+    },
+    {
+      "key": "piece.active",
+      "value": "Enable Move"
+    },
+    {
+      "key": "STRAIGHT",
+      "value": "Straight"
+    },
+    {
+      "key": "DIAGONAL",
+      "value": "Diagonal"
+    },
+    {
+      "key": "CUSTOM",
+      "value": "Custom"
+    },
+    {
+      "key": "MOVE",
+      "value": "Move"
+    },
+    {
+      "key": "CAPTURE",
+      "value": "Capture"
+    },
+    {
+      "key": "JUMP",
+      "value": "Jump"
+    },
+    {
+      "key": "FRONT",
+      "value": "Forward"
+    },
+    {
+      "key": "BACK",
+      "value": "Backward"
+    },
+    {
+      "key": "RIGHT",
+      "value": "Right"
+    },
+    {
+      "key": "LEFT",
+      "value": "Left"
+    },
+    {
+      "key": "piece.selecthouses",
+      "value": "Select squares:"
+    },
+    {
+      "key": "NORULES",
+      "value": "No Rules"
+    },
+    {
+      "key": "NOTURNS",
+      "value": "No Turns"
+    },
+    {
+      "key": "LOCALGAME",
+      "value": "Local Game"
+    },
+    {
+      "key": "IAVSIA",
+      "value": "AI vs AI"
+    },
+    {
+      "key": "EASY",
+      "value": "Easy"
+    },
+    {
+      "key": "MEDIUM",
+      "value": "Medium"
+    },
+    {
+      "key": "HARD",
+      "value": "Hard"
+    },
+    {
+      "key": "Victory",
+      "value": "Victory"
+    },
+    {
+      "key": "Draw",
+      "value": "Draw"
+    },
+    {
+      "key": "Defeat",
+      "value": "Defeat"
+    },
+    {
+      "key": "match.return",
+      "value": "Return to Board"
+    },
+    {
+      "key": "CONTINUE",
+      "value": "Continue"
+    },
+    {
+      "key": "file.create.title",
+      "value": "Create Set"
+    },
+    {
+      "key": "file.create.txt",
+      "value": "Enter the name..."
+    },
+    {
+      "key": "file.save",
+      "value": "Save"
+    },
+    {
+      "key": "file.delete.title",
+      "value": "The file will be deleted"
+    },
     {
       "key": "file.delete.txt",
       "value": "Are you sure you want to delete {0}? This action is permanent and cannot be undone."
     },
-
-    { "key": "folder.delete.title", "value": "The folder will be deleted" },
+    {
+      "key": "folder.delete.title",
+      "value": "The folder will be deleted"
+    },
     {
       "key": "folder.delete.txt",
       "value": "Are you sure you want to delete {0} and all its contents? This action is permanent and cannot be undone."
     },
-
-    { "key": "folder.exist", "value": "A set with this name already exists!" },
-
-    { "key": "file.save.title", "value": "Replace file?" },
+    {
+      "key": "folder.exist",
+      "value": "A set with this name already exists!"
+    },
+    {
+      "key": "file.save.title",
+      "value": "Replace file?"
+    },
     {
       "key": "file.save.txt",
       "value": "A file with the same name already exists in the folder. Do you want to replace it?"
     },
-
-    { "key": "file.replace.title", "value": "Replace file?" },
+    {
+      "key": "file.replace.title",
+      "value": "Replace file?"
+    },
     {
       "key": "file.replace.txt",
       "value": "A file with the same name already exists in the folder. Do you want to replace it?"
     },
-
-    { "key": "file.overwrite.title", "value": "Save file?" },
+    {
+      "key": "file.overwrite.title",
+      "value": "Save file?"
+    },
     {
       "key": "file.overwrite.txt",
       "value": "You are about to overwrite an existing file. The original content will be permanently deleted and cannot be recovered."
     },
-
-    { "key": "file.native.save.txt", "value": "Saving to the native library is not allowed." },
-    { "key": "file.native.delete.txt", "value": "Deleting from the native library is not allowed." },
-
-    { "key": "file.none.art.txt", "value": "No art selected." },
-
-    { "key": "file.fulls_squad.txt", "value": "The squad is full." },
-    { "key": "file.empty_squad.txt", "value": "The squad is empty." },
-    { "key": "file.no_king.txt", "value": "There is no King." },
-
-    { "key": "mode.alert.title", "value": "Strategic Mode" },
-    { "key": "mode.alert.txt", "value": "The squad cannot be used in Strategic Mode."},
-
-    { "key": "none.art.txt", "value": "You need an art to save." },
-    { "key": "none.name.txt", "value": "You need a name to save." },
-
-    { "key": "none.file.txt", "value": "No file selected." },
-    { "key": "none.folder.txt", "value": "No folder selected." },
-
-    { "key": "none.cell.txt", "value": "No painted cell to save." },
-
-    { "key": "file.limit.txt", "value": "The limit of {0} files in this folder has been reached." },
-
-    { "key": "select_white", "value": "Select the white pieces." },
-    { "key": "select_black", "value": "Select the black pieces." },
-
-
-
-
-
-  {
-    "key": "TutorialSeenMenu0",
-    "value": "Create the artwork that will be used for your pieces in 17x17 and 34x34 proportions. You can also import images, which will be automatically converted to the grid."
-  },
-  {
-    "key": "TutorialSeenMenu1",
-    "value": "After creating your artwork, turn it into a board piece.\nThis piece represents the movement you just created."
-  },
-  {
-    "key": "TutorialSeenMenu2",
-    "value": "With your pieces ready, it’s time to build your squad.\nArrange the pieces on the board however you like and define which one will be the King."
-  },
-  {
-    "key": "TutorialSeenMenu3",
-    "value": "In the lobby, select which squads will play as black and white pieces by clicking on the board.\nThen choose which one you will play with, indicated by the crown color.\nAdditional game options are available in the top-right corner."
-  },
-  {
-    "key": "TutorialSeenMenu4",
-    "value": "Now it’s time to play the match.\nIn the top-left corner, you can surrender if the situation becomes difficult.\nIn the top-right corner are the view options.\nOn the right side of the screen, you can follow the match history."
-  },
-
-
-
-
-
-
-  { "key": "TutorialSeenPainting0", "value": "This eraser allows you to quickly erase large areas of pixels of the same color." },
-
-  {
-    "key": "TutorialSeenPainting1",
-    "value": "To use the circle, rectangle, line, or selection tools, click on two points on the grid.\nOn PC, the small dot in the top-left corner indicates the mouse position."
-  },
-  {
-    "key": "TutorialSeenPainting2",
-    "value": "After selecting an area, use the arrows in the bottom-left corner to move it.\nPress the center button to confirm the movement and finish the tool."
-  },
-  {
-    "key": "TutorialSeenPainting3",
-    "value": "The quick save button is used for artwork that has already been saved or loaded.\nThe set it belongs to will be displayed just below the button."
-  },
-  {
-    "key": "TutorialSeenPainting4",
-    "value": "When clicking Save, the available sets will be shown next. Click the desired set again to confirm saving.\nIn the top-right corner, you can create a new set.\nTo delete, click Delete, select the desired set, and confirm the action."
-  },
-
-  {
-    "key": "TutorialSeenPiece0",
-    "value": "Each color shows what the piece can do on that square.\nGreen: movement only.\nRed: capture only.\nYellow: movement + capture.\nBlue: jump movement.\nPurple: jump + capture."
-  },
-  {
-    "key": "TutorialSeenPiece1",
-    "value": "In Moves, you shape how the piece behaves on the board.\nDefine how far it can go, which directions it can move, and what type of action the move allows.\nEach adjustment changes the strategy and creates new gameplay possibilities."
-  },
-  {
-    "key": "TutorialSeenPiece2",
-    "value": "The special move is a unique ability of the Pawn that can only be used once.\nJust like the Knight’s custom movement, simply select the desired squares and activate the move."
-  },
-  {
-    "key": "TutorialSeenPiece3",
-    "value": "After finishing a piece, use the Reset button to clear the data and create a new piece from scratch.\nWarning: creating a new piece without resetting and using Quick Save will overwrite the previous piece."
-  },
-  {
-    "key": "TutorialSeenPiece4",
-    "value": "When clicking Save, the available sets will be shown next. Click the desired set again to confirm saving.\nIn the top-right corner, you can create a new set.\nTo delete, click Delete, select the desired set, and confirm the action."
-  },
-
-
-
-  
-  {
-    "key": "TutorialSeenSquad0",
-    "value": "When pressing Add, the available sets will be displayed.\nChoose a set to add all of its pieces at once.\nTo add pieces individually, use the Pieces button in the top-right corner."
-  },
-  {
-    "key": "TutorialSeenSquad1",
-    "value": "When no piece or button is selected, your squad information appears in the center of the screen.\nThere you can see the total number of pieces, the squad power, and which piece is the King."
-  },
-  {
-    "key": "TutorialSeenSquad2",
-    "value": "Use the crown button to choose which piece will be the King of your squad.\nUse the X button to remove a piece from the board."
-  },
-  {
-    "key": "TutorialSeenSquad3",
-    "value": "Select a piece on the right side to see its information in the center of the screen.\nThen simply click on the board position where you want to place it."
-  },
-  {
-    "key": "TutorialSeenSquad4",
-    "value": "Use the + button to configure promotions and castling for the selected piece.\nSimply drag the desired pieces.\nVery powerful pieces have limitations: above 25 power they cannot promote, and above 80 power they cannot castle."
-  },
-
-  {
-  "key": "TutorialSeenSquad5",
-  "value": "The messages displayed below the board indicate the status of Strategic Mode. This mode evaluates whether your squad is balanced compared to a classic chess set. Although it is possible to save and play with squads outside this standard, Strategic Mode is recommended to ensure greater competitiveness."
-  },
-
-
-  { "key": "TutorialSeenLobby0", "value": "During Local Multiplayer, the board can automatically rotate each turn.\nUse the icon in the top-right corner to enable or disable this rotation." },
-  { "key": "TutorialSeenLobby1", "value": "The crowns represent the two squads: the black squad at the top and the white squad at the bottom. The highlighted crown shows which squad you will control in the match." },
-  { "key": "TutorialSeenLobby2", "value": "Remember: you are a Human, the top crown is yours.\nIt represents you and the squad you will command in the match." },
-  { "key": "TutorialSeenLobby3", "value": "The pieces displayed on the side can be selected to view their moves, abilities, and which piece is defined as the king." },
-  { "key": "TutorialSeenLobby4", "value": "In No Rules mode, you are not required to protect the king when in check.\nIf you fail to notice it, the responsibility is yours, game over." },
-  { "key": "TutorialSeenLobby5", "value": "In No Turns mode, the match is played in real time.\nMove your pieces freely without waiting for your opponent’s turn." },
-
-  
-  { "key": "GOTIT", "value": "Got It" },
-
-  { "key": "RESTART_TUTORIAL", "value": "Restart Tutorial" },
-
-  { "key": "PLAY_VS_IA", "value": "Play vs AI" },
-  { "key": "local", "value": "Local Multiplayer" },
-  { "key": "simulation", "value": "AI Simulation" },
-
-
-  { "key": "squad_piece", "value": "{0} {1}" },
-
-  { "key": "Black", "value": "Black" },
-  { "key": "White", "value": "White" },
-  { "key": "Red", "value": "Red" },
-
-  { "key": "Horde", "value": "Horde" },
-
-  { "key": "Pirates", "value": "Pirates" },
-  { "key": "Fantasy", "value": "Fantasy" },
-  { "key": "Vikings", "value": "Vikings" },
-  { "key": "Brainrot", "value": "Brainrot" },
-
-  { "key": "Bishop", "value": "Bishop" },
-  { "key": "King", "value": "King" },
-  { "key": "Knight", "value": "Knight" },
-  { "key": "Pawn", "value": "Pawn" },
-  { "key": "Queen", "value": "Queen" },
-  { "key": "Rook", "value": "Rook" },
-
-  { "key": "Ballerina", "value": "Ballerina" },
-  { "key": "Brrpatabim", "value": "Brrpatabim" },
-  { "key": "Capuccinoassassino", "value": "Capuccinoassassino" },
-  { "key": "Frigocamello", "value": "Frigocamello" },
-  { "key": "Ketupat", "value": "Ketupat" },
-  { "key": "Tungtung", "value": "Tungtung" },
-
-  { "key": "Dragon", "value": "Dragon" },
-  { "key": "Elf", "value": "Elf" },
-  { "key": "Orc", "value": "Orc" },
-  { "key": "Tower", "value": "Tower" },
-  { "key": "Wizard", "value": "Wizard" },
-
-  { "key": "Lighthouse", "value": "Lighthouse" },
-  { "key": "Mermaid", "value": "Mermaid" },
-  { "key": "Pirate King", "value": "Pirate King" },
-  { "key": "Shaman", "value": "Shaman" },
-  { "key": "Ship", "value": "Ship" },
-  { "key": "Skeleton", "value": "Skeleton" },
-
-  { "key": "Soldier", "value": "Soldier" },
-  { "key": "Valkyrie", "value": "Valkyrie" },
-  { "key": "Viking Ship", "value": "Viking Ship" },
-
-  { "key": "unlock.pack", "value": "The {0} has been unlocked and is now available in your library." },
-  { "key": "pack", "value": "{0} Pack"},
-
-  { "key": "Unlock_Reward", "value": "Unlock Reward" },
-
-  { "key": "reward.explanation", "value": "Watch an advertisement to unlock a random set of pieces." },
-
-  { "key": "saved.in", "value": "Saved in {0}" },
-
-  { "key": "import.explanation", "value": "Images in 34x34 aspect ratio, e.g., 340x340, 680x680, and 1020." },
-
-  { "key": "save.to.gallery", "value": "Save to Gallery" },
-  { "key": "save.to.images", "value": "Save to Images" },
-
-  { "key": "saved.to.gallery", "value": "Saved to gallery" },
-  { "key": "saved.to.images", "value": "Saved to images" },
-
-
-  { "key": "Credits", "value": "Credits" },
-
-  { "key": "credits.explanation", "value": "Click here to see the game credits and meet the people who helped make this project a reality." },
-
-  { "key": "cartase.explanation", "value": "Contribute to the project on Catarse, our crowdfunding platform, and help make new modes, mechanics, and online multiplayer possible, with exclusive rewards for supporters." },
-  { "key": "cartase.enter", "value": "Support the Project" },
-
-
-  {
-    "key": "lobby_no_player",
-    "value": "There is no other player connected to the lobby."
-  },
-  {
-    "key": "lobby_entered",
-    "value": "A player has joined the lobby."
-  },
-  {
-    "key": "lobby_exited",
-    "value": "A player has left the lobby."
-  },
-  {
-    "key": "MULTIPLAYER",
-    "value": "Multiplayer"
-  },
-  {
-    "key": "SINGLEPLAYER",
-    "value": "Single Player"
-  },
-  {
-    "key": "Enter_Code",
-    "value": "Enter Code"
-  },
-  {
-    "key": "Create_Lobby",
-    "value": "Create lobby"
-  },
-  {
-    "key": "Enter_Lobby",
-    "value": "Enter Lobby"
-  },
-  {
-    "key": "lobby_creating",
-    "value": "Creating lobby..."
-  },
-  {
-    "key": "lobby_code_copied",
-    "value": "Lobby code copied to clipboard."
-  },
-  {
-    "key": "READY",
-    "value": "Ready"
-  },
- { "key": "lobby_full", "value": "Lobby is full." },
-  { "key": "lobby_error", "value": "Error while trying to enter the lobby." },
-  { "key": "lobby_not_found", "value": "Lobby not found." },
-  { "key": "Cancel_Ready", "value": "Cancel" },
-  {
-    "key": "downloading_title",
-    "value": "Download Squad"
-  },
-  {
-    "key": "downloading_message",
-    "value": "This squad is not available on your device. Do you want to download it?"
-  },
-  {
-    "key": "downloaded_successfully",
-    "value": "The squad has been downloaded successfully."
-  },
-  {
-    "key": "lobby_client_not_ready",
-    "value": "The other player is not ready yet."
-  }
-
+    {
+      "key": "file.native.save.txt",
+      "value": "Saving to the native library is not allowed."
+    },
+    {
+      "key": "file.native.delete.txt",
+      "value": "Deleting from the native library is not allowed."
+    },
+    {
+      "key": "file.none.art.txt",
+      "value": "No art selected."
+    },
+    {
+      "key": "file.fulls_squad.txt",
+      "value": "The squad is full."
+    },
+    {
+      "key": "file.empty_squad.txt",
+      "value": "The squad is empty."
+    },
+    {
+      "key": "file.no_king.txt",
+      "value": "There is no King."
+    },
+    {
+      "key": "mode.alert.title",
+      "value": "Strategic Mode"
+    },
+    {
+      "key": "mode.alert.txt",
+      "value": "The squad cannot be used in Strategic Mode."
+    },
+    {
+      "key": "none.art.txt",
+      "value": "You need an art to save."
+    },
+    {
+      "key": "none.name.txt",
+      "value": "You need a name to save."
+    },
+    {
+      "key": "none.file.txt",
+      "value": "No file selected."
+    },
+    {
+      "key": "none.folder.txt",
+      "value": "No folder selected."
+    },
+    {
+      "key": "none.cell.txt",
+      "value": "No painted cell to save."
+    },
+    {
+      "key": "file.limit.txt",
+      "value": "The limit of {0} files in this folder has been reached."
+    },
+    {
+      "key": "select_white",
+      "value": "Select the white pieces."
+    },
+    {
+      "key": "select_black",
+      "value": "Select the black pieces."
+    },
+    {
+      "key": "TutorialSeenMenu0",
+      "value": "Create the artwork that will be used for your pieces in 17x17 and 34x34 proportions. You can also import images, which will be automatically converted to the grid."
+    },
+    {
+      "key": "TutorialSeenMenu1",
+      "value": "After creating your artwork, turn it into a board piece.\nThis piece represents the movement you just created."
+    },
+    {
+      "key": "TutorialSeenMenu2",
+      "value": "With your pieces ready, it’s time to build your squad.\nArrange the pieces on the board however you like and define which one will be the King."
+    },
+    {
+      "key": "TutorialSeenMenu3",
+      "value": "In the lobby, select which squads will play as black and white pieces by clicking on the board.\nThen choose which one you will play with, indicated by the crown color.\nAdditional game options are available in the top-right corner."
+    },
+    {
+      "key": "TutorialSeenMenu4",
+      "value": "Now it’s time to play the match.\nIn the top-left corner, you can surrender if the situation becomes difficult.\nIn the top-right corner are the view options.\nOn the right side of the screen, you can follow the match history."
+    },
+    {
+      "key": "TutorialSeenPainting0",
+      "value": "This eraser allows you to quickly erase large areas of pixels of the same color."
+    },
+    {
+      "key": "TutorialSeenPainting1",
+      "value": "To use the circle, rectangle, line, or selection tools, click on two points on the grid.\nOn PC, the small dot in the top-left corner indicates the mouse position."
+    },
+    {
+      "key": "TutorialSeenPainting2",
+      "value": "After selecting an area, use the arrows in the bottom-left corner to move it.\nPress the center button to confirm the movement and finish the tool."
+    },
+    {
+      "key": "TutorialSeenPainting3",
+      "value": "The quick save button is used for artwork that has already been saved or loaded.\nThe set it belongs to will be displayed just below the button."
+    },
+    {
+      "key": "TutorialSeenPainting4",
+      "value": "When clicking Save, the available sets will be shown next. Click the desired set again to confirm saving.\nIn the top-right corner, you can create a new set.\nTo delete, click Delete, select the desired set, and confirm the action."
+    },
+    {
+      "key": "TutorialSeenPiece0",
+      "value": "Each color shows what the piece can do on that square.\nGreen: movement only.\nRed: capture only.\nYellow: movement + capture.\nBlue: jump movement.\nPurple: jump + capture."
+    },
+    {
+      "key": "TutorialSeenPiece1",
+      "value": "In Moves, you shape how the piece behaves on the board.\nDefine how far it can go, which directions it can move, and what type of action the move allows.\nEach adjustment changes the strategy and creates new gameplay possibilities."
+    },
+    {
+      "key": "TutorialSeenPiece2",
+      "value": "The special move is a unique ability of the Pawn that can only be used once.\nJust like the Knight’s custom movement, simply select the desired squares and activate the move."
+    },
+    {
+      "key": "TutorialSeenPiece3",
+      "value": "After finishing a piece, use the Reset button to clear the data and create a new piece from scratch.\nWarning: creating a new piece without resetting and using Quick Save will overwrite the previous piece."
+    },
+    {
+      "key": "TutorialSeenPiece4",
+      "value": "When clicking Save, the available sets will be shown next. Click the desired set again to confirm saving.\nIn the top-right corner, you can create a new set.\nTo delete, click Delete, select the desired set, and confirm the action."
+    },
+    {
+      "key": "TutorialSeenSquad0",
+      "value": "When pressing Add, the available sets will be displayed.\nChoose a set to add all of its pieces at once.\nTo add pieces individually, use the Pieces button in the top-right corner."
+    },
+    {
+      "key": "TutorialSeenSquad1",
+      "value": "When no piece or button is selected, your squad information appears in the center of the screen.\nThere you can see the total number of pieces, the squad power, and which piece is the King."
+    },
+    {
+      "key": "TutorialSeenSquad2",
+      "value": "Use the crown button to choose which piece will be the King of your squad.\nUse the X button to remove a piece from the board."
+    },
+    {
+      "key": "TutorialSeenSquad3",
+      "value": "Select a piece on the right side to see its information in the center of the screen.\nThen simply click on the board position where you want to place it."
+    },
+    {
+      "key": "TutorialSeenSquad4",
+      "value": "Use the + button to configure promotions and castling for the selected piece.\nSimply drag the desired pieces.\nVery powerful pieces have limitations: above 25 power they cannot promote, and above 80 power they cannot castle."
+    },
+    {
+      "key": "TutorialSeenSquad5",
+      "value": "The messages displayed below the board indicate the status of Strategic Mode. This mode evaluates whether your squad is balanced compared to a classic chess set. Although it is possible to save and play with squads outside this standard, Strategic Mode is recommended to ensure greater competitiveness."
+    },
+    {
+      "key": "TutorialSeenLobby0",
+      "value": "During Local Multiplayer, the board can automatically rotate each turn.\nUse the icon in the top-right corner to enable or disable this rotation."
+    },
+    {
+      "key": "TutorialSeenLobby1",
+      "value": "The crowns represent the two squads: the black squad at the top and the white squad at the bottom. The highlighted crown shows which squad you will control in the match."
+    },
+    {
+      "key": "TutorialSeenLobby2",
+      "value": "Remember: you are a Human, the top crown is yours.\nIt represents you and the squad you will command in the match."
+    },
+    {
+      "key": "TutorialSeenLobby3",
+      "value": "The pieces displayed on the side can be selected to view their moves, abilities, and which piece is defined as the king."
+    },
+    {
+      "key": "TutorialSeenLobby4",
+      "value": "In No Rules mode, you are not required to protect the king when in check.\nIf you fail to notice it, the responsibility is yours, game over."
+    },
+    {
+      "key": "TutorialSeenLobby5",
+      "value": "In No Turns mode, the match is played in real time.\nMove your pieces freely without waiting for your opponent’s turn."
+    },
+    {
+      "key": "GOTIT",
+      "value": "Got It"
+    },
+    {
+      "key": "RESTART_TUTORIAL",
+      "value": "Restart Tutorial"
+    },
+    {
+      "key": "PLAY_VS_IA",
+      "value": "Play vs AI"
+    },
+    {
+      "key": "local",
+      "value": "Local Multiplayer"
+    },
+    {
+      "key": "simulation",
+      "value": "AI Simulation"
+    },
+    {
+      "key": "squad_piece",
+      "value": "{0} {1}"
+    },
+    {
+      "key": "Black",
+      "value": "Black"
+    },
+    {
+      "key": "White",
+      "value": "White"
+    },
+    {
+      "key": "Red",
+      "value": "Red"
+    },
+    {
+      "key": "Horde",
+      "value": "Horde"
+    },
+    {
+      "key": "Pirates",
+      "value": "Pirates"
+    },
+    {
+      "key": "Fantasy",
+      "value": "Fantasy"
+    },
+    {
+      "key": "Vikings",
+      "value": "Vikings"
+    },
+    {
+      "key": "Brainrot",
+      "value": "Brainrot"
+    },
+    {
+      "key": "Bishop",
+      "value": "Bishop"
+    },
+    {
+      "key": "King",
+      "value": "King"
+    },
+    {
+      "key": "Knight",
+      "value": "Knight"
+    },
+    {
+      "key": "Pawn",
+      "value": "Pawn"
+    },
+    {
+      "key": "Queen",
+      "value": "Queen"
+    },
+    {
+      "key": "Rook",
+      "value": "Rook"
+    },
+    {
+      "key": "Ballerina",
+      "value": "Ballerina"
+    },
+    {
+      "key": "Brrpatabim",
+      "value": "Brrpatabim"
+    },
+    {
+      "key": "Capuccinoassassino",
+      "value": "Capuccinoassassino"
+    },
+    {
+      "key": "Frigocamello",
+      "value": "Frigocamello"
+    },
+    {
+      "key": "Ketupat",
+      "value": "Ketupat"
+    },
+    {
+      "key": "Tungtung",
+      "value": "Tungtung"
+    },
+    {
+      "key": "Dragon",
+      "value": "Dragon"
+    },
+    {
+      "key": "Elf",
+      "value": "Elf"
+    },
+    {
+      "key": "Orc",
+      "value": "Orc"
+    },
+    {
+      "key": "Tower",
+      "value": "Tower"
+    },
+    {
+      "key": "Wizard",
+      "value": "Wizard"
+    },
+    {
+      "key": "Lighthouse",
+      "value": "Lighthouse"
+    },
+    {
+      "key": "Mermaid",
+      "value": "Mermaid"
+    },
+    {
+      "key": "Pirate King",
+      "value": "Pirate King"
+    },
+    {
+      "key": "Shaman",
+      "value": "Shaman"
+    },
+    {
+      "key": "Ship",
+      "value": "Ship"
+    },
+    {
+      "key": "Skeleton",
+      "value": "Skeleton"
+    },
+    {
+      "key": "Soldier",
+      "value": "Soldier"
+    },
+    {
+      "key": "Valkyrie",
+      "value": "Valkyrie"
+    },
+    {
+      "key": "Viking Ship",
+      "value": "Viking Ship"
+    },
+    {
+      "key": "unlock.pack",
+      "value": "The {0} has been unlocked and is now available in your library."
+    },
+    {
+      "key": "pack",
+      "value": "{0} Pack"
+    },
+    {
+      "key": "Unlock_Reward",
+      "value": "Unlock Reward"
+    },
+    {
+      "key": "reward.explanation",
+      "value": "Watch an advertisement to unlock a random set of pieces."
+    },
+    {
+      "key": "saved.in",
+      "value": "Saved in {0}"
+    },
+    {
+      "key": "import.explanation",
+      "value": "Images in 34x34 aspect ratio, e.g., 340x340, 680x680, and 1020."
+    },
+    {
+      "key": "save.to.gallery",
+      "value": "Save to Gallery"
+    },
+    {
+      "key": "save.to.images",
+      "value": "Save to Images"
+    },
+    {
+      "key": "saved.to.gallery",
+      "value": "Saved to gallery"
+    },
+    {
+      "key": "saved.to.images",
+      "value": "Saved to images"
+    },
+    {
+      "key": "Credits",
+      "value": "Credits"
+    },
+    {
+      "key": "credits.explanation",
+      "value": "Click here to see the game credits and meet the people who helped make this project a reality."
+    },
+    {
+      "key": "cartase.explanation",
+      "value": "Contribute to the project on Catarse, our crowdfunding platform, and help make new modes, mechanics, and online multiplayer possible, with exclusive rewards for supporters."
+    },
+    {
+      "key": "cartase.enter",
+      "value": "Support the Project"
+    },
+    {
+      "key": "lobby_no_player",
+      "value": "There is no other player connected to the lobby."
+    },
+    {
+      "key": "lobby_entered",
+      "value": "A player has joined the lobby."
+    },
+    {
+      "key": "lobby_exited",
+      "value": "A player has left the lobby."
+    },
+    {
+      "key": "MULTIPLAYER",
+      "value": "Multiplayer"
+    },
+    {
+      "key": "SINGLEPLAYER",
+      "value": "Single Player"
+    },
+    {
+      "key": "Enter_Code",
+      "value": "Enter Code"
+    },
+    {
+      "key": "Create_Lobby",
+      "value": "Create lobby"
+    },
+    {
+      "key": "Enter_Lobby",
+      "value": "Enter Lobby"
+    },
+    {
+      "key": "lobby_creating",
+      "value": "Creating lobby..."
+    },
+    {
+      "key": "lobby_code_copied",
+      "value": "Lobby code copied to clipboard."
+    },
+    {
+      "key": "READY",
+      "value": "Ready"
+    },
+    {
+      "key": "lobby_full",
+      "value": "Lobby is full."
+    },
+    {
+      "key": "lobby_error",
+      "value": "Error while trying to enter the lobby."
+    },
+    {
+      "key": "lobby_not_found",
+      "value": "Lobby not found."
+    },
+    {
+      "key": "Cancel_Ready",
+      "value": "Cancel"
+    },
+    {
+      "key": "lobby_entered_spectator",
+      "value": "A player entered the lobby as a spectator."
+    },
+    {
+      "key": "lobby_exited_spectator",
+      "value": "A player who was a spectator left the lobby."
+    },
+    {
+      "key": "downloading_title",
+      "value": "Download Squad"
+    },
+    {
+      "key": "downloading_message",
+      "value": "This squad is not available on your device. Do you want to download it?"
+    },
+    {
+      "key": "downloaded_successfully",
+      "value": "The squad has been downloaded successfully."
+    },
+    {
+      "key": "lobby_client_not_ready",
+      "value": "The other player is not ready yet."
+    }
   ]
 }

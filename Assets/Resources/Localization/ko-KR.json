@@ -812,7 +812,6 @@
       "key": "cartase.enter",
       "value": "프로젝트 지원하기"
     },
-
     {
       "key": "lobby_no_player",
       "value": "로비에 연결된 다른 플레이어가 없습니다."
@@ -857,10 +856,30 @@
       "key": "READY",
       "value": "준비됨"
     },
-  { "key": "lobby_full", "value": "로비가 가득 찼습니다." },
-  { "key": "lobby_error", "value": "로비에 입장하는 중 오류가 발생했습니다." },
-  { "key": "lobby_not_found", "value": "로비를 찾을 수 없습니다." },
-  { "key": "Cancel_Ready", "value": "취소" },
+    {
+      "key": "lobby_full",
+      "value": "로비가 가득 찼습니다."
+    },
+    {
+      "key": "lobby_error",
+      "value": "로비에 입장하는 중 오류가 발생했습니다."
+    },
+    {
+      "key": "lobby_not_found",
+      "value": "로비를 찾을 수 없습니다."
+    },
+    {
+      "key": "Cancel_Ready",
+      "value": "취소"
+    },
+    {
+      "key": "lobby_entered_spectator",
+      "value": "플레이어가 관전자로 로비에 입장했습니다."
+    },
+    {
+      "key": "lobby_exited_spectator",
+      "value": "관전자였던 플레이어가 로비를 떠났습니다."
+    },
     {
       "key": "downloading_title",
       "value": "분대 다운로드"
@@ -877,6 +896,5 @@
       "key": "lobby_client_not_ready",
       "value": "상대 플레이어가 아직 준비되지 않았습니다."
     }
-
   ]
 }

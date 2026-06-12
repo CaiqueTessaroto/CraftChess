@@ -812,8 +812,6 @@
       "key": "cartase.enter",
       "value": "Soutenir le Projet"
     },
-
-
     {
       "key": "lobby_no_player",
       "value": "Aucun autre joueur n'est connecté au lobby."
@@ -858,10 +856,30 @@
       "key": "READY",
       "value": "Prêt"
     },
-  { "key": "lobby_full", "value": "Le lobby est plein." },
-  { "key": "lobby_error", "value": "Erreur lors de la tentative d'entrée dans le lobby." },
-  { "key": "lobby_not_found", "value": "Lobby introuvable." },
-  { "key": "Cancel_Ready", "value": "Annuler" },
+    {
+      "key": "lobby_full",
+      "value": "Le lobby est plein."
+    },
+    {
+      "key": "lobby_error",
+      "value": "Erreur lors de la tentative d'entrée dans le lobby."
+    },
+    {
+      "key": "lobby_not_found",
+      "value": "Lobby introuvable."
+    },
+    {
+      "key": "Cancel_Ready",
+      "value": "Annuler"
+    },
+    {
+      "key": "lobby_entered_spectator",
+      "value": "Un joueur est entré dans le lobby en tant que spectateur."
+    },
+    {
+      "key": "lobby_exited_spectator",
+      "value": "Un joueur qui était spectateur a quitté le lobby."
+    },
     {
       "key": "downloading_title",
       "value": "Télécharger l'escouade"
@@ -878,6 +896,5 @@
       "key": "lobby_client_not_ready",
       "value": "L'autre joueur n'est pas encore prêt."
     }
-
   ]
 }

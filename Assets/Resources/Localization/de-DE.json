@@ -812,7 +812,6 @@
       "key": "cartase.enter",
       "value": "Projekt unterstützen"
     },
-
     {
       "key": "lobby_no_player",
       "value": "Es ist kein anderer Spieler mit der Lobby verbunden."
@@ -857,10 +856,30 @@
       "key": "READY",
       "value": "Bereit"
     },
-  { "key": "lobby_full", "value": "Die Lobby ist voll." },
-  { "key": "lobby_error", "value": "Fehler beim Versuch, die Lobby zu betreten." },
-  { "key": "lobby_not_found", "value": "Lobby nicht gefunden." },
-  { "key": "Cancel_Ready", "value": "Abbrechen" },
+    {
+      "key": "lobby_full",
+      "value": "Die Lobby ist voll."
+    },
+    {
+      "key": "lobby_error",
+      "value": "Fehler beim Versuch, die Lobby zu betreten."
+    },
+    {
+      "key": "lobby_not_found",
+      "value": "Lobby nicht gefunden."
+    },
+    {
+      "key": "Cancel_Ready",
+      "value": "Abbrechen"
+    },
+    {
+      "key": "lobby_entered_spectator",
+      "value": "Ein Spieler hat die Lobby als Zuschauer betreten."
+    },
+    {
+      "key": "lobby_exited_spectator",
+      "value": "Ein Spieler, der ein Zuschauer war, hat die Lobby verlassen."
+    },
     {
       "key": "downloading_title",
       "value": "Truppe herunterladen"
@@ -877,6 +896,5 @@
       "key": "lobby_client_not_ready",
       "value": "Der andere Spieler ist noch nicht bereit."
     }
-
   ]
 }

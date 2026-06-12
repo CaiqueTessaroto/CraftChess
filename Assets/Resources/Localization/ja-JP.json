@@ -812,7 +812,6 @@
       "key": "cartase.enter",
       "value": "プロジェクトを支援"
     },
-
     {
       "key": "lobby_no_player",
       "value": "ロビーに接続している他のプレイヤーはいません。"
@@ -857,10 +856,30 @@
       "key": "READY",
       "value": "準備完了"
     },
-  { "key": "lobby_full", "value": "ロビーは満員です。" },
-  { "key": "lobby_error", "value": "ロビーに入ろうとしてエラーが発生しました。" },
-  { "key": "lobby_not_found", "value": "ロビーが見つかりません。" },
-  { "key": "Cancel_Ready", "value": "キャンセル" },
+    {
+      "key": "lobby_full",
+      "value": "ロビーは満員です。"
+    },
+    {
+      "key": "lobby_error",
+      "value": "ロビーに入ろうとしてエラーが発生しました。"
+    },
+    {
+      "key": "lobby_not_found",
+      "value": "ロビーが見つかりません。"
+    },
+    {
+      "key": "Cancel_Ready",
+      "value": "キャンセル"
+    },
+    {
+      "key": "lobby_entered_spectator",
+      "value": "プレイヤーが観戦者としてロビーに入りました。"
+    },
+    {
+      "key": "lobby_exited_spectator",
+      "value": "観戦者だったプレイヤーがロビーから退出しました。"
+    },
     {
       "key": "downloading_title",
       "value": "チームをダウンロード"
@@ -877,6 +896,5 @@
       "key": "lobby_client_not_ready",
       "value": "他のプレイヤーはまだ準備ができていません。"
     }
-
   ]
 }

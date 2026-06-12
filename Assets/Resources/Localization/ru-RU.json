@@ -812,7 +812,6 @@
       "key": "cartase.enter",
       "value": "Поддержать Проект"
     },
-
     {
       "key": "lobby_no_player",
       "value": "Нет других игроков, подключенных к лобби."
@@ -857,10 +856,30 @@
       "key": "READY",
       "value": "Готов"
     },
-  { "key": "lobby_full", "value": "Лобби заполнено." },
-  { "key": "lobby_error", "value": "Ошибка при попытке войти в лобби." },
-  { "key": "lobby_not_found", "value": "Лобби не найдено." },
-  { "key": "Cancel_Ready", "value": "Отмена" },
+    {
+      "key": "lobby_full",
+      "value": "Лобби заполнено."
+    },
+    {
+      "key": "lobby_error",
+      "value": "Ошибка при попытке войти в лобби."
+    },
+    {
+      "key": "lobby_not_found",
+      "value": "Лобби не найдено."
+    },
+    {
+      "key": "Cancel_Ready",
+      "value": "Отмена"
+    },
+    {
+      "key": "lobby_entered_spectator",
+      "value": "Игрок вошёл в лобби как зритель."
+    },
+    {
+      "key": "lobby_exited_spectator",
+      "value": "Игрок, который был зрителем, покинул лобби."
+    },
     {
       "key": "downloading_title",
       "value": "Скачать отряд"
@@ -877,6 +896,5 @@
       "key": "lobby_client_not_ready",
       "value": "Другой игрок еще не готов."
     }
-
   ]
 }

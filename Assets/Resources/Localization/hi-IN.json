@@ -812,8 +812,6 @@
       "key": "cartase.enter",
       "value": "परियोजना का समर्थन करें"
     },
-
-
     {
       "key": "lobby_no_player",
       "value": "लॉबी से कोई अन्य खिलाड़ी कनेक्ट नहीं है।"
@@ -858,10 +856,30 @@
       "key": "READY",
       "value": "तैयार"
     },
-  { "key": "lobby_full", "value": "लॉबी भरी हुई है।" },
-  { "key": "lobby_error", "value": "लॉबी में प्रवेश करने का प्रयास करते समय त्रुटि।" },
-  { "key": "lobby_not_found", "value": "लॉबी नहीं मिली।" },
-  { "key": "Cancel_Ready", "value": "रद्द करें" },
+    {
+      "key": "lobby_full",
+      "value": "लॉबी भरी हुई है।"
+    },
+    {
+      "key": "lobby_error",
+      "value": "लॉबी में प्रवेश करने का प्रयास करते समय त्रुटि।"
+    },
+    {
+      "key": "lobby_not_found",
+      "value": "लॉबी नहीं मिली।"
+    },
+    {
+      "key": "Cancel_Ready",
+      "value": "रद्द करें"
+    },
+    {
+      "key": "lobby_entered_spectator",
+      "value": "एक खिलाड़ी दर्शक के रूप में लॉबी में प्रवेश किया।"
+    },
+    {
+      "key": "lobby_exited_spectator",
+      "value": "एक खिलाड़ी जो दर्शक था, लॉबी से बाहर हो गया।"
+    },
     {
       "key": "downloading_title",
       "value": "दस्ता डाउनलोड करें"
@@ -878,6 +896,5 @@
       "key": "lobby_client_not_ready",
       "value": "दूसरा खिलाड़ी अभी तैयार नहीं है।"
     }
-
   ]
 }

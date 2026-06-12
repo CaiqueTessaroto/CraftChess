@@ -812,7 +812,6 @@
       "key": "cartase.enter",
       "value": "支持项目"
     },
-
     {
       "key": "lobby_no_player",
       "value": "没有其他玩家连接到大厅。"
@@ -857,10 +856,30 @@
       "key": "READY",
       "value": "准备就绪"
     },
-  { "key": "lobby_full", "value": "大厅已满。" },
-  { "key": "lobby_error", "value": "尝试进入大厅时出错。" },
-  { "key": "lobby_not_found", "value": "未找到大厅。" },
-  { "key": "Cancel_Ready", "value": "取消" },
+    {
+      "key": "lobby_full",
+      "value": "大厅已满。"
+    },
+    {
+      "key": "lobby_error",
+      "value": "尝试进入大厅时出错。"
+    },
+    {
+      "key": "lobby_not_found",
+      "value": "未找到大厅。"
+    },
+    {
+      "key": "Cancel_Ready",
+      "value": "取消"
+    },
+    {
+      "key": "lobby_entered_spectator",
+      "value": "一名玩家以观战者身份进入大厅。"
+    },
+    {
+      "key": "lobby_exited_spectator",
+      "value": "一名曾是观战者的玩家离开了大厅。"
+    },
     {
       "key": "downloading_title",
       "value": "下载小队"
@@ -877,6 +896,5 @@
       "key": "lobby_client_not_ready",
       "value": "另一名玩家尚未准备就绪。"
     }
-
   ]
 }

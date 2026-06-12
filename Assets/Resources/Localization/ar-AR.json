@@ -812,8 +812,6 @@
       "key": "cartase.enter",
       "value": "ادعم المشروع"
     },
-
-
     {
       "key": "lobby_no_player",
       "value": "لا يوجد لاعب آخر متصل باللوبي."
@@ -858,10 +856,30 @@
       "key": "READY",
       "value": "جاهز"
     },
-  { "key": "lobby_full", "value": "اللوبي ممتلئ." },
-  { "key": "lobby_error", "value": "خطأ أثناء محاولة الدخول إلى اللوبي." },
-  { "key": "lobby_not_found", "value": "اللوبي غير موجود." },
-  { "key": "Cancel_Ready", "value": "إلغاء" },
+    {
+      "key": "lobby_full",
+      "value": "اللوبي ممتلئ."
+    },
+    {
+      "key": "lobby_error",
+      "value": "خطأ أثناء محاولة الدخول إلى اللوبي."
+    },
+    {
+      "key": "lobby_not_found",
+      "value": "اللوبي غير موجود."
+    },
+    {
+      "key": "Cancel_Ready",
+      "value": "إلغاء"
+    },
+    {
+      "key": "lobby_entered_spectator",
+      "value": "دخل لاعب إلى اللوبي كمتفرج."
+    },
+    {
+      "key": "lobby_exited_spectator",
+      "value": "غادر لاعب كان متفرجًا اللوبي."
+    },
     {
       "key": "downloading_title",
       "value": "تنزيل الفريق"
@@ -878,6 +896,5 @@
       "key": "lobby_client_not_ready",
       "value": "اللاعب الآخر ليس جاهزًا بعد."
     }
-    
   ]
 }
