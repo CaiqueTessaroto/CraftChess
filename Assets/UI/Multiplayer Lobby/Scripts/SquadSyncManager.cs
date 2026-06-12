@@ -240,6 +240,15 @@ public class SquadSyncManager : NetworkBehaviour
 
         Debug.Log($"[SquadSync] Client {clientId} conectou.");
 
+        if (isPlayer)
+            StartCoroutine(SendProfileImageDelayed(clientId));
+        else
+        {
+            MultiplayerLobbyState.SendReadyStateToHost(false);
+            StartCoroutine(SendExistingProfileImagesToSpectator(clientId));
+            return;
+        }
+
         if (MultiplayerLobbyState.WhiteSquad != null)
         {
             var payload = SquadJsonPayloadRawFromDisc(true);
@@ -268,10 +277,6 @@ public class SquadSyncManager : NetworkBehaviour
             }
         }
 
-        if (isPlayer)
-            StartCoroutine(SendProfileImageDelayed(clientId));
-        else
-            StartCoroutine(SendExistingProfileImagesToSpectator(clientId));
     }
 
     private IEnumerator SendExistingProfileImagesToSpectator(ulong clientId)
@@ -384,14 +389,16 @@ public class SquadSyncManager : NetworkBehaviour
 
         if (isMultiplayerScene)
         {
-            MultiplayerPieceController mp =
-                FindFirstObjectByType<MultiplayerPieceController>();
-
-            if (mp != null)
-                mp.EndGameClientLoseConnection();
-
             if (isPlayer)
+            {
+                MultiplayerPieceController mp =
+                    FindFirstObjectByType<MultiplayerPieceController>();
+
+                if (mp != null)
+                    mp.EndGameClientLoseConnection();
+
                 MultiplayerLobbyState.ClientProfileImageRaw = null;
+            }
         }
 
         if (MultiplayerLobbyUI.Instance)

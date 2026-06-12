@@ -228,49 +228,6 @@ public class NetworkLobbyManager : MonoBehaviour
         StartCoroutine(LeaveRoutine(scene));
     }
 
-
-    public async void LeaveLobby(string scene = null)
-    {
-        try
-        {
-            // CLIENTE
-            if (NetworkManager.Singleton.IsClient &&
-                !NetworkManager.Singleton.IsHost)
-            {
-                await LobbyService.Instance.RemovePlayerAsync(
-                    currentLobby.Id,
-                    Unity.Services.Authentication.AuthenticationService
-                        .Instance.PlayerId
-                );
-
-                StartCoroutine(ShutdownAndLeave(scene));
-
-                //CancelInvoke();
-                //StopAllCoroutines();
-
-                Debug.Log("Cliente saiu do lobby");
-            }
-
-            // HOST
-            else if (NetworkManager.Singleton.IsHost)
-            {
-                NotifyHostLeftClientRpc(); // Avisa clientes primeiro
-
-                await LobbyService.Instance.DeleteLobbyAsync(currentLobby.Id);
-
-                StartCoroutine(ShutdownAndLeave(scene));
-
-                Debug.Log("Host encerrou o lobby");
-            }
-
-            currentLobby = null;
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError(ex);
-        }
-    }
-
     public IEnumerator LeaveRoutine(string scene)
     {
         yield return null;
@@ -278,52 +235,7 @@ public class NetworkLobbyManager : MonoBehaviour
         if (!string.IsNullOrEmpty(scene))
             SceneManager.LoadScene(scene);
     }
-    private IEnumerator ShutdownAndLeave(string scene)
-    {
-        yield return new WaitForSeconds(0.5f); // Aguarda clientes receberem o RPC
 
-        NetworkManager.Singleton.Shutdown();
-
-        yield return null;
-
-        if (scene == "Menu")
-            Destroy(NetworkManager.Singleton.gameObject);
-
-        if (!string.IsNullOrEmpty(scene))
-            SceneManager.LoadScene(scene);
-    }
-
-
-    [ClientRpc]
-    private void NotifyHostLeftClientRpc()
-    {
-        if (NetworkManager.Singleton.IsHost) return;
-
-        string scene = SceneManager.GetActiveScene().name;
-
-        if (scene == "Multiplayer Lobby")
-        {
-            HandleDisconnect("Menu");
-        }
-        else if (scene == "Multiplayer")
-        {
-            currentLobby = null;
-            if (PieceControllerNetwork.Instance != null)
-                PieceControllerNetwork.Instance.SendGiveUp();
-        }
-    }
-
-    /*
-    public void HandleDisconnect(string scene = "Menu")
-    {
-        MultiplayerLobbyState.Reset();
-        currentLobby = null;
-        NetworkManager.Singleton.Shutdown();
-
-        if (!string.IsNullOrEmpty(scene))
-            SceneManager.LoadScene(scene);
-    }
-    */
 
     bool _disconnecting = false;
     public async void HandleDisconnect(string scene = "Menu")
@@ -365,18 +277,6 @@ public class NetworkLobbyManager : MonoBehaviour
 
         _disconnecting = false;
     }
-
-    private IEnumerator HostShutdownSequence(string scene)
-    {
-        NotifyHostLeftClientRpc();
-        yield return new WaitForSeconds(0.3f);
-        NetworkManager.Singleton.Shutdown();
-        yield return null;
-        if (!string.IsNullOrEmpty(scene))
-            SceneManager.LoadScene(scene);
-    }
-
-
 
     private Coroutine _pollCoroutine;
 

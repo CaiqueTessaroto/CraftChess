@@ -140,6 +140,10 @@ public class PieceControllerNetwork : NetworkBehaviour
     private void GiveUpServerRpc(ServerRpcParams rpcParams = default)
     {
         ulong senderId = rpcParams.Receive.SenderClientId;
+
+        if (senderId != NetworkManager.ServerClientId && senderId.ToString() != MultiplayerLobbyState.PlayerClientId)
+            return;
+
         bool senderIsHost = senderId == NetworkManager.ServerClientId;
         bool hostIsWhite = MatchData.Instance.HostIsWhite;
 

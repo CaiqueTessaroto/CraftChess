@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "0080009286",
         "name": "com.GarageIndieStudio.CraftChess",
-        "processId": 19357,
+        "processId": 5638,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -234,6 +234,36 @@
             "deviceId": "0080009286",
             "name": "com.GarageIndieStudio.CraftChess",
             "processId": 19357,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 28105,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 6231,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 13315,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 28415,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 5638,
             "exited": false
         }
     ],

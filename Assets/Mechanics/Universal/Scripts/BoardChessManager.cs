@@ -146,6 +146,15 @@ public class BoardChessManager : MonoBehaviour
             }
         }
 
+        if (isMultiplayer)
+        {
+            if (NetworkLobbyManager.Instance.isSpectator)
+            {
+                gameInterfaceManager.MenuBtn.gameObject.SetActive(true);
+                gameInterfaceManager.giveUpBtn.gameObject.SetActive(false);
+            }
+        }
+
         if (IAvsIA)
         {
             gameInterfaceManager.giveUpBtn.gameObject.SetActive(false);
