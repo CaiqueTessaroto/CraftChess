@@ -244,7 +244,6 @@ public class SquadSyncManager : NetworkBehaviour
             StartCoroutine(SendProfileImageDelayed(clientId));
         else
         {
-            MultiplayerLobbyState.SendReadyStateToHost(false);
             StartCoroutine(SendExistingProfileImagesToSpectator(clientId));
             return;
         }
@@ -276,6 +275,8 @@ public class SquadSyncManager : NetworkBehaviour
                 StartCoroutine(SendSpritesToClient(NetworkManager.Singleton.ConnectedClientsIds, false));
             }
         }
+
+        MultiplayerLobbyState.SendReadyStateToHost(false);
 
     }
 
