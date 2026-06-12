@@ -22,7 +22,6 @@ public class NetworkLobbyManager : MonoBehaviour
 
     public Lobby currentLobby;
 
-
     public NetworkVariable<FixedString32Bytes> LobbyCode =
         new NetworkVariable<FixedString32Bytes>();
 
@@ -36,7 +35,7 @@ public class NetworkLobbyManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
+            //    Destroy(gameObject);
             return;
         }
 
@@ -176,39 +175,18 @@ public class NetworkLobbyManager : MonoBehaviour
     {
         try
         {
-            if (currentLobby != null && !string.IsNullOrEmpty(currentLobby.Id))
-            {
-                Lobby lobby = await LobbyService.Instance.ReconnectToLobbyAsync(currentLobby.Id);
-                await SetupRelayAndStart(lobby, scene);
-                return;
-            }
+            Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(
+                lobbyCode,
+                new JoinLobbyByCodeOptions()
+            );
 
-            Debug.LogWarning("currentLobby é nulo. Tentando entrar novamente pelo código.");
-
-            Lobby newLobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode);
-            await SetupRelayAndStart(newLobby, scene);
+            await SetupRelayAndStart(lobby, scene);
         }
-        catch (LobbyServiceException)
+        catch (LobbyServiceException ex)
         {
-            // Opção 2: Se reconectar falhar, sair e entrar de novo
-            try
-            {
-                if (currentLobby != null)
-                {
-                    await LobbyService.Instance.RemovePlayerAsync(
-                        currentLobby.Id,
-                        AuthenticationService.Instance.PlayerId
-                    );
-                }
-
-                Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode);
-                await SetupRelayAndStart(lobby, scene);
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogError($"Falha ao re-entrar no lobby: {ex}");
-            }
+            Debug.LogError(ex);
         }
+
     }
 
     private async Task SetupRelayAndStart(Lobby lobby, string scene)
@@ -231,7 +209,6 @@ public class NetworkLobbyManager : MonoBehaviour
             });
 
         currentLobby = lobby;
-
 
         string relayJoinCode = lobby.Data["joinCode"].Value;
 
@@ -348,21 +325,45 @@ public class NetworkLobbyManager : MonoBehaviour
     }
     */
 
-    public void HandleDisconnect(string scene = "Menu")
+    bool _disconnecting = false;
+    public async void HandleDisconnect(string scene = "Menu")
     {
+        if (_disconnecting)
+            return;
+
+        _disconnecting = true;
+
+        try
+        {
+            if (currentLobby != null &&
+                AuthenticationService.Instance.IsSignedIn)
+            {
+                if (NetworkManager.Singleton.IsHost)
+                    await LobbyService.Instance.DeleteLobbyAsync(currentLobby.Id);
+                else
+                {
+                    await LobbyService.Instance.RemovePlayerAsync(
+                        currentLobby.Id,
+                        AuthenticationService.Instance.PlayerId
+                    );
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"RemovePlayer falhou: {e}");
+        }
+
         MultiplayerLobbyState.Reset();
         currentLobby = null;
 
-        if (NetworkManager.Singleton.IsHost)
-        {
-            StartCoroutine(HostShutdownSequence(scene));
-        }
-        else
-        {
+        if (NetworkManager.Singleton != null)
             NetworkManager.Singleton.Shutdown();
-            if (!string.IsNullOrEmpty(scene))
-                SceneManager.LoadScene(scene);
-        }
+
+        if (!string.IsNullOrEmpty(scene))
+            SceneManager.LoadScene(scene);
+
+        _disconnecting = false;
     }
 
     private IEnumerator HostShutdownSequence(string scene)

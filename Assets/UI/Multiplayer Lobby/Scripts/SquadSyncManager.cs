@@ -23,6 +23,10 @@ public class SquadSyncManager : NetworkBehaviour
     private const string MSG_PROFILE_HOST_TO_CLIENT = "ProfileImage_H2C";
     private const string MSG_PROFILE_CLIENT_TO_HOST = "ProfileImage_C2H";
 
+
+    private const string MSG_HOST_PROFILE_TO_CLIENT = "HostProfile";
+    private const string MSG_PLAYER_PROFILE_TO_CLIENT = "PlayerProfile";
+
     // ─── Estado interno ────────────────────────────────────────────────────
     private Dictionary<string, Sprite> pendingSpritesWhite = new Dictionary<string, Sprite>();
     private Dictionary<string, Sprite> pendingSpritesBlack = new Dictionary<string, Sprite>();
@@ -64,15 +68,24 @@ public class SquadSyncManager : NetworkBehaviour
             NetworkManager.Singleton.CustomMessagingManager
                 .RegisterNamedMessageHandler(MSG_SQUAD_JSON_HOST_TO_CLIENT, OnReceiveSquadJsonFromHost);
 
-            StartCoroutine(SendProfileImageDelayed_Client());
+            if (!NetworkLobbyManager.Instance.isSpectator)
+                StartCoroutine(SendProfileImageDelayed_Client());
         }
+
+        NetworkManager.Singleton.CustomMessagingManager.RegisterNamedMessageHandler(
+            MSG_HOST_PROFILE_TO_CLIENT,
+            OnReceiveHostProfile);
+
+        NetworkManager.Singleton.CustomMessagingManager.RegisterNamedMessageHandler(
+            MSG_PLAYER_PROFILE_TO_CLIENT,
+            OnReceivePlayerProfile);
 
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
     }
 
     public override void OnNetworkDespawn()
     {
-        if (NetworkManager.Singleton != null)
+        if (NetworkManager.Singleton == null)
             return;
 
         if (NetworkManager.Singleton?.CustomMessagingManager != null)
@@ -89,6 +102,13 @@ public class SquadSyncManager : NetworkBehaviour
                 .UnregisterNamedMessageHandler(MSG_SQUAD_JSON_CLIENT_TO_HOST);
             NetworkManager.Singleton.CustomMessagingManager
                 .UnregisterNamedMessageHandler(MSG_SQUAD_JSON_HOST_TO_CLIENT);
+
+
+            NetworkManager.Singleton.CustomMessagingManager
+                .UnregisterNamedMessageHandler(MSG_HOST_PROFILE_TO_CLIENT);
+
+            NetworkManager.Singleton.CustomMessagingManager
+                .UnregisterNamedMessageHandler(MSG_PLAYER_PROFILE_TO_CLIENT);
         }
 
         if (IsHost)
@@ -200,7 +220,9 @@ public class SquadSyncManager : NetworkBehaviour
 
         if (clientId == NetworkManager.ServerClientId) return;
 
-        if (string.IsNullOrEmpty(MultiplayerLobbyState.PlayerClientId))
+        bool isPlayer = string.IsNullOrEmpty(MultiplayerLobbyState.PlayerClientId);
+
+        if (isPlayer)
         {
             MultiplayerLobbyState.PlayerClientId = clientId.ToString();
             //    Debug.Log($"[SquadSync] PlayerClientId definido: {clientId}");
@@ -246,7 +268,50 @@ public class SquadSyncManager : NetworkBehaviour
             }
         }
 
-        StartCoroutine(SendProfileImageDelayed(clientId));
+        if (isPlayer)
+            StartCoroutine(SendProfileImageDelayed(clientId));
+        else
+            StartCoroutine(SendExistingProfileImagesToSpectator(clientId));
+    }
+
+    private IEnumerator SendExistingProfileImagesToSpectator(ulong clientId)
+    {
+        yield return new WaitForSeconds(1f);
+
+        SendStoredProfileImage(
+            MultiplayerLobbyState.HostProfileImageRaw,
+            clientId,
+            MSG_HOST_PROFILE_TO_CLIENT);
+
+        SendStoredProfileImage(
+            MultiplayerLobbyState.ClientProfileImageRaw,
+            clientId,
+            MSG_PLAYER_PROFILE_TO_CLIENT);
+    }
+
+    private void SendStoredProfileImage(
+    byte[] raw,
+    ulong targetClientId,
+    string messageName)
+    {
+        if (raw == null || raw.Length == 0)
+            return;
+
+        using var writer = new FastBufferWriter(
+            4 + raw.Length,
+            Allocator.Temp);
+
+        writer.WriteValueSafe(raw.Length);
+        writer.WriteBytesSafe(raw);
+
+        NetworkManager.Singleton.CustomMessagingManager.SendNamedMessage(
+            messageName,
+            targetClientId,
+            writer,
+            NetworkDelivery.ReliableFragmentedSequenced);
+
+        Debug.Log(
+            $"[SquadSync] Stored profile enviada para {targetClientId} ({raw.Length / 1024f:F1} kb)");
     }
 
     public void BroadcastSquadsToSpectators()
@@ -288,70 +353,118 @@ public class SquadSyncManager : NetworkBehaviour
 
     private void OnClientDisconnect(ulong clientId)
     {
-        bool multiplayerScene = SceneManager.GetActiveScene().name == "Multiplayer";
-        bool lobbyScene = SceneManager.GetActiveScene().name == "Multiplayer Lobby";
+        bool isMultiplayerScene = SceneManager.GetActiveScene().name == "Multiplayer";
+        bool isLobbyScene = SceneManager.GetActiveScene().name == "Multiplayer Lobby";
 
         if (IsHost)
         {
+            HandleHostDisconnect(clientId, isMultiplayerScene);
+            return;
+        }
 
-            if (clientId.ToString() == MultiplayerLobbyState.PlayerClientId)
+        HandleClientDisconnect(clientId, isLobbyScene, isMultiplayerScene);
+    }
+
+    private void HandleHostDisconnect(ulong clientId, bool isMultiplayerScene)
+    {
+        bool isPlayer = clientId.ToString() == MultiplayerLobbyState.PlayerClientId;
+
+        if (clientId != NetworkManager.ServerClientId)
+        {
+            if (isPlayer)
             {
                 MultiplayerLobbyState.PlayerClientId = null;
-                //Debug.Log($"[SquadSync] PlayerClientId {clientId} desconectou, limpando.");
-                if (clientId != NetworkManager.ServerClientId)
-                {
-                    string text = UIHelperUtils.T("lobby_exited");
-                    if (string.IsNullOrEmpty(text)) text = "A player has left the lobby.";
-                    FileManager.Instance.SpawnMessage(text);
-                }
+                ShowPlayerLeftMessage();
             }
             else
             {
-                if (clientId != NetworkManager.ServerClientId)
-                {
-                    string text = UIHelperUtils.T("lobby_exited_spectator");
-                    if (string.IsNullOrEmpty(text)) text = "A player who was a spectator left the lobby.";
-                    FileManager.Instance.SpawnMessage(text);
-                }
+                ShowSpectatorLeftMessage();
             }
+        }
 
-            if (multiplayerScene)
-            {
-                MultiplayerPieceController mp = FindFirstObjectByType<MultiplayerPieceController>();
-                if (mp != null) mp.EndGameClientLoseConnection();
+        if (isMultiplayerScene)
+        {
+            MultiplayerPieceController mp =
+                FindFirstObjectByType<MultiplayerPieceController>();
 
+            if (mp != null)
+                mp.EndGameClientLoseConnection();
+
+            if (isPlayer)
                 MultiplayerLobbyState.ClientProfileImageRaw = null;
-            }
+        }
 
-            if (MultiplayerLobbyUI.Instance)
+        if (MultiplayerLobbyUI.Instance)
+        {
+            if (isPlayer)
                 MultiplayerLobbyUI.Instance.play2ProfileImage.sprite =
                     MultiplayerLobbyUI.Instance.defaultProfileSprite;
         }
-        else
+    }
+
+    private void HandleClientDisconnect(
+        ulong clientId,
+        bool isLobbyScene,
+        bool isMultiplayerScene)
+    {
+        bool hostDisconnected =
+            clientId == NetworkManager.ServerClientId;
+
+        bool spectatorDisconnected =
+            clientId.ToString() != MultiplayerLobbyState.PlayerClientId && clientId != NetworkManager.ServerClientId;
+
+        if (isLobbyScene)
         {
-            if (lobbyScene)
-            {
-                NetworkLobbyManager.Instance.currentLobby = null;
-                MultiplayerLobbyState.Reset();
-                SceneManager.LoadScene("Menu");
-            }
-            else if (multiplayerScene)
-            {
-                string text = UIHelperUtils.T("lobby_exited");
-                if (string.IsNullOrEmpty(text)) text = "A player has left the lobby.";
-                FileManager.Instance.SpawnMessage(text);
-
-                NetworkLobbyManager.Instance.currentLobby = null;
-
-                MultiplayerPieceController mp = FindFirstObjectByType<MultiplayerPieceController>();
-                if (mp != null && !NetworkLobbyManager.Instance.IsHost)
-                    mp.EndGameHostLoseConnection();
-            }
-            else
+            if (hostDisconnected)
             {
                 NetworkLobbyManager.Instance.HandleDisconnect();
+                return;
+            }
+
+            if (spectatorDisconnected)
+                ShowSpectatorLeftMessage();
+
+            return;
+        }
+
+        if (isMultiplayerScene)
+        {
+            if (hostDisconnected)
+            {
+                ShowPlayerLeftMessage();
+                NetworkLobbyManager.Instance.currentLobby = null;
+
+                MultiplayerPieceController mp =
+                    FindFirstObjectByType<MultiplayerPieceController>();
+
+                if (mp != null)
+                    mp.EndGameHostLoseConnection();
+            }
+            else if (spectatorDisconnected)
+            {
+                ShowSpectatorLeftMessage();
             }
         }
+    }
+
+    private void ShowPlayerLeftMessage()
+    {
+        string text = UIHelperUtils.T("lobby_exited");
+
+        if (string.IsNullOrEmpty(text))
+            text = "A player has left the lobby.";
+
+        FileManager.Instance.SpawnMessage(text);
+    }
+
+    private void ShowSpectatorLeftMessage()
+    {
+        string text = UIHelperUtils.T("lobby_exited_spectator");
+
+        if (string.IsNullOrEmpty(text))
+            text = "A player who was a spectator left the lobby.";
+
+        FileManager.Instance.SpawnMessage(text);
     }
 
     // ───────────────────────────────────────────────────────────────────────
@@ -410,22 +523,38 @@ public class SquadSyncManager : NetworkBehaviour
         Debug.Log($"[SquadSync] ProfileImage enviada | {raw.Length / 1024f:F1} kb | para: {(toHost ? "Host" : "Client")}");
     }
 
-    private void OnReceiveProfileFromClient(ulong senderId, FastBufferReader reader)
-        => ProcessReceivedProfile(reader);
-
     private void OnReceiveProfileFromHost(ulong senderId, FastBufferReader reader)
-        => ProcessReceivedProfile(reader);
+        => ProcessReceivedProfile(reader, true);
 
-    private void ProcessReceivedProfile(FastBufferReader reader)
+    private void OnReceiveProfileFromClient(ulong senderId, FastBufferReader reader)
+        => ProcessReceivedProfile(reader, false);
+
+    private void OnReceiveHostProfile(ulong senderId, FastBufferReader reader)
+        => ProcessReceivedProfile(reader, true);
+
+    private void OnReceivePlayerProfile(ulong senderId, FastBufferReader reader)
+        => ProcessReceivedProfile(reader, false);
+
+    private void ProcessReceivedProfile(
+        FastBufferReader reader,
+        bool isHostProfile)
     {
         reader.ReadValueSafe(out int length);
+
         byte[] raw = new byte[length];
         reader.ReadBytesSafe(ref raw, length);
 
-        if (IsHost) MultiplayerLobbyState.ClientProfileImageRaw = raw;
-        else MultiplayerLobbyState.HostProfileImageRaw = raw;
+        if (isHostProfile)
+        {
+            MultiplayerLobbyState.HostProfileImageRaw = raw;
+        }
+        else
+        {
+            MultiplayerLobbyState.ClientProfileImageRaw = raw;
+        }
 
-        Debug.Log($"[SquadSync] ProfileImage recebida | {length / 1024f:F1} kb");
+        Debug.Log(
+            $"[SquadSync] ProfileImage recebida ({(isHostProfile ? "Host" : "Player")}) | {length / 1024f:F1} kb");
 
         MultiplayerLobbyUI.Instance?.ApplyProfileImages();
     }

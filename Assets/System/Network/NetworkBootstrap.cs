@@ -4,8 +4,17 @@ using Unity.Services.Authentication;
 
 public class NetworkBootstrap : MonoBehaviour
 {
+
+    public static NetworkBootstrap Instance;
     async void Awake()
     {
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         await UnityServices.InitializeAsync();
 
         if (!AuthenticationService.Instance.IsSignedIn)
@@ -16,6 +25,9 @@ public class NetworkBootstrap : MonoBehaviour
         Debug.Log("Unity Services Inicializado");
         Debug.Log("Player ID: " + AuthenticationService.Instance.PlayerId);
 
+        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
+
+
 }
