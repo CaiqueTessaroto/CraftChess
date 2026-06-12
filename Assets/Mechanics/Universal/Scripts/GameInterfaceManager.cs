@@ -160,6 +160,16 @@ public class GameInterfaceManager : MonoBehaviour
 
         });
 
+        if(boardChessManager.isMultiplayer)
+        {
+            if(NetworkLobbyManager.Instance.isSpectator)
+            {
+                MenuBtn.gameObject.SetActive(true);
+                giveUpBtn.gameObject.SetActive(false);
+            }
+
+        }
+
 
     }
 

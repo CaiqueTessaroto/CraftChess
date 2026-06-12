@@ -1,5 +1,5 @@
 # ninja log v5
-8	388	8025654167363808	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	207f0db514810c0e
-388	673	8025654169843484	D:/Workspace Unity/CraftChess/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4h3d2c40/obj/arm64-v8a/libswappywrapper.so	1c9d35a4705c4637
 4	359	8026507939604881	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	207f0db514810c0e
 359	596	8026507941746461	D:/Workspace Unity/CraftChess/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4h3d2c40/obj/arm64-v8a/libswappywrapper.so	1c9d35a4705c4637
+5	456	8028156960197416	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	207f0db514810c0e
+456	680	8028156962284631	D:/Workspace Unity/CraftChess/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4h3d2c40/obj/arm64-v8a/libswappywrapper.so	1c9d35a4705c4637

@@ -26,6 +26,7 @@ public class NetworkLobbyManager : MonoBehaviour
         new NetworkVariable<FixedString32Bytes>();
 
     public bool IsHost = false;
+    public bool isSpectator = false;
 
     [Header("Player")]
     public Sprite CurrentSprite;
@@ -122,7 +123,7 @@ public class NetworkLobbyManager : MonoBehaviour
             int maxPlayers = int.Parse(lobby.Data["maxPlayers"].Value);
             int realPlayers = CountRealPlayers(lobby); // veja abaixo
 
-            bool isSpectator = realPlayers >= maxPlayers;
+            isSpectator = realPlayers >= maxPlayers;
             MultiplayerLobbyState.IsSpectator = isSpectator;
 
             await SetupRelayAndStart(lobby, scene);
@@ -136,7 +137,7 @@ public class NetworkLobbyManager : MonoBehaviour
             }
             else if (ex.Reason == LobbyExceptionReason.LobbyNotFound)
                 FileManager.Instance.SpawnMessage(UIHelperUtils.T("lobby_not_found") ?? "Lobby not found.");
-            else if (ex.Reason == LobbyExceptionReason.LobbyFull) // ← adicionar
+            else if (ex.Reason == LobbyExceptionReason.LobbyFull)
             {
                 FileManager.Instance.SpawnMessage(UIHelperUtils.T("lobby_full") ?? "Lobby is full.");
             }

@@ -181,16 +181,10 @@ public class BoardChessManager : MonoBehaviour
 
     private bool ShouldReverseGrid()
     {
-        // Jogo contra Bot: inverte se o Bot está no Squads[0] (lado branco)
-        if (!localGame && !IAvsIA)
-        {
-            if (Squads[0].Player.name == "Bot")
-                return true;
-        }
         // Multiplayer: inverte se o jogador local for preto
         if (MatchData.Instance.isMultiplayer)
         {
-            if (MultiplayerLobbyState.IsSpectator)
+            if (NetworkLobbyManager.Instance.isSpectator)
                 return false;
             // Host é branco → Client é preto → Client inverte
             // Host é preto  → Host inverte
@@ -200,6 +194,14 @@ public class BoardChessManager : MonoBehaviour
 
             return localPlayerIsBlack;
         }
+
+        // Jogo contra Bot: inverte se o Bot está no Squads[0] (lado branco)
+        if (!localGame && !IAvsIA)
+        {
+            if (Squads[0].Player.name == "Bot")
+                return true;
+        }
+        
         return false;
     }
 
@@ -222,7 +224,7 @@ public class BoardChessManager : MonoBehaviour
     {
         if (MatchData.Instance.isMultiplayer)
         {
-            if (MultiplayerLobbyState.IsSpectator)
+            if (NetworkLobbyManager.Instance.isSpectator)
             {
                 return -1; // ID especial para espectadores
             }
