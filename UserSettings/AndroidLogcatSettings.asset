@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "0080009286",
         "name": "com.GarageIndieStudio.CraftChess",
-        "processId": 31326,
+        "processId": 32047,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -162,6 +162,60 @@
             "deviceId": "0080009286",
             "name": "com.GarageIndieStudio.CraftChess",
             "processId": 31326,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 21677,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 16626,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 5545,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 15290,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 1508,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 16518,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 8023,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 18661,
+            "exited": false
+        },
+        {
+            "deviceId": "0080009286",
+            "name": "com.GarageIndieStudio.CraftChess",
+            "processId": 32047,
             "exited": false
         }
     ],

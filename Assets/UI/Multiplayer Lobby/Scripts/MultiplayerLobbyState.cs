@@ -18,6 +18,7 @@ public static class MultiplayerLobbyState
     public static Dictionary<string, byte[]> BlackSpritesRaw = new Dictionary<string, byte[]>();
     public static byte[] HostProfileImageRaw;
     public static byte[] ClientProfileImageRaw;
+    public static string PlayerClientId;
     public static void Log(string context = "")
     {
         string white = WhiteSquad?.Data?.Name ?? "null";
@@ -42,16 +43,19 @@ public static class MultiplayerLobbyState
             Lobby lobby = NetworkLobbyManager.Instance?.currentLobby;
             if (lobby == null) return false;
 
-            // Procura o player que NÃO é o host
             foreach (var player in lobby.Players)
             {
                 if (player.Id == lobby.HostId) continue;
 
+                bool isSpectator = player.Data != null
+                    && player.Data.ContainsKey("isSpectator")
+                    && player.Data["isSpectator"].Value == "true";
+
+                if (isSpectator) continue;
+
                 if (player.Data != null &&
                     player.Data.TryGetValue(LobbyConstants.ClientReady, out PlayerDataObject data))
-                {
                     return data.Value == "true";
-                }
             }
 
             return false;
@@ -122,14 +126,14 @@ public static class MultiplayerLobbyState
 
         // ─── JSON do squad ────────────────────────────────────────────────
         string squadJson = JsonUtility.ToJson(squad.Data, true);
-        string squadJsonPath = Path.Combine(squadFolder, folderName  + ".json");
+        string squadJsonPath = Path.Combine(squadFolder, folderName + ".json");
         File.WriteAllText(squadJsonPath, squadJson);
         Debug.Log($"[Download] Squad JSON salvo: {squadJsonPath}");
 
         // ─── Imagem do squad ──────────────────────────────────────────────
         if (squad.SquadImageRaw != null)
         {
-            string imagePath = Path.Combine(squadFolder, folderName  + ".png");
+            string imagePath = Path.Combine(squadFolder, folderName + ".png");
             File.WriteAllBytes(imagePath, squad.SquadImageRaw);
             Debug.Log($"[Download] Squad image salva: {imagePath}");
         }
@@ -182,6 +186,7 @@ public static class MultiplayerLobbyState
         LocalIsWhite = false;
         WhiteSquadOwnerId = null;
         BlackSquadOwnerId = null;
+        PlayerClientId = null;
 
         WhiteSpritesRaw.Clear();
         BlackSpritesRaw.Clear();

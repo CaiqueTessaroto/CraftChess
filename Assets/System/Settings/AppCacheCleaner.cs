@@ -21,6 +21,7 @@ public class AppCacheCleaner : MonoBehaviour
             Instance = this;
         }
     }
+    
     public void CheckAndClearCache()
     {
         string path = Application.temporaryCachePath;

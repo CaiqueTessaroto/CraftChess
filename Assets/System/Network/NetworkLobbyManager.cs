@@ -22,6 +22,7 @@ public class NetworkLobbyManager : MonoBehaviour
 
     public Lobby currentLobby;
 
+
     public NetworkVariable<FixedString32Bytes> LobbyCode =
         new NetworkVariable<FixedString32Bytes>();
 
@@ -150,6 +151,7 @@ public class NetworkLobbyManager : MonoBehaviour
         }
         catch (System.Exception ex)
         {
+            FileManager.Instance.SpawnMessage(ex.Message);
             Debug.LogError(ex);
         }
     }
@@ -174,9 +176,17 @@ public class NetworkLobbyManager : MonoBehaviour
     {
         try
         {
-            // Opção 1: Reconectar direto (mantém o player no lobby)
-            Lobby lobby = await LobbyService.Instance.ReconnectToLobbyAsync(currentLobby?.Id);
-            await SetupRelayAndStart(lobby, scene);
+            if (currentLobby != null && !string.IsNullOrEmpty(currentLobby.Id))
+            {
+                Lobby lobby = await LobbyService.Instance.ReconnectToLobbyAsync(currentLobby.Id);
+                await SetupRelayAndStart(lobby, scene);
+                return;
+            }
+
+            Debug.LogWarning("currentLobby é nulo. Tentando entrar novamente pelo código.");
+
+            Lobby newLobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode);
+            await SetupRelayAndStart(newLobby, scene);
         }
         catch (LobbyServiceException)
         {
@@ -221,6 +231,7 @@ public class NetworkLobbyManager : MonoBehaviour
             });
 
         currentLobby = lobby;
+
 
         string relayJoinCode = lobby.Data["joinCode"].Value;
 

@@ -152,7 +152,17 @@ public class MultiplayerLobbyUI : MonoBehaviour
                 return;
             }
 
-            bool hasClient = NetworkLobbyManager.Instance.currentLobby.Players.Count > 1;
+            bool hasClient = false;
+            foreach (var player in NetworkLobbyManager.Instance.currentLobby.Players)
+            {
+                if (player.Id == NetworkLobbyManager.Instance.currentLobby.HostId) continue;
+
+                bool isSpectator = player.Data != null
+                    && player.Data.ContainsKey("isSpectator")
+                    && player.Data["isSpectator"].Value == "true";
+
+                if (!isSpectator) { hasClient = true; break; }
+            }
 
             if (!hasClient)
             {
@@ -312,6 +322,9 @@ public class MultiplayerLobbyUI : MonoBehaviour
             RestoreStateIfAvailable();
         }
 
+        if (MultiplayerLobbyState.IsSpectator)
+            MultiplayerLobbyState.SendReadyStateToHost(false);
+
     }
 
     private void RestoreStateIfAvailable()
@@ -412,33 +425,49 @@ public class MultiplayerLobbyUI : MonoBehaviour
     private void SetupButtons()
     {
         bool isHost = NetworkManager.Singleton.IsHost;
+        bool isSpectator = MultiplayerLobbyState.IsSpectator;
 
         if (isHost)
             play1ProfileImage.sprite = NetworkLobbyManager.Instance.CurrentSprite;
-        else
+        else if (!isSpectator)
             play2ProfileImage.sprite = NetworkLobbyManager.Instance.CurrentSprite;
 
         play.gameObject.SetActive(isHost);
-        ready.gameObject.SetActive(!isHost);
+        ready.gameObject.SetActive(!isHost && !isSpectator);
+
+        whiteBtn.interactable = !isSpectator;
+        blackBtn.interactable = !isSpectator;
     }
+
+    private bool _lastClientReady = false;
 
     private void OnLobbyUpdated(Lobby lobby)
     {
-        // Só o host precisa reagir ao ready do client
+
+        bool ready = MultiplayerLobbyState.ClientIsReady;
+
+        if (NetworkLobbyManager.Instance.isSpectator)
+        {
+            if (!ready && _lastClientReady)
+            {
+                MultiplayerLobbyState.WhiteSquad = null;
+                MultiplayerLobbyState.BlackSquad = null;
+
+                RefreshLocalUI();
+            }
+            _lastClientReady = ready;
+            return;
+        }
+
         if (!NetworkManager.Singleton.IsHost) return;
 
-        // Aplica visualmente a cor de desabilitado sem alterar interactable
         var colors = play.colors;
-        if (!MultiplayerLobbyState.ClientIsReady)
-        {
-            play.image.color = colors.disabledColor;
-        }
-        else
-        {
-            play.image.color = colors.normalColor; // Para restaurar (volta à cor normal)
-        }
+        play.image.color = ready ? colors.normalColor : colors.disabledColor;
 
-        //play.interactable = MultiplayerLobbyState.ClientIsReady;
+        if (ready && !_lastClientReady)
+            SquadSyncManager.Instance.BroadcastSquadsToSpectators();
+
+        _lastClientReady = ready;
     }
 
     // ───────────────────────────────────────────────────────────────────────
@@ -460,6 +489,7 @@ public class MultiplayerLobbyUI : MonoBehaviour
         SquadSyncManager.Instance.OnRemoteSquadReady -= OnSquadReady;
     }
 
+    int count_squads = 0;
     private void OnSquadReady(bool isWhite)
     {
         MatchSquadData squadWhite = MultiplayerLobbyState.WhiteSquad;
@@ -478,8 +508,18 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
         gridLobby.ClearGrid(gridLobby.posInGrid);
 
-        //Debug.Log($"[MultiplayerLobbyUI] Painel {(isMySquad ? "local" : "oponente")} atualizado.");
-        //Debug.Log($"[MultiplayerLobbyUI] Painel atualizado.");
+
+        if (MultiplayerLobbyState.IsSpectator)
+        {
+            count_squads++;
+            if (count_squads == 2)
+            {
+                if (MultiplayerLobbyState.WhiteSquad != null && MultiplayerLobbyState.BlackSquad != null)
+                    PrepareMatchData();
+
+                count_squads = 0;
+            }
+        }
     }
 
     public void RefreshLocalUI()
@@ -541,13 +581,17 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
     public void UpdateSquadInLobby(MatchSquadData squad, Transform gridPainel, TMP_Text squadName, TMP_Text squadName2, bool isBlack)
     {
+
+        foreach (Transform child in gridPainel)
+            Destroy(child.gameObject);
+
         if (squad != null)
         {
             if (squad.Data.Translate)
             {
                 string name = UIHelperUtils.T(squad.Data.Name);
 
-                if(string.IsNullOrEmpty(name))
+                if (string.IsNullOrEmpty(name))
                     name = squad.Data.Name;
 
                 squadName.text = $"{name}\n{squad.Data.Power}";
