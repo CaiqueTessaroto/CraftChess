@@ -8,10 +8,52 @@ public class PieceControllerNetwork : NetworkBehaviour
     private MultiplayerPieceController mp;
     private PieceController pc;
 
+    public bool simulatePacketLoss = false;
+
+
+    private const float STALL_TIMEOUT = 15f; // segundos sem movimento
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+    }
+
+    private void Update()
+    {
+        if (!IsHost) return;
+
+        EnsureMP();
+        if (mp == null || mp.endGame) return;
+
+        mp.turnStallTimer += Time.deltaTime;
+
+        if (mp.turnStallTimer >= STALL_TIMEOUT)
+        {
+            mp.turnStallTimer = 0f;
+            RequestResyncFromCurrentPlayer();
+        }
+    }
+
+    private void RequestResyncFromCurrentPlayer()
+    {
+        int expectedTurn = mp.moveTracker.GetTurnPlayer();
+        int expectedTurnNumber = mp.moveTracker.GetTurnNumber();
+
+        bool isClientTurn = mp.GetLocalPlayerId() != expectedTurn;
+        if (!isClientTurn) return;
+
+        if (string.IsNullOrEmpty(MultiplayerLobbyState.PlayerClientId)) return;
+        if (!ulong.TryParse(MultiplayerLobbyState.PlayerClientId, out ulong clientId)) return;
+
+        RequestBoardResyncClientRpc(expectedTurnNumber,
+            new ClientRpcParams
+            {
+                Send = new ClientRpcSendParams
+                {
+                    TargetClientIds = new[] { clientId }
+                }
+            });
     }
 
     // ─── Move normal ──────────────────────────────────────────────────────
@@ -26,11 +68,26 @@ public class PieceControllerNetwork : NetworkBehaviour
     private void SendMoveServerRpc(int ox, int oy, int tx, int ty,
         ServerRpcParams rpcParams = default)
     {
+
+        if (simulatePacketLoss)
+        {
+            Debug.Log("[TEST] Pacote descartado intencionalmente.");
+            return; // simula perda
+        }
+
+        ResetStallTimer();
         // 1. Avisa TODOS que há um movimento pendente
         AcknowledgeMoveClientRpc(ox, oy, tx, ty);
 
         // 2. Confirma execução para todos
         ConfirmMoveClientRpc(ox, oy, tx, ty);
+    }
+
+    // chamado pelo host para resetar
+    public void ResetStallTimer()
+    {
+        EnsureMP();
+        mp.turnStallTimer = 0f;
     }
 
     // Fase 1 — salva o movimento pendente em todos os clientes
@@ -66,6 +123,7 @@ public class PieceControllerNetwork : NetworkBehaviour
     private void SendCastleServerRpc(int kox, int koy, int ktx, int kty,
                                      int rox, int roy, int rtx, int rty)
     {
+        ResetStallTimer();
         AcknowledgeCastleClientRpc(kox, koy, ktx, kty, rox, roy, rtx, rty);
         ConfirmCastleClientRpc(kox, koy, ktx, kty, rox, roy, rtx, rty);
     }
@@ -105,6 +163,7 @@ public class PieceControllerNetwork : NetworkBehaviour
     private void SendPromotionServerRpc(int ox, int oy, int tx, int ty,
                                         string pieceName, int playerId)
     {
+        ResetStallTimer();
         AcknowledgePromotionClientRpc(ox, oy, tx, ty, pieceName, playerId);
         ConfirmPromotionClientRpc(ox, oy, tx, ty, pieceName, playerId);
     }
@@ -175,6 +234,32 @@ public class PieceControllerNetwork : NetworkBehaviour
         pc.SetEndGame(black: blackWins, white: whiteWins, draw: draw);
     }
 
+    [ClientRpc]
+    public void RequestBoardResyncClientRpc(int expectedTurn, ClientRpcParams p = default)
+    {
+        EnsureMP();
+        int localTurn = mp.GetCurrentTurn();
+
+        Debug.Log($"[Resync] Host espera turno {expectedTurn}, local é {localTurn}");
+
+        // Turno igual mas cliente tem um movimento gravado = RPC se perdeu
+        if (localTurn == expectedTurn && mp.lastMoveType != MultiplayerPieceController.LastMoveType.None)
+        {
+            mp.ResendLastMove();
+            return;
+        }
+
+        if (localTurn == expectedTurn + 1)
+        {
+            mp.ResendLastMove();
+            return;
+        }
+
+        if (localTurn > expectedTurn + 1)
+        {
+            Debug.LogWarning("[Resync] Gap maior — SendFullBoardState não implementado.");
+        }
+    }
 
     // ─── Helpers ──────────────────────────────────────────────────────────
 

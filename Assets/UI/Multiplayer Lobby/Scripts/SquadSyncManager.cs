@@ -81,6 +81,8 @@ public class SquadSyncManager : NetworkBehaviour
             OnReceivePlayerProfile);
 
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+
+        MultiplayerLobbyState.SendReadyStateToHost(false);
     }
 
     public override void OnNetworkDespawn()
@@ -275,8 +277,6 @@ public class SquadSyncManager : NetworkBehaviour
                 StartCoroutine(SendSpritesToClient(NetworkManager.Singleton.ConnectedClientsIds, false));
             }
         }
-
-        MultiplayerLobbyState.SendReadyStateToHost(false);
 
     }
 

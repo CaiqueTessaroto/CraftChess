@@ -23,17 +23,6 @@ public class ChessClockNetwork : NetworkBehaviour
 
     private Coroutine _tickRoutine;
 
-    // ───────────────────────────────────────────────────────────────────
-    void Start()
-    {
-
-    }
-
-    public override void OnNetworkSpawn()
-    {
-    }
-    // ── API pública ─────────────────────────────────────────────────────
-
     /// <summary>Inicia o relógio. Chame no host ao começar a partida.</summary>
     public void StartClock()
     {
