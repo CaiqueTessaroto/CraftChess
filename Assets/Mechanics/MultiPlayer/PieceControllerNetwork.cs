@@ -69,15 +69,15 @@ public class PieceControllerNetwork : NetworkBehaviour
         ServerRpcParams rpcParams = default)
     {
 
+        ResetStallTimer();
+        // 1. Avisa TODOS que há um movimento pendente
+        AcknowledgeMoveClientRpc(ox, oy, tx, ty);
+
         if (simulatePacketLoss)
         {
             Debug.Log("[TEST] Pacote descartado intencionalmente.");
             return; // simula perda
         }
-
-        ResetStallTimer();
-        // 1. Avisa TODOS que há um movimento pendente
-        AcknowledgeMoveClientRpc(ox, oy, tx, ty);
 
         // 2. Confirma execução para todos
         ConfirmMoveClientRpc(ox, oy, tx, ty);
@@ -235,32 +235,45 @@ public class PieceControllerNetwork : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RequestBoardResyncClientRpc(int expectedTurn, ClientRpcParams p = default)
+    private void RequestBoardResyncClientRpc(int expectedTurn,
+    ClientRpcParams p = default)
     {
         EnsureMP();
         int localTurn = mp.GetCurrentTurn();
 
-        Debug.Log($"[Resync] Host espera turno {expectedTurn}, local é {localTurn}");
-
-        // Turno igual mas cliente tem um movimento gravado = RPC se perdeu
-        if (localTurn == expectedTurn && mp.lastMoveType != MultiplayerPieceController.LastMoveType.None)
-        {
-            mp.ResendLastMove();
-            return;
-        }
+        Debug.Log($"[Resync] Host pediu resync. Host espera turno {expectedTurn}, local é {localTurn}");
 
         if (localTurn == expectedTurn + 1)
         {
+            // Cliente está 1 turno à frente — reenvia o último movimento
             mp.ResendLastMove();
-            return;
         }
-
-        if (localTurn > expectedTurn + 1)
+        else if (localTurn > expectedTurn + 1)
         {
-            Debug.LogWarning("[Resync] Gap maior — SendFullBoardState não implementado.");
+            // Gap maior — envia board state completo
+            //mp.SendFullBoardState();
+            Debug.LogWarning("Gap maior — envia board state completo");
         }
+        // Se igual, ignora (falso alarme)
     }
 
+    // NetworkVariable — sincroniza automaticamente para todos
+    private NetworkVariable<int> authorativeTurnPlayer = new NetworkVariable<int>(
+        0,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server
+    );
+
+    public void UpdateTurnPlayer()
+    {
+        if (!IsHost) return;
+        authorativeTurnPlayer.Value = mp.moveTracker.GetTurnPlayer();
+    }
+
+    public int GetAuthorativeTurnPlayer()
+    {
+        return authorativeTurnPlayer.Value;
+    }
     // ─── Helpers ──────────────────────────────────────────────────────────
 
     private void EnsureMP()

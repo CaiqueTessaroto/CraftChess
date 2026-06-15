@@ -201,7 +201,7 @@ public class MultiplayerPieceController : PieceController
         }
 
         pendingNetworkType = PendingMoveType.None;
-        lastMoveType = LastMoveType.None;
+        //lastMoveType = LastMoveType.None;
 
         // --- lógica original ---
         GameObject pieceAtOrigin = boardManager.GetPieceAtPosition(origin.x, origin.y);
@@ -220,6 +220,10 @@ public class MultiplayerPieceController : PieceController
         base.OnCellClicked(origin, forceMove: true, false);
         base.OnCellClicked(target, forceMove: true, false);
         isReceivingMove = false;
+
+
+        if (NetworkLobbyManager.Instance.IsHost)
+            PieceControllerNetwork.Instance?.UpdateTurnPlayer();
     }
 
     public void ExecuteConfirmedCastle(Vector2Int kingOrigin, Vector2Int kingTarget,
@@ -234,7 +238,7 @@ public class MultiplayerPieceController : PieceController
         }
 
         pendingNetworkType = PendingMoveType.None;
-        lastMoveType = LastMoveType.None;
+        //lastMoveType = LastMoveType.None;
 
         // --- lógica original ---
         GameObject kingObj = boardManager.GetPieceAtPosition(kingOrigin.x, kingOrigin.y);
@@ -258,6 +262,9 @@ public class MultiplayerPieceController : PieceController
         boardManager.HighlightLastMove(kingOrigin, kingTarget);
         boardManager.UpdateBoardControl();
         isReceivingMove = false;
+
+        if (NetworkLobbyManager.Instance.IsHost)
+            PieceControllerNetwork.Instance?.UpdateTurnPlayer();
     }
 
     public void ExecuteConfirmedPromotion(Vector2Int origin, Vector2Int target,
@@ -272,7 +279,7 @@ public class MultiplayerPieceController : PieceController
         }
 
         pendingNetworkType = PendingMoveType.None;
-        lastMoveType = LastMoveType.None;
+        //lastMoveType = LastMoveType.None;
 
         // --- lógica original ---
         GameObject pawnObj = boardManager.GetPieceAtPosition(origin.x, origin.y);
@@ -298,12 +305,16 @@ public class MultiplayerPieceController : PieceController
             pieceName,
             targetPiece
         );
+
+
+        if (NetworkLobbyManager.Instance.IsHost)
+            PieceControllerNetwork.Instance?.UpdateTurnPlayer();
     }
 
     public void ResendLastMove()
     {
-        if (isReceivingMove) return; 
-        
+        if (isReceivingMove) return;
+
         Debug.Log($"[Resync] Reenviando último lance: {lastMoveType}");
 
         switch (lastMoveType)
@@ -334,7 +345,10 @@ public class MultiplayerPieceController : PieceController
 
     public bool IsMyTurnPublic()
     {
-        return moveTracker.GetTurnPlayer() == GetLocalPlayerId();
+        if (PieceControllerNetwork.Instance != null)
+            return PieceControllerNetwork.Instance.GetAuthorativeTurnPlayer() == GetLocalPlayerId();
+
+        return moveTracker.GetTurnPlayer() == GetLocalPlayerId(); // fallback
     }
 
     public int GetLocalPlayerId()
