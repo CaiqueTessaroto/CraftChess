@@ -21,7 +21,7 @@ public class PieceControllerNetwork : NetworkBehaviour
 
     private void Update()
     {
-        if (!IsHost) return;
+        //if (!IsHost) return;
 
         EnsureMP();
         if (mp == null || mp.endGame) return;
@@ -46,14 +46,23 @@ public class PieceControllerNetwork : NetworkBehaviour
         if (string.IsNullOrEmpty(MultiplayerLobbyState.PlayerClientId)) return;
         if (!ulong.TryParse(MultiplayerLobbyState.PlayerClientId, out ulong clientId)) return;
 
-        RequestBoardResyncClientRpc(expectedTurnNumber,
-            new ClientRpcParams
-            {
-                Send = new ClientRpcSendParams
+
+        if (IsHost)
+        {
+            ReportHostTurnClientRpc(expectedTurnNumber,
+                new ClientRpcParams
                 {
-                    TargetClientIds = new[] { clientId }
-                }
-            });
+                    Send = new ClientRpcSendParams
+                    {
+                        TargetClientIds = new[] { clientId }
+                    }
+                });
+        }
+        else
+        {
+            ReportClientTurnServerRpc(expectedTurnNumber);
+        }
+
     }
 
     // ─── Move normal ──────────────────────────────────────────────────────
@@ -234,27 +243,49 @@ public class PieceControllerNetwork : NetworkBehaviour
         pc.SetEndGame(black: blackWins, white: whiteWins, draw: draw);
     }
 
-    [ClientRpc]
-    private void RequestBoardResyncClientRpc(int expectedTurn,
-    ClientRpcParams p = default)
+    [ServerRpc(RequireOwnership = false)]
+    public void ReportClientTurnServerRpc(int clientTurn, ServerRpcParams p = default)
     {
         EnsureMP();
-        int localTurn = mp.GetCurrentTurn();
+        int hostTurn = mp.moveTracker.GetTurnNumber(); // no host
+        int diff = clientTurn - hostTurn;
 
-        Debug.Log($"[Resync] Host pediu resync. Host espera turno {expectedTurn}, local é {localTurn}");
+        Debug.Log($"[Resync] Cliente reportou turno {clientTurn}, host está no {hostTurn}, diff={diff}");
 
-        if (localTurn == expectedTurn + 1)
+        if (diff <= 0) return;
+
+        if (diff == 1)
         {
-            // Cliente está 1 turno à frente — reenvia o último movimento
+            // Host está 1 atrás — reenvia último movimento
             mp.ResendLastMove();
         }
-        else if (localTurn > expectedTurn + 1)
+        else if (diff > 1)
         {
-            // Gap maior — envia board state completo
-            //mp.SendFullBoardState();
-            Debug.LogWarning("Gap maior — envia board state completo");
+            // Gap maior — full board state
+            Debug.LogWarning($"Gap de {diff} — host envia board state completo");
         }
-        // Se igual, ignora (falso alarme)
+    }
+
+    [ClientRpc]
+    public void ReportHostTurnClientRpc(int hostTurn, ClientRpcParams p = default)
+    {
+        EnsureMP();
+        int localTurn = mp.moveTracker.GetTurnNumber();
+        int diff = hostTurn - localTurn;
+
+        Debug.Log($"[Resync] Host no turno {hostTurn}, cliente no turno {localTurn}, diff={diff}");
+
+        if (diff <= 0) return;
+
+        if (diff == 1)
+        {
+            mp.ResendLastMove();
+        }
+        else
+        {
+            Debug.LogWarning($"Gap de {diff} turnos — envia board state completo");
+            // mp.SendFullBoardState();
+        }
     }
 
     // NetworkVariable — sincroniza automaticamente para todos
@@ -263,11 +294,17 @@ public class PieceControllerNetwork : NetworkBehaviour
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server
     );
-
     public void UpdateTurnPlayer()
     {
         if (!IsHost) return;
+
+        EnsureMP();
+
+        if (mp == null || mp.moveTracker == null) return;
+
         authorativeTurnPlayer.Value = mp.moveTracker.GetTurnPlayer();
+
+        Debug.Log($"[TURN AUTH] Turno autoritativo atualizado para: {authorativeTurnPlayer.Value} | TurnNumber={mp.moveTracker.GetTurnNumber()}");
     }
 
     public int GetAuthorativeTurnPlayer()

@@ -129,11 +129,6 @@ public class MultiplayerPieceController : PieceController
         }
     }
 
-    public int GetCurrentTurn()
-    {
-        return moveTracker.GetTurnNumber(); // ou o equivalente no seu MoveTracker
-    }
-
     public enum PendingMoveType { None, Move, Castle, Promotion }
 
     private PendingMoveType pendingNetworkType = PendingMoveType.None;
