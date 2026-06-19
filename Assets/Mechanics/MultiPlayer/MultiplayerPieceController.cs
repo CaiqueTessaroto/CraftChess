@@ -69,7 +69,7 @@ public class MultiplayerPieceController : PieceController
                 lastResyncReportTime = Time.time;
                 PieceControllerNetwork.Instance?.ReportTurnAfterMove();
             }
-            
+
             return;
         }
 
@@ -213,6 +213,8 @@ public class MultiplayerPieceController : PieceController
         pendingNetworkType = PendingMoveType.None;
         //lastMoveType = LastMoveType.None;
 
+        base.DeselectPiece();
+
         // --- lógica original ---
         GameObject pieceAtOrigin = boardManager.GetPieceAtPosition(origin.x, origin.y);
         if (pieceAtOrigin == null) return;
@@ -257,6 +259,8 @@ public class MultiplayerPieceController : PieceController
 
         pendingNetworkType = PendingMoveType.None;
         //lastMoveType = LastMoveType.None;
+
+        base.DeselectPiece();
 
         // --- lógica original ---
         GameObject kingObj = boardManager.GetPieceAtPosition(kingOrigin.x, kingOrigin.y);
@@ -305,6 +309,8 @@ public class MultiplayerPieceController : PieceController
             return;
         }
 
+        base.DeselectPiece();
+        
         pendingNetworkType = PendingMoveType.None;
         //lastMoveType = LastMoveType.None;
 
