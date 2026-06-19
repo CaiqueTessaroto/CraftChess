@@ -96,7 +96,7 @@ public class PieceController : MonoBehaviour
                 if ((!boardManager.localGame && comp.Player.id == botPlayerId && IA == false) || boardManager.IAvsIA)
                     return;
 
-            if (boardManager.noTurns || (comp.Player.id == moveTracker.GetTurnPlayer()) || forceMove) //erro ao mover o rei em check
+            if (boardManager.noTurns || (comp.Player.id == moveTracker.GetTurnPlayer())) // || forceMove
                 SelectPiece(piece);
             //Debug.Log($"Selecionou peça {piece.name} em {clickedPos}");
 

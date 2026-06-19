@@ -11,7 +11,7 @@ public class PieceControllerNetwork : NetworkBehaviour
     public bool simulatePacketLoss = false;
 
 
-    private const float STALL_TIMEOUT = 15f; // segundos sem movimento
+    private const float STALL_TIMEOUT = 30f; // segundos sem movimento
 
     private void Awake()
     {
@@ -40,15 +40,15 @@ public class PieceControllerNetwork : NetworkBehaviour
         int expectedTurn = mp.moveTracker.GetTurnPlayer();
         int expectedTurnNumber = mp.moveTracker.GetTurnNumber();
 
-        bool isClientTurn = mp.GetLocalPlayerId() != expectedTurn;
-        if (!isClientTurn) return;
-
-        if (string.IsNullOrEmpty(MultiplayerLobbyState.PlayerClientId)) return;
-        if (!ulong.TryParse(MultiplayerLobbyState.PlayerClientId, out ulong clientId)) return;
-
-
         if (IsHost)
         {
+            bool isClientTurn = mp.GetLocalPlayerId() != expectedTurn;
+            if (!isClientTurn) return;
+
+            if (string.IsNullOrEmpty(MultiplayerLobbyState.PlayerClientId)) return;
+
+            if (!ulong.TryParse(MultiplayerLobbyState.PlayerClientId, out ulong clientId)) return;
+
             ReportHostTurnClientRpc(expectedTurnNumber,
                 new ClientRpcParams
                 {
@@ -60,6 +60,9 @@ public class PieceControllerNetwork : NetworkBehaviour
         }
         else
         {
+            bool isHostTurn = mp.GetLocalPlayerId() != expectedTurn;
+            if (!isHostTurn) return;
+
             ReportClientTurnServerRpc(expectedTurnNumber);
         }
 
@@ -79,7 +82,6 @@ public class PieceControllerNetwork : NetworkBehaviour
     {
 
         ResetStallTimer();
-        // 1. Avisa TODOS que há um movimento pendente
 
         if (simulatePacketLoss)
         {
@@ -87,7 +89,8 @@ public class PieceControllerNetwork : NetworkBehaviour
             ConfirmMoveClientRpc(ox, oy, tx, ty);
             return; // simula perda
         }
-        
+
+        // 1. Avisa TODOS que há um movimento pendente
         AcknowledgeMoveClientRpc(ox, oy, tx, ty);
 
         // 2. Confirma execução para todos
@@ -245,12 +248,14 @@ public class PieceControllerNetwork : NetworkBehaviour
         pc.SetEndGame(black: blackWins, white: whiteWins, draw: draw);
     }
 
+    public int diff = 0;
+
     [ServerRpc(RequireOwnership = false)]
     public void ReportClientTurnServerRpc(int clientTurn, ServerRpcParams p = default)
     {
         EnsureMP();
         int hostTurn = mp.moveTracker.GetTurnNumber(); // no host
-        int diff = clientTurn - hostTurn;
+        diff = hostTurn - clientTurn;
 
         Debug.Log($"[Resync] Cliente reportou turno {clientTurn}, host está no {hostTurn}, diff={diff}");
 
@@ -273,7 +278,7 @@ public class PieceControllerNetwork : NetworkBehaviour
     {
         EnsureMP();
         int localTurn = mp.moveTracker.GetTurnNumber();
-        int diff = hostTurn - localTurn;
+        diff = localTurn - hostTurn;
 
         Debug.Log($"[Resync] Host no turno {hostTurn}, cliente no turno {localTurn}, diff={diff}");
 
@@ -308,6 +313,17 @@ public class PieceControllerNetwork : NetworkBehaviour
 
         Debug.Log($"[TURN AUTH] Turno autoritativo atualizado para: {authorativeTurnPlayer.Value} | TurnNumber={mp.moveTracker.GetTurnNumber()}");
     }
+
+    public void ReportTurnAfterMove()
+    {
+        int currentTurn = mp.moveTracker.GetTurnNumber();
+
+        if (IsHost)
+            ReportHostTurnClientRpc(currentTurn);
+        else
+            ReportClientTurnServerRpc(currentTurn);
+    }
+
 
     public int GetAuthorativeTurnPlayer()
     {

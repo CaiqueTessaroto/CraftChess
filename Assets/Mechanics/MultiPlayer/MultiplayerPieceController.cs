@@ -21,6 +21,9 @@ public class MultiplayerPieceController : PieceController
 
     public float turnStallTimer = 0f;
 
+    private float lastResyncReportTime = -999f;
+    private const float RESYNC_REPORT_COOLDOWN = 1f;
+
     public void EndGameHostLoseConnection()
     {
         if (endGame) return;
@@ -57,8 +60,16 @@ public class MultiplayerPieceController : PieceController
             return;
 
         if (!isReceivingMove && !boardManager.noTurns && !IsMyTurnPublic())
+            return;
+
+        if (boardManager.noTurns && PieceControllerNetwork.Instance?.diff != 0)
         {
-            //Debug.Log($"[Multiplayer] Bloqueado — não é o turno local. Turno: {moveTracker.GetTurnPlayer()}, Local: {GetLocalPlayerId()}");
+            if (Time.time - lastResyncReportTime >= RESYNC_REPORT_COOLDOWN)
+            {
+                lastResyncReportTime = Time.time;
+                PieceControllerNetwork.Instance?.ReportTurnAfterMove();
+            }
+            
             return;
         }
 
@@ -220,9 +231,10 @@ public class MultiplayerPieceController : PieceController
         base.OnCellClicked(target, forceMove: true, false);
         isReceivingMove = false;
 
-
         if (NetworkLobbyManager.Instance.IsHost)
             PieceControllerNetwork.Instance?.UpdateTurnPlayer();
+
+        PieceControllerNetwork.Instance?.ReportTurnAfterMove();
     }
 
     public void ExecuteConfirmedCastle(Vector2Int kingOrigin, Vector2Int kingTarget,
@@ -271,6 +283,8 @@ public class MultiplayerPieceController : PieceController
 
         if (NetworkLobbyManager.Instance.IsHost)
             PieceControllerNetwork.Instance?.UpdateTurnPlayer();
+
+        PieceControllerNetwork.Instance?.ReportTurnAfterMove();
     }
 
     public void ExecuteConfirmedPromotion(Vector2Int origin, Vector2Int target,
@@ -322,7 +336,10 @@ public class MultiplayerPieceController : PieceController
 
         if (NetworkLobbyManager.Instance.IsHost)
             PieceControllerNetwork.Instance?.UpdateTurnPlayer();
+
+        PieceControllerNetwork.Instance?.ReportTurnAfterMove();
     }
+
 
     public void ResendLastMove()
     {
