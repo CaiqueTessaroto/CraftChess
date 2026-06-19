@@ -179,16 +179,20 @@ public class MultiplayerPieceController : PieceController
 
     public void ExecuteConfirmedMove(Vector2Int origin, Vector2Int target)
     {
-        if (pendingNetworkType != PendingMoveType.None
-            && pendingNetworkType != PendingMoveType.Move)
+        if (pendingNetworkType == PendingMoveType.None)
+        {
+            Debug.LogWarning("[TwoPhase] Confirmação de Move ignorada — nenhum movimento pendente.");
+            return;
+        }
+
+        if (pendingNetworkType != PendingMoveType.Move)
         {
             Debug.LogWarning("[TwoPhase] Confirmação de Move ignorada — tipo pendente diferente.");
             pendingNetworkType = PendingMoveType.None;
             return;
         }
 
-        if (pendingNetworkType == PendingMoveType.Move
-            && (pendingNetworkOrigin != origin || pendingNetworkTarget != target))
+        if (pendingNetworkOrigin != origin || pendingNetworkTarget != target)
         {
             Debug.LogWarning("[TwoPhase] Confirmação de Move ignorada — posições não batem com pendente.");
             pendingNetworkType = PendingMoveType.None;
@@ -224,6 +228,13 @@ public class MultiplayerPieceController : PieceController
     public void ExecuteConfirmedCastle(Vector2Int kingOrigin, Vector2Int kingTarget,
                                         Vector2Int rookOrigin, Vector2Int rookTarget)
     {
+
+        if (pendingNetworkType == PendingMoveType.None)
+        {
+            Debug.LogWarning("[TwoPhase] Confirmação de Move ignorada — nenhum movimento pendente.");
+            return;
+        }
+
         if (pendingNetworkType != PendingMoveType.None
             && pendingNetworkType != PendingMoveType.Castle)
         {
@@ -265,6 +276,13 @@ public class MultiplayerPieceController : PieceController
     public void ExecuteConfirmedPromotion(Vector2Int origin, Vector2Int target,
                                            string pieceName, int playerId)
     {
+
+        if (pendingNetworkType == PendingMoveType.None)
+        {
+            Debug.LogWarning("[TwoPhase] Confirmação de Move ignorada — nenhum movimento pendente.");
+            return;
+        }
+
         if (pendingNetworkType != PendingMoveType.None
             && pendingNetworkType != PendingMoveType.Promotion)
         {

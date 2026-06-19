@@ -80,13 +80,15 @@ public class PieceControllerNetwork : NetworkBehaviour
 
         ResetStallTimer();
         // 1. Avisa TODOS que há um movimento pendente
-        AcknowledgeMoveClientRpc(ox, oy, tx, ty);
 
         if (simulatePacketLoss)
         {
             Debug.Log("[TEST] Pacote descartado intencionalmente.");
+            ConfirmMoveClientRpc(ox, oy, tx, ty);
             return; // simula perda
         }
+        
+        AcknowledgeMoveClientRpc(ox, oy, tx, ty);
 
         // 2. Confirma execução para todos
         ConfirmMoveClientRpc(ox, oy, tx, ty);
