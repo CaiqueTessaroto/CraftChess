@@ -789,6 +789,19 @@ public class MovementCreation : MonoBehaviour
                 {
                     field.SetValue(movement, value);
                     //Debug.Log(toggle.gameObject.name + " atualizado para: " + value);
+                    if (toggle.gameObject.name == "Jump" && value)
+                    {
+                        FieldInfo moveField = typeof(Special).GetField("Move", BindingFlags.Public | BindingFlags.Instance);
+
+                        if (moveField != null)
+                            moveField.SetValue(movement, true);
+
+                        Toggle moveToggle = System.Array.Find(toggles, t => t.gameObject.name == "Move");
+
+                        if (moveToggle != null && !moveToggle.isOn)
+                            moveToggle.isOn = true;
+                    }
+
                     gridView.HighlightValidMoves(); // Atualiza os movimentos válidos na UI
                     CalcularPoderTotal();
                 });
@@ -823,6 +836,19 @@ public class MovementCreation : MonoBehaviour
                 {
                     field.SetValue(movement, value);
                     //Debug.Log(toggle.gameObject.name + " atualizado para: " + value);
+                    if (toggle.gameObject.name == "Jump" && value)
+                    {
+                        FieldInfo moveField = typeof(PersonalizedMove).GetField("Move", BindingFlags.Public | BindingFlags.Instance);
+
+                        if (moveField != null)
+                            moveField.SetValue(movement, true);
+
+                        Toggle moveToggle = System.Array.Find(toggles, t => t.gameObject.name == "Move");
+
+                        if (moveToggle != null && !moveToggle.isOn)
+                            moveToggle.isOn = true;
+                    }
+
                     gridView.HighlightValidMoves(); // Atualiza os movimentos válidos na UI
                     CalcularPoderTotal();
                 });
@@ -858,7 +884,21 @@ public class MovementCreation : MonoBehaviour
                 toggle.onValueChanged.AddListener((value) =>
                 {
                     field.SetValue(movement, value);
-                    //Debug.Log(toggle.gameObject.name + " atualizado para: " + value);
+                    Debug.Log(toggle.gameObject.name + " atualizado para: " + value);
+
+                    if (toggle.gameObject.name == "Jump" && value)
+                    {
+                        FieldInfo moveField = typeof(Movement).GetField("Move", BindingFlags.Public | BindingFlags.Instance);
+
+                        if (moveField != null)
+                            moveField.SetValue(movement, true);
+
+                        Toggle moveToggle = System.Array.Find(toggles, t => t.gameObject.name == "Move");
+
+                        if (moveToggle != null && !moveToggle.isOn)
+                            moveToggle.isOn = true;
+                    }
+
                     gridView.HighlightValidMoves(); // Atualiza os movimentos válidos na UI
                     CalcularPoderTotal();
                 });
@@ -965,9 +1005,11 @@ public class MovementCreation : MonoBehaviour
             poder = CalcularPoder(straight.Move, straight.Capture, straight.Jump, rangePorDirecao);
             poderTotal = poderTotal + poder;
 
-            if (straight.Range >= 7)
-                poderTotal = poderTotal + 20;
+            //if (straight.Range >= 7)
+            //poderTotal = poderTotal + 20;
 
+            if (straight.All)
+                poderTotal = poderTotal + 20;
         }
 
         // Movimento diagonal

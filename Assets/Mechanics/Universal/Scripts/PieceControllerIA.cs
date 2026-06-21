@@ -126,9 +126,7 @@ public class PieceControllerIA : MonoBehaviour
     public bool SelectPiece(GameObject piece)
     {
 
-
         PieceComponent component = piece.GetComponent<PieceComponent>();
-
 
         if (component != null) //component != null && component.player.id == GameManager.Instance.currentPlayerId
         {

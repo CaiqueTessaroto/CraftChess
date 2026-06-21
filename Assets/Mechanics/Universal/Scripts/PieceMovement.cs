@@ -46,6 +46,9 @@ public class PieceMovement : MonoBehaviour
 
         if (configData.straight.Active)
         {
+            if (configData.straight.Jump)
+                configData.straight.Move = true;
+
             List<Vector2Int> rawMoves = GetDirectionalMoves(configData.straight);
             List<Vector2Int> moves = GetValidDirectionalMoves(rawMoves, false, configData.straight.Capture, configData.straight.Move);
             validMoves.AddRange(ControlOccupiedHouses(moves, configData.straight.Capture, false));
@@ -54,6 +57,9 @@ public class PieceMovement : MonoBehaviour
         }
         if (configData.diagonal.Active)
         {
+            if (configData.diagonal.Jump)
+                configData.diagonal.Move = true;
+
             List<Vector2Int> rawMoves = GetDiagonalMoves(configData.diagonal);
             List<Vector2Int> moves = GetValidDiagonalMoves(rawMoves, false, configData.diagonal.Capture, configData.diagonal.Move);
             validMoves.AddRange(ControlOccupiedHouses(moves, configData.diagonal.Capture, control));
@@ -62,6 +68,9 @@ public class PieceMovement : MonoBehaviour
         }
         if (configData.custom.Active)
         {
+            if (configData.custom.Jump)
+                configData.custom.Move = true;
+
             List<Vector2Int> rawMoves = GetCustomMovies();
             List<Vector2Int> moves = FilterValidMoves(rawMoves, configData.custom.Jump, configData.custom.Capture, configData.custom.Move);
             validMoves.AddRange(ControlOccupiedHouses(moves, configData.custom.Capture, control));
@@ -70,6 +79,9 @@ public class PieceMovement : MonoBehaviour
         if (!thisPiece.HasMoved)
             if (configData.special.Active)
             {
+                if (configData.special.Jump)
+                    configData.special.Move = true;
+
                 List<Vector2Int> rawMoves = GetSpecialMovies();
                 List<Vector2Int> moves = FilterValidMoves(rawMoves, configData.special.Jump, configData.special.Capture, configData.special.Move);
                 validMoves.AddRange(ControlOccupiedHouses(moves, configData.special.Capture, control));

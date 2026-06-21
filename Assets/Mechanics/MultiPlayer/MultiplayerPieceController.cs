@@ -49,10 +49,9 @@ public class MultiplayerPieceController : PieceController
     public new void OnCellClicked(Vector2Int clickedPos, bool forceMove = false, bool IA = false)
     {
 
-        if (boardManager.infoPiece && !IA)
+        if (boardManager.infoPiece && !IA && !forceMove)
         {
-            GameObject piece = boardManager.GetPieceAtPosition(clickedPos.x, clickedPos.y);
-            GetPieceInfo(piece);
+            base.OnCellClicked(clickedPos, forceMove, IA);
             return;
         }
 

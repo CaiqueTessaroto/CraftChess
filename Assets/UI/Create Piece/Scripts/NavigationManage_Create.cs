@@ -424,6 +424,8 @@ public class NavigationManage_Create : MonoBehaviour
 
         gridViewManager.UpdateArtToGrid(sprite);
 
+        movementCreation.CalcularPoderTotal();
+
         folderNavigation.selectRootPath = rootPath;
     }
 

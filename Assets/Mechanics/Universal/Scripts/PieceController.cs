@@ -138,9 +138,7 @@ public class PieceController : MonoBehaviour
     public bool SelectPiece(GameObject piece)
     {
 
-
         PieceComponent component = piece.GetComponent<PieceComponent>();
-
 
         if (component != null) //component != null && component.player.id == GameManager.Instance.currentPlayerId
         {
@@ -150,8 +148,11 @@ public class PieceController : MonoBehaviour
             pieceMovement.enabled = true;
 
 
-            if (!forceMove) // pieceComponent.Player.id != botPlayerId
+            if (!forceMove)
+            {
+                motionVisualization.ClearMoveOverlays();
                 motionVisualization.VisualizeMoves(pieceComponent, pieceMovement);
+            }
 
             return true;
         }
@@ -166,6 +167,8 @@ public class PieceController : MonoBehaviour
 
         PieceComponent component = piece.GetComponent<PieceComponent>();
         PieceMovement movement = piece.GetComponent<PieceMovement>();
+
+        motionVisualization.VisualizeMoves(component, movement);
 
         MatchSquadData matchSquad;
 
