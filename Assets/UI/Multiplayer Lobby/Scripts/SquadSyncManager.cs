@@ -113,9 +113,6 @@ public class SquadSyncManager : NetworkBehaviour
                 .UnregisterNamedMessageHandler(MSG_PLAYER_PROFILE_TO_CLIENT);
         }
 
-        if (IsHost)
-            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
-
         NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
     }
 
@@ -235,6 +232,8 @@ public class SquadSyncManager : NetworkBehaviour
         }
         else
         {
+            MultiplayerLobbyState.SpectatorClientId = clientId.ToString();
+
             string text = UIHelperUtils.T("lobby_entered_spectator");
             if (string.IsNullOrEmpty(text)) text = "A player entered the lobby as a spectator.";
             FileManager.Instance.SpawnMessage(text);
@@ -374,6 +373,7 @@ public class SquadSyncManager : NetworkBehaviour
     private void HandleHostDisconnect(ulong clientId, bool isMultiplayerScene)
     {
         bool isPlayer = clientId.ToString() == MultiplayerLobbyState.PlayerClientId;
+        bool isSpectator = clientId.ToString() == MultiplayerLobbyState.SpectatorClientId;
 
         if (clientId != NetworkManager.ServerClientId)
         {
@@ -382,8 +382,9 @@ public class SquadSyncManager : NetworkBehaviour
                 MultiplayerLobbyState.PlayerClientId = null;
                 ShowPlayerLeftMessage();
             }
-            else
+            else if (isSpectator)
             {
+                MultiplayerLobbyState.SpectatorClientId = null;
                 ShowSpectatorLeftMessage();
             }
         }
@@ -419,18 +420,29 @@ public class SquadSyncManager : NetworkBehaviour
             clientId == NetworkManager.ServerClientId;
 
         bool spectatorDisconnected =
-            clientId.ToString() != MultiplayerLobbyState.PlayerClientId && clientId != NetworkManager.ServerClientId;
+            clientId.ToString() == MultiplayerLobbyState.SpectatorClientId;
+
+        bool playerDisconnected =
+            clientId.ToString() == MultiplayerLobbyState.PlayerClientId;
+
+        //bool spectatorDisconnected = clientId.ToString() != MultiplayerLobbyState.PlayerClientId && clientId != NetworkManager.ServerClientId;
+
+        if (clientId.ToString() == MultiplayerLobbyState.PlayerClientId)
+            Debug.Log("MultiplayerLobbyState.PlayerClientId");
 
         if (isLobbyScene)
         {
             if (hostDisconnected)
-            {
                 NetworkLobbyManager.Instance.HandleDisconnect();
-                return;
-            }
-
-            if (spectatorDisconnected)
+            else if (spectatorDisconnected)
                 ShowSpectatorLeftMessage();
+            else if (playerDisconnected)
+                ShowPlayerLeftMessage();
+            else if (!hostDisconnected && !spectatorDisconnected && !playerDisconnected)
+            {
+                Debug.LogWarning("Lobby: Unknown client ID, likely host.");
+                NetworkLobbyManager.Instance.HandleDisconnect();
+            }
 
             return;
         }
@@ -452,6 +464,23 @@ public class SquadSyncManager : NetworkBehaviour
             {
                 ShowSpectatorLeftMessage();
             }
+            else if (playerDisconnected)
+                ShowPlayerLeftMessage();
+            else if (!hostDisconnected && !spectatorDisconnected && !playerDisconnected)
+            {
+                Debug.LogWarning("MultiplayerScene: Unknown client ID, likely host.");
+
+                ShowPlayerLeftMessage();
+                NetworkLobbyManager.Instance.currentLobby = null;
+
+                MultiplayerPieceController mp =
+                    FindFirstObjectByType<MultiplayerPieceController>();
+
+                if (mp != null)
+                    mp.EndGameHostLoseConnection();
+            }
+
+            return;
         }
     }
 

@@ -112,9 +112,11 @@ public class GameInterfaceManager : MonoBehaviour
 
         continueBtn.onClick.AddListener(() =>
         {
-
             if (boardChessManager.isMultiplayer)
-                gameManager.ChangeScene("Multiplayer Lobby");
+                if (NetworkLobbyManager.Instance.IsConnected())
+                    gameManager.ChangeScene("Multiplayer Lobby");
+                else
+                    LeaveToMenu();
             else
                 gameManager.ChangeScene("Single Lobby");
         });
@@ -126,9 +128,11 @@ public class GameInterfaceManager : MonoBehaviour
 
         continueBtn2.onClick.AddListener(() =>
         {
-
             if (boardChessManager.isMultiplayer)
-                gameManager.ChangeScene("Multiplayer Lobby");
+                if (NetworkLobbyManager.Instance.IsConnected())
+                    gameManager.ChangeScene("Multiplayer Lobby");
+                else
+                    LeaveToMenu();
             else
                 gameManager.ChangeScene("Single Lobby");
         });

@@ -19,6 +19,7 @@ public static class MultiplayerLobbyState
     public static byte[] HostProfileImageRaw;
     public static byte[] ClientProfileImageRaw;
     public static string PlayerClientId;
+    public static string SpectatorClientId;
     public static void Log(string context = "")
     {
         string white = WhiteSquad?.Data?.Name ?? "null";

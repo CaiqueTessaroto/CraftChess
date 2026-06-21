@@ -257,12 +257,13 @@ public class PieceControllerNetwork : NetworkBehaviour
         int hostTurn = mp.moveTracker.GetTurnNumber(); // no host
         diff = hostTurn - clientTurn;
 
-        Debug.Log($"[Resync] Cliente reportou turno {clientTurn}, host está no {hostTurn}, diff={diff}");
+        //Debug.Log($"[Resync] Cliente reportou turno {clientTurn}, host está no {hostTurn}, diff={diff}");
 
         if (diff <= 0) return;
 
         if (diff == 1)
         {
+            Debug.LogWarning($"[Resync] Cliente reportou turno {clientTurn}, host está no {hostTurn}, diff={diff}");
             // Host está 1 atrás — reenvia último movimento
             mp.ResendLastMove();
         }
@@ -280,12 +281,13 @@ public class PieceControllerNetwork : NetworkBehaviour
         int localTurn = mp.moveTracker.GetTurnNumber();
         diff = localTurn - hostTurn;
 
-        Debug.Log($"[Resync] Host no turno {hostTurn}, cliente no turno {localTurn}, diff={diff}");
+        //Debug.Log($"[Resync] Host no turno {hostTurn}, cliente no turno {localTurn}, diff={diff}");
 
         if (diff <= 0) return;
 
         if (diff == 1)
         {
+            Debug.LogWarning($"[Resync] Host no turno {hostTurn}, cliente no turno {localTurn}, diff={diff}");
             mp.ResendLastMove();
         }
         else
@@ -311,7 +313,7 @@ public class PieceControllerNetwork : NetworkBehaviour
 
         authorativeTurnPlayer.Value = mp.moveTracker.GetTurnPlayer();
 
-        Debug.Log($"[TURN AUTH] Turno autoritativo atualizado para: {authorativeTurnPlayer.Value} | TurnNumber={mp.moveTracker.GetTurnNumber()}");
+        //Debug.Log($"[TURN AUTH] Turno autoritativo atualizado para: {authorativeTurnPlayer.Value} | TurnNumber={mp.moveTracker.GetTurnNumber()}");
     }
 
     public void ReportTurnAfterMove()
