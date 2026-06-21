@@ -20,7 +20,7 @@ public class MultiplayerPieceInfo : MonoBehaviour
     public Transform castelingContent;
     public GameObject viewPiecePrefab;
     public Button closePiecebtn;
-    
+
     private bool isWhite;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -132,9 +132,9 @@ public class MultiplayerPieceInfo : MonoBehaviour
 
     }
 
-        //string name = fileName.Replace(squad, "").Trim();
-        //string name = fileName.Trim();
-        //string name = fileName.Replace(" ", "").Trim();
+    //string name = fileName.Replace(squad, "").Trim();
+    //string name = fileName.Trim();
+    //string name = fileName.Replace(" ", "").Trim();
 
     public IEnumerator LoadPiecesImage(string fileName, string squad, Transform content)
     {
@@ -150,27 +150,34 @@ public class MultiplayerPieceInfo : MonoBehaviour
 
         Sprite sprite = null;
 
-        if (MultiplayerLobbyState.WhiteSquad?.Sprites == null || 
-            MultiplayerLobbyState.BlackSquad?.Sprites == null)
-        {
-            Debug.LogWarning("MultiplayerLobbyState or squads not properly initialized.");
-            yield break;
-        }
-
         if (isWhite)
         {
-            if (MultiplayerLobbyState.WhiteSquad.Sprites.ContainsKey($"{fileName}"))
-                sprite = MultiplayerLobbyState.WhiteSquad.Sprites[$"{fileName}"];
+            if (MultiplayerLobbyState.WhiteSquad?.Sprites != null)
+            {
+                if (MultiplayerLobbyState.WhiteSquad.Sprites.ContainsKey($"{fileName}"))
+                    sprite = MultiplayerLobbyState.WhiteSquad.Sprites[$"{fileName}"];
+                else
+                    Debug.LogWarning($"Sprite not found for piece: {fileName} in squad: {squad}");
+            }
             else
-                Debug.LogWarning($"Sprite not found for piece: {fileName} in squad: {squad}");
+            {
+                Debug.LogWarning("MultiplayerLobbyState or squads not properly initialized.");
+            }
         }
-        else
+
+        if(!isWhite)
         {
-            
-            if (MultiplayerLobbyState.BlackSquad.Sprites.ContainsKey($"{fileName}"))
-                sprite = MultiplayerLobbyState.BlackSquad.Sprites[$"{fileName}"];
+            if (MultiplayerLobbyState.BlackSquad?.Sprites != null)
+            {
+                if (MultiplayerLobbyState.BlackSquad.Sprites.ContainsKey($"{fileName}"))
+                    sprite = MultiplayerLobbyState.BlackSquad.Sprites[$"{fileName}"];
+                else
+                    Debug.LogWarning($"Sprite not found for piece: {fileName} in squad: {squad}");
+            }
             else
-                Debug.LogWarning($"Sprite not found for piece: {fileName} in squad: {squad}");
+            {
+                Debug.LogWarning("MultiplayerLobbyState or squads not properly initialized.");
+            }
         }
 
         if (img != null)

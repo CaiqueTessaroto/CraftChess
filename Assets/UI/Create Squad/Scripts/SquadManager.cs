@@ -89,6 +89,9 @@ public class SquadManager : MonoBehaviour
     public bool enabledMode = false;
     public bool editMode = false;
     private bool setCursor = false;
+    private int promotionPower = 25;
+    private int castelingPower = 90;
+
 
 
     [Header("Save:")]
@@ -215,10 +218,10 @@ public class SquadManager : MonoBehaviour
 
             infoGridPanel.SetActive(false);
 
-            if (currentPiecepower <= 25)
+            if (currentPiecepower <= promotionPower)
                 promotion.SetActive(true);
 
-            if (currentPiecepower <= 80)
+            if (currentPiecepower <= castelingPower)
                 casteling.SetActive(true);
 
             moreSpecialBtw.gameObject.SetActive(false);
@@ -1069,6 +1072,12 @@ public class SquadManager : MonoBehaviour
 
         if (pieceData.CastlingPieces != null)
         {
+            if (config.piece.Power > castelingPower)
+            {
+                ClearCastling(pieceData.NameInSquad);
+                yield break;
+            }
+
             if (pieceData.CastlingPieces.Count > 0)
                 casteling.SetActive(true);
 
@@ -1080,6 +1089,12 @@ public class SquadManager : MonoBehaviour
 
         if (pieceData.PromotionPieces != null)
         {
+            if (config.piece.Power > promotionPower)
+            {
+                ClearPromotions(pieceData.NameInSquad);
+                yield break;
+            }
+
             if (pieceData.PromotionPieces.Count > 0)
                 promotion.SetActive(true);
 
@@ -1096,6 +1111,50 @@ public class SquadManager : MonoBehaviour
 
         yield return null;
 
+    }
+
+    private void ClearPromotions(string c_PieceName)
+    {
+        foreach (Transform child in promotionContent.transform)
+            Destroy(child.gameObject);
+
+        SquadPieceData pieceData = squadData.Pieces.Find(p => p.NameInSquad == c_PieceName);
+
+        if (pieceData == null)
+            return;
+
+        int power = pieceData.PromotionPieces.Count * 10;
+
+        pieceData.Power -= power;
+        pieceData.PromotionPieces.Clear();
+
+        currentPiecepower = pieceData.Power;
+
+        powerTmp.text = UIHelperUtils.SetPowerText(currentPiecepower);
+
+        UpdateSquadPower();
+    }
+
+    private void ClearCastling(string currentPieceName)
+    {
+        foreach (Transform child in castelingContent.transform)
+            Destroy(child.gameObject);
+
+        SquadPieceData pieceData = squadData.Pieces.Find(p => p.NameInSquad == currentPieceName);
+
+        if (pieceData == null)
+            return;
+
+        int power = pieceData.CastlingPieces.Count * 10;
+
+        pieceData.Power -= power;
+        pieceData.CastlingPieces.Clear();
+
+        currentPiecepower = pieceData.Power;
+
+        powerTmp.text = UIHelperUtils.SetPowerText(currentPiecepower);
+
+        UpdateSquadPower();
     }
 
     public IEnumerator LoadPiecesImage(string fileName, Transform content)

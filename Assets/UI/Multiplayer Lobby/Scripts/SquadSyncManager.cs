@@ -193,8 +193,8 @@ public class SquadSyncManager : NetworkBehaviour
                 continue;
             }
 
-            squad.Pieces[piece.NameInSquad] =
-                JsonUtility.FromJson<MovementConfigData>(File.ReadAllText(movPath));
+            //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(File.ReadAllText(movPath));
+            squad.Pieces[piece.NameInSquad] = JsonUtility.FromJson<MovementConfigData>(File.ReadAllText(movPath));
 
             string spritePath = Path.Combine(rootPath,
                 FileManager.Instance.basePath_Sprite, piece.SpriteSet, piece.Sprite.Trim() + ".png");

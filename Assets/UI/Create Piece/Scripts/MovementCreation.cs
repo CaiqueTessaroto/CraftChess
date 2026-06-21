@@ -1005,11 +1005,11 @@ public class MovementCreation : MonoBehaviour
             poder = CalcularPoder(straight.Move, straight.Capture, straight.Jump, rangePorDirecao);
             poderTotal = poderTotal + poder;
 
-            //if (straight.Range >= 7)
-            //poderTotal = poderTotal + 20;
+            if (straight.Range >= 7)
+                poderTotal = poderTotal + 10;
 
             if (straight.All)
-                poderTotal = poderTotal + 20;
+                poderTotal = poderTotal + 10;
         }
 
         // Movimento diagonal

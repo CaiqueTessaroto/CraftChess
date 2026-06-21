@@ -161,11 +161,6 @@ public class ManagerPieceInfo : MonoBehaviour
         // Define o nome do objeto (opcional)
         clone.name = "Preview_" + fileName;
 
-        //string name = fileName.Trim();
-        //string name = fileName.Replace(" ", "").Trim();
-        //sprite = pieceSpritesWhite[$"{name}{squad}"];
-        //sprite = pieceSpritesBlack[$"{name}{squad}"];
-
         // Acha a imagem dentro do painel
         Image img = clone.GetComponentInChildren<Image>();
 
@@ -173,18 +168,15 @@ public class ManagerPieceInfo : MonoBehaviour
         if (isWhite)
         {
             //sprite = boardChessManager.Squads[0].Sprites[name];
-            
             if (pieceSpritesWhite.ContainsKey($"{fileName}"))
                 sprite = pieceSpritesWhite[$"{fileName}"];
         }
         else
         {
             //sprite = boardChessManager.Squads[1].Sprites[name];
-
             if (pieceSpritesBlack.ContainsKey($"{fileName}"))
                 sprite = pieceSpritesBlack[$"{fileName}"];
         }
-
 
         if (img != null)
         {

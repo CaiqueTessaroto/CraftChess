@@ -231,7 +231,7 @@ public class InfoGridView : MonoBehaviour
 
     void ToggleCellSelection(Vector2Int cellPos)
     {
-        Debug.Log("cellPos: " + cellPos);
+        //Debug.Log("cellPos: " + cellPos);
         selectedPosition = new Vector2Int(cellPos.x, cellPos.y);
         RegenerateGrid();
         HighlightValidMoves(selectConfig);
@@ -298,18 +298,6 @@ public class InfoGridView : MonoBehaviour
             ClearMovementFlagsFromSource("special");
             wasSpecialActive = false;
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
         // Straight
         if (straight.Active)
