@@ -893,6 +893,18 @@
       "value": "El equipo se ha descargado correctamente."
     },
     {
+      "key": "spriteNotfoundInLobby",
+      "value": "No se encontró el Sprite {0}.\n\nPara solucionarlo:\n1. Abra el Creador de Piezas.\n2. Seleccione el arte de la pieza nuevamente y guárdelo.\n3. Abra el Creador de Escuadrón.\n4. Agregue la pieza actualizada al escuadrón y guarde el escuadrón nuevamente."
+    },
+    {
+      "key": "pieceNotfoundInLobby",
+      "value": "No se encontró la Pieza {0}.\n\nPara solucionarlo:\nVuelva a crear la pieza en el Creador de Piezas y guárdela nuevamente.\nLuego abra el Creador de Escuadrón, agregue la versión actualizada de la pieza y guarde el escuadrón."
+    },
+    {
+      "key": "warningDiffMultiplayer",
+      "value": "Jugador con una diferencia de {0} turnos enviando una solicitud de reenvío."
+    },
+    {
       "key": "lobby_client_not_ready",
       "value": "El otro jugador aún no está listo."
     }

@@ -893,6 +893,18 @@
       "value": "O esquadrão foi baixado com sucesso."
     },
     {
+      "key": "spriteNotfoundInLobby",
+      "value": "Sprite {0} não foi encontrado.\n\nPara corrigir:\n1. Abra o Criador de Peças.\n2. Selecione a arte da peça novamente e salve-a.\n3. Abra o Criador de Esquadrão.\n4. Adicione a peça atualizada ao esquadrão e salve o esquadrão novamente."
+    },
+    {
+      "key": "pieceNotfoundInLobby",
+      "value": "Peça {0} não foi encontrada.\n\nPara corrigir:\nRecrie a peça no Criador de Peças e salve-a novamente.\nEm seguida, abra o Criador de Esquadrão, adicione a versão atualizada da peça e salve o esquadrão."
+    },
+    {
+      "key": "warningDiffMultiplayer",
+      "value": "Jogador com uma diferença de {0} turnos enviando uma solicitação de reenvio."
+    },
+    {
       "key": "lobby_client_not_ready",
       "value": "O outro jogador ainda não está pronto."
     }

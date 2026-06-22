@@ -25,6 +25,7 @@ public class FileManager : MonoBehaviour
     public GameObject advicePrefab;
     public GameObject inputPrefab;
     public GameObject messagePrefab;
+    public GameObject messageLongPrefab;
     public Transform panel;
     public bool warning = false;
     [SerializeField] private float fadeDuration = 1f;
@@ -46,6 +47,29 @@ public class FileManager : MonoBehaviour
     public void SpawnMessage(string text)
     {
         GameObject instance = Instantiate(messagePrefab, panel);
+
+        TextMeshProUGUI tmp = instance.GetComponentInChildren<TextMeshProUGUI>();
+        if (tmp == null)
+        {
+            Destroy(instance);
+            return;
+        }
+
+        tmp.text = text;
+        tmp.font = LocalizationManager.Instance?.currentFont;
+
+        StartCoroutine(FadeRoutine(tmp, instance));
+    }
+
+    public void SpawnLongMessage(string text)
+    {
+        GameObject prefab = null;
+        if (messageLongPrefab != null)
+            prefab = messageLongPrefab;
+        else
+            prefab = messagePrefab;
+
+        GameObject instance = Instantiate(prefab, panel);
 
         TextMeshProUGUI tmp = instance.GetComponentInChildren<TextMeshProUGUI>();
         if (tmp == null)

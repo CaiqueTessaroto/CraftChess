@@ -65,9 +65,15 @@ public class MultiplayerPieceController : PieceController
         {
             if (Time.time - lastResyncReportTime >= RESYNC_REPORT_COOLDOWN)
             {
-                FileManager.Instance.SpawnMessage($"Player with a {PieceControllerNetwork.Instance.diff}-turn difference sending a resend request.");
+                //string text = UIHelperUtils.T("lobby_exited");
+                string text = UIHelperUtils.T("warningDiffMultiplayer", PieceControllerNetwork.Instance.diff);
+
+                if (string.IsNullOrEmpty(text))
+                    text = $"Player with a {PieceControllerNetwork.Instance.diff}-turn difference sending a resend request.";
+
+                FileManager.Instance.SpawnLongMessage(text);
                 lastResyncReportTime = Time.time;
-                PieceControllerNetwork.Instance?.ReportTurnAfterMove();
+                PieceControllerNetwork.Instance.ReportTurnAfterMove();
             }
 
             return;

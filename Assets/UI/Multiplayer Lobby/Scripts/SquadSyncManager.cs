@@ -190,7 +190,12 @@ public class SquadSyncManager : NetworkBehaviour
             if (!File.Exists(movPath))
             {
                 Debug.LogWarning($"[SquadSync] Movement JSON não encontrado: {movPath}");
-                FileManager.Instance.SpawnMessage($"Piece '{piece.NameInSquad}' not found");
+                string text = UIHelperUtils.T("pieceNotfoundInLobby", piece.NameInSquad);
+
+                if (string.IsNullOrEmpty(text))
+                    text = $"Piece {piece.NameInSquad} was not found.\n\nTo fix this:\nRecreate the piece in the Piece Creator and save it again.\nThen open the Squad Creator, add the updated version of the piece, and save the squad.";
+
+                FileManager.Instance.SpawnLongMessage(text);
                 return;
             }
 
@@ -200,9 +205,15 @@ public class SquadSyncManager : NetworkBehaviour
             string spritePath = Path.Combine(rootPath,
                 FileManager.Instance.basePath_Sprite, piece.SpriteSet, piece.Sprite.Trim() + ".png");
 
-            if (!File.Exists(spritePath)){
+            if (!File.Exists(spritePath))
+            {
                 Debug.LogWarning($"[SquadSync] Sprite não encontrada: {spritePath}");
-                FileManager.Instance.SpawnMessage($"Sprite '{piece.NameInSquad}' not found");
+                string text = UIHelperUtils.T("spriteNotfoundInLobby", piece.NameInSquad);
+
+                if (string.IsNullOrEmpty(text))
+                    text = $"Sprite {piece.NameInSquad} was not found.\n\nTo fix this:\n1. Open the Piece Creator.\n2. Select the piece art again and save it.\n3. Open the Squad Creator.\n4. Add the updated piece to the squad and save the squad again.";
+
+                FileManager.Instance.SpawnLongMessage(text);
                 return;
             }
 

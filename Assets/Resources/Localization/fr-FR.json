@@ -893,6 +893,18 @@
       "value": "L'escouade a été téléchargée avec succès."
     },
     {
+      "key": "spriteNotfoundInLobby",
+      "value": "Le sprite {0} est introuvable.\n\nPour résoudre ce problème :\n1. Ouvrez le Créateur de pièces.\n2. Sélectionnez à nouveau l'illustration de la pièce et enregistrez-la.\n3. Ouvrez le Créateur d'escouade.\n4. Ajoutez la pièce mise à jour à l'escouade et enregistrez à nouveau l'escouade."
+    },
+    {
+      "key": "pieceNotfoundInLobby",
+      "value": "La pièce {0} est introuvable.\n\nPour résoudre ce problème :\nRecréez la pièce dans le Créateur de pièces et enregistrez-la à nouveau.\nOuvrez ensuite le Créateur d'escouade, ajoutez la version mise à jour de la pièce et enregistrez l'escouade."
+    },
+    {
+      "key": "warningDiffMultiplayer",
+      "value": "Joueur avec une différence de {0} tours envoyant une demande de renvoi."
+    },
+    {
       "key": "lobby_client_not_ready",
       "value": "L'autre joueur n'est pas encore prêt."
     }

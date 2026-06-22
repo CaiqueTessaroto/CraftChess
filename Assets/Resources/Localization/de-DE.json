@@ -893,6 +893,18 @@
       "value": "Die Truppe wurde erfolgreich heruntergeladen."
     },
     {
+      "key": "spriteNotfoundInLobby",
+      "value": "Sprite {0} wurde nicht gefunden.\n\nSo beheben Sie das Problem:\n1. Öffnen Sie den Stück-Ersteller.\n2. Wählen Sie die Stückgrafik erneut aus und speichern Sie sie.\n3. Öffnen Sie den Truppen-Ersteller.\n4. Fügen Sie das aktualisierte Stück zur Truppe hinzu und speichern Sie die Truppe erneut."
+    },
+    {
+      "key": "pieceNotfoundInLobby",
+      "value": "Stück {0} wurde nicht gefunden.\n\nSo beheben Sie das Problem:\nErstellen Sie das Stück im Stück-Ersteller neu und speichern Sie es erneut.\nÖffnen Sie dann den Truppen-Ersteller, fügen Sie die aktualisierte Version des Stücks hinzu und speichern Sie die Truppe."
+    },
+    {
+      "key": "warningDiffMultiplayer",
+      "value": "Spieler mit einer {0}-Zug-Differenz sendet eine erneute Anforderung."
+    },
+    {
       "key": "lobby_client_not_ready",
       "value": "Der andere Spieler ist noch nicht bereit."
     }

@@ -893,6 +893,18 @@
       "value": "小队已成功下载。"
     },
     {
+      "key": "spriteNotfoundInLobby",
+      "value": "未找到精灵 {0}。\n\n要解决此问题：\n1. 打开棋子创建器。\n2. 重新选择棋子图像并保存。\n3. 打开小队创建器。\n4. 将更新后的棋子添加到小队并再次保存小队。"
+    },
+    {
+      "key": "pieceNotfoundInLobby",
+      "value": "未找到棋子 {0}。\n\n要解决此问题：\n在棋子创建器中重新创建该棋子并再次保存。\n然后打开小队创建器，添加更新后的棋子版本，并保存小队。"
+    },
+    {
+      "key": "warningDiffMultiplayer",
+      "value": "相差 {0} 回合的玩家正在发送重新发送请求。"
+    },
+    {
       "key": "lobby_client_not_ready",
       "value": "另一名玩家尚未准备就绪。"
     }

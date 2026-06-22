@@ -6594,6 +6594,7 @@ MonoBehaviour:
   advicePrefab: {fileID: 8681817349286575285, guid: 69c790aebce36024bbac98470c0fdc3c, type: 3}
   inputPrefab: {fileID: 4861523131148347322, guid: ddb14cc30c79bff459925aaab5afc042, type: 3}
   messagePrefab: {fileID: 3987015553489549906, guid: 4cb543b959557e442a5a3567c0193e08, type: 3}
+  messageLongPrefab: {fileID: 3987015553489549906, guid: f3d4011566a58114f93e46d7c85453ef, type: 3}
   panel: {fileID: 2146586620}
   warning: 0
   fadeDuration: 1
