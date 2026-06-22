@@ -61,10 +61,11 @@ public class MultiplayerPieceController : PieceController
         if (!isReceivingMove && !boardManager.noTurns && !IsMyTurnPublic())
             return;
 
-        if (boardManager.noTurns && PieceControllerNetwork.Instance?.diff != 0)
+        if (PieceControllerNetwork.Instance?.diff != 0)
         {
             if (Time.time - lastResyncReportTime >= RESYNC_REPORT_COOLDOWN)
             {
+                FileManager.Instance.SpawnMessage($"Player with a {PieceControllerNetwork.Instance.diff}-turn difference sending a resend request.");
                 lastResyncReportTime = Time.time;
                 PieceControllerNetwork.Instance?.ReportTurnAfterMove();
             }
@@ -309,7 +310,7 @@ public class MultiplayerPieceController : PieceController
         }
 
         base.DeselectPiece();
-        
+
         pendingNetworkType = PendingMoveType.None;
         //lastMoveType = LastMoveType.None;
 
