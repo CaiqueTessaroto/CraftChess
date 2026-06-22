@@ -29,6 +29,8 @@ public class FileManager : MonoBehaviour
     public Transform panel;
     public bool warning = false;
     [SerializeField] private float fadeDuration = 1f;
+    [SerializeField] private float fadeDurationlong = 2f;
+
     [SerializeField] private float lifetime = 1f;
 
     public static FileManager Instance;
@@ -58,7 +60,7 @@ public class FileManager : MonoBehaviour
         tmp.text = text;
         tmp.font = LocalizationManager.Instance?.currentFont;
 
-        StartCoroutine(FadeRoutine(tmp, instance));
+        StartCoroutine(FadeRoutine(tmp, instance, fadeDuration));
     }
 
     public void SpawnLongMessage(string text)
@@ -81,11 +83,11 @@ public class FileManager : MonoBehaviour
         tmp.text = text;
         tmp.font = LocalizationManager.Instance?.currentFont;
 
-        StartCoroutine(FadeRoutine(tmp, instance));
+        StartCoroutine(FadeRoutine(tmp, instance, fadeDurationlong));
     }
 
 
-    private IEnumerator FadeRoutine(TextMeshProUGUI tmp, GameObject instance)
+    private IEnumerator FadeRoutine(TextMeshProUGUI tmp, GameObject instance, float duration)
     {
         Color color = tmp.color;
 
@@ -108,10 +110,10 @@ public class FileManager : MonoBehaviour
 
         // Fade Out
         t = 0f;
-        while (t < fadeDuration)
+        while (t < duration)
         {
             t += Time.deltaTime;
-            color.a = Mathf.Lerp(1f, 0f, t / fadeDuration);
+            color.a = Mathf.Lerp(1f, 0f, t / duration);
             tmp.color = color;
             yield return null;
         }
