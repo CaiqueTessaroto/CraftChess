@@ -75,6 +75,10 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScene(string sceneName)
     {
+        if (sceneName == "Menu")
+            if (MatchData.Instance != null)
+                MatchData.Instance.Reset();
+
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
         AdsManager.TryShowInterstitial();
@@ -88,15 +92,15 @@ public class GameManager : MonoBehaviour
 
         if (usedRam >= RAM_LIMIT)
         {
-        
-        //Debug.LogWarning($"RAM excedida: {usedRam / (1024 * 1024)} MB. Resetando cena...");
 
-        #if !UNITY_EDITOR
+            //Debug.LogWarning($"RAM excedida: {usedRam / (1024 * 1024)} MB. Resetando cena...");
+
+#if !UNITY_EDITOR
 
         ReloadCurrentScene();
 
-        #endif
-        
+#endif
+
         }
     }
 

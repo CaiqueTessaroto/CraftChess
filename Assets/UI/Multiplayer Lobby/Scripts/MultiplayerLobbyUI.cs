@@ -273,6 +273,9 @@ public class MultiplayerLobbyUI : MonoBehaviour
             {
                 if (NetworkLobbyManager.Instance.IsConnected())
                 {
+                    if (MatchData.Instance != null)
+                        MatchData.Instance.Reset();
+
                     NetworkLobbyManager.Instance.HandleDisconnect();
                 }
                 else

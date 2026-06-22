@@ -171,6 +171,10 @@ public class GameInterfaceManager : MonoBehaviour
     public void LeaveToMenu()
     {
         MultiplayerLobbyState.Reset();
+
+        if (MatchData.Instance != null)
+            MatchData.Instance.Reset();
+
         try
         {
             if (NetworkLobbyManager.Instance.IsConnected())

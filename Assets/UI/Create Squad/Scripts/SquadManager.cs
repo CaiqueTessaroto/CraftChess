@@ -82,7 +82,7 @@ public class SquadManager : MonoBehaviour
     public GameObject prefabCounter;
 
     [Header("Control:")]
-    public int maximumPower = 1510;
+    public int maximumPower = 1520;
     public bool selectedPiece = false;
     public bool removePiece = false;
     public bool setKing = false;
@@ -766,7 +766,7 @@ public class SquadManager : MonoBehaviour
 
         squadData.Power = squadPower;
 
-        squadpowerTmp.text = $"Power: {squadPower}";
+        squadpowerTmp.text = UIHelperUtils.SetPowerText(squadPower);
         squadgridpowerTmp.text = $"{squadPower}";
     }
 
@@ -1003,7 +1003,7 @@ public class SquadManager : MonoBehaviour
                 currentTname = namePieceSquad;
         }
 
-        if (config.piece.Power > 80)
+        if (config.piece.Power > castelingPower)
             moreSpecialBtw.gameObject.SetActive(false);
         else
             moreSpecialBtw.gameObject.SetActive(true);
@@ -1075,7 +1075,6 @@ public class SquadManager : MonoBehaviour
             if (config.piece.Power > castelingPower)
             {
                 ClearCastling(pieceData.NameInSquad);
-                yield break;
             }
 
             if (pieceData.CastlingPieces.Count > 0)
@@ -1092,7 +1091,6 @@ public class SquadManager : MonoBehaviour
             if (config.piece.Power > promotionPower)
             {
                 ClearPromotions(pieceData.NameInSquad);
-                yield break;
             }
 
             if (pieceData.PromotionPieces.Count > 0)

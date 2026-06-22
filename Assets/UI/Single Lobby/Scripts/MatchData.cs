@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class  MatchData : MonoBehaviour
+public class MatchData : MonoBehaviour
 {
     public static MatchData Instance;
 
@@ -46,6 +46,28 @@ public class  MatchData : MonoBehaviour
         // 🔒 Garante limpeza da instância
         if (Instance == this)
             Instance = null;
+    }
+
+    public void Reset()
+    {
+        blackSquadName = string.Empty;
+        whiteSquadName = string.Empty;
+        mapName = string.Empty;
+        whoStarts = default;
+        botDifficulty = default;
+
+        noRules = false;
+        noTurns = false;
+        localGame = false;
+        autoSwitchSide = true;
+        IAvsIA = false;
+
+        Squads.Clear();
+
+        isMultiplayer = false;
+        HostIsWhite = false;
+        HostProfileSprite = null;
+        ClientProfileSprite = null;
     }
 
 }
