@@ -97,7 +97,7 @@ public class InteractiveLobby : MonoBehaviour
     public SingleMatchConfig currentMatch;
 
     [Header("Control")]
-    public bool OnWhite = false;
+    public bool IsWhite = false;
     public string currentWhiteRootPath;
     public string currentBlackRootPath;
     string currentWhiteTname;
@@ -222,7 +222,7 @@ public class InteractiveLobby : MonoBehaviour
 
         blackBtn.onClick.AddListener(() =>
         {
-            OnWhite = false;
+            IsWhite = false;
 
             navigationManage.StartFormationsButtons();
 
@@ -230,7 +230,7 @@ public class InteractiveLobby : MonoBehaviour
 
         whiteBtn.onClick.AddListener(() =>
         {
-            OnWhite = true;
+            IsWhite = true;
 
             navigationManage.StartFormationsButtons();
         });
@@ -414,7 +414,7 @@ public class InteractiveLobby : MonoBehaviour
     {
 
 
-        if (OnWhite)
+        if (IsWhite)
         {
             managerPieceInfo.pieceSpritesWhite.Clear();
 
@@ -481,6 +481,11 @@ public class InteractiveLobby : MonoBehaviour
 
         int elementCount = 0;
 
+        if (!IsWhite)
+            ignoredPiecesBlack.Clear();
+        else
+            ignoredPiecesWhite.Clear();
+
         foreach (SquadPieceData piece in data.Pieces)
         {
 
@@ -496,6 +501,11 @@ public class InteractiveLobby : MonoBehaviour
             if (!File.Exists(jsonPath))
             {
                 Debug.LogWarning($"[Formation Loader] Arquivo da peça não encontrado: {jsonPath}");
+                if (!IsWhite)
+                    ignoredPiecesBlack.Add(piece.NameInSquad);
+                else
+                    ignoredPiecesWhite.Add(piece.NameInSquad);
+
                 continue;
             }
 
@@ -519,7 +529,6 @@ public class InteractiveLobby : MonoBehaviour
             {
                 Debug.LogWarning("Sprite não encontrada: " + caminhoSprite);
             }
-
 
             Sprite sprite = UIHelperUtils.GetSpriteFromPath(caminhoSprite);
 
@@ -545,14 +554,14 @@ public class InteractiveLobby : MonoBehaviour
                     if (piece.NameInSquad == data.King.Name)
                         IsKing = true;
 
-                    managerPieceInfo.SelectPiece(piece.NameInSquad, piece, wrapper, sprite, OnWhite, IsKing);
+                    managerPieceInfo.SelectPiece(piece.NameInSquad, piece, wrapper, sprite, IsWhite, IsKing);
                     //    squadManager.SelectPiece(nameInSquad, pieceData, File.ReadAllText(jsonPath), sprite, rootPath);
                 });
 
             }
 
             // --- 🔹 Guarda dados em cache conforme o lado (usuário ou inimigo) ---
-            if (OnWhite)
+            if (IsWhite)
             {
                 if (!WhiteSquad.Sprites.ContainsKey(piece.NameInSquad))
                     WhiteSquad.Sprites[piece.NameInSquad] = sprite;
@@ -589,7 +598,7 @@ public class InteractiveLobby : MonoBehaviour
 
 
         // --- 🔹 Ao final, guarda o Squad completo ---
-        if (OnWhite)
+        if (IsWhite)
             WhiteSquad.Data = data;
         else
             BlackSquad.Data = data;
@@ -599,11 +608,11 @@ public class InteractiveLobby : MonoBehaviour
 
 
         if (BlackSquad.Data != null)
-            LoadPiecesInGrid(BlackSquad.Data, BlackSquad.Sprites, true);
+            LoadPiecesInGrid(BlackSquad.Data, BlackSquad.Sprites, ignoredPiecesBlack, true);
 
 
         if (WhiteSquad.Data != null)
-            LoadPiecesInGrid(WhiteSquad.Data, WhiteSquad.Sprites);
+            LoadPiecesInGrid(WhiteSquad.Data, WhiteSquad.Sprites, ignoredPiecesWhite);
 
 
         gridLobby.ClearGrid(posInGrid);
@@ -685,7 +694,7 @@ public class InteractiveLobby : MonoBehaviour
 
         currentRootPath = Application.persistentDataPath;
 
-        OnWhite = true;
+        IsWhite = true;
         squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
         jsonFile = Path.Combine(squadFolder, currentMatch.WhiteSquadName + ".json");
         //pngFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".png");
@@ -766,13 +775,11 @@ public class InteractiveLobby : MonoBehaviour
 
 
     public List<Vector2Int> posInGrid = new List<Vector2Int>();
+    public List<string> ignoredPiecesBlack = new List<string>();
+    public List<string> ignoredPiecesWhite = new List<string>();
 
-
-
-
-    public void LoadPiecesInGrid(Squad squadData, Dictionary<string, Sprite> pieceSprites, bool IsBlack = false)
+    public void LoadPiecesInGrid(Squad squadData, Dictionary<string, Sprite> pieceSprites, List<string> ignoredPieces, bool IsBlack = false)
     {
-
         foreach (var piece in squadData.Units)
         {
             Vector2Int finalPosition = piece.Position;
@@ -782,14 +789,17 @@ public class InteractiveLobby : MonoBehaviour
                 finalPosition = MirrorPosition(piece.Position);
             }
 
-            posInGrid.Add(finalPosition);
+            if (ignoredPieces == null)
+                posInGrid.Add(finalPosition);
+            else if (!ignoredPieces.Contains(piece.Name))
+                posInGrid.Add(finalPosition);
 
             GameObject cell = gridLobby.GetCellAtPosition(finalPosition);
 
-            SetPieceToCellFromJson(cell, piece, pieceSprites);
+            SetSpriteFromJson(cell, piece, pieceSprites);
         }
-
     }
+
 
     private Vector2Int MirrorPosition(Vector2Int original)
     {
@@ -798,17 +808,6 @@ public class InteractiveLobby : MonoBehaviour
             original.x,
             boardSize - 1 - original.y
         );
-    }
-
-    public void SetPieceToCellFromJson(GameObject cell, UnitPieceData piece, Dictionary<string, Sprite> pieceSprites)
-    {
-        // coloca o sprite na célula
-        if (!pieceSprites.ContainsKey(piece.Name))
-        {
-            return;
-        }
-
-        SetSpriteFromJson(cell, piece, pieceSprites);
     }
 
 

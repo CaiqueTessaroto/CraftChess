@@ -119,26 +119,23 @@ public class GridLobby : MonoBehaviour
 
     public List<Vector2Int> posInGrid = new List<Vector2Int>();
 
-
     public void LoadPiecesInGrid(Squad squadData, Dictionary<string, Sprite> pieceSprites, bool IsBlack = false)
     {
-
         foreach (var piece in squadData.Units)
         {
-            Vector2Int finalPosition = piece.Position;
-
-            if (IsBlack)
+            if (!pieceSprites.ContainsKey(piece.Name))
             {
-                finalPosition = MirrorPosition(piece.Position);
+                Debug.LogWarning($"Sprite não encontrado para '{piece.Name}', peça ignorada.");
+                continue;
             }
+
+            Vector2Int finalPosition = IsBlack ? MirrorPosition(piece.Position) : piece.Position;
 
             posInGrid.Add(finalPosition);
 
             GameObject cell = GetCellAtPosition(finalPosition);
-
             SetPieceToCellFromJson(cell, piece, pieceSprites);
         }
-
     }
 
     private Vector2Int MirrorPosition(Vector2Int original)

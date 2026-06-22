@@ -106,8 +106,19 @@ public static class MultiplayerLobbyState
             return;
         }
 
+        // ─── Deep copy via JSON (evita mutar o objeto original) ───────────
+        string rawJson = JsonUtility.ToJson(squad.Data);
+        Squad squadData = JsonUtility.FromJson<Squad>(rawJson);
+
+        Dictionary<string, MovementConfigData> piecesCopy = new();
+        foreach (var kv in squad.Pieces)
+        {
+            string pieceRawJson = JsonUtility.ToJson(kv.Value);
+            piecesCopy[kv.Key] = JsonUtility.FromJson<MovementConfigData>(pieceRawJson);
+        }
+
         // ─── Nome da pasta (evita colisão) ────────────────────────────────
-        string baseName = squad.Data.Name;
+        string baseName = squadData.Name;
         string folderName = baseName;
         int suffix = 1;
 
@@ -115,6 +126,14 @@ public static class MultiplayerLobbyState
 
         while (Directory.Exists(Path.Combine(squadsRoot, folderName)))
             folderName = baseName + suffix++;
+
+        // ─── Atualiza referências ao nome do squad na cópia ───────────────
+        squadData.Name = folderName;
+        foreach (var piece in squadData.Pieces)
+        {
+            piece.Squad = folderName;
+            piece.SpriteSet = folderName;
+        }
 
         // ─── Caminhos ─────────────────────────────────────────────────────
         string squadFolder = Path.Combine(squadsRoot, folderName);
@@ -126,7 +145,7 @@ public static class MultiplayerLobbyState
         Directory.CreateDirectory(spritesFolder);
 
         // ─── JSON do squad ────────────────────────────────────────────────
-        string squadJson = JsonUtility.ToJson(squad.Data, true);
+        string squadJson = JsonUtility.ToJson(squadData, true);
         string squadJsonPath = Path.Combine(squadFolder, folderName + ".json");
         File.WriteAllText(squadJsonPath, squadJson);
         Debug.Log($"[Download] Squad JSON salvo: {squadJsonPath}");
@@ -140,17 +159,20 @@ public static class MultiplayerLobbyState
         }
 
         // ─── MovementConfigData (peças) ───────────────────────────────────
-        foreach (var kv in squad.Pieces)
+        foreach (var kv in piecesCopy)
         {
             string pieceName = kv.Key;
-            string pieceJson = JsonUtility.ToJson(kv.Value, true);
+            var pieceData = kv.Value;
 
-            // Pasta por squad dentro de Pieces  ex: Pieces/NomeDoSquad/
+            pieceData.piece.Squad = folderName;
+            pieceData.piece.FolderSprite = folderName;
+
+            string pieceJson = JsonUtility.ToJson(pieceData, true);
+
             string pieceSquadFolder = Path.Combine(piecesFolder, folderName);
             Directory.CreateDirectory(pieceSquadFolder);
 
             string piecePath = Path.Combine(pieceSquadFolder, pieceName + ".json");
-            //squad.SquadImage
             File.WriteAllText(piecePath, pieceJson);
             Debug.Log($"[Download] Piece salva: {piecePath}");
         }
@@ -161,7 +183,6 @@ public static class MultiplayerLobbyState
             string pieceName = kv.Key;
             byte[] pngBytes = kv.Value;
 
-            // Pasta por squad dentro de Sprites  ex: Sprites/NomeDoSquad/
             string spriteSquadFolder = Path.Combine(spritesFolder, folderName);
             Directory.CreateDirectory(spriteSquadFolder);
 
@@ -176,8 +197,6 @@ public static class MultiplayerLobbyState
             text = "The squad has been downloaded successfully.";
 
         FileManager.Instance.SpawnMessage(text);
-
-        //Debug.Log($"[MultiplayerLobbyState] Download completo → {squadFolder}");
     }
 
     public static void Reset()

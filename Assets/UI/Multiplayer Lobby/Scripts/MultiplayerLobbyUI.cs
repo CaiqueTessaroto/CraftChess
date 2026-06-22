@@ -658,10 +658,19 @@ public class MultiplayerLobbyUI : MonoBehaviour
 
             Sprite sprite = null;
 
+            if (!squad.Pieces.TryGetValue(piece.NameInSquad, out MovementConfigData wrapper))
+            {
+                Debug.LogWarning($"Peça '{piece.NameInSquad}' não encontrada em squad.Pieces. Pulando...");
+                continue;
+            }
+
             if (squad.Sprites.ContainsKey(piece.NameInSquad))
                 sprite = squad.Sprites[piece.NameInSquad];
-
-            MovementConfigData wrapper = squad.Pieces[piece.NameInSquad];
+            else
+            {
+                squad.Sprites[piece.NameInSquad] = Resources.Load<Sprite>("Sprites/Default/Piece_Default");
+                sprite = squad.Sprites[piece.NameInSquad];
+            }
 
             GameObject img = Instantiate(piece_ImgPrefab, grid);
             img.name = piece.NameInSquad;
@@ -695,7 +704,6 @@ public class MultiplayerLobbyUI : MonoBehaviour
             });
 
         }
-
 
     }
 

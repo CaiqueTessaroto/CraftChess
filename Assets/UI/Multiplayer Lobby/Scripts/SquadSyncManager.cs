@@ -190,7 +190,8 @@ public class SquadSyncManager : NetworkBehaviour
             if (!File.Exists(movPath))
             {
                 Debug.LogWarning($"[SquadSync] Movement JSON não encontrado: {movPath}");
-                continue;
+                FileManager.Instance.SpawnMessage($"Piece '{piece.NameInSquad}' not found");
+                return;
             }
 
             //MovementConfigData config = JsonUtility.FromJson<MovementConfigData>(File.ReadAllText(movPath));
@@ -199,8 +200,11 @@ public class SquadSyncManager : NetworkBehaviour
             string spritePath = Path.Combine(rootPath,
                 FileManager.Instance.basePath_Sprite, piece.SpriteSet, piece.Sprite.Trim() + ".png");
 
-            if (!File.Exists(spritePath))
+            if (!File.Exists(spritePath)){
                 Debug.LogWarning($"[SquadSync] Sprite não encontrada: {spritePath}");
+                FileManager.Instance.SpawnMessage($"Sprite '{piece.NameInSquad}' not found");
+                return;
+            }
 
             squad.Sprites[piece.NameInSquad] = UIHelperUtils.GetSpriteFromPath(spritePath);
         }
