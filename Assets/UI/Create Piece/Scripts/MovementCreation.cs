@@ -991,8 +991,9 @@ public class MovementCreation : MonoBehaviour
         // Função local para calcular com base nos flags
         int CalcularPoder(bool move, bool capture, bool jump, int range)
         {
+            bool _move = move || jump; // jump implica move, sem alterar o original
             int poder = 0;
-            if (move) poder += 2 * range;
+            if (_move) poder += 2 * range;
             if (capture) poder += 3 * range;
             if (jump) poder += 2 * range;
             return poder;
