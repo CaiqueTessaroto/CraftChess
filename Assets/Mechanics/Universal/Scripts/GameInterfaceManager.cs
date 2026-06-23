@@ -80,7 +80,7 @@ public class GameInterfaceManager : MonoBehaviour
             }
             else
             {
-                if (pieceController.botPlayerId == 0)
+                if (pieceController.opponentPlayerId == 0)
                     white = true;
                 else
                     black = true;

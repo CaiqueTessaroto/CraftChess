@@ -26,13 +26,13 @@ public class PieceController : MonoBehaviour
     public GameObject selectedPiece;
     public bool kingWhiteIsInCheck;
     public bool kingBlackIsInCheck;
-    public int botPlayerId;
+    public int opponentPlayerId;
     public bool IA = false;
     public bool endGame = false;
     public bool haskingWhite = false;
     public bool haskingBlack = false;
     public bool forceMove = false;
-    public bool visualizationInfo = false;
+    public bool hasCheck = false;
     public PieceComponent KingWhite;
     public PieceComponent KingBlack;
 
@@ -63,7 +63,7 @@ public class PieceController : MonoBehaviour
             gameInterfaceManager = FindFirstObjectByType<GameInterfaceManager>();
 
 
-        botPlayerId = boardManager.GetOpponentId();
+        opponentPlayerId = boardManager.GetOpponentId();
     }
 
 
@@ -94,7 +94,7 @@ public class PieceController : MonoBehaviour
             }
 
             if (!forceMove)
-                if ((!boardManager.localGame && comp.Player.id == botPlayerId && IA == false) || boardManager.IAvsIA)
+                if ((!boardManager.localGame && comp.Player.id == opponentPlayerId && IA == false) || boardManager.IAvsIA)
                     return;
 
             if (boardManager.noTurns || (comp.Player.id == moveTracker.GetTurnPlayer())) // || forceMove
@@ -155,7 +155,6 @@ public class PieceController : MonoBehaviour
         PieceMovement movement = piece.GetComponent<PieceMovement>();
 
         motionVisualization.VisualizeMoves(component, movement);
-        visualizationInfo = true;
 
         MatchSquadData matchSquad;
 
@@ -361,9 +360,9 @@ public class PieceController : MonoBehaviour
         if (draw)
             gameInterfaceManager.EndGame("Draw");
 
-        if (black && botPlayerId == 0)
+        if (black && opponentPlayerId == 0)
             gameInterfaceManager.EndGame("Victory");
-        else if (white && botPlayerId == 1)
+        else if (white && opponentPlayerId == 1)
             gameInterfaceManager.EndGame("Victory");
         else if (black || white)
             gameInterfaceManager.EndGame("Defeat");
@@ -394,7 +393,7 @@ public class PieceController : MonoBehaviour
 
             kingWhiteIsInCheck = cellWhite.house.isControlledByBlack;
 
-            if (boardManager.localGame || (!boardManager.IAvsIA && !boardManager.noRules)) //KingWhite.Player.id != botPlayerId &&
+            if (boardManager.localGame || (!boardManager.IAvsIA && !boardManager.noRules)) //KingWhite.Player.id != opponentPlayerId &&
                 if (kingWhiteIsInCheck)
                 {
                     AudioManager.Instance.PlaySFX(checkSound);
@@ -423,7 +422,7 @@ public class PieceController : MonoBehaviour
 
             kingBlackIsInCheck = cellBlack.house.isControlledByWhite;
 
-            if (boardManager.localGame || (!boardManager.IAvsIA && !boardManager.noRules)) //KingBlack.Player.id != botPlayerId &&
+            if (boardManager.localGame || (!boardManager.IAvsIA && !boardManager.noRules)) //KingBlack.Player.id != opponentPlayerId &&
                 if (kingBlackIsInCheck)
                 {
                     AudioManager.Instance.PlaySFX(checkSound);

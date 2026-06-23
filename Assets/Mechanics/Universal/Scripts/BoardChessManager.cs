@@ -627,7 +627,7 @@ public class BoardChessManager : MonoBehaviour
             Transform child = cell.transform.GetChild(i);
 
             // Ignora o overlay de seleção
-            if (child.name == "Overlay" || child.name == "Identification(Clone)")
+            if (child.name == "Overlay" || child.name == "Identification(Clone)" || child.name == "CheckOverlay")
                 continue;
 
             // Retorna o primeiro filho válido (presumindo que só há uma peça)
