@@ -59,7 +59,11 @@ public class ChessClock : MonoBehaviour
         GameObject active = isWhiteTurn ? pointWhite : pointBlack;
         GameObject inactive = isWhiteTurn ? pointBlack : pointWhite;
 
+        if (active == null || inactive == null)
+            return;
+
         SpriteRenderer inactiveSr = inactive?.GetComponent<SpriteRenderer>();
+
         if (inactiveSr != null) inactiveSr.enabled = false;
 
         if (pointBlinkRoutine != null) StopCoroutine(pointBlinkRoutine);
@@ -84,6 +88,9 @@ public class ChessClock : MonoBehaviour
     private IEnumerator BlinkOverlay(GameObject overlay)
     {
         SpriteRenderer sr = overlay.GetComponent<SpriteRenderer>();
+
+        if (sr == null)
+            yield break;
 
         while (!pieceController.endGame)
         {

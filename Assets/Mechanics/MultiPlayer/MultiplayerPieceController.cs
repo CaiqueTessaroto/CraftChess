@@ -59,7 +59,10 @@ public class MultiplayerPieceController : PieceController
         if (MultiplayerLobbyState.IsSpectator)
             return;
 
-        if (!isReceivingMove && !boardManager.noTurns && !IsMyTurnPublic())
+        if (isReceivingMove)
+            return;
+
+        if (!boardManager.noTurns && !IsMyTurnPublic())
             return;
 
         if (PieceControllerNetwork.Instance?.diff != 0)

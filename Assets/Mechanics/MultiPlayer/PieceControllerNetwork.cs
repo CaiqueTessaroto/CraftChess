@@ -17,6 +17,20 @@ public class PieceControllerNetwork : NetworkBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
+    public override void OnNetworkSpawn()
+    {
+        if (IsServer)
+        {
+            authorativeTurnPlayer.Value = 0;
+        }
+    }
+
+    public void ResetTurnPlayer()
+    {
+        if (!IsHost) return;
+
+        authorativeTurnPlayer.Value = 0;
+    }
 
     private void Update()
     {
@@ -263,16 +277,17 @@ public class PieceControllerNetwork : NetworkBehaviour
 
         bool synced = diff <= 0;
 
-        if (senderId.ToString() == MultiplayerLobbyState.SpectatorClientId)
-        {
-            spectatorSynced = synced;
-            Debug.Log($"Spectator synced = {synced} diff={diff}");
-        }
-        else
-        {
-            player2Synced = synced;
-            Debug.Log($"Player synced = {synced} diff={diff}");
-        }
+        if (!MultiplayerLobbyState.SpectatorClientId.IsNullOrEmpty())
+            if (senderId.ToString() == MultiplayerLobbyState.SpectatorClientId)
+            {
+                spectatorSynced = synced;
+                Debug.Log($"Spectator synced = {synced} diff={diff}");
+            }
+            else
+            {
+                player2Synced = synced;
+                Debug.Log($"Player synced = {synced} diff={diff}");
+            }
 
         if (synced) return;
 
@@ -363,8 +378,8 @@ public class PieceControllerNetwork : NetworkBehaviour
 
     public void ReportCanPlayAfterMove()
     {
-        if (!IsHost)
-            CanPlayServerRpc();
+        //if (!IsHost)
+        CanPlayServerRpc();
     }
 
 

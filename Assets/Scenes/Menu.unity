@@ -9477,6 +9477,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   simulatePacketLoss: 0
   diff: 0
+  CanPlayResponse: 1
 --- !u!114 &877656737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15690,6 +15691,7 @@ MonoBehaviour:
   panel: {fileID: 1680361634}
   warning: 0
   fadeDuration: 1
+  fadeDurationlong: 2
   lifetime: 1
 --- !u!1 &1649503280
 GameObject:
@@ -17789,8 +17791,8 @@ MonoBehaviour:
   testMode: 0
   rewardedAdUnitAndroid: Rewarded_Android
   interstitialAdUnitAndroid: Interstitial_Android
-  firstAdDelay: 60
-  interstitialCooldown: 300
+  firstAdDelay: 600
+  interstitialCooldown: 600
   bannerAdUnitAndroid: Banner_Android
   bannerAdUnitIOS: Banner_iOS
 --- !u!1 &1983400165

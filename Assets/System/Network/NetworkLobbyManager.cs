@@ -267,10 +267,11 @@ public class NetworkLobbyManager : MonoBehaviour
         }
 
         MultiplayerLobbyState.Reset();
-        currentLobby = null;
 
         if (NetworkManager.Singleton != null)
             NetworkManager.Singleton.Shutdown();
+
+        currentLobby = null;
 
         if (!string.IsNullOrEmpty(scene))
             SceneManager.LoadScene(scene);

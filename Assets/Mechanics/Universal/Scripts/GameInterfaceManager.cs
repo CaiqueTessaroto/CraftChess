@@ -96,6 +96,7 @@ public class GameInterfaceManager : MonoBehaviour
 
             if (boardChessManager.isMultiplayer)
             {
+                PieceControllerNetwork.Instance.ResetTurnPlayer();
                 LeaveToMenu();
             }
             else
@@ -113,10 +114,13 @@ public class GameInterfaceManager : MonoBehaviour
         continueBtn.onClick.AddListener(() =>
         {
             if (boardChessManager.isMultiplayer)
+            {
+                PieceControllerNetwork.Instance.ResetTurnPlayer();
                 if (NetworkLobbyManager.Instance.IsConnected())
                     gameManager.ChangeScene("Multiplayer Lobby");
                 else
                     LeaveToMenu();
+            }
             else
                 gameManager.ChangeScene("Single Lobby");
         });
@@ -128,11 +132,16 @@ public class GameInterfaceManager : MonoBehaviour
 
         continueBtn2.onClick.AddListener(() =>
         {
+            PieceControllerNetwork.Instance.ResetTurnPlayer();
+
             if (boardChessManager.isMultiplayer)
+            {
+                PieceControllerNetwork.Instance.ResetTurnPlayer();
                 if (NetworkLobbyManager.Instance.IsConnected())
                     gameManager.ChangeScene("Multiplayer Lobby");
                 else
                     LeaveToMenu();
+            }
             else
                 gameManager.ChangeScene("Single Lobby");
         });
@@ -142,10 +151,13 @@ public class GameInterfaceManager : MonoBehaviour
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
             if (boardChessManager.isMultiplayer)
+            {
+                PieceControllerNetwork.Instance.ResetTurnPlayer();
                 if (NetworkLobbyManager.Instance.IsConnected())
                     gameManager.ChangeScene("Multiplayer Lobby");
                 else
                     LeaveToMenu();
+            }
             else
                 gameManager.ChangeScene("Single Lobby");
         });
