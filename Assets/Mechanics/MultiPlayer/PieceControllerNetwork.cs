@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using WebSocketSharp;
 
 public class PieceControllerNetwork : NetworkBehaviour
 {
@@ -9,9 +10,7 @@ public class PieceControllerNetwork : NetworkBehaviour
     private PieceController pc;
 
     public bool simulatePacketLoss = false;
-
-
-    private const float STALL_TIMEOUT = 30f; // segundos sem movimento
+    private const float STALL_TIMEOUT = 10f; // segundos sem movimento
 
     private void Awake()
     {
@@ -249,29 +248,39 @@ public class PieceControllerNetwork : NetworkBehaviour
     }
 
     public int diff = 0;
+    private bool player2Synced = true;
+    private bool spectatorSynced = true;
 
     [ServerRpc(RequireOwnership = false)]
     public void ReportClientTurnServerRpc(int clientTurn, ServerRpcParams p = default)
     {
         EnsureMP();
-        int hostTurn = mp.moveTracker.GetTurnNumber(); // no host
+
+        ulong senderId = p.Receive.SenderClientId;
+        int hostTurn = mp.moveTracker.GetTurnNumber();
+
         diff = hostTurn - clientTurn;
 
-        //Debug.Log($"[Resync] Cliente reportou turno {clientTurn}, host está no {hostTurn}, diff={diff}");
+        bool synced = diff <= 0;
 
-        if (diff <= 0) return;
+        if (senderId.ToString() == MultiplayerLobbyState.SpectatorClientId)
+        {
+            spectatorSynced = synced;
+            Debug.Log($"Spectator synced = {synced} diff={diff}");
+        }
+        else
+        {
+            player2Synced = synced;
+            Debug.Log($"Player synced = {synced} diff={diff}");
+        }
+
+        if (synced) return;
 
         if (diff == 1)
-        {
-            Debug.LogWarning($"[Resync] Cliente reportou turno {clientTurn}, host está no {hostTurn}, diff={diff}");
-            // Host está 1 atrás — reenvia último movimento
             mp.ResendLastMove();
-        }
         else if (diff > 1)
-        {
-            // Gap maior — full board state
-            Debug.LogWarning($"Gap de {diff} — host envia board state completo");
-        }
+            Debug.LogError($"Gap de {diff} — host envia board state completo");
+
     }
 
     [ClientRpc]
@@ -280,8 +289,6 @@ public class PieceControllerNetwork : NetworkBehaviour
         EnsureMP();
         int localTurn = mp.moveTracker.GetTurnNumber();
         diff = localTurn - hostTurn;
-
-        //Debug.Log($"[Resync] Host no turno {hostTurn}, cliente no turno {localTurn}, diff={diff}");
 
         if (diff <= 0) return;
 
@@ -292,9 +299,39 @@ public class PieceControllerNetwork : NetworkBehaviour
         }
         else
         {
-            Debug.LogWarning($"Gap de {diff} turnos — envia board state completo");
-            // mp.SendFullBoardState();
+            Debug.LogError($"Gap de {diff} turnos — envia board state completo");
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void CanPlayServerRpc(ServerRpcParams p = default)
+    {
+        bool canPlay = true;
+
+        if (!player2Synced)
+            canPlay = false;
+
+        if (!MultiplayerLobbyState.SpectatorClientId.IsNullOrEmpty())
+            if (!spectatorSynced)
+                canPlay = false;
+
+        ClientRpcParams target = new ClientRpcParams
+        {
+            Send = new ClientRpcSendParams
+            {
+                TargetClientIds = new[] { p.Receive.SenderClientId }
+            }
+        };
+
+        CanPlayClientRpc(canPlay, target);
+    }
+
+    public bool CanPlayResponse = true;
+
+    [ClientRpc]
+    private void CanPlayClientRpc(bool canPlay, ClientRpcParams p = default)
+    {
+        CanPlayResponse = canPlay;
     }
 
     // NetworkVariable — sincroniza automaticamente para todos
@@ -312,8 +349,6 @@ public class PieceControllerNetwork : NetworkBehaviour
         if (mp == null || mp.moveTracker == null) return;
 
         authorativeTurnPlayer.Value = mp.moveTracker.GetTurnPlayer();
-
-        //Debug.Log($"[TURN AUTH] Turno autoritativo atualizado para: {authorativeTurnPlayer.Value} | TurnNumber={mp.moveTracker.GetTurnNumber()}");
     }
 
     public void ReportTurnAfterMove()
@@ -324,6 +359,15 @@ public class PieceControllerNetwork : NetworkBehaviour
             ReportHostTurnClientRpc(currentTurn);
         else
             ReportClientTurnServerRpc(currentTurn);
+    }
+
+    public void ReportCanPlayAfterMove()
+    {
+        if (!MultiplayerLobbyState.SpectatorClientId.IsNullOrEmpty())
+            return;
+
+        if (!IsHost)
+            CanPlayServerRpc();
     }
 
 

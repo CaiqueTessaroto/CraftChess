@@ -10,7 +10,7 @@ public class AdsManager : MonoBehaviour,
 {
 
     public static AdsManager Instance;
-    //4673340916623
+    
     [SerializeField] string androidGameId = "6029556";
     [SerializeField] string iosGameId = "6029557";
     [SerializeField] bool testMode = false;
@@ -21,8 +21,8 @@ public class AdsManager : MonoBehaviour,
     [SerializeField] string interstitialAdUnitAndroid = "Interstitial_Android";
 
     [Header("Interstitial Time Settings")]
-    [SerializeField] float firstAdDelay = 60f;
-    [SerializeField] float interstitialCooldown = 300f; // 5 minutos
+    [SerializeField] float firstAdDelay = 600f;
+    [SerializeField] float interstitialCooldown = 600f; // 10 minutos
 
     float lastInterstitialTime = 0;
     float gameStartTime;

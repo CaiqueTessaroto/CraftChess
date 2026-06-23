@@ -1085,12 +1085,8 @@ public class MovementCreation : MonoBehaviour
             poderTotal = poderTotal + 20;
         }
 
-
-
-
         // Atribui o poder à peça
         piece.Power = poderTotal;
-        //powerPreview.text = $"Power: {piece.Power}";
         powerPreview.text = UIHelperUtils.SetPowerText(piece.Power);
     }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using WebSocketSharp;
 
 public class MultiplayerPieceController : PieceController
 {
@@ -22,7 +23,7 @@ public class MultiplayerPieceController : PieceController
     public float turnStallTimer = 0f;
 
     private float lastResyncReportTime = -999f;
-    private const float RESYNC_REPORT_COOLDOWN = 1f;
+    private const float RESYNC_REPORT_COOLDOWN = 10f;
 
     public void EndGameHostLoseConnection()
     {
@@ -65,7 +66,6 @@ public class MultiplayerPieceController : PieceController
         {
             if (Time.time - lastResyncReportTime >= RESYNC_REPORT_COOLDOWN)
             {
-                //string text = UIHelperUtils.T("lobby_exited");
                 string text = UIHelperUtils.T("warningDiffMultiplayer", PieceControllerNetwork.Instance.diff);
 
                 if (string.IsNullOrEmpty(text))
@@ -78,10 +78,22 @@ public class MultiplayerPieceController : PieceController
 
             return;
         }
+        else if (!PieceControllerNetwork.Instance.CanPlayResponse && !MultiplayerLobbyState.SpectatorClientId.IsNullOrEmpty())
+        {
+            if (Time.time - lastResyncReportTime >= RESYNC_REPORT_COOLDOWN)
+            {
+                lastResyncReportTime = Time.time;
 
-        //Debug.Log($"[Multiplayer] OnCellClicked em {clickedPos} | forceMove: {forceMove} | isReceivingMove: {isReceivingMove}");
+                FileManager.Instance.SpawnLongMessage("Awaiting spectator synchronization.");
+                PieceControllerNetwork.Instance.ReportCanPlayAfterMove();
+            }
+
+            return;
+        }
+
         base.OnCellClicked(clickedPos, forceMove, IA);
     }
+
 
     // ── gravar último lance ───────────────────────────────────────────────
     public new void RegisterMove(Vector2Int origin, Vector2Int target)
@@ -109,15 +121,14 @@ public class MultiplayerPieceController : PieceController
         lastMoveType = LastMoveType.Castle;
     }
 
-    // Chame esse método logo antes de chamar PieceControllerNetwork.Instance?.SendPromotion(...)
     public void RegisterPromotion(Vector2Int origin, Vector2Int target,
         string pieceName, int playerId)
     {
         if (isReceivingMove) return;
         pendingOrigin = origin;
         pendingTarget = target;
-        pendingNetworkPieceName = pieceName;   // ← faltava
-        pendingNetworkPlayerId = playerId;     // ← faltava
+        pendingNetworkPieceName = pieceName;
+        pendingNetworkPlayerId = playerId;
         lastMoveType = LastMoveType.Promotion;
     }
 
@@ -193,7 +204,6 @@ public class MultiplayerPieceController : PieceController
     }
 
     // Fase 2 — ExecuteConfirmed só executa se o pendente bate com o confirmado
-
     public void ExecuteConfirmedMove(Vector2Int origin, Vector2Int target)
     {
         if (pendingNetworkType == PendingMoveType.None)

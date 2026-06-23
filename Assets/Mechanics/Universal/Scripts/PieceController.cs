@@ -32,6 +32,7 @@ public class PieceController : MonoBehaviour
     public bool haskingWhite = false;
     public bool haskingBlack = false;
     public bool forceMove = false;
+    public bool visualizationInfo = false;
     public PieceComponent KingWhite;
     public PieceComponent KingBlack;
 
@@ -76,6 +77,9 @@ public class PieceController : MonoBehaviour
 
         GameObject piece = boardManager.GetPieceAtPosition(clickedPos.x, clickedPos.y);
 
+        //if (visualizationInfo && forceMove)
+        //    motionVisualization.ClearMoveOverlays();
+
         if (piece != null)
         {
             PieceComponent comp = piece.GetComponent<PieceComponent>();
@@ -86,7 +90,7 @@ public class PieceController : MonoBehaviour
                     return;
             }
 
-            if (boardManager.infoPiece && !IA)
+            if (boardManager.infoPiece && !IA && !forceMove)
             {
                 GetPieceInfo(piece);
                 return;
@@ -98,8 +102,6 @@ public class PieceController : MonoBehaviour
 
             if (boardManager.noTurns || (comp.Player.id == moveTracker.GetTurnPlayer())) // || forceMove
                 SelectPiece(piece);
-            //Debug.Log($"Selecionou peça {piece.name} em {clickedPos}");
-
         }
         else if (selectedPiece != null)
         {
@@ -108,22 +110,9 @@ public class PieceController : MonoBehaviour
         else
         {
             DeselectPiece();
-            //Debug.Log("Célula vazia clicada, nenhuma peça selecionada.");
         }
 
     }
-
-    /*
-    if (selectedPiece == null)
-    {
-        SelectPiece(piece);
-        Debug.Log($"Selecionou peça {piece.name} em {clickedPos}");
-    }
-    else
-    {
-        AttemptMoveOrCapture(clickedPos);
-    }
-    */
 
     public void DeselectPiece()
     {
@@ -131,7 +120,7 @@ public class PieceController : MonoBehaviour
         pieceComponent = null;
         pieceMovement = null;
 
-        if (!forceMove)
+        if (!forceMove) //|| visualizationInfo
             motionVisualization.ClearMoveOverlays();
     }
 
@@ -169,6 +158,7 @@ public class PieceController : MonoBehaviour
         PieceMovement movement = piece.GetComponent<PieceMovement>();
 
         motionVisualization.VisualizeMoves(component, movement);
+        visualizationInfo = true;
 
         MatchSquadData matchSquad;
 
