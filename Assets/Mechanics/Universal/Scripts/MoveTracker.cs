@@ -46,6 +46,7 @@ public class MoveTracker : MonoBehaviour
             if (boardChess.chessClock != null && NetworkLobbyManager.Instance.IsHost)
             {
                 bool IsWhiteTurn = GetTurnPlayer() == 0;
+                PieceControllerNetwork.Instance?.UpdateTurnPlayer();
                 boardChess.chessClock.chessClockNetwork.SwitchTurn(IsWhiteTurn);
             }
             

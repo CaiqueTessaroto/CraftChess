@@ -252,9 +252,6 @@ public class MultiplayerPieceController : PieceController
         base.OnCellClicked(target, forceMove: true, false);
         isReceivingMove = false;
 
-        if (NetworkLobbyManager.Instance.IsHost)
-            PieceControllerNetwork.Instance?.UpdateTurnPlayer();
-
         PieceControllerNetwork.Instance?.ReportTurnAfterMove();
     }
 
@@ -304,9 +301,6 @@ public class MultiplayerPieceController : PieceController
         boardManager.UpdateBoardControl();
         isReceivingMove = false;
 
-        if (NetworkLobbyManager.Instance.IsHost)
-            PieceControllerNetwork.Instance?.UpdateTurnPlayer();
-
         PieceControllerNetwork.Instance?.ReportTurnAfterMove();
     }
 
@@ -329,6 +323,8 @@ public class MultiplayerPieceController : PieceController
         }
 
         base.DeselectPiece();
+
+        isReceivingMove = true;
 
         pendingNetworkType = PendingMoveType.None;
         //lastMoveType = LastMoveType.None;
@@ -358,9 +354,7 @@ public class MultiplayerPieceController : PieceController
             targetPiece
         );
 
-
-        if (NetworkLobbyManager.Instance.IsHost)
-            PieceControllerNetwork.Instance?.UpdateTurnPlayer();
+        isReceivingMove = false;
 
         PieceControllerNetwork.Instance?.ReportTurnAfterMove();
     }
