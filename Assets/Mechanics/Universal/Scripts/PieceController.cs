@@ -77,9 +77,6 @@ public class PieceController : MonoBehaviour
 
         GameObject piece = boardManager.GetPieceAtPosition(clickedPos.x, clickedPos.y);
 
-        //if (visualizationInfo && forceMove)
-        //    motionVisualization.ClearMoveOverlays();
-
         if (piece != null)
         {
             PieceComponent comp = piece.GetComponent<PieceComponent>();
@@ -120,7 +117,7 @@ public class PieceController : MonoBehaviour
         pieceComponent = null;
         pieceMovement = null;
 
-        if (!forceMove) //|| visualizationInfo
+        if (!forceMove)
             motionVisualization.ClearMoveOverlays();
     }
 
@@ -129,7 +126,7 @@ public class PieceController : MonoBehaviour
 
         PieceComponent component = piece.GetComponent<PieceComponent>();
 
-        if (component != null) //component != null && component.player.id == GameManager.Instance.currentPlayerId
+        if (component != null)
         {
             selectedPiece = piece;
             pieceComponent = piece.GetComponent<PieceComponent>();

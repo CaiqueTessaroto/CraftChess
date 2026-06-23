@@ -363,9 +363,6 @@ public class PieceControllerNetwork : NetworkBehaviour
 
     public void ReportCanPlayAfterMove()
     {
-        if (!MultiplayerLobbyState.SpectatorClientId.IsNullOrEmpty())
-            return;
-
         if (!IsHost)
             CanPlayServerRpc();
     }

@@ -78,13 +78,13 @@ public class MultiplayerPieceController : PieceController
 
             return;
         }
-        else if (!PieceControllerNetwork.Instance.CanPlayResponse && !MultiplayerLobbyState.SpectatorClientId.IsNullOrEmpty())
+        else if (!PieceControllerNetwork.Instance.CanPlayResponse)
         {
             if (Time.time - lastResyncReportTime >= RESYNC_REPORT_COOLDOWN)
             {
                 lastResyncReportTime = Time.time;
 
-                FileManager.Instance.SpawnLongMessage("Awaiting spectator synchronization.");
+                FileManager.Instance.SpawnMessage("Awaiting spectator synchronization.");
                 PieceControllerNetwork.Instance.ReportCanPlayAfterMove();
             }
 
