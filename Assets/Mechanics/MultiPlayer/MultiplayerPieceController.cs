@@ -81,7 +81,7 @@ public class MultiplayerPieceController : PieceController
 
             return;
         }
-        else if (!PieceControllerNetwork.Instance.CanPlayResponse)
+        else if (!PieceControllerNetwork.Instance.CanPlayResponse) // && !boardManager.noTurns
         {
             if (Time.time - lastResyncReportTime >= RESYNC_REPORT_COOLDOWN)
             {

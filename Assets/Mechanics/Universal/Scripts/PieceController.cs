@@ -81,16 +81,19 @@ public class PieceController : MonoBehaviour
         {
             PieceComponent comp = piece.GetComponent<PieceComponent>();
 
+            if (boardManager.infoPiece && !IA && !forceMove)
+            {
+                if (selectedPiece != null)
+                    DeselectPiece();
+
+                GetPieceInfo(piece);
+                return;
+            }
+
             if (selectedPiece != null)
             {
                 if (AttemptMoveOrCapture(clickedPos))
                     return;
-            }
-
-            if (boardManager.infoPiece && !IA && !forceMove)
-            {
-                GetPieceInfo(piece);
-                return;
             }
 
             if (!forceMove)
@@ -102,6 +105,15 @@ public class PieceController : MonoBehaviour
         }
         else if (selectedPiece != null)
         {
+            if (boardManager.infoPiece && !IA && !forceMove)
+            {
+                if (selectedPiece != null)
+                    DeselectPiece();
+
+                GetPieceInfo(piece);
+                return;
+            }
+
             AttemptMoveOrCapture(clickedPos);
         }
         else
