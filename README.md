@@ -1,60 +1,194 @@
-# CraftChess
+# ♟️ CraftChess
 
-A Creative Strategy Game Reinventing Chess
-Developed by: Caique Leandro Tessaroto (Indie Game Developer)
-Platform: PC (Steam) and Mobile
+> **Create your own chess. Design. Play. Share.**
 
-⚖️ License: This project is proprietary. See the LICENSE file for more details.
+CraftChess is a sandbox strategy game where you are not limited by traditional chess rules.
+Create your own pieces, define how they move, build custom armies, and challenge other players in unique strategic battles.
 
-## Game Overview
+> **Built with Unity • C# • Multiplayer • Custom Editors**
 
-CraftChess is an indie strategy game that expands the traditional chess experience by
-introducing custom pieces created by the player in pixel art, unique piece movements , and dynamic gameplay rules. The goal is to maintain the strategic depth of chess while offering fresh tactical possibilities. 
+---
 
-## Vision & Goals
+## 🎮 Features
 
-The vision of CraftChess is to modernize chess for a new generation of players, blending
-familiarity with creativity. The game aims to appeal to casual players while still offering
-depth for competitive audiences.
+### 🎨 Piece Creator
+Design your own chess pieces with the built-in pixel editor.
 
-## Gameplay & Key Features
+- Pixel Art Editor
+- Color Palette
+- PNG Export
+- Custom Sprites
+- Unlimited Creativity
 
-- **Custom pixel-art pieces**
-- Custom squad with special rules
-- Unique movements for pieces
-- Strategic depth inspired by classic chess
-- Single-player and multiplayer focus
-- Creation of chess variants
+---
 
-## Target Audience
+### ⚙️ Movement Editor
 
-- Chess players looking for innovation and new strategic experiences
-- Strategy and puzzle game fans
-- PC players interested in creative and experimental indie games
-- Young players and children who enjoy creativity and freedom in games such as Minecraft, Roblox, SimCity, and KoGaMa
-- Players who enjoy building, customizing, and experimenting with game systems and rules
+Create completely custom movement patterns.
 
-## Platform & Market
+Examples:
 
-CraftChess is planned for release on PC via Steam and Mobile via PlayStore. The strategy and
-board-game-inspired indie market has shown strong and consistent demand, especially for
-games that offer replayability and competitive depth.
+- Straight movement
+- Diagonal movement
+- Knight jumps
+- Pawn movement
+- Castling
+- Range customization
+- Capture rules
+- Special abilities
 
-## Development Status
+No programming required.
 
-- Core gameplay systems implemented
-- Customizing pieces in pixel-art, movements and squads
-- Ongoing iteration and balancing
-- UI/UX improvements, performance optimization, and extensive testing
-- Alpha: Core game systems and rule functionalities
+---
 
-## Development Roadmap
+### ⚔️ Strategy Mode
 
-- Alpha: Multiplayer implementation and initial stability testing
-- Release (PC): PC (Steam) launch with post-launch support and updates
-- Release (Mobile): Mobile (Google Play Store) launch with post-launch support and updates
+Build your own army instead of using traditional chess pieces.
 
-## Monetization
+Features include:
 
-- PC title (one-time purchase)
-- Ads for Mobile
+- Squad creation
+- Power budget system
+- Piece balancing
+- Custom formations
+- Tactical gameplay
+
+Every match can feel completely different.
+
+---
+
+### 🌍 Multiplayer
+
+Challenge your friends online.
+
+- Online Matches
+- Lobby System
+- Spectator Support
+- Custom Squads
+- Synchronised Gameplay
+
+---
+
+### 🤖 AI Opponents
+
+Play against computer-controlled enemies featuring evaluation systems that analyze:
+
+- Piece value
+- Board control
+- Threats
+- Positioning
+- Tactical opportunities
+
+---
+
+### 📚 Future Content
+
+Planned features include:
+
+- Story Campaign
+- Roguelike Mode
+- Horde Mode
+- Four Player Battles
+- Steam Workshop Support
+- Community Sharing
+
+---
+
+# 🛠️ Built With
+
+- Unity 6
+- C#
+- Netcode for GameObjects
+- Unity Relay
+- Unity Lobby
+- Unity Transport
+- ScriptableObjects
+- Addressables
+
+---
+
+# 📂 Project Structure
+
+```
+Assets/
+│
+├── Art/
+├── Audio/
+├── Prefabs/
+├── Scenes/
+├── Scripts/
+│   ├── Gameplay/
+│   ├── Multiplayer/
+│   ├── UI/
+│   ├── Pieces/
+│   ├── Board/
+│   └── Editor/
+│
+├── ScriptableObjects/
+└── Resources/
+```
+
+---
+
+# 🚀 Goals
+
+CraftChess aims to become the ultimate sandbox chess experience by giving players complete freedom to create their own strategy game.
+
+Instead of asking:
+
+> "How do I play chess?"
+
+CraftChess asks:
+
+> **"What should chess become?"**
+
+---
+
+# 🎥 Development
+
+This repository contains the active development of CraftChess.
+
+Current areas of development:
+
+- Gameplay
+- Multiplayer
+- AI
+- UI/UX
+- Performance
+- Cross-platform Support
+
+---
+
+# 🤝 Contributing
+
+Contributions, ideas, feedback and bug reports are always welcome.
+
+Feel free to open an Issue or submit a Pull Request.
+
+---
+
+# 📄 License
+
+This project is currently under development.
+
+All rights reserved © CraftChess.
+
+---
+
+# 👨‍💻 Developer
+
+**Caique Leandro Tessaroto**
+
+Game Developer • Unity Developer • Software Developer
+
+LinkedIn:
+https://www.linkedin.com/in/caiquetessaroto
+
+GitHub:
+https://github.com/CaiqueTessaroto
+
+---
+
+# ⭐ If you like this project
+
+Please consider giving the repository a ⭐ to support the development of CraftChess!
