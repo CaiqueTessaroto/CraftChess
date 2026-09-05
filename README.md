@@ -81,19 +81,6 @@ Play against computer-controlled enemies featuring evaluation systems that analy
 
 ---
 
-### 📚 Future Content
-
-Planned features include:
-
-- Story Campaign
-- Roguelike Mode
-- Horde Mode
-- Four Player Battles
-- Steam Workshop Support
-- Community Sharing
-
----
-
 # 🛠️ Built With
 
 - Unity 6
@@ -159,17 +146,7 @@ Current areas of development:
 
 ---
 
-# 🤝 Contributing
-
-Contributions, ideas, feedback and bug reports are always welcome.
-
-Feel free to open an Issue or submit a Pull Request.
-
----
-
 # 📄 License
-
-This project is currently under development.
 
 All rights reserved © CraftChess.
 
@@ -188,7 +165,3 @@ GitHub:
 https://github.com/CaiqueTessaroto
 
 ---
-
-# ⭐ If you like this project
-
-Please consider giving the repository a ⭐ to support the development of CraftChess!
