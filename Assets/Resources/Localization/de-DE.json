@@ -907,6 +907,24 @@
     {
       "key": "lobby_client_not_ready",
       "value": "Der andere Spieler ist noch nicht bereit."
-    }
+    },
+    { "key": "Robots", "value": "Roboter" },
+    { "key": "Tanks", "value": "Panzer" },
+    { "key": "Elements", "value": "Elemente" },
+    { "key": "Vacalo", "value": "Vacalo" },
+    { "key": "Turret", "value": "Geschützturm" },
+    { "key": "Tank", "value": "Panzer" },
+    { "key": "Byspa", "value": "Byspa" },
+    { "key": "Worker Robot", "value": "Arbeitsroboter" },
+    { "key": "Spaceship", "value": "Raumschiff" },
+    { "key": "Sentinel", "value": "Wächter" },
+    { "key": "Robot Dog", "value": "Roboterhund" },
+    { "key": "Guardian Robot", "value": "Wächterroboter" },
+    { "key": "Water-Knight", "value": "Wasser-Springer" },
+    { "key": "Earth-Rook", "value": "Erd-Turm" },
+    { "key": "Light-Queen", "value": "Licht-Dame" },
+    { "key": "Fire-Bishop", "value": "Feuer-Läufer" },
+    { "key": "Darkness-King", "value": "Dunkelheit-König" },
+    { "key": "Attack-Pawn", "value": "Angriffs-Bauer" }
   ]
 }

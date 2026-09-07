@@ -907,6 +907,24 @@
     {
       "key": "lobby_client_not_ready",
       "value": "他のプレイヤーはまだ準備ができていません。"
-    }
+    },
+    { "key": "Robots", "value": "ロボット" },
+    { "key": "Tanks", "value": "戦車" },
+    { "key": "Elements", "value": "エレメント" },
+    { "key": "Vacalo", "value": "ヴァカロ" },
+    { "key": "Turret", "value": "タレット" },
+    { "key": "Tank", "value": "タンク" },
+    { "key": "Byspa", "value": "バイスパ" },
+    { "key": "Worker Robot", "value": "ワーカーロボット" },
+    { "key": "Spaceship", "value": "宇宙船" },
+    { "key": "Sentinel", "value": "センチネル" },
+    { "key": "Robot Dog", "value": "ロボット犬" },
+    { "key": "Guardian Robot", "value": "ガーディアンロボット" },
+    { "key": "Water-Knight", "value": "水の騎士" },
+    { "key": "Earth-Rook", "value": "大地のルーク" },
+    { "key": "Light-Queen", "value": "光のクイーン" },
+    { "key": "Fire-Bishop", "value": "火のビショップ" },
+    { "key": "Darkness-King", "value": "闇のキング" },
+    { "key": "Attack-Pawn", "value": "攻撃のポーン" }
   ]
 }

@@ -907,6 +907,24 @@
     {
       "key": "lobby_client_not_ready",
       "value": "दूसरा खिलाड़ी अभी तैयार नहीं है।"
-    }
+    },
+    { "key": "Robots", "value": "रोबोट" },
+    { "key": "Tanks", "value": "टैंक" },
+    { "key": "Elements", "value": "तत्व" },
+    { "key": "Vacalo", "value": "वैकालो" },
+    { "key": "Turret", "value": "बुर्ज" },
+    { "key": "Tank", "value": "टैंक" },
+    { "key": "Byspa", "value": "बायस्पा" },
+    { "key": "Worker Robot", "value": "श्रमिक रोबोट" },
+    { "key": "Spaceship", "value": "अंतरिक्ष यान" },
+    { "key": "Sentinel", "value": "प्रहरी" },
+    { "key": "Robot Dog", "value": "रोबोट कुत्ता" },
+    { "key": "Guardian Robot", "value": "रक्षक रोबोट" },
+    { "key": "Water-Knight", "value": "जल-घोड़ा" },
+    { "key": "Earth-Rook", "value": "पृथ्वी-हाथी" },
+    { "key": "Light-Queen", "value": "प्रकाश-रानी" },
+    { "key": "Fire-Bishop", "value": "अग्नि-ऊंट" },
+    { "key": "Darkness-King", "value": "अंधकार-राजा" },
+    { "key": "Attack-Pawn", "value": "आक्रमण-प्यादा" }
   ]
 }

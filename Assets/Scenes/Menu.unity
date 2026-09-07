@@ -8956,6 +8956,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   appCacheCleaner: {fileID: 1733793183}
   rewards:
+  - {fileID: 11400000, guid: 19d84645724f9df43befab7ea5a5551c, type: 2}
+  - {fileID: 11400000, guid: b4c1f2d98af53fb41bd3a020638f4a8b, type: 2}
+  - {fileID: 11400000, guid: eeb9b6e728474004abe5461b86db117c, type: 2}
   - {fileID: 11400000, guid: 28ea6f2601fb93045859a806e282f436, type: 2}
   - {fileID: 11400000, guid: 7669d355b27ae8f4cad4f7e4c4743451, type: 2}
   - {fileID: 11400000, guid: b95560d929fe14145af871056f05e0a1, type: 2}

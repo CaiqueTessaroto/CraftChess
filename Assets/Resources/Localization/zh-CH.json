@@ -907,6 +907,24 @@
     {
       "key": "lobby_client_not_ready",
       "value": "另一名玩家尚未准备就绪。"
-    }
+    },
+    { "key": "Robots", "value": "机器人" },
+    { "key": "Tanks", "value": "坦克" },
+    { "key": "Elements", "value": "元素" },
+    { "key": "Vacalo", "value": "瓦卡洛" },
+    { "key": "Turret", "value": "炮塔" },
+    { "key": "Tank", "value": "坦克" },
+    { "key": "Byspa", "value": "比斯帕" },
+    { "key": "Worker Robot", "value": "工人机器人" },
+    { "key": "Spaceship", "value": "太空船" },
+    { "key": "Sentinel", "value": "哨兵" },
+    { "key": "Robot Dog", "value": "机器狗" },
+    { "key": "Guardian Robot", "value": "守护机器人" },
+    { "key": "Water-Knight", "value": "水之骑士" },
+    { "key": "Earth-Rook", "value": "地之车" },
+    { "key": "Light-Queen", "value": "光之后" },
+    { "key": "Fire-Bishop", "value": "火之象" },
+    { "key": "Darkness-King", "value": "暗之王" },
+    { "key": "Attack-Pawn", "value": "攻击兵" }
   ]
 }

@@ -907,6 +907,25 @@
     {
       "key": "lobby_client_not_ready",
       "value": "اللاعب الآخر ليس جاهزًا بعد."
-    }
+    },
+    { "key": "Robots", "value": "روبوتات" },
+    { "key": "Tanks", "value": "دبابات" },
+    { "key": "Elements", "value": "عناصر" },
+    { "key": "Vacalo", "value": "فاكالو" },
+    { "key": "Turret", "value": "برج" },
+    { "key": "Tank", "value": "دبابة" },
+    { "key": "Byspa", "value": "بايسپا" },
+    { "key": "Worker Robot", "value": "روبوت عامل" },
+    { "key": "Spaceship", "value": "سفينة فضاء" },
+    { "key": "Sentinel", "value": "حارس" },
+    { "key": "Robot Dog", "value": "كلب آلي" },
+    { "key": "Guardian Robot", "value": "روبوت حارس" },
+    { "key": "Water-Knight", "value": "فارس الماء" },
+    { "key": "Earth-Rook", "value": "قلعة الأرض" },
+    { "key": "Light-Queen", "value": "ملكة الضوء" },
+    { "key": "Fire-Bishop", "value": "أسقف النار" },
+    { "key": "Darkness-King", "value": "ملك الظلام" },
+    { "key": "Attack-Pawn", "value": "بيدق الهجوم" }
+    
   ]
 }

@@ -907,6 +907,24 @@
     {
       "key": "lobby_client_not_ready",
       "value": "상대 플레이어가 아직 준비되지 않았습니다."
-    }
+    },
+    { "key": "Robots", "value": "로봇" },
+    { "key": "Tanks", "value": "전차" },
+    { "key": "Elements", "value": "엘리먼트" },
+    { "key": "Vacalo", "value": "바칼로" },
+    { "key": "Turret", "value": "터렛" },
+    { "key": "Tank", "value": "탱크" },
+    { "key": "Byspa", "value": "바이스파" },
+    { "key": "Worker Robot", "value": "워커 로봇" },
+    { "key": "Spaceship", "value": "우주선" },
+    { "key": "Sentinel", "value": "센티넬" },
+    { "key": "Robot Dog", "value": "로봇독" },
+    { "key": "Guardian Robot", "value": "가디언 로봇" },
+    { "key": "Water-Knight", "value": "물의 기사" },
+    { "key": "Earth-Rook", "value": "대지의 룩" },
+    { "key": "Light-Queen", "value": "빛의 퀸" },
+    { "key": "Fire-Bishop", "value": "불의 비숍" },
+    { "key": "Darkness-King", "value": "어둠의 킹" },
+    { "key": "Attack-Pawn", "value": "공격 폰" }
   ]
 }

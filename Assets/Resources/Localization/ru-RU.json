@@ -907,6 +907,24 @@
     {
       "key": "lobby_client_not_ready",
       "value": "Другой игрок еще не готов."
-    }
+    },
+    { "key": "Robots", "value": "Роботы" },
+    { "key": "Tanks", "value": "Танки" },
+    { "key": "Elements", "value": "Стихии" },
+    { "key": "Vacalo", "value": "Вакало" },
+    { "key": "Turret", "value": "Турель" },
+    { "key": "Tank", "value": "Танк" },
+    { "key": "Byspa", "value": "Биспа" },
+    { "key": "Worker Robot", "value": "Рабочий робот" },
+    { "key": "Spaceship", "value": "Космический корабль" },
+    { "key": "Sentinel", "value": "Страж" },
+    { "key": "Robot Dog", "value": "Робот-пёс" },
+    { "key": "Guardian Robot", "value": "Робот-хранитель" },
+    { "key": "Water-Knight", "value": "Водный рыцарь" },
+    { "key": "Earth-Rook", "value": "Ладья Земли" },
+    { "key": "Light-Queen", "value": "Королева Света" },
+    { "key": "Fire-Bishop", "value": "Огненный слон" },
+    { "key": "Darkness-King", "value": "Король Тьмы" },
+    { "key": "Attack-Pawn", "value": "Штурмовая пешка" }
   ]
 }

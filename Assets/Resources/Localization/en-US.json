@@ -907,6 +907,29 @@
     {
       "key": "lobby_client_not_ready",
       "value": "The other player is not ready yet."
-    }
+    },
+
+    { "key": "Robots", "value": "Robots" },
+    { "key": "Tanks", "value": "Tanks" },
+    { "key": "Elements", "value": "Elements" },
+
+    { "key": "Vacalo", "value": "Vacalo" },
+    { "key": "Turret", "value": "Turret" },
+    { "key": "Tank", "value": "Tank" },
+    { "key": "Byspa", "value": "Byspa" },
+
+    { "key": "Worker Robot", "value": "Worker Robot" },
+    { "key": "Spaceship", "value": "Spaceship" },
+    { "key": "Sentinel", "value": "Sentinel" },
+    { "key": "Robot Dog", "value": "Robot Dog" },
+    { "key": "Guardian Robot", "value": "Guardian Robot" },
+
+    { "key": "Water-Knight", "value": "Water-Knight" },
+    { "key": "Earth-Rook", "value": "Earth-Rook" },
+    { "key": "Light-Queen", "value": "Light-Queen" },
+    { "key": "Fire-Bishop", "value": "Fire-Bishop" },
+    { "key": "Darkness-King", "value": "Darkness-King" },
+    { "key": "Attack-Pawn", "value": "Attack-Pawn" }
+    
   ]
 }
