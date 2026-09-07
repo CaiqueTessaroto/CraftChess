@@ -548,13 +548,19 @@ public class InteractiveLobby : MonoBehaviour
                 if (textComp != null)
                     textComp.text = string.IsNullOrEmpty(piece.NameInSquad) ? wrapper.piece.Art : piece.NameInSquad;
 
+                // 🔑 snapshot local do lado da peça — evita que a lambda capture o campo
+                // mutável IsWhite e leia, no clique, um valor diferente do que valia
+                // quando este botão foi criado (bug de closure em foreach/lambda).
+                bool pieceIsWhite = IsWhite;
+
                 newImage.GetComponent<Button>().onClick.AddListener(() =>
                 {
                     bool IsKing = false;
                     if (piece.NameInSquad == data.King.Name)
                         IsKing = true;
 
-                    managerPieceInfo.SelectPiece(piece.NameInSquad, piece, wrapper, sprite, IsWhite, IsKing);
+                    // 🔑 SelectPiece espera "isBlack", não "isWhite" — por isso é !pieceIsWhite
+                    managerPieceInfo.SelectPiece(piece.NameInSquad, piece, wrapper, sprite, !pieceIsWhite, IsKing);
                     //    squadManager.SelectPiece(nameInSquad, pieceData, File.ReadAllText(jsonPath), sprite, rootPath);
                 });
 
@@ -590,12 +596,7 @@ public class InteractiveLobby : MonoBehaviour
             }
 
             elementCount += 1;
-
-
-
         }
-
-
 
         // --- 🔹 Ao final, guarda o Squad completo ---
         if (IsWhite)
@@ -694,7 +695,7 @@ public class InteractiveLobby : MonoBehaviour
 
         currentRootPath = Application.persistentDataPath;
 
-        IsWhite = true;
+        //IsWhite = true;
         squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
         jsonFile = Path.Combine(squadFolder, currentMatch.WhiteSquadName + ".json");
         //pngFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".png");
