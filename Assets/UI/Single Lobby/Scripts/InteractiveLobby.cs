@@ -695,7 +695,7 @@ public class InteractiveLobby : MonoBehaviour
 
         currentRootPath = Application.persistentDataPath;
 
-        //IsWhite = true;
+        IsWhite = true;
         squadFolder = Path.Combine(Application.persistentDataPath, fileManager.basePath_SquadData, currentMatch.WhiteSquadName);
         jsonFile = Path.Combine(squadFolder, currentMatch.WhiteSquadName + ".json");
         //pngFile = Path.Combine(squadFolder, currentMatch.BotSquadName + ".png");

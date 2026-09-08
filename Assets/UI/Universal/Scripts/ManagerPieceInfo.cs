@@ -154,13 +154,6 @@ public class ManagerPieceInfo : MonoBehaviour
 
     public IEnumerator LoadPiecesImage(string fileName, string squad, Transform content)
     {
-
-        Debug.Log(
-            $"[Promotion/Castling] Procurando sprite: '{fileName}' | " +
-            $"IsWhite: {isWhite} | " +
-            $"White keys: {string.Join(", ", pieceSpritesWhite.Keys)} | " +
-            $"Black keys: {string.Join(", ", pieceSpritesBlack.Keys)}"
-        );
         //Transform content = panel.transform;
 
         GameObject clone = Instantiate(viewPiecePrefab, content);
