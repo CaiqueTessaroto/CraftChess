@@ -137,4 +137,4 @@ If you have questions, concerns, or requests regarding this Privacy Policy or th
 
 **Caique Leandro Tessaroto**
 
-**Email:** [caiquetessarotto@gmai.com](mailto:caiquetessarotto@gmai.com)
+**Email:** [caiquetessarotto@gmail.com](mailto:caiquetessarotto@gmail.com)
